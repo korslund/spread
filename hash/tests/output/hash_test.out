@@ -1,0 +1,29 @@
+Initial value:
+00
+With size = 10:
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+With size = 123456789:
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!oM)G)
+Hash string size: 45
+Hash of 'Hello Dolly':
+3iO0pe:|W(TthftSH*g7^<S(LW4M_NA4J94LdQih2
+'This is Louis, Dolly\n
+/XPewpH4Dr_FkQ:b~fD-_XWzFRlhJ,qu2F@C2-xb<
+Got expected match
+Got expected mismatch
+From string:
+N*:7Irw4-wN*:7Irw4-w8KvL7JrsGN[@qBfngn<|JtytSn[;Q,
+abcd:
+r}UgKOhRHU51n-{DdJXZ;zzhNN3O9PMMCGW82y+T+
+to and from string:
+r}UgKOhRHU51n-{DdJXZ;zzhNN3O9PMMCGW82y+T+
+
+Hash of zero buffer:
+p1*O<C+PO-~GxYjfr=n2{yfFs^{}[@n}~s/VzkVC
+Finishing early:
+p1*O<C+PO-~GxYjfr=n2{yfFs^{}[@n}~s/VzkVC
+p1*O<C+PO-~GxYjfr=n2{yfFs^{}[@n}~s/VzkVC
+Hashed abcd in two turns:
+r}UgKOhRHU51n-{DdJXZ;zzhNN3O9PMMCGW82y+T+
+Repeat with 3 turns:
+r}UgKOhRHU51n-{DdJXZ;zzhNN3O9PMMCGW82y+T+
