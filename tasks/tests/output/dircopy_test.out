@@ -1,0 +1,11 @@
+Empty test:
+  Not started yet!  - progress 0/0
+  Success!  - progress 0/0
+Copy one file, one dir:
+  Success!  - progress 7/7
+Copy dirs:
+  Success!  - progress 13/13
+Move dirs:
+  Success!  - progress 20/20
+Failing a move:
+  Failure: Failed to copy _tmp.dat => _dirmove2/_tmp.dat  - progress 20/21
