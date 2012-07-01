@@ -1,0 +1,25 @@
+Opening test file test1.zip:
+Found 2 files:
+--------------- test1.json
+{
+        "abc":"def",
+        "hei":["hello", 123, "dude!"]
+}
+
+---------------
+
+--------------- test2.json
+[1,2,3,4,5,6,7]
+
+---------------
+
+
+JSON values:
+
+{
+	"abc" : "def",
+	"hei" : [ "hello", 123, "dude!" ]
+}
+
+[ 1, 2, 3, 4, 5, 6, 7 ]
+

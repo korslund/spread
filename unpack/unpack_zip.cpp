@@ -18,6 +18,12 @@ static void checkErr(int err, const std::string &file)
     fail(zzip_strerror(err), file);
 }
 
+struct Ent
+{
+  std::string name;
+  int64_t size;
+};
+
 void UnpackZip::unpack(const std::string &file, Mangle::VFS::StreamFactoryPtr output,
                        Progress *prog, const FileList &list)
 {
@@ -29,7 +35,7 @@ void UnpackZip::unpack(const std::string &file, Mangle::VFS::StreamFactoryPtr ou
 
   // Build a directory of all the files in the archive, and count up
   // the total size
-  std::vector<std::string> dir;
+  std::vector<Ent> dir;
   int64_t total = 0, current = 0;
   {
     ZZIP_DIRENT ent;
@@ -43,7 +49,11 @@ void UnpackZip::unpack(const std::string &file, Mangle::VFS::StreamFactoryPtr ou
             // Nope. Skip it.
             continue;
 
-        dir.push_back(name);
+        Ent e;
+        e.name = name;
+        e.size = ent.st_size;
+        dir.push_back(e);
+
         total += ent.st_size;
       }
     checkErr(zzip_error(root), file);
@@ -63,12 +73,15 @@ void UnpackZip::unpack(const std::string &file, Mangle::VFS::StreamFactoryPtr ou
       if(abort)
         break;
 
-      std::string fname = dir[i];
+      std::string fname = dir[i].name;
 
       // Fetch a writable stream
       StreamPtr outs = output->open(fname);
       if(!outs) continue;
       assert(outs->isWritable);
+
+      // Tell the stream exactly how many bytes we are going to write
+      outs->reserve(dir[i].size);
 
       // Open the archive entry
       ZZIP_FILE *zf = zzip_file_open(root, fname.c_str(), 0);

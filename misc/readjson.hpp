@@ -12,6 +12,8 @@ namespace ReadJson
 
   void writeJson(Mangle::Stream::StreamPtr strm, const Json::Value &value, bool fast=false);
   Json::Value readJson(Mangle::Stream::StreamPtr strm);
+
+  Json::Value strToJson(const std::string &input);
 }
 
 #endif

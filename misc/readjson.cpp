@@ -5,20 +5,6 @@
 #include <mangle/stream/servers/outfile_stream.hpp>
 #include <mangle/stream/clients/io_stream.hpp>
 
-/*
-Json::Value parseJsonString(const std::string &string)
-{
-  using namespace Json;
-
-  Value root;
-
-  Reader reader;
-  if(!reader.parse(string, root))
-    throw std::runtime_error(reader.getFormatedErrorMessages());
-
-  return root;
-}
-*/
 using namespace Mangle::Stream;
 
 namespace ReadJson
@@ -78,6 +64,17 @@ Json::Value readJson(const std::string &file)
       throw std::runtime_error(e.what() + (" (reading " + file + ")"));
     }
   return res;
+}
+
+Json::Value strToJson(const std::string &string)
+{
+  Json::Value root;
+  Json::Reader reader;
+
+  if(!reader.parse(string, root))
+    throw std::runtime_error(reader.getFormatedErrorMessages());
+
+  return root;
 }
 
 }

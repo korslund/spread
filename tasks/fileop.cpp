@@ -20,6 +20,11 @@ void FileOpTask::addOp(int type, const std::string &source, const std::string &d
   addOp(op);
 }
 
+static void parent(const bs::path &file)
+{
+  create_directories(file.parent_path());
+}
+
 void FileOpTask::doJob()
 {
   info->total = ops.size();
@@ -49,6 +54,8 @@ void FileOpTask::doJob()
           setBusy("Moving " + op.source + " => " + op.dest);
           if(bs::exists(op.dest) && !bs::is_directory(op.dest))
             bs::remove(op.dest);
+          else
+            parent(op.dest);
           bs::rename(op.source, op.dest);
         }
       else if(op.type == FILEOP_COPY)
@@ -78,6 +85,7 @@ void FileOpTask::doJob()
 
           // Single file copy only
           setBusy("Copying " + op.source + " => " + op.dest);
+          parent(op.dest);
           bs::copy_file(op.source, op.dest);
         }
       else setError("Invalid operation");
