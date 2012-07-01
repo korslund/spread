@@ -1,0 +1,44 @@
+
+TEST1: Plain vanilla writing
+Writing VooCur<D/UuaPX;6)b!TJFEvaCe3EkY3OJvz6f;T+ - 'hey'
+Writing cc!4o|vH[lcP>=[k3>3l6F9<zW{;3DhCyR!Qot2C. - 'yo man'
+Jobs get deleted properly
+
+TEST2: Writing same hash twice
+Writing VooCur<D/UuaPX;6)b!TJFEvaCe3EkY3OJvz6f;T+ - 'hey'
+Writing VooCur<D/UuaPX;6)b!TJFEvaCe3EkY3OJvz6f;T+ - 'yo man' - SKIPPED
+
+TEST3: Writing unwanted hashes
+Writing CgrA*|lUs.V+Rx@=R({zqL_6oZM]zwTx^LcDnK)B= - 'fish tastes like good' - SKIPPED
+Writing 5)-5z~;i^4Ha8Oi^Tx>w;)vuIe)|q_:+zxRpkF46< - 'this is not a string' - SKIPPED
+
+TEST4: One hash to multiple locations
+Writing VooCur<D/UuaPX;6)b!TJFEvaCe3EkY3OJvz6f;T+ - 'hey'
+Writing VooCur<D/UuaPX;6)b!TJFEvaCe3EkY3OJvz6f;T+ - 'hey' - SKIPPED
+Writing cc!4o|vH[lcP>=[k3>3l6F9<zW{;3DhCyR!Qot2C. - 'yo man' - SKIPPED
+
+TEST5: Wrong content
+Writing VooCur<D/UuaPX;6)b!TJFEvaCe3EkY3OJvz6f;T+ - 'this is not a string'
+CAUGHT: Task failed: Hash mismatch in _ht_test5/wrong.txt
+  Expected: VooCur<D/UuaPX;6)b!TJFEvaCe3EkY3OJvz6f;T+
+  Recieved: 5)-5z~;i^4Ha8Oi^Tx>w;)vuIe)|q_:+zxRpkF46<
+
+TEST6: Throw up
+CAUGHT: Task failed: Blaaargh!
+
+TEST7: Fail respectfully
+CAUGHT: Task failed: Excuse me, can I borrow the restroom?
+
+TEST9: Not generating the requested output
+ ... slacking off ... 
+CAUGHT: Task did not produce all requested output files.
+
+Wating for job to finish...
+
+TEST10: All-around test, with threading
+Writing !T<pm-29lCh=ruld<xHP)uE!iFTEyVYs*vedhGJ/u - 'this is a bad attempt at quasi-intellectual existentialism with flat humor' - SKIPPED
+Writing 5)-5z~;i^4Ha8Oi^Tx>w;)vuIe)|q_:+zxRpkF46< - 'this is not a string'
+Writing CgrA*|lUs.V+Rx@=R({zqL_6oZM]zwTx^LcDnK)B= - 'fish tastes like good'
+Writing cc!4o|vH[lcP>=[k3>3l6F9<zW{;3DhCyR!Qot2C. - 'yo man'
+Writing VooCur<D/UuaPX;6)b!TJFEvaCe3EkY3OJvz6f;T+ - 'hey'
+Writing 5)-5z~;i^4Ha8Oi^Tx>w;)vuIe)|q_:+zxRpkF46< - 'this is not a string' - SKIPPED

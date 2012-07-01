@@ -17,7 +17,7 @@ namespace Tasks
      multithreading.
 
      If one sub-task fails, the entire task fails. The task only
-     succeeds if when all the sub-tasks have succeeded.
+     succeeds when all the sub-tasks have succeeded.
 
      Job objects are deleted when the multitask is deleted.
 
