@@ -39,6 +39,9 @@ namespace Spread
     HashDir inputs;
     HashDir outputs;
 
+    void addInput(Hash h, const std::string &file)
+    { inputs.insert(HDValue(h,file)); }
+
     void addOutput(Hash h, const std::string &file)
     { outputs.insert(HDValue(h,file)); }
 

@@ -29,7 +29,7 @@ set(TASKS ${TDIR}/unpack.cpp ${TDIR}/curl.cpp ${TDIR}/download.cpp ${TDIR}/insta
 set(C85 ${MIDIR}/comp85.cpp)
 set(HASH ${HDIR}/hash.cpp ${LIBDIR}/sha2/sha2.c ${C85})
 
-set(HTASKS ${HTDIR}/hashtask.cpp ${HASH} ${TASKS})
+set(HTASKS ${HASH} ${TASKS} ${HTDIR}/hashtask.cpp ${HTDIR}/unpackhash.cpp ${HTDIR}/downloadhash.cpp)
 
 set(MANGLE ${MDIR}/stream/clients/io_stream.cpp)
 set(JSON ${JS}/json_reader.cpp ${JS}/json_writer.cpp ${JS}/json_value.cpp)
@@ -39,3 +39,9 @@ set(SPL ${SLDIR}/sr0.cpp ${TASKS} ${READJSON} ${HASH})
 
 add_executable(hashtask_test hashtask_test.cpp ${HTASKS})
 target_link_libraries(hashtask_test ${LIBS})
+
+add_executable(unpack_test unpack_test.cpp ${HTASKS})
+target_link_libraries(unpack_test ${LIBS})
+
+add_executable(dl_test dl_test.cpp ${HTASKS})
+target_link_libraries(dl_test ${LIBS})

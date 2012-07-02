@@ -2,7 +2,6 @@
 
 #include <boost/filesystem.hpp>
 #include <assert.h>
-#include <iostream>
 #include <utility> // for std::pair
 
 using namespace boost::filesystem;

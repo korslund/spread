@@ -79,8 +79,9 @@ JobInfoPtr HashTask::run(bool async)
   j->add(new CloseTask(this));
 
   assert(!ptr->info);
-
   ptr->info = j->getInfo();
+  assert(ptr->info);
+
   Thread::run(j,async);
 
   // Call finish ourselves if the job is already done
