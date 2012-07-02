@@ -17,6 +17,10 @@ set(READJSON ${JSON} ${MANGLE} ${MIDIR}/readjson.cpp)
 
 set(C85 ${MIDIR}/comp85.cpp)
 
+set(CONF ${READJSON} ${MIDIR}/jconfig.cpp ${C85})
+
 add_executable(comp85_test comp85_test.cpp ${C85})
 
 add_executable(json_test json_test.cpp ${READJSON})
+
+add_executable(conf_test conf_test.cpp ${CONF})
