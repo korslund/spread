@@ -7,20 +7,22 @@ using namespace std;
 
 Cache::CacheIndex index;
 
-void add(const std::string &file, const Hash &h = Hash())
+Hash add(const std::string &file, const Hash &h = Hash())
 {
   cout << "Adding " << file;
   if(!h.isNull()) cout << " (expecting " << h << ")";
   cout << endl;
+  Hash out;
   try
     {
-      Hash out =index.addFile(file,h);
+      out = index.addFile(file,h);
       cout << "  Got: " << out << endl;
     }
   catch(exception &e)
     {
       cout << "  Error: " << e.what() << endl;
     }
+  return out;
 }
 
 void find(const Hash &h)
@@ -49,40 +51,11 @@ void status(const std::string &file, const Hash &h)
 
 int main()
 {
-  Hash hello("hello",5);
-  Hash testsh("_fA]2iV(n)FhBQ4,]~RSNlcWF;vuGc)_N0pbn3Rc_,");
+  index.load("cache2.conf");
 
-  add("test.sh");
-  add("Makefile");
-  add("hello.dat", hello);
-  add("hello.dat", Hash("WRONG!",6));
-  add("nofile.dat");
-  add("hello2.dat");
-  add("hello2.dat");
-
-  find(testsh);
-  index.removeFile("test.sh");
-  find(testsh);
-
-  find(hello);
-  index.removeFile("hello.dat");
-  find(hello);
-  index.removeFile("hello.dat");
-  find(hello);
-  index.removeFile("hello2.dat");
-  find(hello);
-
-  status("nofile", hello);
-  status("test.sh", hello);
+  Hash hello("hello", 5);
   status("hello2.dat", hello);
-  status("test.sh", hello);
-  status("hello.dat", testsh);
   status("hello.dat", hello);
-
-  // Do this at the end just to dump the file. We don't want it to
-  // interfere with the testing above.
-  index.load("_cache1.conf");
-  index.addFile("CMakeLists.txt");
 
   return 0;
 }

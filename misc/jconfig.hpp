@@ -37,6 +37,10 @@ namespace Misc
     void setData(const std::string &name, const void *p, size_t num);
     void getData(const std::string &name, void *p, size_t num);
 
+    // Remove an entry. Non-existing entries are allowed. Returns true
+    // if the entry existed before removal.
+    bool remove(const std::string &name);
+
     void set(const std::string &name, const std::string &value);
     std::string get(const std::string &name, const std::string &def="");
 

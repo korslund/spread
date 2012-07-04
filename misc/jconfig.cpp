@@ -85,6 +85,15 @@ int64_t JConfig::getInt64(const std::string &name, int64_t def)
   return res;
 }
 
+bool JConfig::remove(const std::string &name)
+{
+  p->L();
+  // removeMember() returns a Null value if nothing was removed.
+  bool res = !p->val.removeMember(name).isNull();
+  save();
+  p->U();
+}
+
 std::string JConfig::get(const std::string &name, const std::string &def)
 { return p->LG(name,def).asString(); }
 

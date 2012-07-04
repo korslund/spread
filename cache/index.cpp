@@ -4,6 +4,9 @@
 #include <boost/filesystem.hpp>
 #include "hash/hash_stream.hpp"
 #include <stdint.h>
+#include <boost/thread/recursive_mutex.hpp>
+#include "misc/jconfig.hpp"
+
 namespace bf = boost::filesystem;
 
 using namespace Cache;
@@ -25,10 +28,45 @@ typedef PathToEntry::iterator PTE_it;
 typedef std::pair<Hash, Entry*> HTE_val;
 typedef std::pair<HTE_it,HTE_it> HTE_pair;
 
+typedef boost::lock_guard<boost::recursive_mutex> LOCK;
+
 struct CacheIndex::_CacheIndex_Hidden
 {
   PathToEntry paths;
   HashToEntry hashes;
+
+  Misc::JConfig conf;
+  boost::recursive_mutex mutex;
+
+  void addConf(const std::string &file, const Hash &hash, time_t wtime)
+  {
+    char buf[16];
+    snprintf(buf, 16, "%ld", wtime);
+    conf.set(file, hash.toString() + " " + std::string(buf));
+  }
+
+  void removeConf(const std::string &file)
+  { conf.remove(file); }
+
+  void loadConf(const std::string &file)
+  {
+    conf.load(file);
+
+    // Insert into the list
+    std::vector<std::string> names;
+    names = conf.getNames();
+
+    for(int i=0; i<names.size(); i++)
+      {
+        const std::string &file = names[i];
+
+        std::string val = conf.get(file);
+        int split = val.find(' ');
+        Hash hash(val.substr(0,split));
+        time_t wtime = atoll(val.substr(split+1).c_str());
+        add(file, hash, wtime);
+      }
+  }
 
   Entry *find(const std::string &file)
   {
@@ -44,7 +82,12 @@ struct CacheIndex::_CacheIndex_Hidden
     return it->second;
   }
 
-  void add(const std::string &file, const Hash &hash, time_t writeTime)
+  /* FIXED BUG: At this point, it's possible the 'file' passed to us
+     is a reference to ent->file, which may get deleted by
+     remove(file). So to avoid referencing deleted objects, this
+     function takes value parameters rather than references.
+   */
+  void add(std::string file, Hash hash, time_t writeTime)
   {
     // Remove any existing entry first
     remove(file);
@@ -91,11 +134,23 @@ struct CacheIndex::_CacheIndex_Hidden
   }
 };
 
-CacheIndex::CacheIndex() { ptr = new _CacheIndex_Hidden; }
+CacheIndex::CacheIndex(const std::string &conf)
+{
+  ptr = new _CacheIndex_Hidden;
+  if(conf != "") load(conf);
+}
 CacheIndex::~CacheIndex() { delete ptr; }
+
+void CacheIndex::load(const std::string &conf)
+{
+  LOCK lock(ptr->mutex);
+  ptr->loadConf(conf);
+}
 
 int CacheIndex::getStatus(const std::string &where, const Hash &hash)
 {
+  LOCK lock(ptr->mutex);
+
   // Check the index first if we think this is a match.
   Entry *ent = ptr->find(where);
   bool exists = bf::exists(where);
@@ -140,6 +195,8 @@ int CacheIndex::getStatus(const std::string &where, const Hash &hash)
 
 std::string CacheIndex::findHash(const Hash &hash)
 {
+  LOCK lock(ptr->mutex);
+
   Entry *ent = ptr->find(hash);
   while(ent)
     {
@@ -154,13 +211,21 @@ std::string CacheIndex::findHash(const Hash &hash)
 }
 
 void CacheIndex::removeFile(const std::string &where)
-{ ptr->remove(where); }
+{
+  LOCK lock(ptr->mutex);
+  ptr->remove(where);
+  ptr->removeConf(where);
+}
 
 /* This is the main 'workhorse' of the indexer, and the function that
    does most of the actual interaction with the filesystem.
  */
 Hash CacheIndex::addFile(const std::string &where, const Hash &h)
 {
+  LOCK lock(ptr->mutex);
+
+  assert(where != "");
+
   // First things first: does the file even exist?
   if(!bf::exists(where))
     {
@@ -207,6 +272,7 @@ Hash CacheIndex::addFile(const std::string &where, const Hash &h)
     hash = HashStream::sum(where);
   assert(!hash.isNull());
   ptr->add(where, hash, time);
+  ptr->addConf(where, hash, time);
 
   return hash;
 }

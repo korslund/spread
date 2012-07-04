@@ -32,3 +32,6 @@ set(CACHE ${CONF} ${HASH} ${CDIR}/index.cpp)
 
 add_executable(cache1_test cache1_test.cpp ${CACHE})
 target_link_libraries(cache1_test ${LIBS})
+
+add_executable(cache2_test cache2_test.cpp ${CACHE})
+target_link_libraries(cache2_test ${LIBS})

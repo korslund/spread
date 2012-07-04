@@ -9,6 +9,8 @@
 
    The index doesn't actually store, write or modify any files (except
    for its own config file), it just indexes existing files.
+
+   The class is thread safe.
  */
 
 namespace Cache
@@ -75,7 +77,16 @@ namespace Cache
      */
     void removeFile(const std::string &where);
 
-    CacheIndex();
+    /* Load data from a file. This file will be kept continually
+       updated with changes from this point on.
+
+       It's OK to specify a file that doesn't exist; it will be
+       created on demand.
+     */
+    void load(const std::string &conf);
+
+    // The optional 'conf' parameter is passed on to load().
+    CacheIndex(const std::string &conf = "");
     ~CacheIndex();
   private:
     struct _CacheIndex_Hidden;

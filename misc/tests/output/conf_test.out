@@ -9,3 +9,5 @@ Writing to pre-loaded object:
 Testing binary data:
   f: 3.14
   i: 103
+Testing remove():
+  OK

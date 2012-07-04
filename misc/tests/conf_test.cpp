@@ -61,11 +61,33 @@ void test3()
   cout << "  i: " << t2.i << endl;
 }
 
+void test4()
+{
+  cout << "Testing remove():\n";
+
+  JConfig jc("_test4.conf");
+
+  jc.set("abc", "def");
+  jc.set("hello", "man");
+
+  assert(jc.has("abc"));
+  assert(jc.has("hello"));
+  assert(!jc.has("def"));
+
+  jc.remove("abc");
+
+  assert(!jc.has("abc"));
+  assert(jc.has("hello"));
+  assert(!jc.has("def"));
+  cout << "  OK\n";
+}
+
 int main()
 {
   test1();
   test2();
   test3();
+  test4();
 
   return 0;
 }
