@@ -1,0 +1,59 @@
+Hashes:
+Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2, = HELLO
+dmDzRCwoYmVI{sX}dD_A/!yL*fOzE/;WurxeJq{Z, = DOLLY
+:vmeG((;^AM16eA-,)EJQJX!T(fAyU|!zD32<{v^, = WORLD
+myf+eo4Qq<J*@vDoo1(p(f)Xl(rO[09BBTrbSBoN, = YEAH!
+sP5w413-Kmx)8/.<C2{wV.1-]pYa,+tyOnL=x6pd- = INZIP1
+dZ~aJ7Mdh0w<yG1kmVhUhKH8Dsji^97ts<5+nq]p- = INZIP2
+DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN. = ZIPFILE
+
+Handled 9 input dependencies into 7 hashes:
+Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2, : COPY from hello.txt
+  => _file1_hello
+:vmeG((;^AM16eA-,)EJQJX!T(fAyU|!zD32<{v^, : UNHANDLED
+  => _file2_world
+myf+eo4Qq<J*@vDoo1(p(f)Xl(rO[09BBTrbSBoN, : UNHANDLED
+DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN. : RULE (URL for zipfile)
+dmDzRCwoYmVI{sX}dD_A/!yL*fOzE/;WurxeJq{Z, : COPY from dolly.txt
+  => _file3_dolly
+  => _file4_dolly
+dZ~aJ7Mdh0w<yG1kmVhUhKH8Dsji^97ts<5+nq]p- : RULE (ZIP rule)
+  => _file6_inzip2
+  <= DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN.
+sP5w413-Kmx)8/.<C2{wV.1-]pYa,+tyOnL=x6pd- : RULE (ZIP rule)
+  => _file5_inzip1
+  <= DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN.
+
+Handled 9 input dependencies into 7 hashes:
+Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2, : COPY from hello.txt
+  => _file1_hello
+:vmeG((;^AM16eA-,)EJQJX!T(fAyU|!zD32<{v^, : UNHANDLED
+  => _file2_world
+myf+eo4Qq<J*@vDoo1(p(f)Xl(rO[09BBTrbSBoN, : UNHANDLED
+DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN. : RULE (URL for zipfile)
+dmDzRCwoYmVI{sX}dD_A/!yL*fOzE/;WurxeJq{Z, : COPY from dolly.txt
+  => _file3_dolly
+  => _file4_dolly
+dZ~aJ7Mdh0w<yG1kmVhUhKH8Dsji^97ts<5+nq]p- : RULE (ZIP rule)
+  => _file6_inzip2
+  <= DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN.
+sP5w413-Kmx)8/.<C2{wV.1-]pYa,+tyOnL=x6pd- : RULE (ZIP rule)
+  => _file5_inzip1
+  <= DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN.
+
+Handled 9 input dependencies into 7 hashes:
+Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2, : COPY from hello.txt
+  => _file1_hello
+:vmeG((;^AM16eA-,)EJQJX!T(fAyU|!zD32<{v^, : COPY from world.txt
+  => _file2_world
+myf+eo4Qq<J*@vDoo1(p(f)Xl(rO[09BBTrbSBoN, : UNHANDLED
+DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN. : RULE (URL for zipfile)
+dmDzRCwoYmVI{sX}dD_A/!yL*fOzE/;WurxeJq{Z, : COPY from dolly.txt
+  => _file3_dolly
+  => _file4_dolly
+dZ~aJ7Mdh0w<yG1kmVhUhKH8Dsji^97ts<5+nq]p- : RULE (ZIP rule)
+  => _file6_inzip2
+  <= DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN.
+sP5w413-Kmx)8/.<C2{wV.1-]pYa,+tyOnL=x6pd- : RULE (ZIP rule)
+  => _file5_inzip1
+  <= DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN.

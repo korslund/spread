@@ -157,17 +157,19 @@ int CacheIndex::getStatus(const std::string &where, const Hash &hash)
   bool checkAlt = false;
   if(!ent || ent->hash != hash || !exists)
     {
-      // If it probably isn't, then it's more efficient to check for
-      // alternatives first, rather than hashing a file we will
-      // overwrite anyway. Alternatives always take precedence over
-      // mismatches.
+      /* If there probably isn't a match, then it's more efficient to
+         check for alternatives first, rather than hashing a file we
+         will potentially overwrite anyway. Alternatives (marked by
+         CI_ElseWhere) always take precedence over mismatches
+         (CI_Diff).
+      */
       checkAlt = true;
       std::string alt = findHash(hash);
       if(alt != "")
         return CI_ElseWhere;
     }
 
-  // Check there there is no file
+  // If nothing was found, tell the user
   if(!exists)
     return CI_None;
 
@@ -178,9 +180,9 @@ int CacheIndex::getStatus(const std::string &where, const Hash &hash)
   if(real == hash)
     return CI_Match;
 
-  /* So the file exists and it doesn't match the requested hash. So
-     it's either CI_Diff or CI_Elsewhere. Do the alternatives check
-     here if we didn't do it above.
+  /* So the file exists and it doesn't match the requested hash. This
+     means it's either CI_Diff or CI_Elsewhere. Do the alternatives
+     check here if we didn't do it above.
    */
   if(!checkAlt)
     {

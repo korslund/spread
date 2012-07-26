@@ -117,9 +117,7 @@ static Hash decode85(const std::string &hstr)
 {
   Hash res;
 
-  // Special encoding of null hash
-  if(hstr == "00")
-    return res;
+  assert(hstr != "00");
 
   int len = hstr.size();
 
@@ -190,7 +188,11 @@ std::string Hash::toString() const
 
 void Hash::fromString(const std::string &str)
 {
-  dealloc();
+  clear();
+
+  // Special encoding of null hash
+  if(str == "00")
+    return;
 
   if(str.size() >= 40 && str.size() <= 50)
     {
