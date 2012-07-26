@@ -88,6 +88,9 @@ namespace Spread
     // Converts hash digest to compact85 (40-50 characters long)
     std::string toString() const;
 
+    // Converts hash digest to base64url (43-54 characters long)
+    std::string toBase64() const;
+
     // Converts hash digest to an 80 byte long hex string
     std::string toHex() const;
 

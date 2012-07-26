@@ -1,59 +1,59 @@
 Hashes:
-Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2, = HELLO
-dmDzRCwoYmVI{sX}dD_A/!yL*fOzE/;WurxeJq{Z, = DOLLY
-:vmeG((;^AM16eA-,)EJQJX!T(fAyU|!zD32<{v^, = WORLD
-myf+eo4Qq<J*@vDoo1(p(f)Xl(rO[09BBTrbSBoN, = YEAH!
-sP5w413-Kmx)8/.<C2{wV.1-]pYa,+tyOnL=x6pd- = INZIP1
-dZ~aJ7Mdh0w<yG1kmVhUhKH8Dsji^97ts<5+nq]p- = INZIP2
-DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN. = ZIPFILE
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF = HELLO
+z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F = DOLLY
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF = WORLD
+Wci-t_e_9EMxWOlZu9jW2XFOHM8I-OIdAomk4XA0xXgF = YEAH!
+9eJFKxZiv9EAeRQWuTGM8j1KBKIvDqcMDEeEcjvGB7cG = INZIP1
+9VfWa-IYTB56akggQXlNjhZkwVcTA_k5AjBcLPF6u9sG = INZIP2
+nOYmHbSVYgh-BC4bhVen8JWujb124ib0UNBaY1UjMXkH = ZIPFILE
 
 Handled 9 input dependencies into 7 hashes:
-Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2, : COPY from hello.txt
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from hello.txt
   => _file1_hello
-:vmeG((;^AM16eA-,)EJQJX!T(fAyU|!zD32<{v^, : UNHANDLED
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF : UNHANDLED
   => _file2_world
-myf+eo4Qq<J*@vDoo1(p(f)Xl(rO[09BBTrbSBoN, : UNHANDLED
-DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN. : RULE (URL for zipfile)
-dmDzRCwoYmVI{sX}dD_A/!yL*fOzE/;WurxeJq{Z, : COPY from dolly.txt
+Wci-t_e_9EMxWOlZu9jW2XFOHM8I-OIdAomk4XA0xXgF : UNHANDLED
+nOYmHbSVYgh-BC4bhVen8JWujb124ib0UNBaY1UjMXkH : RULE (URL for zipfile)
+z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : COPY from dolly.txt
   => _file3_dolly
   => _file4_dolly
-dZ~aJ7Mdh0w<yG1kmVhUhKH8Dsji^97ts<5+nq]p- : RULE (ZIP rule)
+9VfWa-IYTB56akggQXlNjhZkwVcTA_k5AjBcLPF6u9sG : RULE (ZIP rule)
   => _file6_inzip2
-  <= DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN.
-sP5w413-Kmx)8/.<C2{wV.1-]pYa,+tyOnL=x6pd- : RULE (ZIP rule)
+  <= nOYmHbSVYgh-BC4bhVen8JWujb124ib0UNBaY1UjMXkH
+9eJFKxZiv9EAeRQWuTGM8j1KBKIvDqcMDEeEcjvGB7cG : RULE (ZIP rule)
   => _file5_inzip1
-  <= DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN.
+  <= nOYmHbSVYgh-BC4bhVen8JWujb124ib0UNBaY1UjMXkH
 
 Handled 9 input dependencies into 7 hashes:
-Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2, : COPY from hello.txt
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from hello.txt
   => _file1_hello
-:vmeG((;^AM16eA-,)EJQJX!T(fAyU|!zD32<{v^, : UNHANDLED
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF : UNHANDLED
   => _file2_world
-myf+eo4Qq<J*@vDoo1(p(f)Xl(rO[09BBTrbSBoN, : UNHANDLED
-DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN. : RULE (URL for zipfile)
-dmDzRCwoYmVI{sX}dD_A/!yL*fOzE/;WurxeJq{Z, : COPY from dolly.txt
+Wci-t_e_9EMxWOlZu9jW2XFOHM8I-OIdAomk4XA0xXgF : UNHANDLED
+nOYmHbSVYgh-BC4bhVen8JWujb124ib0UNBaY1UjMXkH : RULE (URL for zipfile)
+z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : COPY from dolly.txt
   => _file3_dolly
   => _file4_dolly
-dZ~aJ7Mdh0w<yG1kmVhUhKH8Dsji^97ts<5+nq]p- : RULE (ZIP rule)
+9VfWa-IYTB56akggQXlNjhZkwVcTA_k5AjBcLPF6u9sG : RULE (ZIP rule)
   => _file6_inzip2
-  <= DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN.
-sP5w413-Kmx)8/.<C2{wV.1-]pYa,+tyOnL=x6pd- : RULE (ZIP rule)
+  <= nOYmHbSVYgh-BC4bhVen8JWujb124ib0UNBaY1UjMXkH
+9eJFKxZiv9EAeRQWuTGM8j1KBKIvDqcMDEeEcjvGB7cG : RULE (ZIP rule)
   => _file5_inzip1
-  <= DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN.
+  <= nOYmHbSVYgh-BC4bhVen8JWujb124ib0UNBaY1UjMXkH
 
 Handled 9 input dependencies into 7 hashes:
-Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2, : COPY from hello.txt
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from hello.txt
   => _file1_hello
-:vmeG((;^AM16eA-,)EJQJX!T(fAyU|!zD32<{v^, : COPY from world.txt
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF : COPY from world.txt
   => _file2_world
-myf+eo4Qq<J*@vDoo1(p(f)Xl(rO[09BBTrbSBoN, : UNHANDLED
-DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN. : RULE (URL for zipfile)
-dmDzRCwoYmVI{sX}dD_A/!yL*fOzE/;WurxeJq{Z, : COPY from dolly.txt
+Wci-t_e_9EMxWOlZu9jW2XFOHM8I-OIdAomk4XA0xXgF : UNHANDLED
+nOYmHbSVYgh-BC4bhVen8JWujb124ib0UNBaY1UjMXkH : RULE (URL for zipfile)
+z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : COPY from dolly.txt
   => _file3_dolly
   => _file4_dolly
-dZ~aJ7Mdh0w<yG1kmVhUhKH8Dsji^97ts<5+nq]p- : RULE (ZIP rule)
+9VfWa-IYTB56akggQXlNjhZkwVcTA_k5AjBcLPF6u9sG : RULE (ZIP rule)
   => _file6_inzip2
-  <= DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN.
-sP5w413-Kmx)8/.<C2{wV.1-]pYa,+tyOnL=x6pd- : RULE (ZIP rule)
+  <= nOYmHbSVYgh-BC4bhVen8JWujb124ib0UNBaY1UjMXkH
+9eJFKxZiv9EAeRQWuTGM8j1KBKIvDqcMDEeEcjvGB7cG : RULE (ZIP rule)
   => _file5_inzip1
-  <= DyIG01.-e)I>Th/HFIEwd7IxfGY{Ox];=yGKVpzN.
+  <= nOYmHbSVYgh-BC4bhVen8JWujb124ib0UNBaY1UjMXkH

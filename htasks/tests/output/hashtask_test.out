@@ -1,27 +1,27 @@
 
 TEST1: Plain vanilla writing
-Writing VooCur<D/UuaPX;6)b!TJFEvaCe3EkY3OJvz6f;T+ - 'hey'
-Writing cc!4o|vH[lcP>=[k3>3l6F9<zW{;3DhCyR!Qot2C. - 'yo man'
+Writing TpVf6gJoUYy6pQBAnfvsiPDs660o2E7L4lC67ZfbqIkE - 'hey'
+Writing 5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH - 'yo man'
 Jobs get deleted properly
 
 TEST2: Writing same hash twice
-Writing VooCur<D/UuaPX;6)b!TJFEvaCe3EkY3OJvz6f;T+ - 'hey'
-Writing VooCur<D/UuaPX;6)b!TJFEvaCe3EkY3OJvz6f;T+ - 'yo man' - SKIPPED
+Writing TpVf6gJoUYy6pQBAnfvsiPDs660o2E7L4lC67ZfbqIkE - 'hey'
+Writing TpVf6gJoUYy6pQBAnfvsiPDs660o2E7L4lC67ZfbqIkE - 'yo man' - SKIPPED
 
 TEST3: Writing unwanted hashes
-Writing CgrA*|lUs.V+Rx@=R({zqL_6oZM]zwTx^LcDnK)B= - 'fish tastes like good' - SKIPPED
-Writing 5)-5z~;i^4Ha8Oi^Tx>w;)vuIe)|q_:+zxRpkF46< - 'this is not a string' - SKIPPED
+Writing nNdHCq2-eBiq_4tNjqrg-9lTQtdcW4fynNawsk8q_FAW - 'fish tastes like good' - SKIPPED
+Writing VFJt-Q1dairWD3TFtxh08OpLdGk4XKaqd4SRhfH8KC8V - 'this is not a string' - SKIPPED
 
 TEST4: One hash to multiple locations
-Writing VooCur<D/UuaPX;6)b!TJFEvaCe3EkY3OJvz6f;T+ - 'hey'
-Writing VooCur<D/UuaPX;6)b!TJFEvaCe3EkY3OJvz6f;T+ - 'hey' - SKIPPED
-Writing cc!4o|vH[lcP>=[k3>3l6F9<zW{;3DhCyR!Qot2C. - 'yo man' - SKIPPED
+Writing TpVf6gJoUYy6pQBAnfvsiPDs660o2E7L4lC67ZfbqIkE - 'hey'
+Writing TpVf6gJoUYy6pQBAnfvsiPDs660o2E7L4lC67ZfbqIkE - 'hey' - SKIPPED
+Writing 5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH - 'yo man' - SKIPPED
 
 TEST5: Wrong content
-Writing VooCur<D/UuaPX;6)b!TJFEvaCe3EkY3OJvz6f;T+ - 'this is not a string'
+Writing TpVf6gJoUYy6pQBAnfvsiPDs660o2E7L4lC67ZfbqIkE - 'this is not a string'
 CAUGHT: Task failed: Hash mismatch in _ht_test5/wrong.txt
-  Expected: VooCur<D/UuaPX;6)b!TJFEvaCe3EkY3OJvz6f;T+
-  Recieved: 5)-5z~;i^4Ha8Oi^Tx>w;)vuIe)|q_:+zxRpkF46<
+  Expected: TpVf6gJoUYy6pQBAnfvsiPDs660o2E7L4lC67ZfbqIkE
+  Recieved: VFJt-Q1dairWD3TFtxh08OpLdGk4XKaqd4SRhfH8KC8V
 
 TEST6: Throw up
 CAUGHT: Task failed: Blaaargh!
@@ -36,9 +36,9 @@ CAUGHT: Task did not produce all requested output files.
 Wating for job to finish...
 
 TEST10: All-around test, with threading
-Writing !T<pm-29lCh=ruld<xHP)uE!iFTEyVYs*vedhGJ/u - 'this is a bad attempt at quasi-intellectual existentialism with flat humor' - SKIPPED
-Writing 5)-5z~;i^4Ha8Oi^Tx>w;)vuIe)|q_:+zxRpkF46< - 'this is not a string'
-Writing CgrA*|lUs.V+Rx@=R({zqL_6oZM]zwTx^LcDnK)B= - 'fish tastes like good'
-Writing cc!4o|vH[lcP>=[k3>3l6F9<zW{;3DhCyR!Qot2C. - 'yo man'
-Writing VooCur<D/UuaPX;6)b!TJFEvaCe3EkY3OJvz6f;T+ - 'hey'
-Writing 5)-5z~;i^4Ha8Oi^Tx>w;)vuIe)|q_:+zxRpkF46< - 'this is not a string' - SKIPPED
+Writing ag4J03R3blal_CDQ2Tmpfe3yB8QgZAeSQDBburlAJhpL - 'this is a bad attempt at quasi-intellectual existentialism with flat humor' - SKIPPED
+Writing VFJt-Q1dairWD3TFtxh08OpLdGk4XKaqd4SRhfH8KC8V - 'this is not a string'
+Writing nNdHCq2-eBiq_4tNjqrg-9lTQtdcW4fynNawsk8q_FAW - 'fish tastes like good'
+Writing 5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH - 'yo man'
+Writing TpVf6gJoUYy6pQBAnfvsiPDs660o2E7L4lC67ZfbqIkE - 'hey'
+Writing VFJt-Q1dairWD3TFtxh08OpLdGk4XKaqd4SRhfH8KC8V - 'this is not a string' - SKIPPED

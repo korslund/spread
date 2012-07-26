@@ -1,29 +1,29 @@
 Initial value:
 00
 With size = 10:
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAK
 With size = 123456789:
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!oM)G)
-Hash string size: 45
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVzVsH
+Hash string size: 48
 Hash of 'Hello Dolly':
-3iO0pe:|W(TthftSH*g7^<S(LW4M_NA4J94LdQih2
+YQAl2gAD3gRCiXfo_0gENJLMEHAB0Tl4oy0fKbgXO8ML
 'This is Louis, Dolly\n
-/XPewpH4Dr_FkQ:b~fD-_XWzFRlhJ,qu2F@C2-xb<
+vELB8X8tDeG9QaU8ije4E2t1SmDRHtQQ_9_GSwagGLEV
 Got expected match
 Got expected mismatch
 From string:
-N*:7Irw4-wN*:7Irw4-w8KvL7JrsGN[@qBfngn<|JtytSn[;Q,
+ASNFZ4mrze8BI0VniavN7wARIjNEVWZ3iJmqu8zd7v-IiIiIEREREQ
 abcd:
-r}UgKOhRHU51n-{DdJXZ;zzhNN3O9PMMCGW82y+T+
+iNQmb9TmM40TuEX88olXnSCciXgjuSF9o-Fhk28DFYkE
 to and from string:
-r}UgKOhRHU51n-{DdJXZ;zzhNN3O9PMMCGW82y+T+
+iNQmb9TmM40TuEX88olXnSCciXgjuSF9o-Fhk28DFYkE
 
 Hash of zero buffer:
-p1*O<C+PO-~GxYjfr=n2{yfFs^{}[@n}~s/VzkVC
+47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU
 Finishing early:
-p1*O<C+PO-~GxYjfr=n2{yfFs^{}[@n}~s/VzkVC
-p1*O<C+PO-~GxYjfr=n2{yfFs^{}[@n}~s/VzkVC
+47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU
+47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU
 Hashed abcd in two turns:
-r}UgKOhRHU51n-{DdJXZ;zzhNN3O9PMMCGW82y+T+
+iNQmb9TmM40TuEX88olXnSCciXgjuSF9o-Fhk28DFYkE
 Repeat with 3 turns:
-r}UgKOhRHU51n-{DdJXZ;zzhNN3O9PMMCGW82y+T+
+iNQmb9TmM40TuEX88olXnSCciXgjuSF9o-Fhk28DFYkE

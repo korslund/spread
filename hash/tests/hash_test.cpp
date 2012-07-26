@@ -30,9 +30,11 @@ int main()
   cout << "From string:\n" << Hash("0123456789abcdef0123456789abcdef00112233445566778899aabbccddeeff8888888811111111") << endl;
 
   h.hash("abcd", 4);
-  cout << "abcd:\n" << h << endl;
-  h.fromString(h.toString());
-  cout << "to and from string:\n" << h << endl;
+  cout << "abcd:\n" << h.toString() << endl;
+  Hash h2;
+  h2.fromString(h.toString());
+  cout << "to and from string:\n" << h2 << endl;
+  assert(h == h2);
 
   cout << "\nHash of zero buffer:\n" << Hash(NULL,0) << endl;
   cout << "Finishing early:\n" << h.finish() << endl << h.finish() << endl;

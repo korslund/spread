@@ -5,7 +5,6 @@ using namespace Spread;
 #include "../libs/sha2/sha2.h"
 #include <string.h>
 #include <stdexcept>
-#include "../misc/comp85.hpp"
 
 void Hash::hash(const void *input, uint32_t len)
 {
@@ -108,62 +107,91 @@ static uint8_t dehex(const char *s)
   return (dehexDig(*s)<<4) | dehexDig(s[1]);
 }
 
-static void fail85(const std::string &msg)
+/* Base64 characters. Notice that we use an URL-friendly variant with
+   -_ at the end instead of +/. But our decoding routine supports both.
+ */
+static const char cb64[]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+
+// Converts 3 input bytes to 4 output characters
+void toBase(const uint8_t *in, char *out)
 {
-  throw std::runtime_error("Comp85 decode error: " + msg);
+  out[0] = cb64[ in[0] >> 2 ];
+  out[1] = cb64[ ((in[0] & 0x03) << 4) | ((in[1] & 0xf0) >> 4) ];
+  out[2] = cb64[ ((in[1] & 0x0f) << 2) | ((in[2] & 0xc0) >> 6) ];
+  out[3] = cb64[ in[2] & 0x3f ];
 }
 
-static Hash decode85(const std::string &hstr)
+// Decode character
+uint8_t bval(char c)
 {
-  Hash res;
+  if(c >= 'A' && c <= 'Z') return c-'A';
+  if(c >= 'a' && c <= 'z') return c-'a'+26;
+  if(c >= '0' && c <= '9') return c-'0'+52;
+  if(c == '-' || c == '+') return 62;
+  if(c == '/' || c == '_') return 63;
+  if(c == '=') return 0;
 
-  assert(hstr != "00");
-
-  int len = hstr.size();
-
-  // Check size
-  if(len < 40) fail85("Hash is too short");
-  if(len > 50) fail85("Hash is too long");
-
-  /* We don't accept trailing !s in the length, as this breaks
-     uniqueness. This is a SECURITY REQUIREMENT. See note in
-     decode85_value().
-  */
-  if(len > 40 && hstr[len-1] == '!')
-    fail85("Invalid trailing '!'");
-
-  // Full input buffer
-  char input[50];
-  memset(input, '!', 50);
-  hstr.copy(input, 50);
-
-  // Output binary buffer
-  char output[40];
-  len = Comp85::decode(input, 50, &output);
-  assert(len == 40);
-
-  res.copy(output);
-  assert(!res.isNull());
-
-  return res;
+  throw std::runtime_error(std::string("Invalid base64 character '") + c + "'");
 }
 
-static std::string encode85(const Hash &h)
+// Converts 4 input characters to 3 output bytes
+void fromBase(const char *in, uint8_t *out)
 {
-  if(h.isNull()) return "00";
+  uint8_t v0 = bval(in[0]);
+  uint8_t v1 = bval(in[1]);
+  uint8_t v2 = bval(in[2]);
+  uint8_t v3 = bval(in[3]);
+  out[0] = (v0 << 2) | ((v1 & 0x30) >> 4);
+  out[1] = ((v1 & 0x0f) << 4) | ((v2 & 0x3c) >> 2);
+  out[2] = ((v2 & 0x03) << 6) | v3;
+}
 
-  const char *ptr = (const char*)h.getData();
+static void decodeBase(const std::string &str, uint8_t *out)
+{
+  assert(str.size() <= 56);
 
-  char output[50];
+  int pos = 0;
+  int outleft = 40;
 
-  int len = Comp85::encode(ptr, 40, output);
-  assert(len == 50);
+  while(pos < str.size() && outleft > 0)
+    {
+      char buf[5] = "AAAA";
+      str.copy(buf, 4, pos);
 
-  // Trim away trailing ! chars from the length
-  while(len > 40 && output[len-1] == '!')
-    len--;
+      uint8_t obuf[3];
+      fromBase(buf, obuf);
 
-  return std::string(output, len);
+      if(outleft >= 3)
+        memcpy(out, obuf, 3);
+      else
+        memcpy(out, obuf, outleft);
+
+      outleft -= 3;
+      out += 3;
+      pos += 4;
+    }
+}
+
+std::string Hash::toBase64() const
+{
+  if(isNull()) return "00";
+
+  const uint8_t *ptr = data;
+
+  char output[56];
+
+  for(int i=0; i<13; i++)
+    toBase(ptr+i*3, output+i*4);
+  uint8_t last[3];
+  last[0] = ptr[39];
+  last[1] = last[2] = 0;
+  toBase(last, output+52);
+
+  // Trim trailing As
+  int end = 55;
+  while(output[end] == 'A' && end>0) end--;
+
+  return std::string(output, end+1);
 }
 
 std::string Hash::toHex() const
@@ -183,7 +211,7 @@ std::string Hash::toHex() const
 
 std::string Hash::toString() const
 {
-  return encode85(*this);
+  return toBase64();
 }
 
 void Hash::fromString(const std::string &str)
@@ -194,9 +222,9 @@ void Hash::fromString(const std::string &str)
   if(str == "00")
     return;
 
-  if(str.size() >= 40 && str.size() <= 50)
+  if(str.size() <= 56)
     {
-      *this = decode85(str);
+      decodeBase(str, data);
       return;
     }
 

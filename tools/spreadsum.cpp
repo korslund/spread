@@ -8,50 +8,6 @@
 using namespace std;
 using namespace Spread;
 
-static const char cb64[]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-
-void b64_encodeblock( unsigned char in[3], char out[4], int len )
-{
-    out[0] = cb64[ in[0] >> 2 ];
-    out[1] = cb64[ ((in[0] & 0x03) << 4) | ((in[1] & 0xf0) >> 4) ];
-    out[2] = (len > 1 ? cb64[ ((in[1] & 0x0f) << 2) | ((in[2] & 0xc0) >> 6) ] : '=');
-    out[3] = (len > 2 ? cb64[ in[2] & 0x3f ] : '=');
-}
-
-string base64(const void *input, int size)
-{
-  string res;
-
-  // We know how large the output will be.
-  res.reserve((4*size)/3 + 4);
-  const unsigned char *inp = (unsigned char*)input;
-
-  while(size)
-    {
-      unsigned char in[3];
-      int len = 0;
-      for(int i = 0; i < 3; i++ )
-        {
-          if(size)
-            {
-              in[i] = *(inp++);
-              size--;
-              len++;
-            }
-          else
-            in[i] = 0;
-        }
-
-      assert(len);
-
-      char out[4];
-      b64_encodeblock( in, out, len );
-      res.append(out, 4);
-    }
-
-  return res;
-}
-
 Hash hashStream(istream &inf)
 {
   vector<char> buf(1024);
@@ -91,10 +47,8 @@ int main(int argc, char**argv)
   /*
     0 = hex
     1 = base64
-    2 = compact85
    */
-  int format = 2;
-  bool use64 = false;
+  int format = 1;
 
   vector<string> files;
 
@@ -111,16 +65,13 @@ int main(int argc, char**argv)
         format = 1;
       else if(par == "-x")
         format = 0;
-      else if(par == "-a")
-        format = 2;
       else if(par == "--help")
         {
           cout << "spreadsum [options] <files>\n\n";
           cout << "  -j    Output in JSON format\n";
           cout << "  -c    Remove leading ./ from filenames\n";
           cout << "  -x    Output in hex format\n";
-          cout << "  -b    Output in base64 format\n";
-          cout << "  -z    Output in compact85 (default)\n";
+          cout << "  -b    Output in base64 format (default)\n";
           return 0;
         }
       else
@@ -151,8 +102,6 @@ int main(int argc, char**argv)
       if(format == 0)
         hstring = h.toHex();
       else if(format == 1)
-        hstring = base64(h.getData(), 40);
-      else if(format == 2)
         hstring = h.toString();
 
       if(json)
