@@ -3,6 +3,7 @@
 #include <map>
 #include <ctime>
 #include "misc/random.hpp"
+#include <boost/thread/recursive_mutex.hpp>
 
 using namespace Spread;
 
@@ -10,11 +11,14 @@ typedef boost::shared_ptr<URLRule> URLPtr;
 typedef std::vector<URLPtr> UVec;
 typedef std::map<Hash, UVec> UMap;
 
+#define LOCK boost::lock_guard<boost::recursive_mutex> lock(ptr->mutex)
+
 struct RuleSet::_RuleSetInternal
 {
   UMap urls;
 
   Misc::Random rnd;
+  boost::recursive_mutex mutex;
 
   // Returns an URL rule or NULL
   const Rule* findURL(const Hash &hash)
@@ -92,13 +96,10 @@ RuleSet::RuleSet()
   ptr.reset(new _RuleSetInternal);
 }
 
-const Directory *RuleSet::findDir(const Hash &hash) const
-{
-  return NULL;
-}
-
 const Rule *RuleSet::findRule(const Hash &hash) const
 {
+  LOCK;
+
   // Search URLs
   const Rule *rule = ptr->findURL(hash);
   if(rule) return rule;
@@ -112,11 +113,16 @@ void RuleSet::addURL(const Hash &hash, const std::string &url,
 {
   if(ruleString == "")
     ruleString = "URL " + hash.toString() + " " + url;
-  ptr->urls[hash].push_back(URLPtr(new URLRule(ruleString, url, priority, weight)));
+
+  LOCK;
+  ptr->urls[hash].push_back
+    (URLPtr(new URLRule(hash, ruleString, url, priority, weight)));
 }
 
 void RuleSet::reportBrokenURL(const Hash &hash, const std::string &url)
 {
+  LOCK;
+
   // Find all matching rules and disable them
   UMap::iterator it = ptr->urls.find(hash);
   if(it != ptr->urls.end())
@@ -131,9 +137,9 @@ void RuleSet::reportBrokenURL(const Hash &hash, const std::string &url)
         }
     }
 
-  /* TODO: use a callback to notify external systems. Remember to
-     update the function docs in the header when you do this.
-   */
+  // Invoke the callback to notify external systems about the broken
+  // URL.
+  if(callback) callback(hash, url);
 }
 
 const URLRule *RuleSet::getURL(const Rule *r)

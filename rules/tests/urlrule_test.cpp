@@ -60,8 +60,27 @@ void stats(const Hash &hash)
   cout << endl;
 }
 
+struct Callback
+{
+  int i;
+
+  void operator()(const Hash &hash, const std::string &url) const
+  {
+    cout << "  => Disabling " << h(hash) << " " << url
+         << " (i=" << i << ")\n";
+  }
+};
+
+void setCB()
+{
+  Callback cb;
+  cb.i = 13;
+  rules.setURLCallback(cb);
+}
+
 int main()
 {
+  setCB();
   test(hello);
   cout << "Adding rule:\n";
   rules.addURL(hello, "http://hello1.com");
