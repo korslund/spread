@@ -28,7 +28,7 @@ void InstallFinder::addDep(const Directory &dep, const std::string &reldir)
     }
 }
 
-void InstallFinder::handleDeps(const DepList &deps)
+void InstallFinder::handleDeps(const DepList &deps, ActionMap &output)
 {
   for(int i=0; i<deps.size(); i++)
     {
@@ -53,10 +53,14 @@ void InstallFinder::handleDeps(const DepList &deps)
 
       if(stat == Cache::CI_Match)
         {
-          // Add copy action with empty destination. This allows
-          // other tasks to look up the same action later and add
-          // multiple destinations.
-          output[hash] = Action("COPY from " + dest);
+          /* Add copy action with empty destination. This allows other
+             tasks to look up the same action later and add multiple
+             destinations.
+
+             If no other actions need this file, then the action is
+             ignored, which is OK since the file is already installed.
+          */
+          output[hash] = Action(dest);
           continue;
         }
 
@@ -69,7 +73,7 @@ void InstallFinder::handleDeps(const DepList &deps)
           if(existing != "")
             {
               // Yup, it exists. Add a copy operation.
-              output[hash] = Action("COPY from " + existing, dest);
+              output[hash] = Action(existing, dest);
               continue;
             }
         }
@@ -84,7 +88,7 @@ void InstallFinder::handleDeps(const DepList &deps)
           bool found = false;
 
           // Set up the output action
-          Action a("RULE", "", r);
+          Action a(r);
 
           // Loop through and add the action for all the hashes it
           // produces, not just the one we are looking for.
@@ -108,7 +112,7 @@ void InstallFinder::handleDeps(const DepList &deps)
             {
               const Hash &h = r->deps[k];
               subdeps.push_back(DepPair("",h));
-              handleDeps(subdeps);
+              handleDeps(subdeps, output);
             }
 
           /* TODO: Handle recursion. Recursion happens when a hash
@@ -119,7 +123,8 @@ void InstallFinder::handleDeps(const DepList &deps)
           continue;
         }
 
-      // There was no way to resolve this hash.
-      output[hash] = Action("UNHANDLED", dest);
+      // There was no way to resolve this hash. An empty copy action
+      // represents an unhandled dependency.
+      output[hash] = Action("", dest);
     }
 }

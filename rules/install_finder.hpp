@@ -5,9 +5,8 @@
 #include "cache/index.hpp"
 #include "hash/hash.hpp"
 #include "rulefinder.hpp"
+#include "actions.hpp"
 #include <vector>
-#include <set>
-#include <map>
 
 namespace Spread
 {
@@ -39,44 +38,25 @@ namespace Spread
        dependencies in 'deps' and converts it to a list of actions in
        'output'.
      */
-    void perform() { handleDeps(deps); }
-
-    struct Action
-    {
-      std::string action;
-      std::set<std::string> destlist;
-      const Rule *rule;
-
-      void addDest(const std::string &dest)
-      { if(dest != "") destlist.insert(dest); }
-
-      Action() : rule(NULL) {}
-      Action(const std::string &act, const std::string &dest = "", const Rule *r = NULL)
-        : action(act), rule(r) { addDest(dest); }
-    };
+    void perform(ActionMap &output) { handleDeps(deps, output); }
 
     typedef std::pair<std::string,Hash> DepPair;
     typedef std::vector<DepPair> DepList;
-    typedef std::map<Hash,Action> ActionMap;
 
     /* This is the struct's input data. You can set it up through the
        addDep functions above, or manually if you prefer. Then run
        perform() to produce the output.
 
-       Running perform() does not change the depslist. So to repeat
-       the process you can just .clear() the output and run it again.
+       Running perform() does not change the depslist, so the struct
+       is reusable.
      */
     DepList deps;
-
-    /* This is the output produced by perform().
-     */
-    ActionMap output;
 
   private:
     const RuleFinder &rules;
     Cache::CacheIndex &cache;
 
-    void handleDeps(const DepList &deps);
+    void handleDeps(const DepList &deps, ActionMap &output);
   };
 }
 #endif
