@@ -14,14 +14,6 @@
 
 namespace Spread
 {
-  // These are used for the Rule::type field on all produced rules
-  enum RuleSetTypes
-    {
-      RST_None          = 0,    // No/unknown rule type
-      RST_URL           = 1,    // URL rule
-      RST_Archive       = 2     // Archive / unpack rule
-    };
-
   /* Specific Rule sublclasses for the rule types known to RuleSet.
    */
   struct URLRule : Rule
@@ -54,6 +46,19 @@ namespace Spread
             const std::string &_url, int prio = 1, float wght = 1.0)
       : Rule(RST_URL, rulestr), url(_url), isBroken(false),
         priority(prio), weight(wght) { addOut(hash); }
+
+    // Get URLRule pointer from a Rule pointer
+    static const URLRule *get(const Rule *r);
+  };
+
+  struct ArcRuleData
+  {
+    Hash arcHash, dirHash;
+    std::string ruleString;
+
+    ArcRuleData(const Hash &arc, const Hash &dir,
+                const std::string &str)
+      : arcHash(arc), dirHash(dir), ruleString(str) {}
   };
 
   struct RuleSet : RuleFinder
@@ -62,20 +67,29 @@ namespace Spread
 
     /* Inherited from RuleFinder.
 
-       NOTE: Returned pointers are only valid for the lifetime of the
+       NOTE: Returned pointers are only valid for the lifetime of this
        RuleSet instance. Objects are deleted when RuleSet destructs.
      */
     const Rule *findRule(const Hash &hash) const;
-    const Directory *findDir(const Hash &hash) const { return NULL; }
 
-    /* Add an URL rule.
+    /* Add an URL rule. URL rules are directly searchable through
+       findRule().
     */
     void addURL(const Hash &hash, const std::string &url,
                 int priority = 1, float weight = 1.0,
                 std::string ruleString = "");
 
-    /* Decode and add rule string.
+    /* Add an archive rule. These are searchable through
+       findArchive()
+     */
+    void addArchive(const Hash &hash, const Hash &dirHash,
+                    std::string ruleString = "");
 
+    /* Search archive database.
+     */
+    const ArcRuleData *findArchive(const Hash &hash) const;
+
+    /* Decode and add rule string.
        Known formats:
 
        "URL <hash> <url> [priority] [weight]"
@@ -96,9 +110,6 @@ namespace Spread
        the server, or do other actions to correct the problem.
      */
     void reportBrokenURL(const Hash &hash, const std::string &url);
-
-    // Get URLRule pointer from a Rule pointer
-    static const URLRule *getURL(const Rule *r);
 
     // Set callback to handle broken URLs
     typedef boost::function< void(const Hash &hash, const std::string &url) > CBFunc;

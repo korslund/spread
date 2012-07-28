@@ -1,7 +1,6 @@
 #ifndef __SPREAD_INSTALL_FINDER_HPP_
 #define __SPREAD_INSTALL_FINDER_HPP_
 
-#include "dir/directory.hpp"
 #include "cache/index.hpp"
 #include "hash/hash.hpp"
 #include "rulefinder.hpp"
@@ -14,23 +13,14 @@ namespace Spread
   {
     InstallFinder(const RuleFinder &rules, Cache::CacheIndex &cache);
 
-    /* Add a directory of dependencies. Dependencies are the list of
-       files to be installed. The directory can either contain full
-       paths, or paths relative to reldir.
+    /* Add a dependency. A dependency is a request for a specific
+       object 'hash' to be installed in location 'file'.
 
-       Dependencies may overwrite the same location. It's always the
-       depdency that's added last that takes precedence. This can be
-       used intentionally to install eg. a game, and then a patch on
-       top of it.
+       Several dependencies may overwrite the same location. It's
+       always the one added last that takes effect. This can be used
+       intentionally to install eg. a game, and then a patch on top of
+       it.
      */
-    void addDep(const Directory &deps, const std::string &reldir = "");
-
-    /* Add a dependency by looking up a directory rule. The files
-       names in the directory are added relative to reldir.
-    */
-    void addDep(const Hash &hash, const std::string &reldir);
-
-    // Add a single dependency. Must be a full path name
     void addDep(const std::string &file, const Hash &hash)
     { deps.push_back(DepPair(file,hash)); }
 

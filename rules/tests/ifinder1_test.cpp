@@ -28,7 +28,6 @@ struct MyFinder : RuleFinder
     zipurl.ruleString = "URL for zipfile";
   }
 
-  const Directory *findDir(const Hash &hash) const { return NULL; }
   const Rule *findRule(const Hash &hash) const
   {
     if(hash == inzip1 || hash == inzip2)

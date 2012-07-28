@@ -30,7 +30,7 @@ set(DIR ${DDIR}/directory.cpp)
 set(CONF ${READJSON} ${MIDIR}/jconfig.cpp)
 set(CACHE ${CONF} ${HASH} ${CDIR}/index.cpp)
 
-set(RULES ${DIR} ${CACHE} ${RDIR}/install_finder.cpp ${RDIR}/ruleset.cpp)
+set(RULES ${DIR} ${CACHE} ${RDIR}/install_finder.cpp ${RDIR}/ruleset.cpp ${RDIR}/arcruleset.cpp)
 
 add_executable(ifinder1_test ifinder1_test.cpp ${RULES})
 target_link_libraries(ifinder1_test ${LIBS})
@@ -40,3 +40,9 @@ target_link_libraries(urlrule_test ${LIBS})
 
 add_executable(ifinder2_test ifinder2_test.cpp ${RULES})
 target_link_libraries(ifinder2_test ${LIBS})
+
+add_executable(arcrule1_test arcrule1_test.cpp ${RULES})
+target_link_libraries(arcrule1_test ${LIBS})
+
+add_executable(arcset1_test arcset1_test.cpp ${RULES})
+target_link_libraries(arcset1_test ${LIBS})

@@ -6,10 +6,17 @@
 
 namespace Spread
 {
+  // These values are used for the Rule::type field
+  enum RuleSetTypes
+    {
+      RST_None          = 0,    // No/unknown rule type
+      RST_URL           = 1,    // URL rule
+      RST_Archive       = 2     // Archive / unpack rule
+    };
+
   struct Rule
   {
-    // Rule type and description. Contents and meaning are defined by
-    // the specific RuleFinder implementation you are using.
+    // Rule type and description.
     int type;
     std::string ruleString;
 

@@ -7,27 +7,6 @@ using namespace Spread;
 InstallFinder::InstallFinder(const RuleFinder &_rules, Cache::CacheIndex &_cache)
   : rules(_rules), cache(_cache) {}
 
-void InstallFinder::addDep(const Hash &hash, const std::string &reldir)
-{
-  const Directory *dir = rules.findDir(hash);
-  if(dir) addDep(*dir, reldir);
-}
-
-void InstallFinder::addDep(const Directory &dep, const std::string &reldir)
-{
-  Directory::DirMap::const_iterator it;
-
-  boost::filesystem::path dir = reldir;
-
-  for(it = dep.dir.begin(); it != dep.dir.end(); it++)
-    {
-      std::string file = it->first;
-      if(reldir != "")
-        file = (dir/file).string();
-      addDep(file, it->second);
-    }
-}
-
 void InstallFinder::handleDeps(const DepList &deps, ActionMap &output)
 {
   for(int i=0; i<deps.size(); i++)

@@ -58,22 +58,5 @@ LPJNul-w - Rule found:
   Priority: 5
   Weight: 1
 
-Adding weights at p=6
-LPJNul-w - Rule found:
-  Rule: "URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF random10_1"
-  URL: random10_1
-  Priority: 6
-  Weight: 10
 
-random10_1  :    5009
-random10_2  :    4991
-
-Adding some more weights:
-random1     :    96
-random10_1  :    1021
-random10_2  :    996
-random18    :    1885
-random3     :    302
-random49    :    4833
-random9     :    867
-
+Add any parameter to include random tests.

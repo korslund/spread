@@ -1,24 +1,35 @@
 #include "ruleset.hpp"
 #include <vector>
 #include <map>
-#include <ctime>
 #include "misc/random.hpp"
 #include <boost/thread/recursive_mutex.hpp>
 
 using namespace Spread;
 
 typedef boost::shared_ptr<URLRule> URLPtr;
+typedef boost::shared_ptr<ArcRuleData> ArcPtr;
 typedef std::vector<URLPtr> UVec;
 typedef std::map<Hash, UVec> UMap;
+typedef std::map<Hash, ArcPtr> AMap;
 
 #define LOCK boost::lock_guard<boost::recursive_mutex> lock(ptr->mutex)
 
 struct RuleSet::_RuleSetInternal
 {
   UMap urls;
+  AMap arcs;
 
   Misc::Random rnd;
   boost::recursive_mutex mutex;
+
+  const ArcRuleData* findArc(const Hash &hash)
+  {
+    AMap::iterator it = arcs.find(hash);
+    if(it == arcs.end())
+      return NULL;
+
+    return it->second.get();
+  }
 
   // Returns an URL rule or NULL
   const Rule* findURL(const Hash &hash)
@@ -100,11 +111,27 @@ const Rule *RuleSet::findRule(const Hash &hash) const
 {
   LOCK;
 
-  // Search URLs
+  // Search URLs only
   const Rule *rule = ptr->findURL(hash);
   if(rule) return rule;
 
   return NULL;
+}
+
+const ArcRuleData *RuleSet::findArchive(const Hash &hash) const
+{
+  LOCK;
+  return ptr->findArc(hash);
+}
+
+void RuleSet::addArchive(const Hash &hash, const Hash &dirHash,
+                         std::string ruleString)
+{
+  if(ruleString == "")
+    ruleString = "ARC " + hash.toString() + " " + dirHash.toString();
+
+  LOCK;
+  ptr->arcs[hash] = ArcPtr(new ArcRuleData(hash, dirHash, ruleString));
 }
 
 void RuleSet::addURL(const Hash &hash, const std::string &url,
@@ -142,7 +169,7 @@ void RuleSet::reportBrokenURL(const Hash &hash, const std::string &url)
   if(callback) callback(hash, url);
 }
 
-const URLRule *RuleSet::getURL(const Rule *r)
+const URLRule *URLRule::get(const Rule *r)
 {
   assert(r->type == RST_URL);
   const URLRule *ur = dynamic_cast<const URLRule*>(r);

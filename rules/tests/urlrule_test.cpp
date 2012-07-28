@@ -1,6 +1,8 @@
 #include <iostream>
 #include "ruleset.hpp"
 
+#include <map>
+
 using namespace std;
 using namespace Spread;
 
@@ -32,7 +34,7 @@ void test(const Hash &hash)
       return;
     }
 
-  const URLRule *url = rules.getURL(r);
+  const URLRule *url = URLRule::get(r);
   assert(!url->isBroken);
 
   cout << "  URL: " << url->url
@@ -41,7 +43,6 @@ void test(const Hash &hash)
        << "\n\n";
 }
 
-
 typedef std::map<std::string,int> Hist;
 
 void stats(const Hash &hash)
@@ -49,7 +50,7 @@ void stats(const Hash &hash)
   Hist hst;
   for(int i=0; i<10000; i++)
     {
-      std::string url = rules.getURL(rules.findRule(hash))->url;
+      std::string url = URLRule::get(rules.findRule(hash))->url;
       hst[url]++;
     }
 
@@ -78,7 +79,7 @@ void setCB()
   rules.setURLCallback(cb);
 }
 
-int main()
+int main(int argc, char **argv)
 {
   setCB();
   test(hello);
@@ -111,6 +112,12 @@ int main()
   cout << "Disabling prio=10:\n";
   rules.reportBrokenURL(hello, "http://hello10.com");
   test(hello);
+
+  if(argc < 2)
+    {
+      cout << "\nAdd any parameter to include random tests.\n";
+      return 0;
+    }
 
   cout << "Adding weights at p=6\n";
   rules.addURL(hello, "random10_1", 6, 10);
