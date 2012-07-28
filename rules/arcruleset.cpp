@@ -1,4 +1,5 @@
 #include "arcruleset.hpp"
+#include "arcrule.hpp"
 #include <map>
 #include <assert.h>
 
@@ -20,14 +21,6 @@ struct ArcRuleSet::_Internal
     return it->second.get();
   }
 };
-
-const ArcRule *ArcRule::get(const Rule *r)
-{
-  assert(r->type == RST_Archive);
-  const ArcRule *ur = dynamic_cast<const ArcRule*>(r);
-  assert(ur != NULL);
-  return ur;
-}
 
 ArcRuleSet::ArcRuleSet(RuleFinder *_base)
   : base(_base)
@@ -52,16 +45,12 @@ void ArcRuleSet::addArchive(const Hash arcHash, const Directory *dir,
 {
   ArcPtr arcPtr(new ArcRule(arcHash, dir, ruleString));
 
-  /* Loop through all the hashes in the directory, and point each of
-     them to this archive.
+  /* Loop through all the output hashes, and add a lookup for each of
+     them pointing to this archive.
   */
-  Directory::DirMap::const_iterator it;
-  for(it = dir->dir.begin(); it != dir->dir.end(); it++)
+  for(int i=0; i<arcPtr->outputs.size(); i++)
     {
-      const Hash &fileHash = it->second;
+      const Hash &fileHash = arcPtr->outputs[i];
       ptr->files[fileHash] = arcPtr;
-
-      // Also add the output to the archive rule itself
-      arcPtr->addOut(fileHash);
     }
 }

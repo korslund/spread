@@ -1,4 +1,5 @@
 #include "ruleset.hpp"
+#include "urlrule.hpp"
 #include <vector>
 #include <map>
 #include "misc/random.hpp"
@@ -167,12 +168,4 @@ void RuleSet::reportBrokenURL(const Hash &hash, const std::string &url)
   // Invoke the callback to notify external systems about the broken
   // URL.
   if(callback) callback(hash, url);
-}
-
-const URLRule *URLRule::get(const Rule *r)
-{
-  assert(r->type == RST_URL);
-  const URLRule *ur = dynamic_cast<const URLRule*>(r);
-  assert(ur != NULL);
-  return ur;
 }

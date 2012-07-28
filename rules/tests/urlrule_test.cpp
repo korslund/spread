@@ -1,46 +1,15 @@
-#include <iostream>
+#include "common.cpp"
+
 #include "ruleset.hpp"
-
 #include <map>
-
-using namespace std;
-using namespace Spread;
 
 Hash hello("hello",5);
 Hash dolly("dolly",5);
 RuleSet rules;
 
-std::string h(const Hash &hash)
-{
-  return hash.toString().substr(0,8);
-}
-
 void test(const Hash &hash)
 {
-  cout << h(hash) << " - ";
-  const Rule *r = rules.findRule(hash);
-
-  if(!r)
-    {
-      cout << "NOT FOUND\n\n";
-      return;
-    }
-
-  cout << "Rule found:\n  Rule: \"" << r->ruleString << "\"\n";
-
-  if(r->type != RST_URL)
-    {
-      cout << "  Non-URL\n\n";
-      return;
-    }
-
-  const URLRule *url = URLRule::get(r);
-  assert(!url->isBroken);
-
-  cout << "  URL: " << url->url
-       << "\n  Priority: " << url->priority
-       << "\n  Weight: " << url->weight
-       << "\n\n";
+  test(hash, rules);
 }
 
 typedef std::map<std::string,int> Hist;

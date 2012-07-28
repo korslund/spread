@@ -22,19 +22,6 @@
 
 namespace Spread
 {
-  struct ArcRule : Rule
-  {
-    const Directory *dir;
-
-    ArcRule(const Hash &arc, const Directory *_dir,
-            const std::string &rulestr)
-      : Rule(RST_Archive, rulestr), dir(_dir)
-    { addDep(arc); }
-
-    // Get ArcRule pointer from a Rule pointer
-    static const ArcRule *get(const Rule *r);
-  };
-
   struct ArcRuleSet : RuleFinder
   {
     /* If base is specified, all failed searches in findRule() is

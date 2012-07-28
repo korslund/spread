@@ -1,8 +1,8 @@
 LPJNul-w - NOT FOUND
-
 Adding rule:
 LPJNul-w - Rule found:
   Rule: "URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF http://hello1.com"
+  => LPJNul-w
   URL: http://hello1.com
   Priority: 1
   Weight: 1
@@ -11,10 +11,10 @@ Disabling rule:
   => Disabling LPJNul-w http://hello1.com (i=13)
   => Disabling LPJNul-w doesn't exist (i=13)
 LPJNul-w - NOT FOUND
-
 Adding rule twice:
 LPJNul-w - Rule found:
   Rule: "URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF http://hello2.com"
+  => LPJNul-w
   URL: http://hello2.com
   Priority: 3
   Weight: 1
@@ -22,12 +22,14 @@ LPJNul-w - Rule found:
 Adding something else:
 LPJNul-w - Rule found:
   Rule: "URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF http://hello2.com"
+  => LPJNul-w
   URL: http://hello2.com
   Priority: 3
   Weight: 1
 
 z5uehbma - Rule found:
   Rule: "URL z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F DOLLY!"
+  => z5uehbma
   URL: DOLLY!
   Priority: 1
   Weight: 1
@@ -35,10 +37,10 @@ z5uehbma - Rule found:
 Disabling both:
   => Disabling LPJNul-w http://hello2.com (i=13)
 LPJNul-w - NOT FOUND
-
 Adding prio=5
 LPJNul-w - Rule found:
   Rule: "URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF http://hello5.com"
+  => LPJNul-w
   URL: http://hello5.com
   Priority: 5
   Weight: 1
@@ -46,6 +48,7 @@ LPJNul-w - Rule found:
 Adding prio=10
 LPJNul-w - Rule found:
   Rule: "URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF http://hello10.com"
+  => LPJNul-w
   URL: http://hello10.com
   Priority: 10
   Weight: 1
@@ -54,6 +57,7 @@ Disabling prio=10:
   => Disabling LPJNul-w http://hello10.com (i=13)
 LPJNul-w - Rule found:
   Rule: "URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF http://hello5.com"
+  => LPJNul-w
   URL: http://hello5.com
   Priority: 5
   Weight: 1
