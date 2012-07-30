@@ -21,6 +21,10 @@ namespace Spread
     /* Index used to look up the archive file. The string format is
        archive-type specific, so you should only supply an index
        created with makeIndex().
+
+       Don't worry if the index contains more files than you need to
+       extract. Files not requested with HashTask::addOutput() will
+       still be ignored.
      */
     HashMap index;
 

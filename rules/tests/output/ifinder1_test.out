@@ -7,7 +7,7 @@ Wci-t_e_9EMxWOlZu9jW2XFOHM8I-OIdAomk4XA0xXgF = YEAH!
 9VfWa-IYTB56akggQXlNjhZkwVcTA_k5AjBcLPF6u9sG = INZIP2
 nOYmHbSVYgh-BC4bhVen8JWujb124ib0UNBaY1UjMXkH = ZIPFILE
 
-Handled 9 input dependencies into 7 hashes:
+Handled 9 input dependencies into 7 hashes (OK=0):
 LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from hello.txt
   => _file1_hello
 SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF : UNHANDLED
@@ -24,7 +24,7 @@ z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : COPY from dolly.txt
   <= nOYmHbSVYgh-BC4bhVen8JWujb124ib0UNBaY1UjMXkH
   => _file5_inzip1
 
-Handled 9 input dependencies into 7 hashes:
+Handled 9 input dependencies into 7 hashes (OK=0):
 LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from hello.txt
   => _file1_hello
 SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF : UNHANDLED
@@ -41,7 +41,7 @@ z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : COPY from dolly.txt
   <= nOYmHbSVYgh-BC4bhVen8JWujb124ib0UNBaY1UjMXkH
   => _file5_inzip1
 
-Handled 9 input dependencies into 7 hashes:
+Handled 9 input dependencies into 7 hashes (OK=0):
 LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from hello.txt
   => _file1_hello
 SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF : COPY from world.txt

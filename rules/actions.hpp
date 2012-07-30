@@ -4,6 +4,7 @@
 #include "rule.hpp"
 #include <set>
 #include <map>
+#include <boost/shared_ptr.hpp>
 
 namespace Spread
 {
@@ -36,14 +37,14 @@ namespace Spread
        action, ie. there were no rules or sources found for this
        target.
     */
-    bool isNone() { return rule == NULL && source == ""; }
+    bool isNone() const { return rule == NULL && source == ""; }
 
     // True if this is a copy action, from 'source' to 'destlist'.
-    bool isCopy() { return rule == NULL && source != ""; }
+    bool isCopy() const { return rule == NULL && source != ""; }
 
     // True if this is a Rule action, using 'rule' to create
     // 'destlist'.
-    bool isRule() { return rule != NULL && source == ""; }
+    bool isRule() const { return rule != NULL && source == ""; }
 
     void addDest(const std::string &dest)
     { if(dest != "") destlist.insert(dest); }

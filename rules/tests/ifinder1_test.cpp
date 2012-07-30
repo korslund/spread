@@ -46,10 +46,10 @@ Cache::CacheIndex cache;
 void print(InstallFinder &inf)
 {
   ActionMap output;
-  inf.perform(output);
+  bool isOk = inf.perform(output);
 
   cout << "\nHandled " << inf.deps.size() << " input dependencies into "
-       << output.size() << " hashes:\n";
+       << output.size() << " hashes (OK=" << isOk << "):\n";
   ActionMap::iterator it;
   for(it = output.begin(); it != output.end(); it++)
     {

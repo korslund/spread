@@ -21,6 +21,7 @@ set(TDIR ${SPDIR}/tasks)
 set(JDIR ${SPDIR}/job)
 set(HDIR ${SPDIR}/hash)
 set(HTDIR ${SPDIR}/htasks)
+set(IDIR ${SPDIR}/install)
 
 set(UNPACK ${UDIR}/dirwriter.cpp ${UDIR}/base.cpp ${UDIR}/unpack_zip.cpp ${UDIR}/auto.cpp)
 set(JOB ${JDIR}/thread.cpp ${JDIR}/job.cpp)
@@ -35,16 +36,7 @@ set(MANGLE ${MDIR}/stream/clients/io_stream.cpp)
 set(JSON ${JS}/json_reader.cpp ${JS}/json_writer.cpp ${JS}/json_value.cpp)
 set(READJSON ${JSON} ${MANGLE} ${MIDIR}/readjson.cpp)
 
-set(SPL ${SLDIR}/sr0.cpp ${TASKS} ${READJSON} ${HASH})
+set(INST ${HTASKS} ${IDIR}/installer.cpp)
 
-add_executable(hashtask_test hashtask_test.cpp ${HTASKS})
-target_link_libraries(hashtask_test ${LIBS})
-
-add_executable(unpack_test unpack_test.cpp ${HTASKS})
-target_link_libraries(unpack_test ${LIBS})
-
-add_executable(dl_test dl_test.cpp ${HTASKS})
-target_link_libraries(dl_test ${LIBS})
-
-add_executable(copy_test copy_test.cpp ${HTASKS})
-target_link_libraries(copy_test ${LIBS})
+add_executable(inst1_test inst1_test.cpp ${INST})
+target_link_libraries(inst1_test ${LIBS})

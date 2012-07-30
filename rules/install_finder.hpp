@@ -27,8 +27,11 @@ namespace Spread
     /* Perform the rule resolution. Takes the list of input
        dependencies in 'deps' and converts it to a list of actions in
        'output'.
+
+       Returns true on success, or false if the output contains unmet
+       dependencies.
      */
-    void perform(ActionMap &output) { handleDeps(deps, output); }
+    bool perform(ActionMap &output) { return handleDeps(deps, output); }
 
     typedef std::pair<std::string,Hash> DepPair;
     typedef std::vector<DepPair> DepList;
@@ -45,8 +48,7 @@ namespace Spread
   private:
     const RuleFinder &rules;
     Cache::CacheIndex &cache;
-
-    void handleDeps(const DepList &deps, ActionMap &output);
+    bool handleDeps(const DepList &deps, ActionMap &output);
   };
 }
 #endif

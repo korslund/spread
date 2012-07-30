@@ -1,4 +1,5 @@
 #include "install_finder.hpp"
+#include <assert.h>
 #include <boost/filesystem.hpp>
 #include <set>
 
@@ -7,8 +8,10 @@ using namespace Spread;
 InstallFinder::InstallFinder(const RuleFinder &_rules, Cache::CacheIndex &_cache)
   : rules(_rules), cache(_cache) {}
 
-void InstallFinder::handleDeps(const DepList &deps, ActionMap &output)
+bool InstallFinder::handleDeps(const DepList &deps, ActionMap &output)
 {
+  bool isOk = true;
+
   for(int i=0; i<deps.size(); i++)
     {
       const std::string &dest = deps[i].first;
@@ -91,7 +94,8 @@ void InstallFinder::handleDeps(const DepList &deps, ActionMap &output)
             {
               const Hash &h = r->deps[k];
               subdeps.push_back(DepPair("",h));
-              handleDeps(subdeps, output);
+              if(!handleDeps(subdeps, output))
+                isOk = false;
             }
 
           /* TODO: Handle recursion. Recursion happens when a hash
@@ -105,5 +109,7 @@ void InstallFinder::handleDeps(const DepList &deps, ActionMap &output)
       // There was no way to resolve this hash. An empty copy action
       // represents an unhandled dependency.
       output[hash] = Action("", dest);
+      isOk = false;
     }
+  return isOk;
 }

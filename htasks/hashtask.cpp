@@ -99,11 +99,10 @@ void HashTask::finish()
   // TODO: Fix some more informative error reporting. Child classes
   // are bound to have more useful info about what went wrong.
 
-  if(!ptr->info->isFinished())
-    fail("Working thread did not finish: " + ptr->info->message);
+  assert(ptr->info->isFinished());
 
   if(!ptr->info->isSuccess())
-    fail("Task failed: " + ptr->info->message);
+    fail(ptr->info->message);
 
   // Make sure the last stream was closed
   assert(!ptr->curStream);

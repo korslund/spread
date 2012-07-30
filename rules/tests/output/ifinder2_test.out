@@ -2,20 +2,20 @@ Hashes:
 LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF = HELLO
 z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F = DOLLY
 
-Handled 2 input dependencies into 2 hashes:
+Handled 2 input dependencies into 2 hashes (OK=0):
 LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : UNHANDLED
   => _file1_hello
 z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : UNHANDLED
   => _file2_dolly
 Broken URL arne
 
-Handled 2 input dependencies into 2 hashes:
+Handled 2 input dependencies into 2 hashes (OK=0):
 LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF hello-url
   => _file1_hello
 z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : UNHANDLED
   => _file2_dolly
 
-Handled 2 input dependencies into 2 hashes:
+Handled 2 input dependencies into 2 hashes (OK=1):
 LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from hello.txt
   => _file1_hello
 z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : URL z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F dolly-url
@@ -23,14 +23,14 @@ z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : URL z5uehbmaSdLx6w2YGCXGTwadrwpgx
 Broken URL hello-url
 Broken URL dolly-url
 
-Handled 2 input dependencies into 2 hashes:
+Handled 2 input dependencies into 2 hashes (OK=1):
 LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from hello.txt
   => _file1_hello
 z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : URL z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F dolly-url
   => _file2_dolly
 Broken URL dolly-url
 
-Handled 2 input dependencies into 2 hashes:
+Handled 2 input dependencies into 2 hashes (OK=0):
 LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from hello.txt
   => _file1_hello
 z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : UNHANDLED

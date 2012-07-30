@@ -270,7 +270,7 @@ Hash CacheIndex::addFile(const std::string &where, const Hash &h)
 
   Hash hash = h;
   if(hash.isNull())
-    // No hash provided. Hash the file ourself.
+    // No hash provided. Hash the file ourselves.
     hash = HashStream::sum(where);
   assert(!hash.isNull());
   ptr->add(where, hash, time);
