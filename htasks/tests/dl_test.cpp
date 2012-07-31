@@ -3,6 +3,7 @@
 #include <iostream>
 using namespace std;
 using namespace Spread;
+using namespace Jobify;
 
 int main()
 {
@@ -15,7 +16,8 @@ int main()
   dl.url = url;
   dl.addOutput(hash, "_robots.txt");
   dl.addOutput(hash, "_robots2.txt");
-  dl.run(false);
+  JobInfoPtr info = dl.run(false);
+  cout << info->getCurrent() << "/" << info->getTotal() << endl;
 
   return 0;
 }

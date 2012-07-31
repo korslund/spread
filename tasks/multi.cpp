@@ -11,7 +11,7 @@ MultiTask::~MultiTask()
 {
   JList::iterator it;
   for(it = joblist.begin(); it != joblist.end(); ++it)
-    delete *it;
+    delete it->first;
 }
 
 /* Internal JobInfo that has a client pointer. It fetches update
@@ -24,23 +24,23 @@ MultiTask::~MultiTask()
  */
 struct MultiInfo : JobInfo
 {
-  Jobify::JobInfoPtr client;
+  Jobify::JobInfoPtr abortInfo, statsInfo;
 
   void abort()
   {
     doAbort = true;
-    if(client) client->abort();
+    if(abortInfo) abortInfo->abort();
   }
 
   int64_t getCurrent()
   {
-    if(client) current = client->getCurrent();
+    if(statsInfo) current = statsInfo->getCurrent();
     return current;
   }
 
   int64_t getTotal()
   {
-    if(client) total = client->getTotal();
+    if(statsInfo) total = statsInfo->getTotal();
     return total;
   }
 };
@@ -59,9 +59,15 @@ void MultiTask::doJob()
   JList::iterator it;
   for(it = joblist.begin(); it != joblist.end(); ++it)
     {
-      Job &j = **it;
+      Job &j = *it->first;
+      bool useInfo = it->second;
       JobInfoPtr client = j.getInfo();
-      if(inf) inf->client = client;
+      if(inf)
+        {
+          inf->abortInfo = client;
+          if(useInfo)
+            inf->statsInfo = client;
+        }
       j.run();
 
       // Abort on failure

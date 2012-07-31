@@ -75,8 +75,11 @@ JobInfoPtr HashTask::run(bool async)
      while the JobInfo status is still marked as 'busy'. This is
      essential, otherwise finish() might get called before the last
      closeStream() has finished.
+
+     The second 'false' parameter to MultiTask::add() prevents
+     CloseTask from messing up the job progress numbers.
    */
-  j->add(new CloseTask(this));
+  j->add(new CloseTask(this), false);
 
   assert(!ptr->info);
   ptr->info = j->getInfo();

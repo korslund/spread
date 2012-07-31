@@ -90,5 +90,25 @@ int main()
     testStatus(mult);
   }
 
+  {
+    cout << "\nSetting useInfo=false on some jobs:\n";
+    MultiTask mult;
+    testStatus(mult);
+    mult.add(new Dummy(10));
+    mult.add(new Dummy(20), false);
+    mult.run();
+    testStatus(mult);
+  }
+
+  {
+    cout << "\nSetting useInfo=false on ALL jobs:\n";
+    MultiTask mult;
+    testStatus(mult);
+    mult.add(new Dummy(10), false);
+    mult.add(new Dummy(20), false);
+    mult.run();
+    testStatus(mult);
+  }
+
   return 0;
 }

@@ -44,3 +44,15 @@ Not started yet!  - progress 0/0
 3
 4
 Success!  - progress 0/0
+
+Setting useInfo=false on some jobs:
+Not started yet!  - progress 0/0
+10
+20
+Success!  - progress 10/10
+
+Setting useInfo=false on ALL jobs:
+Not started yet!  - progress 0/0
+10
+20
+Success!  - progress 0/0

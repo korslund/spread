@@ -32,11 +32,11 @@ Failed download:
 Broken url: http://tiggit.net/robots.txt
 Broken url: hello-BACKUP-URL
 ERROR: status=Error fetching hello-BACKUP-URL:
-Couldn't resolve host name progress=0/0
+Couldn't resolve host name progress=35/35
 
 Successful download:
 Created: N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj  -  _robots.txt
-DONE: status=Installing progress=0/0
+DONE: status=Installing progress=35/35
 
 Empty:
 DONE: status=Installing progress=0/0
@@ -44,10 +44,10 @@ DONE: status=Installing progress=0/0
 File inside zip:
 Created: ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ  -  _testsh.out
 Created: ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ  -  _testsh2.out
-DONE: status=Installing progress=0/0
+DONE: status=Installing progress=479/479
 
 Zip inside zip:
 Created: bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ  -  _tmp_hashes/bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ
 Created: ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ  -  _testsh.out
 Created: ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ  -  _testsh2.out
-DONE: status=Installing progress=0/0
+DONE: status=Installing progress=899/899

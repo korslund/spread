@@ -42,7 +42,16 @@ namespace Tasks
     MultiTask(Jobify::JobInfoPtr info = Jobify::JobInfoPtr());
     ~MultiTask();
 
-    void add(Jobify::Job *j) { joblist.push_back(j); }
+    /* Add a job. If useInfo=false, we do NOT use the jobInfo of this
+       task for progress statistics. This is useful if you're adding a
+       small cleanup task after the main task, and don't want it to
+       reset the progress reports (info->getCurrent/Total()) from the
+       main task.
+
+       useInfo only affects the progress part of the JobInfo struct.
+       Aborts will still be passed through to the client job.
+    */
+    void add(Jobify::Job *j, bool useInfo=true) { joblist.push_back(JPair(j,useInfo)); }
 
     static Jobify::JobInfoPtr makeInfo();
 
@@ -50,7 +59,8 @@ namespace Tasks
     void doJob();
 
   private:
-    typedef std::list<Jobify::Job*> JList;
+    typedef std::pair<Jobify::Job*, bool> JPair;
+    typedef std::list<JPair> JList;
     JList joblist;
   };
 }
