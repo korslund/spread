@@ -9,7 +9,9 @@
 
    I just needed something stupidly simple that is NOT rand()/srand()
    (for thread safety) and which doesn't depend on Boost or TR1 or
-   complicated dependencies. This is mostly just used to pick between
+   complicated dependencies.
+
+   This is mostly just used for minor tasks like picking between
    weighted URL sources, so we REALLY don't need anything good here.
  */
 namespace Misc

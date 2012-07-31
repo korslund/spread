@@ -13,6 +13,14 @@ namespace Cache
   {
     CacheIndex index;
 
+    // Not our final solution, just a quick fix.
+    std::string tmpDir;
+
+    std::string createTmpFilename(const Spread::Hash &h)
+    {
+      return tmpDir + "/" + h.toString();
+    }
+
     // Load a directory object
     Spread::DirectoryCPtr loadDir(const Spread::Hash &hash)
     {

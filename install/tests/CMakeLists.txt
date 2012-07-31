@@ -45,11 +45,16 @@ set(CACHE ${CONF} ${HASH} ${CDIR}/index.cpp)
 
 set(RULES ${DIR} ${CACHE} ${RDIR}/install_finder.cpp ${RDIR}/ruleset.cpp ${RDIR}/arcruleset.cpp)
 
-set(INST ${HTASKS} ${IDIR}/action_installer.cpp)
-set(BUILD ${RULES} ${IDIR}/build_actions.cpp)
+set(ACTINST ${HTASKS} ${IDIR}/action_installer.cpp)
+set(ACTBUILD ${RULES} ${IDIR}/build_actions.cpp)
 
-add_executable(inst1_test inst1_test.cpp ${INST})
+set(INSTALL ${ACTINST} ${ACTBUILD} ${IDIR}/installer.cpp)
+
+add_executable(inst1_test inst1_test.cpp ${ACTINST})
 target_link_libraries(inst1_test ${LIBS})
 
-add_executable(build_test build_test.cpp ${BUILD})
+add_executable(build_test build_test.cpp ${ACTBUILD})
 target_link_libraries(build_test ${LIBS})
+
+add_executable(full_test full_test.cpp ${INSTALL})
+target_link_libraries(full_test ${LIBS})

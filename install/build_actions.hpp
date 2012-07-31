@@ -20,7 +20,7 @@ namespace Spread
   struct ActionBuilder
   {
     ActionBuilder(Cache::Cache &_cache, RuleSet &_rules,
-                  std::string _prefix = "")
+                  const std::string &_prefix = "")
       : cache(_cache), rules(_rules), arcs(&rules), prefix(_prefix)
     {}
 

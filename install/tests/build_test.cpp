@@ -1,7 +1,5 @@
 #include "build_actions.hpp"
 #include <iostream>
-#include "rules/urlrule.hpp"
-#include "rules/arcrule.hpp"
 
 using namespace std;
 using namespace Spread;
