@@ -1,4 +1,4 @@
-#include "installer.hpp"
+#include "action_installer.hpp"
 #include "rules/urlrule.hpp"
 #include "rules/arcrule.hpp"
 #include "job/thread.hpp"
@@ -39,7 +39,7 @@ struct Target
   Hash hash;
   const Action *action;
   std::string url; // For download actions only
-  const Directory *dir; // For unpack actions only
+  DirectoryCPtr dir; // For unpack actions only
 
   int type, status;
 
@@ -137,7 +137,7 @@ struct Target
       {
         UnpackHash *uh = new UnpackHash;
         htask.reset(uh);
-        assert(dir != NULL);
+        assert(dir);
         uh->index = dir->dir;
       }
     else assert(0);

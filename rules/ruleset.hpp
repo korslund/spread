@@ -48,7 +48,8 @@ namespace Spread
     void addArchive(const Hash &hash, const Hash &dirHash,
                     std::string ruleString = "");
 
-    /* Search archive database.
+    /* Search archive database. Will return archives that matches
+       EITHER the archive hash or the dir hash.
      */
     const ArcRuleData *findArchive(const Hash &hash) const;
 

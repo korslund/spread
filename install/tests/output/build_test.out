@@ -1,0 +1,145 @@
+
+Empty builder:
+Got 0 actions:
+
+Request non-existing file:
+CAUGHT: Don't know how to satisfy the following dependencies:
+  LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
+    output.dat
+
+Request existing file:
+Got 1 actions:
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from hello.txt
+  => prefix/output.dat
+
+Adding non-existing dir:
+CAUGHT: Directory not found: b0pJQX7I8U2_IpfK3fsppNT10LS9Q09C2FchwEYXuJFy
+
+Add hint but not archive:
+CAUGHT: Don't know how to satisfy the following dependencies:
+  ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ
+    some/dir/test.sh
+
+Add archive but not hint:
+CAUGHT: Don't know how to satisfy the following dependencies:
+  ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ
+    some/dir/test.sh
+
+Both archive and hint, but no loadable dir:
+CAUGHT: Don't know how to satisfy the following dependencies:
+  ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ
+    some/dir/test.sh
+
+WITH loadable dir:
+CAUGHT: Don't know how to satisfy the following dependencies:
+  bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ
+
+Full working case:
+Got 2 actions:
+bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ : COPY from testsh.zip
+ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ : ZIP1
+  <= bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ
+  => some/dir/test.sh
+
+Implicit hinting through addDir:
+Got 2 actions:
+bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ : COPY from testsh.zip
+ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ : ZIP1
+  <= bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ
+  => out/test.sh
+
+Three files from different sources, one missing:
+CAUGHT: Don't know how to satisfy the following dependencies:
+  SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF
+    out/dir/world.out
+
+Three files from different sources, all present:
+Got 4 actions:
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from hello.txt
+  => out/hello.out
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF : URL SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF http://world-url.com/
+  => out/dir/world.out
+bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ : COPY from testsh.zip
+ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ : ZIP1
+  <= bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ
+  => out/test.sh
+
+Overwriting existing file with wrong data:
+CAUGHT: Don't know how to satisfy the following dependencies:
+  LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
+    test.sh
+
+Overwriting existing file with right data:
+Got 1 actions:
+ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ : COPY from test.sh
+
+Unzipping two zips into one dir:
+Got 5 actions:
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : TESTDIR ZIP
+  <= UXWlJa1SLdf0UcJTqiM8dKWxKOORKX_GlpRhnnT2TOlMAQ
+  => out/hello.out
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF : TESTDIR ZIP
+  <= UXWlJa1SLdf0UcJTqiM8dKWxKOORKX_GlpRhnnT2TOlMAQ
+  => out/dir/world.out
+UXWlJa1SLdf0UcJTqiM8dKWxKOORKX_GlpRhnnT2TOlMAQ : COPY from testdir.zip
+bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ : URL bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ zip1URL
+ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ : TESTSH ZIP
+  <= bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ
+  => out/test.sh
+
+Hinting to two zips (no actual deps):
+Got 0 actions:
+
+Adding stand-alone files from two zips:
+Got 5 actions:
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : TESTDIR ZIP
+  <= UXWlJa1SLdf0UcJTqiM8dKWxKOORKX_GlpRhnnT2TOlMAQ
+  => file_hello
+  => file_hello_again
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF : TESTDIR ZIP
+  <= UXWlJa1SLdf0UcJTqiM8dKWxKOORKX_GlpRhnnT2TOlMAQ
+  => file_world
+UXWlJa1SLdf0UcJTqiM8dKWxKOORKX_GlpRhnnT2TOlMAQ : COPY from testdir.zip
+bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ : URL bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ zip1URL
+ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ : TESTSH ZIP
+  <= bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ
+  => file_testsh
+
+Zip in zip, hinting at inner zip:
+CAUGHT: Don't know how to satisfy the following dependencies:
+  bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ
+
+Zip in zip, hinting at outer zip:
+CAUGHT: Don't know how to satisfy the following dependencies:
+  ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ
+    testsh_output
+
+Zip in zip, hinting at both zips:
+Got 3 actions:
+RKEFhXsBxTYXmQt4oMxU_RQk_t7F0Oj8RMGALSJKh6UfAg : COPY from zipzip.zip
+bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ : ZIPZIP
+  <= RKEFhXsBxTYXmQt4oMxU_RQk_t7F0Oj8RMGALSJKh6UfAg
+ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ : ZIP
+  <= bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ
+  => testsh_output
+
+All URLs present:
+Got 1 actions:
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF url 4
+  => output.hello
+
+Disabled url 4:
+Got 1 actions:
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF url 3 10
+  => output.hello
+
+Disabled the other url also:
+Got 1 actions:
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF url default
+  => output.hello
+
+Disabled everything:
+CAUGHT: Don't know how to satisfy the following dependencies:
+  LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
+    output.hello
+

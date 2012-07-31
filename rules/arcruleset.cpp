@@ -40,7 +40,7 @@ const Rule *ArcRuleSet::findRule(const Hash &hash) const
   return NULL;
 }
 
-void ArcRuleSet::addArchive(const Hash arcHash, const Directory *dir,
+void ArcRuleSet::addArchive(const Hash arcHash, DirectoryCPtr dir,
                             const std::string &ruleString)
 {
   ArcPtr arcPtr(new ArcRule(arcHash, dir, ruleString));

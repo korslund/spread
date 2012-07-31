@@ -13,6 +13,9 @@ typedef std::vector<URLPtr> UVec;
 typedef std::map<Hash, UVec> UMap;
 typedef std::map<Hash, ArcPtr> AMap;
 
+#include <iostream>
+using namespace std;
+
 #define LOCK boost::lock_guard<boost::recursive_mutex> lock(ptr->mutex)
 
 struct RuleSet::_RuleSetInternal
@@ -45,7 +48,8 @@ struct RuleSet::_RuleSetInternal
       return NULL;
 
     // First, build a list of rules with the highest priority
-    int prio = vec[0]->priority;
+    int prio;
+    bool prioFirst = true;
     std::vector<int> indices;
     double sum = 0;
 
@@ -56,8 +60,14 @@ struct RuleSet::_RuleSetInternal
         // Skip disabled rules
         if(r.isBroken) continue;
 
+        if(prioFirst)
+          {
+            prio = r.priority;
+            prioFirst = false;
+          }
+
         // Drop all previous results if this has a higher priority
-        if(r.priority > prio)
+        else if(r.priority > prio)
           {
             indices.clear();
             prio = r.priority;
@@ -132,7 +142,12 @@ void RuleSet::addArchive(const Hash &hash, const Hash &dirHash,
     ruleString = "ARC " + hash.toString() + " " + dirHash.toString();
 
   LOCK;
-  ptr->arcs[hash] = ArcPtr(new ArcRuleData(hash, dirHash, ruleString));
+  ArcPtr data(new ArcRuleData(hash, dirHash, ruleString));
+
+  // Make the archive retrievable both through the archive hash and
+  // the dir hash.
+  ptr->arcs[hash] = data;
+  ptr->arcs[dirHash] = data;
 }
 
 void RuleSet::addURL(const Hash &hash, const std::string &url,

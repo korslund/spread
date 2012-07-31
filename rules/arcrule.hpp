@@ -10,9 +10,9 @@ namespace Spread
   // Archive rule
   struct ArcRule : Rule
   {
-    const Directory *dir;
+    DirectoryCPtr dir;
 
-    ArcRule(const Hash &arc, const Directory *_dir,
+    ArcRule(const Hash &arc, DirectoryCPtr _dir,
             const std::string &rulestr)
       : Rule(RST_Archive, rulestr), dir(_dir)
     {

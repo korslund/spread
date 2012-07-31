@@ -1,4 +1,4 @@
-#include "installer.hpp"
+#include "action_installer.hpp"
 #include <iostream>
 #include "rules/urlrule.hpp"
 #include "rules/arcrule.hpp"
@@ -98,16 +98,16 @@ int main()
   dum.acts[zipfile] = Action("testsh.zip");
   test(dum);
 
-  Directory dir;
-  dir.dir["test.sh"] = testsh;
-  ArcRule ziprule(zipfile, &dir, "test zip");
+  DirectoryPtr dir(new Directory);
+  dir->dir["test.sh"] = testsh;
+  ArcRule ziprule(zipfile, dir, "test zip");
   dum.acts[testsh] = Action(&ziprule, "_testsh.out");
   dum.acts[testsh].addDest("_testsh2.out");
   test(dum, "File inside zip");
 
-  Directory dir2;
-  dir2.dir["testsh.zip"] = zipfile;
-  ArcRule ziprule2(zipzip, &dir2, "zip inside zip");
+  DirectoryPtr dir2(new Directory);
+  dir2->dir["testsh.zip"] = zipfile;
+  ArcRule ziprule2(zipzip, dir2, "zip inside zip");
   dum.acts[zipzip] = Action("zipzip.zip");
   dum.acts[zipfile] = Action(&ziprule2);
   test(dum, "Zip inside zip");

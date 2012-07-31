@@ -6,6 +6,7 @@
 #include <json/json.h>
 #include "hash/hash.hpp"
 #include <mangle/stream/stream.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace Spread
 {
@@ -31,6 +32,8 @@ namespace Spread
     // Find a member entry. Returns a null hash if not found.
     const Hash &find(const std::string &name) const;
   };
-}
 
+  typedef boost::shared_ptr<Directory> DirectoryPtr;
+  typedef boost::shared_ptr<const Directory> DirectoryCPtr;
+}
 #endif

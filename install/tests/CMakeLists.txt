@@ -22,13 +22,16 @@ set(JDIR ${SPDIR}/job)
 set(HDIR ${SPDIR}/hash)
 set(HTDIR ${SPDIR}/htasks)
 set(IDIR ${SPDIR}/install)
+set(DDIR ${SPDIR}/dir)
+set(RDIR ${SPDIR}/rules)
+set(CDIR ${SPDIR}/cache)
 
 set(UNPACK ${UDIR}/dirwriter.cpp ${UDIR}/base.cpp ${UDIR}/unpack_zip.cpp ${UDIR}/auto.cpp)
 set(JOB ${JDIR}/thread.cpp ${JDIR}/job.cpp)
 set(TASKS ${TDIR}/unpack.cpp ${TDIR}/curl.cpp ${TDIR}/download.cpp ${TDIR}/install.cpp ${TDIR}/multi.cpp ${TDIR}/fileop.cpp ${TDIR}/dircopy.cpp ${TDIR}/notify.cpp ${TDIR} ${JOB} ${UNPACK})
 
 set(C85 ${MIDIR}/comp85.cpp)
-set(HASH ${HDIR}/hash.cpp ${LIBDIR}/sha2/sha2.c ${C85})
+set(HASH ${HDIR}/hash.cpp ${LIBDIR}/sha2/sha2.c)
 
 set(HTASKS ${HASH} ${TASKS} ${HTDIR}/hashtask.cpp ${HTDIR}/unpackhash.cpp ${HTDIR}/downloadhash.cpp ${HTDIR}/copyhash.cpp)
 
@@ -36,7 +39,17 @@ set(MANGLE ${MDIR}/stream/clients/io_stream.cpp)
 set(JSON ${JS}/json_reader.cpp ${JS}/json_writer.cpp ${JS}/json_value.cpp)
 set(READJSON ${JSON} ${MANGLE} ${MIDIR}/readjson.cpp)
 
-set(INST ${HTASKS} ${IDIR}/installer.cpp)
+set(DIR ${DDIR}/directory.cpp)
+set(CONF ${READJSON} ${MIDIR}/jconfig.cpp ${C85})
+set(CACHE ${CONF} ${HASH} ${CDIR}/index.cpp)
+
+set(RULES ${DIR} ${CACHE} ${RDIR}/install_finder.cpp ${RDIR}/ruleset.cpp ${RDIR}/arcruleset.cpp)
+
+set(INST ${HTASKS} ${IDIR}/action_installer.cpp)
+set(BUILD ${RULES} ${IDIR}/build_actions.cpp)
 
 add_executable(inst1_test inst1_test.cpp ${INST})
 target_link_libraries(inst1_test ${LIBS})
+
+add_executable(build_test build_test.cpp ${BUILD})
+target_link_libraries(build_test ${LIBS})
