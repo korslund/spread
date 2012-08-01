@@ -9,7 +9,7 @@ Hash world("world", 5);
 Hash testsh("ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ");
 Hash zipfile("bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ");
 Hash zipzip("RKEFhXsBxTYXmQt4oMxU_RQk_t7F0Oj8RMGALSJKh6UfAg");
-Hash testzip("UXWlJa1SLdf0UcJTqiM8dKWxKOORKX_GlpRhnnT2TOlMAQ");
+Hash testzip("HjZUnmXcFYkS8mTsovU-oVKEdKoGbF7Ga3NlNWYX6spMAQ");
 
 DirectoryPtr testDir, zipDir, zipzipDir;
 

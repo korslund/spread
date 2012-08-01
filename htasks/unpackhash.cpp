@@ -3,6 +3,7 @@
 #include <mangle/vfs/stream_factory.hpp>
 #include <mangle/stream/servers/null_stream.hpp>
 #include "hash/hash_stream.hpp"
+#include <boost/filesystem.hpp>
 #include <stdexcept>
 
 using namespace Spread;
@@ -10,15 +11,18 @@ using namespace Jobify;
 using namespace Tasks;
 using namespace Mangle::Stream;
 
-/* This output writer is used for indexing. It swallows data and
-   filenames, and stores the names + hashes in an index.
+/* This output writer is used for indexing. It stores names + hashes
+   in an index, and can optionally write data to files.
  */
+
 struct UH_ListHasher : Mangle::VFS::StreamFactory
 {
   UnpackHash::HashMap *index;
 
   HashStreamPtr stream;
   std::string lastName;
+  bool lastDir;
+  std::string where;
 
   // This follows the same close-then-open mechanics as
   // getOutStream()/closeStream() in HashTask.
@@ -28,33 +32,52 @@ struct UH_ListHasher : Mangle::VFS::StreamFactory
     if(stream)
       {
         // Ignore directories
-        char ch = 0;
-        if(lastName.size()) ch = lastName[lastName.size()-1];
-        if(ch != '/' && ch != '\\')
+        if(!lastDir)
           (*index)[lastName] = stream->finish();
       }
-    else
-      stream.reset(new HashStream(StreamPtr(new NullStream)));
 
-    // Use this after the last stream has finished
-    if(name == "")
-      return StreamPtr();
+    // Allow an empty name to close the last file (above) without
+    // opening a new one here.
+    if(name == "") return StreamPtr();
 
+    // Is this a directory?
+    char ch = name[name.size()-1];
+    lastDir = (ch == '/' || ch == '\\');
     lastName = name;
+
+    if(where == "")
+      {
+        if(!stream)
+          stream.reset(new HashStream(StreamPtr(new NullStream)));
+      }
+    else
+      {
+        stream.reset();
+        if(!lastDir)
+          {
+            using namespace boost::filesystem;
+            path file = where;
+            file /= name;
+            create_directories(file.parent_path());
+            stream.reset(new HashStream(file.string(), true));
+          }
+      }
+
     return stream;
   }
 };
 
-void UnpackHash::makeIndex(const std::string &arcFile,
-                           HashMap &index)
+void UnpackHash::makeIndex(const std::string &arcFile, HashMap &index,
+                           const std::string &where)
 {
   UH_ListHasher *m = new UH_ListHasher;
   m->index = &index;
+  m->where = where;
   Mangle::VFS::StreamFactoryPtr mp(m);
 
   UnpackTask unp(arcFile, mp);
   unp.run();
-  // Needed to include the last one
+  // Needed to include the last file
   m->open("");
 }
 
@@ -107,7 +130,7 @@ Job *UnpackHash::createJob()
 
       // Have we already listed this hash?
       if(hashes.count(hsh) != 0)
-        // Prune dupicates
+        // Prune duplicates
         continue;
 
       // Is the hash empty? Might be the case for directories. If so,

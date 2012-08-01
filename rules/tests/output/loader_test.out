@@ -1,0 +1,70 @@
+Rule search:
+aaaa - Rule found:
+  Rule: "URL aaaa test-url 2 4.3"
+  => aaaa
+  URL: test-url
+  Priority: 2
+  Weight: 4.3
+
+Archive search:
+  Nothing
+
+Rule search:
+bbbb - Rule found:
+  Rule: "URL bbbb other-url"
+  => bbbb
+  URL: other-url
+  Priority: 1
+  Weight: 1
+
+Archive search:
+  ARC arc=bbbb dir=cccc
+
+Rule search:
+cccc - NOT FOUND
+Archive search:
+  ARC arc=bbbb dir=cccc
+
+Rule search:
+dddd - NOT FOUND
+Archive search:
+  Nothing
+
+Rule search:
+aaaa - Rule found:
+  Rule: "URL aaaa xyz 3"
+  => aaaa
+  URL: xyz
+  Priority: 3
+  Weight: 1
+
+Archive search:
+  ARC arc=dddd dir=aaaa
+
+Rule search:
+bbbb - Rule found:
+  Rule: "URL bbbb other-url"
+  => bbbb
+  URL: other-url
+  Priority: 1
+  Weight: 1
+
+Archive search:
+  ARC arc=bbbb dir=cccc
+
+Rule search:
+cccc - Rule found:
+  Rule: "URL cccc something 1 1.9"
+  => cccc
+  URL: something
+  Priority: 1
+  Weight: 1.9
+
+Archive search:
+  ARC arc=bbbb dir=cccc
+
+Rule search:
+dddd - NOT FOUND
+Archive search:
+  ARC arc=dddd dir=aaaa
+

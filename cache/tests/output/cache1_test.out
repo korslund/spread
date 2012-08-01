@@ -1,39 +1,39 @@
 Adding test.sh
-  Got: _fA]2iV(n)FhBQ4,]~RSNlcWF;vuGc)_N0pbn3Rc_,
+  Got: ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ
 Adding Makefile
-  Got: |AkJ(^yeAEujD4vF.m.QT5dZ1]]Fh8x+EQGieP,8^S*
-Adding hello.dat (expecting Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2,)
-  Got: Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2,
-Adding hello.dat (expecting VDAK:/O<QRxVJshY:s^OCg-M=SBA;iK6|G-^GHKR-)
+  Got: Q1NiBMXoK1tcYvTsMD7af_Ai-CBNLS03e3n3YSAnGDUnYw
+Adding hello.dat (expecting LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF)
+  Got: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
+Adding hello.dat (expecting lZ5oPKdWMISZA5jDyfBQeyndzkVx3MLEOarWExFR-YMG)
   Error: Given hash doesn't match real file size: hello.dat
 Adding nofile.dat
   Error: Cannot index non-existing file: nofile.dat
 Adding hello2.dat
-  Got: Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2,
+  Got: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
 Adding hello2.dat
-  Got: Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2,
-Searching for _fA]2iV(n)FhBQ4,]~RSNlcWF;vuGc)_N0pbn3Rc_,
+  Got: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
+Searching for ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ
   Found: test.sh
-Searching for _fA]2iV(n)FhBQ4,]~RSNlcWF;vuGc)_N0pbn3Rc_,
+Searching for ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ
   Found: 
-Searching for Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2,
+Searching for LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
   Found: hello.dat
-Searching for Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2,
+Searching for LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
   Found: hello2.dat
-Searching for Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2,
+Searching for LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
   Found: hello2.dat
-Searching for Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2,
+Searching for LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
   Found: 
-Checking status for nofile   Hash: Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2,
+Checking status for nofile   Hash: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
   No file found
-Checking status for test.sh   Hash: Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2,
+Checking status for test.sh   Hash: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
   File exists but is different:
-    _fA]2iV(n)FhBQ4,]~RSNlcWF;vuGc)_N0pbn3Rc_,
-Checking status for hello2.dat   Hash: Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2,
+    ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ
+Checking status for hello2.dat   Hash: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
   File already matches
-Checking status for test.sh   Hash: Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2,
+Checking status for test.sh   Hash: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
   Hash exists elsewhere: hello2.dat
-Checking status for hello.dat   Hash: _fA]2iV(n)FhBQ4,]~RSNlcWF;vuGc)_N0pbn3Rc_,
+Checking status for hello.dat   Hash: ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ
   Hash exists elsewhere: test.sh
-Checking status for hello.dat   Hash: Oi^te>=ye+GrlX4(CY,[(bV[E9W.AF44eWGYSjj2,
+Checking status for hello.dat   Hash: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
   Hash exists elsewhere: hello2.dat

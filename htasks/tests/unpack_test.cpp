@@ -25,7 +25,7 @@ int main()
 {
   UnpackHash unp;
 
-  UnpackHash::makeIndex("test1.zip", unp.index);
+  UnpackHash::makeIndex("test1.zip", unp.index, "_unp_test2");
   print(unp.index);
 
   unp.addInput(Hash(), "test1.zip");

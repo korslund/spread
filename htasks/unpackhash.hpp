@@ -29,9 +29,12 @@ namespace Spread
     HashMap index;
 
     /* Generate an index from an archive file.
+
+       An optional dir 'where' can be used to specify an output
+       directory. If empty, no files are written.
      */
-    static void makeIndex(const std::string &arcFile,
-                          HashMap &index);
+    static void makeIndex(const std::string &arcFile, HashMap &index,
+                          const std::string &where = "");
 
   private:
     Jobify::Job *createJob();

@@ -75,13 +75,13 @@ ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ : COPY from test.sh
 
 Unzipping two zips into one dir:
 Got 5 actions:
+HjZUnmXcFYkS8mTsovU-oVKEdKoGbF7Ga3NlNWYX6spMAQ : COPY from testdir.zip
 LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : TESTDIR ZIP
-  <= UXWlJa1SLdf0UcJTqiM8dKWxKOORKX_GlpRhnnT2TOlMAQ
+  <= HjZUnmXcFYkS8mTsovU-oVKEdKoGbF7Ga3NlNWYX6spMAQ
   => out/hello.out
 SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF : TESTDIR ZIP
-  <= UXWlJa1SLdf0UcJTqiM8dKWxKOORKX_GlpRhnnT2TOlMAQ
+  <= HjZUnmXcFYkS8mTsovU-oVKEdKoGbF7Ga3NlNWYX6spMAQ
   => out/dir/world.out
-UXWlJa1SLdf0UcJTqiM8dKWxKOORKX_GlpRhnnT2TOlMAQ : COPY from testdir.zip
 bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ : URL bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ zip1URL
 ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ : TESTSH ZIP
   <= bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ
@@ -92,14 +92,14 @@ Got 0 actions:
 
 Adding stand-alone files from two zips:
 Got 5 actions:
+HjZUnmXcFYkS8mTsovU-oVKEdKoGbF7Ga3NlNWYX6spMAQ : COPY from testdir.zip
 LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : TESTDIR ZIP
-  <= UXWlJa1SLdf0UcJTqiM8dKWxKOORKX_GlpRhnnT2TOlMAQ
+  <= HjZUnmXcFYkS8mTsovU-oVKEdKoGbF7Ga3NlNWYX6spMAQ
   => file_hello
   => file_hello_again
 SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF : TESTDIR ZIP
-  <= UXWlJa1SLdf0UcJTqiM8dKWxKOORKX_GlpRhnnT2TOlMAQ
+  <= HjZUnmXcFYkS8mTsovU-oVKEdKoGbF7Ga3NlNWYX6spMAQ
   => file_world
-UXWlJa1SLdf0UcJTqiM8dKWxKOORKX_GlpRhnnT2TOlMAQ : COPY from testdir.zip
 bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ : URL bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ zip1URL
 ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ : TESTSH ZIP
   <= bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ

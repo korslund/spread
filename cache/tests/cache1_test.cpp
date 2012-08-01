@@ -50,8 +50,7 @@ void status(const std::string &file, const Hash &h)
 int main()
 {
   Hash hello("hello",5);
-  Hash testsh("_fA]2iV(n)FhBQ4,]~RSNlcWF;vuGc)_N0pbn3Rc_,");
-
+  Hash testsh("ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ");
   add("test.sh");
   add("Makefile");
   add("hello.dat", hello);
