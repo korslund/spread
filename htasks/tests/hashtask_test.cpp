@@ -1,4 +1,5 @@
 #include "hashtask.hpp"
+#include "job/thread.hpp"
 
 #include <iostream>
 #include <stdexcept>
@@ -66,9 +67,9 @@ struct TestTask : HashTask
 void testJob(TestJob *j)
 {
   TestTask t(j);
-  try { t.run(false); }
-  catch(exception &e)
-    { cout << "CAUGHT: " << e.what() << endl; }
+  t.run();
+  if(t.getInfo()->isError())
+    cout << "CAUGHT: " << t.getInfo()->getMessage() << endl;
 }
 
 struct T1 : TestJob
@@ -190,16 +191,15 @@ int main()
   testJob(new T7);
   testJob(new T9);
 
-  TestTask t(new T10);
-  try
-    {
-      JobInfoPtr info = t.run();
-      cout << "\nWating for job to finish...\n";
-      while(!info->isFinished()) {}
-      t.finish();
-    }
-  catch(exception &e)
-    { cout << "CAUGHT: " << e.what() << endl; }
+  Job *job = new TestTask(new T10);
+
+  JobInfoPtr info = job->getInfo();
+  Thread::run(job);
+  cout << "\nWating for job to finish...\n";
+  while(!info->isFinished()) {}
+
+  if(info->isError())
+    cout << "CAUGHT2: " << info->getMessage() << endl;
 
   return 0;
 }

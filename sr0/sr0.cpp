@@ -163,17 +163,9 @@ struct Sr0Job : Job
     */
     inst.addDir(newHash);
 
-    if(checkStatus()) return;
-
     // Run the install!
     setBusy("Updating");
-    JobInfoPtr inf = inst.start(false);
-
-    if(inf->isNonSuccess())
-      {
-        setError(inf->getMessage());
-        return;
-      }
+    if(runClient(inst)) return;
 
     // On success, write back the new version file
     OutFileStream out(hashFile);

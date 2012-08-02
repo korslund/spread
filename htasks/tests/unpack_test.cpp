@@ -34,7 +34,7 @@ int main()
   unp.addOutput(H1, "_unp_test1/dir/to/file1.txt");
   unp.addOutput(H2, "_unp_test1/file2_again.txt");
 
-  unp.run(false);
+  unp.run();
 
   return 0;
 }

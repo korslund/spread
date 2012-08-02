@@ -11,11 +11,10 @@ int main()
 
   Hash hash("OEa8aUtr8n77FuIrXefgKVpVRY66g2CULBYP4N9EuQIEBw");
 
-  CopyHash dl;
-  dl.source = source;
+  CopyHash dl(source);
   dl.addOutput(hash, "_copy1.zip");
   dl.addOutput(hash, "_copy2.dat");
-  dl.run(false);
+  dl.run();
 
   return 0;
 }

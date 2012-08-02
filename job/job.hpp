@@ -17,7 +17,7 @@ namespace Jobs
     Job();
     virtual ~Job() {}
 
-    void run();
+    JobInfoPtr run();
     JobInfoPtr getInfo() { return info; }
 
   protected:

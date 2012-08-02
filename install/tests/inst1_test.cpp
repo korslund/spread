@@ -13,10 +13,10 @@ Hash testsh("ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ");
 Hash zipfile("bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ");
 Hash zipzip("RKEFhXsBxTYXmQt4oMxU_RQk_t7F0Oj8RMGALSJKh6UfAg");
 
+ActionMap acts;
+
 struct Dummy : ActionInstaller
 {
-  ActionMap acts;
-
   std::string brokenURL(const Hash &hash, const std::string &url)
   {
     cout << "Broken url: " << url << endl;
@@ -42,10 +42,11 @@ struct Dummy : ActionInstaller
   }
 };
 
-void test(ActionInstaller &a, const std::string &msg = "Empty")
+void test(const std::string &msg = "Empty")
 {
+  Dummy a;
   cout << endl << msg << ":\n";
-  Jobs::JobInfoPtr info = a.start(false);
+  Jobs::JobInfoPtr info = a.run();
   assert(info->isFinished());
   if(info->isError()) cout << "ERROR";
   else if(info->isSuccess()) cout << "DONE";
@@ -56,61 +57,60 @@ void test(ActionInstaller &a, const std::string &msg = "Empty")
 
 int main()
 {
-  Dummy dum;
-  test(dum);
+  test();
 
-  Action &helloAct = dum.acts[hello];
+  Action &helloAct = acts[hello];
 
   helloAct = Action("hello.txt");
-  test(dum);
+  test();
   helloAct = Action("world.txt");
-  test(dum);
+  test();
 
   helloAct = Action("world.txt", "_hello.out");
-  test(dum, "Copying wrong file");
+  test("Copying wrong file");
 
   helloAct = Action("hello.txt", "_hello.out");
-  test(dum, "Copying right file");
+  test("Copying right file");
 
   helloAct = Action("hello.txt");
   helloAct.addDest("_hello2.out");
   helloAct.addDest("_hello3.out");
-  test(dum, "Multiple outputs");
+  test("Multiple outputs");
 
   helloAct = Action("nofile");
-  test(dum);
+  test();
 
   helloAct = Action("nofile", "_fail1.txt");
-  test(dum, "Non-existing file");
+  test("Non-existing file");
 
   URLRule rule1(hello, "test rule", "http://tiggit.net/robots.txt");
   helloAct = Action(&rule1, "_fail2.txt");
-  test(dum, "Failed download");
+  test("Failed download");
 
-  Action &roboAct = dum.acts[robots];
+  Action &roboAct = acts[robots];
   roboAct = Action(&rule1, "_robots.txt");
   helloAct = Action("disable");
 
   // TODO: This should have given some progress numbers
-  test(dum, "Successful download");
+  test("Successful download");
   roboAct = Action("disable");
 
-  dum.acts[zipfile] = Action("testsh.zip");
-  test(dum);
+  acts[zipfile] = Action("testsh.zip");
+  test();
 
   DirectoryPtr dir(new Directory);
   dir->dir["test.sh"] = testsh;
   ArcRule ziprule(zipfile, dir, "test zip");
-  dum.acts[testsh] = Action(&ziprule, "_testsh.out");
-  dum.acts[testsh].addDest("_testsh2.out");
-  test(dum, "File inside zip");
+  acts[testsh] = Action(&ziprule, "_testsh.out");
+  acts[testsh].addDest("_testsh2.out");
+  test("File inside zip");
 
   DirectoryPtr dir2(new Directory);
   dir2->dir["testsh.zip"] = zipfile;
   ArcRule ziprule2(zipzip, dir2, "zip inside zip");
-  dum.acts[zipzip] = Action("zipzip.zip");
-  dum.acts[zipfile] = Action(&ziprule2);
-  test(dum, "Zip inside zip");
+  acts[zipzip] = Action("zipzip.zip");
+  acts[zipfile] = Action(&ziprule2);
+  test("Zip inside zip");
 
   return 0;
 }

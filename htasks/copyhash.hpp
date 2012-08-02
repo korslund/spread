@@ -3,17 +3,20 @@
 
 #include "hashtask.hpp"
 
-/* This class copy one file to a given output set. The hash is guessed
-   from the first entry in the copy list.
+/* This class copies one file to a given output set. The hash is
+   guessed from the first entry in the output list added through
+   HashTask::addOutput(). All outputs must be of the same hash.
  */
 
 namespace Spread
 {
   struct CopyHash : HashTask
   {
-    std::string source;
+    CopyHash(const std::string &_source)
+      : source(_source) {}
 
   private:
+    std::string source;
     Jobs::Job *createJob();
   };
 };

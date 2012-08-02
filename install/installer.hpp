@@ -5,10 +5,10 @@
 #include "cache/cache.hpp"
 #include "rules/ruleset.hpp"
 
-/* Main installer.
+/* Main installer job.
 
    Add dependencies (output files) through addDep and the addDir()
-   variants, then run the installation with ActionInstaller::start().
+   variants, then run the job like normal.
  */
 
 namespace Spread

@@ -7,6 +7,7 @@ Jobs::Job* DownloadHash::createJob()
 {
   // Guess the hash from targets
   assert(outputs.size() > 0);
+  assert(url != "");
   const Hash &hash = outputs.begin()->first;
   return new Tasks::DownloadTask(url, getOutStream(hash));
 }

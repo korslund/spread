@@ -12,9 +12,11 @@ namespace Spread
 {
   struct DownloadHash : HashTask
   {
-    std::string url;
+    DownloadHash(const std::string &_url)
+      : url(_url) {}
 
   private:
+    std::string url;
     Jobs::Job *createJob();
   };
 };

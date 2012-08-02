@@ -13,7 +13,7 @@
 
 namespace Spread
 {
-  struct ActionInstaller
+  struct ActionInstaller : Jobs::Job
   {
     /* Report a broken URL.
 
@@ -34,16 +34,8 @@ namespace Spread
      */
     virtual void addToCache(const Hash &h, const std::string &file) = 0;
 
-    /* Start the installation job. Returns a JobInfo describing the
-       job.
-
-       If the job is run asynchronously (async=true), the job is
-       started in a background thread.
-
-       If async=false, the returned JobInfo will immediately reflect
-       job status (success or failure.)
-     */
-    Jobs::JobInfoPtr start(bool async=true);
+  private:
+    void doJob();
   };
 }
 

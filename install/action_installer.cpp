@@ -5,14 +5,10 @@
 #include "htasks/unpackhash.hpp"
 #include "htasks/downloadhash.hpp"
 #include "htasks/copyhash.hpp"
+#include <stdexcept>
 
 using namespace Spread;
 using namespace Jobs;
-
-/*
-#include <iostream>
-using namespace std;
-*/
 
 enum Type
   {
@@ -49,6 +45,7 @@ struct Target
   // done.
   typedef std::map<Hash, Target*> HTMap;
   HTMap waitingFor;
+
   JobInfoPtr info;
 
   // List of all output files. If there are no directly requested
@@ -59,8 +56,6 @@ struct Target
   // Targets that depend on us should use this file as their input
   // when we are TS_Done.
   std::string useForDeps;
-
-  boost::shared_ptr<HashTask> htask;
 
   ~Target()
   {
@@ -117,29 +112,14 @@ struct Target
   {
     assert(status == TS_Ready);
     assert(!info);
-    assert(!htask);
 
+    HashTask *htask;
     if(type == TT_FileCopy)
-      {
-        CopyHash *ct = new CopyHash;
-        htask.reset(ct);
-        assert(action->source != "");
-        ct->source = action->source;
-      }
+      htask = new CopyHash(action->source);
     else if(type == TT_Download)
-      {
-        DownloadHash *dh = new DownloadHash;
-        htask.reset(dh);
-        assert(url != "");
-        dh->url = url;
-      }
+      htask = new DownloadHash(url);
     else if(type == TT_Unpack)
-      {
-        UnpackHash *uh = new UnpackHash;
-        htask.reset(uh);
-        assert(dir);
-        uh->index = dir->dir;
-      }
+      htask = new UnpackHash(dir->dir);
     else assert(0);
 
     assert(htask);
@@ -173,8 +153,9 @@ struct Target
     for(int i=0; i<outFiles.size(); i++)
       htask->addOutput(hash, outFiles[i]);
 
-    info = htask->run();
+    info = htask->getInfo();
     assert(info);
+    Thread::run(htask);
     status = TS_Running;
   }
 
@@ -197,7 +178,6 @@ struct Target
                 // back to TS_Ready, pretend the botched job never
                 // happened, and restart with startJob() using the new
                 // url.
-                htask.reset();
                 info.reset();
                 status = TS_Ready;
                 startJob();
@@ -205,11 +185,9 @@ struct Target
               }
           }
 
-        /* This will throw an exception on error. Since our overall
-           job system is designed to use exceptions, this is pretty
-           much all the error handling we need.
-         */
-        htask->finish();
+        // Throw an exception if the job failed
+        if(info->isNonSuccess())
+          throw std::runtime_error(info->getMessage());
 
         // Make sure all newly created files are added to the cache
         // index.
@@ -257,7 +235,7 @@ struct Target
 
   /* Set up outFiles and waitingFor, as well as moving status from
      TS_Wanted/TS_Unwanted to TS_Waiting or TS_Ready.
-   */
+  */
   void fixPaths(TargetMap &tmap)
   {
     // Don't reprocess an already fixed target
@@ -330,89 +308,74 @@ struct Target
   }
 };
 
-struct InstallJob : Job
+void ActionInstaller::doJob()
 {
-  ActionInstaller *owner;
+  ActionMap acts;
+  TargetMap targets;
 
-  void doJob()
+  getActions(acts);
+
+  // Convert ActionMap to TargetMap
   {
-    assert(owner);
-    ActionMap acts;
-    TargetMap targets;
+    ActionMap::iterator it;
+    for(it = acts.begin(); it != acts.end(); it++)
+      targets[it->first].setup(&it->second, it->first, this);
+  }
 
-    owner->getActions(acts);
-
-    // Convert ActionMap to TargetMap
+  // Set up output paths all targets
+  TargetMap::iterator it;
+  for(it = targets.begin(); it != targets.end(); it++)
     {
-      ActionMap::iterator it;
-      for(it = acts.begin(); it != acts.end(); it++)
-        targets[it->first].setup(&it->second, it->first, owner);
+      Target &t = it->second;
+
+      // Only process targets with that have output requests
+      if(t.status == TS_Wanted)
+        t.fixPaths(targets);
     }
 
-    // Set up output paths all targets
-    TargetMap::iterator it;
-    for(it = targets.begin(); it != targets.end(); it++)
-      {
-        Target &t = it->second;
+  // Cull unwanted targets
+  for(it = targets.begin(); it != targets.end();)
+    {
+      TargetMap::iterator it2 = it++;
+      if(it2->second.status == TS_Unwanted)
+        targets.erase(it2);
+    }
 
-        // Only process targets with that have output requests
-        if(t.status == TS_Wanted)
-          t.fixPaths(targets);
-      }
+  setBusy("Installing");
 
-    // Cull unwanted targets
-    for(it = targets.begin(); it != targets.end();)
-      {
-        TargetMap::iterator it2 = it++;
-        if(it2->second.status == TS_Unwanted)
-          targets.erase(it2);
-      }
+  /* Main loop. This updates and checks up on the status of all
+     targets at regular intervals.
+  */
+  while(true)
+    {
+      if(checkStatus())
+        // Abondon ship. Running jobs are aborted automatically by
+        // Target's destructor.
+        return;
 
-    setBusy("Installing");
+      // Progress counters
+      int64_t cur = 0, tot = 0;
 
-    /* Main loop. This updates and checks up on the status of all
-       targets at regular intervals.
-     */
-    while(true)
-      {
-        if(checkStatus())
-          // Abondon ship. Running jobs are aborted automatically by
-          // Target's destructor.
-          return;
+      // Loop through and update all the targets
+      bool allDone = true;
+      for(it = targets.begin(); it != targets.end(); it++)
+        {
+          Target &t = it->second;
 
-        // Progress counters
-        int64_t cur = 0, tot = 0;
+          t.update(cur, tot);
 
-        // Loop through and update all the targets
-        bool allDone = true;
-        for(it = targets.begin(); it != targets.end(); it++)
-          {
-            Target &t = it->second;
+          if(t.status != TS_Done)
+            allDone = false;
+        }
 
-            t.update(cur, tot);
+      setProgress(cur,tot);
 
-            if(t.status != TS_Done)
-              allDone = false;
-          }
+      if(allDone)
+        break;
 
-        setProgress(cur,tot);
+      // Don't busy-loop
+      Thread::sleep(0.1);
+    }
 
-        if(allDone)
-          break;
-
-        // Don't busy-loop
-        Thread::sleep(0.1);
-      }
-
-    setDone();
-  }
-};
-
-JobInfoPtr ActionInstaller::start(bool async)
-{
-  InstallJob *job = new InstallJob();
-  job->owner = this;
-  JobInfoPtr info = job->getInfo();
-  Thread::run(job, async);
-  return info;
+  setDone();
 }

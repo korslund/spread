@@ -1,9 +1,6 @@
 #include "hashtask.hpp"
 
-#include "job/thread.hpp"
 #include "hash/hash_stream.hpp"
-#include "tasks/multi.hpp"
-
 #include <boost/filesystem.hpp>
 #include <assert.h>
 #include <stdexcept>
@@ -29,8 +26,6 @@ static void fail(const std::string &msg)
 
 struct HashTask::_HashTaskHidden
 {
-  JobInfoPtr info;
-
   HashStreamPtr curStream;
   Hash curHash;
   std::string curFile;
@@ -38,91 +33,30 @@ struct HashTask::_HashTaskHidden
 
 HashTask::HashTask()
 {
-  ptr = new _HashTaskHidden;
+  ptr.reset(new _HashTaskHidden);
 }
 
-HashTask::~HashTask()
+void HashTask::doJob()
 {
-  delete ptr;
-}
+  Job *job = createJob();
+  assert(job);
+  boost::shared_ptr<Job> deleter(job);
 
-struct CloseTask : Job
-{
-  HashTask *owner;
-
-  CloseTask(HashTask *h)
-    : owner(h) { assert(owner); }
-
-  void doJob()
-  {
-    owner->getOutStream(Hash());
-    setDone();
-  }
-};
-
-JobInfoPtr HashTask::run(bool async)
-{
-  Tasks::MultiTask *j = new Tasks::MultiTask;
-  Job *jjj = createJob();
-  assert(jjj);
-  j->add(jjj);
-  /* Make sure we close up shop (call closeStream()) in the worker
-     thread.
-
-     The MultiTask struct is a good way to ensure that this is done
-     while the JobInfo status is still marked as 'busy'. This is
-     essential, otherwise finish() might get called before the last
-     closeStream() has finished.
-
-     The second 'false' parameter to MultiTask::add() prevents
-     CloseTask from messing up the job progress numbers.
-   */
-  j->add(new CloseTask(this), false);
-
-  assert(!ptr->info);
-  ptr->info = j->getInfo();
-  assert(ptr->info);
-
-  Thread::run(j,async);
-
-  // Call finish ourselves if the job is already done
-  if(!async)
-    {
-      assert(ptr->info->isFinished());
-      finish();
-    }
-
-  return ptr->info;
-}
-
-/* This really isn't necessary at all anymore. We can just as easily
-   do the necessary cleanup in the job itself, and have the user check
-   the status manually. This way we could restructure this to be a
-   Jobs::Job base class instead.
- */
-void HashTask::finish()
-{
-  assert(ptr->info->isFinished());
-
-  if(!ptr->info->isSuccess())
-    fail(ptr->info->getMessage());
-
-  // Make sure the last stream was closed
-  assert(!ptr->curStream);
+  if(runClient(*job)) return;
+  closeStream();
 
   // Check that all outputs were satisfied
   if(outputs.size() != 0)
-    fail("Task did not produce all requested output files.");
+    setError("Task did not produce all requested output files.");
+  else
+    setDone();
 }
 
 void HashTask::closeStream()
 {
   if(!ptr->curStream) return;
 
-  // Don't bother copying files or error checking the data if the job
-  // itself has already failed
-  if(ptr->info->isNonSuccess())
-    return;
+  assert(info->isBusy());
 
   // Hash the written data
   Hash res = ptr->curStream->finish();
@@ -159,11 +93,9 @@ void HashTask::closeStream()
 
 StreamPtr HashTask::getOutStream(const Hash &h)
 {
-  HashStreamPtr res;
-
-  // Undocumented function: Calling with a null hash will exit with no
-  // pointer (as expected), but it will FIRST call closeStream().
   closeStream();
+
+  HashStreamPtr res;
   if(h.isNull()) return res;
 
   // Is this a requested hash?

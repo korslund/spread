@@ -11,7 +11,7 @@ Job::Job() : info(new JobInfo)
   info->status = ST_CREATED;
 }
 
-void Job::run()
+JobInfoPtr Job::run()
 {
   assert(info->isCreated());
   assert(!info->isBusy());
@@ -19,7 +19,7 @@ void Job::run()
   if(info->doAbort)
     {
       info->status = ST_ABORT;
-      return;
+      return info;
     }
   setBusy();
 
@@ -32,8 +32,9 @@ void Job::run()
   catch(...)
     { setError("Unknown error"); }
 
-  assert(!info->isBusy());
+  assert(info->isFinished());
   cleanup();
+  return info;
 }
 
 bool Job::runClient(Job &job, bool includeStats)

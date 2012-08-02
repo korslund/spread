@@ -57,7 +57,7 @@ void setup()
 void test(ActionInstaller &a, const std::string &msg)
 {
   cout << "\n" << msg << "\n";
-  Jobs::JobInfoPtr info = a.start(false);
+  Jobs::JobInfoPtr info = a.run();
   assert(info->isFinished());
   if(info->isError()) cout << "ERROR";
   else if(info->isSuccess()) cout << "DONE";
