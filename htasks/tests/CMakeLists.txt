@@ -24,7 +24,7 @@ set(HTDIR ${SPDIR}/htasks)
 
 set(UNPACK ${UDIR}/dirwriter.cpp ${UDIR}/base.cpp ${UDIR}/unpack_zip.cpp ${UDIR}/auto.cpp)
 set(JOB ${JDIR}/thread.cpp ${JDIR}/job.cpp ${JDIR}/jobinfo.cpp)
-set(TASKS ${TDIR}/unpack.cpp ${TDIR}/curl.cpp ${TDIR}/download.cpp ${TDIR}/install.cpp ${TDIR}/multi.cpp ${TDIR}/fileop.cpp ${TDIR}/dircopy.cpp ${TDIR}/notify.cpp ${TDIR} ${JOB} ${UNPACK})
+set(TASKS ${TDIR}/unpack.cpp ${TDIR}/curl.cpp ${TDIR}/download.cpp ${JOB} ${UNPACK})
 
 set(C85 ${MIDIR}/comp85.cpp)
 set(HASH ${HDIR}/hash.cpp ${LIBDIR}/sha2/sha2.c ${C85})
