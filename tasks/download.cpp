@@ -9,12 +9,11 @@ std::string DownloadTask::userAgent = "Tiggit/1.0 - see http://tiggit.net/";
 
 struct DLProgress : cURL::Progress
 {
-  Jobify::JobInfoPtr info;
+  Jobs::JobInfoPtr info;
 
   bool progress(int64_t total, int64_t now)
   {
-    info->current = now;
-    info->total = total;
+    info->setProgress(now, total);
 
     // Abort the download if the user requested it.
     if(info->checkStatus())

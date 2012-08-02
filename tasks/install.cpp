@@ -13,12 +13,7 @@ void InstallTask::doJob()
   if(dir != "")
     add(new UnpackTask(zip, dir));
 
-  try
-    { MultiTask::doJob(); }
-  catch(std::exception &e)
-    { setError(e.what()); }
-  catch(...)
-    { setError("Unknown error"); }
+  MultiTask::doJob();
 }
 
 void InstallTask::cleanup()

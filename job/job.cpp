@@ -3,37 +3,11 @@
 #include <assert.h>
 #include <exception>
 
-using namespace Jobify;
+using namespace Jobs;
 
-void JobInfo::reset()
-{
-  current = total = 0;
-  status = ST_NONE;
-  doAbort = false;
-  message = "";
-}
-
-void JobInfo::setError(const std::string &what)
-{
-  message = what;
-  status = ST_ERROR;
-}
-
-bool JobInfo::checkStatus()
-{
-  // Check for abort requests
-  if(doAbort) status = ST_ABORT;
-
-  // Return true if any non-busy state has been set
-  return !isBusy();
-}
-
-Job::Job(JobInfoPtr i)
-  : info(i?i:JobInfoPtr(new JobInfo))
+Job::Job() : info(new JobInfo)
 {
   assert(info);
-  assert(!info->isCreated());
-  info->reset();
   info->status = ST_CREATED;
 }
 
@@ -44,7 +18,7 @@ void Job::run()
   assert(!info->isFinished());
   if(info->doAbort)
     {
-      setAbort();
+      info->status = ST_ABORT;
       return;
     }
   setBusy();
@@ -62,14 +36,17 @@ void Job::run()
   cleanup();
 }
 
+bool Job::runClient(Job &job, bool includeStats)
+{
+  if(clearClient()) return true;
+  if(includeStats) setClient(job.getInfo());
+  else setAbortClient(job.getInfo());
+  job.run();
+  return clearClient();
+}
+
 void Job::setBusy(const std::string &what)
 {
   info->message = what;
   info->status = ST_BUSY;
-}
-
-void Job::setAbort()
-{
-  assert(info->doAbort);
-  info->status = ST_ABORT;
 }

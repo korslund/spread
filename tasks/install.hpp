@@ -29,9 +29,8 @@ namespace Tasks
   struct InstallTask : MultiTask
   {
     InstallTask(const std::string &_url, const std::string &_zip,
-                const std::string &_dir,
-                Jobify::JobInfoPtr _info = Jobify::JobInfoPtr())
-      : MultiTask(_info), url(_url), zip(_zip), dir(_dir) {}
+                const std::string &_dir)
+      : url(_url), zip(_zip), dir(_dir) {}
 
     void doJob();
     void cleanup();

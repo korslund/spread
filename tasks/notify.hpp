@@ -9,13 +9,11 @@ namespace Tasks
      notifications when another task succeeds or fails.
 
      Pass along a job to the constructor, and run it as normal. The
-     NotifyTask will share the other job's JobInfo.
-
-     The destructor deletes the job.
+     destructor deletes the job.
    */
-  struct NotifyTask : Jobify::Job
+  struct NotifyTask : Jobs::Job
   {
-    NotifyTask(Jobify::Job *j);
+    NotifyTask(Jobs::Job *j);
     ~NotifyTask() { delete other; }
 
   protected:
@@ -24,7 +22,7 @@ namespace Tasks
     virtual void onError() {}
 
   private:
-    Jobify::Job *other;
+    Jobs::Job *other;
 
     void doJob();
     void cleanup();

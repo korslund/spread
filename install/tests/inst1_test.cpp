@@ -45,12 +45,12 @@ struct Dummy : ActionInstaller
 void test(ActionInstaller &a, const std::string &msg = "Empty")
 {
   cout << endl << msg << ":\n";
-  Jobify::JobInfoPtr info = a.start(false);
+  Jobs::JobInfoPtr info = a.start(false);
   assert(info->isFinished());
   if(info->isError()) cout << "ERROR";
   else if(info->isSuccess()) cout << "DONE";
   else cout << "UNKNOWN STATUS";
-  cout << ": status=" << info->message << " progress=" << info->getCurrent()
+  cout << ": status=" << info->getMessage() << " progress=" << info->getCurrent()
        << "/" << info->getTotal() << endl;
 }
 

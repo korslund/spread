@@ -3,7 +3,7 @@
 #include <boost/filesystem.hpp>
 
 using namespace Tasks;
-using namespace Jobify;
+using namespace Jobs;
 namespace bs = boost::filesystem;
 
 void FileOpTask::addOp(const FileOp &op)
@@ -27,8 +27,8 @@ static void parent(const bs::path &file)
 
 void FileOpTask::doJob()
 {
-  info->total = ops.size();
-  info->current = 0;
+  setProgress(0, ops.size());
+  int64_t cur = 0;
 
   OpList::iterator it;
   for(it = ops.begin(); it != ops.end(); it++)
@@ -94,7 +94,7 @@ void FileOpTask::doJob()
       if(checkStatus())
         return;
 
-      info->current++;
+      setProgress(++cur);
     }
 
   setDone();

@@ -24,16 +24,13 @@ namespace Tasks
    */
   enum FileOpTaskOps { FILEOP_COPY, FILEOP_MOVE, FILEOP_DELETE };
 
-  struct FileOpTask : Jobify::Job
+  struct FileOpTask : Jobs::Job
   {
     struct FileOp
     {
       int type;
       std::string source, dest; // Use 'dest' for delete operations
     };
-
-    FileOpTask(Jobify::JobInfoPtr info = Jobify::JobInfoPtr())
-      : Jobify::Job(info) {}
 
     void addOp(const FileOp &op);
     void addOp(int type, const std::string &source, const std::string &dest);

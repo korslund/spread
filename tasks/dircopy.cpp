@@ -74,8 +74,8 @@ void DirCopyTask::doJob()
           files.push_back(Pair(s, dpath));
     }
 
-  info->total = files.size();
-  info->current = 0;
+  int64_t cur = 0;
+  setProgress(cur,files.size());
 
   PairList::iterator pit;
   for(pit = files.begin(); pit != files.end(); pit++)
@@ -94,7 +94,7 @@ void DirCopyTask::doJob()
           setError("Failed to copy " + src.string() + " => " + dst.string());
           return;
         }
-      info->current++;
+      setProgress(++cur);
     }
 
   if(doMove)

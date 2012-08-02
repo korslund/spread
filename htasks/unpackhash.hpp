@@ -37,7 +37,7 @@ namespace Spread
                           const std::string &where = "");
 
   private:
-    Jobify::Job *createJob();
+    Jobs::Job *createJob();
     FileList list;
   };
 };

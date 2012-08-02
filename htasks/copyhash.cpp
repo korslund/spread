@@ -6,7 +6,7 @@ using namespace Spread;
 using namespace Mangle::Stream;
 
 // This just reads from a file and dumps the data into a stream
-struct CopyTask : Jobify::Job
+struct CopyTask : Jobs::Job
 {
   CopyTask(const std::string &input, StreamPtr output)
     : in(input), out(output) {}
@@ -23,7 +23,7 @@ private:
   StreamPtr out;
 };
 
-Jobify::Job* CopyHash::createJob()
+Jobs::Job* CopyHash::createJob()
 {
   // Guess the hash from targets
   assert(outputs.size() > 0);

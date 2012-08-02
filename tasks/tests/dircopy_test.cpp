@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 using namespace Tasks;
-using namespace Jobify;
+using namespace Jobs;
 
 void testStatus(Job &j)
 {
@@ -13,7 +13,7 @@ void testStatus(Job &j)
   if(info->isBusy()) cout << "Busy!";
   else if(!info->hasStarted()) cout << "Not started yet!";
   else if(info->isSuccess()) cout << "Success!";
-  else if(info->isNonSuccess()) cout << "Failure: " << info->message;
+  else if(info->isNonSuccess()) cout << "Failure: " << info->getMessage();
   cout << "  - progress " << info->getCurrent() << "/" << info->getTotal() << endl;
 }
 

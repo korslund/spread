@@ -9,7 +9,7 @@
 #include <stdexcept>
 
 using namespace Spread;
-using namespace Jobify;
+using namespace Jobs;
 using namespace Mangle::Stream;
 namespace bs = boost::filesystem;
 
@@ -67,9 +67,7 @@ JobInfoPtr HashTask::run(bool async)
   assert(jjj);
   j->add(jjj);
   /* Make sure we close up shop (call closeStream()) in the worker
-     thread. That function call may perform some potentially
-     time-consuming file copying, and we don't want it to block the
-     calling thread needlessly.
+     thread.
 
      The MultiTask struct is a good way to ensure that this is done
      while the JobInfo status is still marked as 'busy'. This is
@@ -97,15 +95,17 @@ JobInfoPtr HashTask::run(bool async)
   return ptr->info;
 }
 
+/* This really isn't necessary at all anymore. We can just as easily
+   do the necessary cleanup in the job itself, and have the user check
+   the status manually. This way we could restructure this to be a
+   Jobs::Job base class instead.
+ */
 void HashTask::finish()
 {
-  // TODO: Fix some more informative error reporting. Child classes
-  // are bound to have more useful info about what went wrong.
-
   assert(ptr->info->isFinished());
 
   if(!ptr->info->isSuccess())
-    fail(ptr->info->message);
+    fail(ptr->info->getMessage());
 
   // Make sure the last stream was closed
   assert(!ptr->curStream);

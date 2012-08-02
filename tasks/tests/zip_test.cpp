@@ -9,16 +9,16 @@ int main()
   cout << "Unpacking " << zip << "...\n";
 
   Tasks::UnpackTask unp(zip, "_outdir1");
-  Jobify::JobInfoPtr info = unp.getInfo();
+  Jobs::JobInfoPtr info = unp.getInfo();
 
   unp.run();
 
   if(info->isSuccess())
     cout << "Success!\n";
   else
-    cout << "Failure: " << info->message << endl;
+    cout << "Failure: " << info->getMessage() << endl;
 
-  cout << "Progress: " << info->current << "/" << info->total << endl;
+  cout << "Progress: " << info->getCurrent() << "/" << info->getTotal() << endl;
 
   return 0;
 }

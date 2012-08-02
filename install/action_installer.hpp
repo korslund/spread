@@ -43,7 +43,7 @@ namespace Spread
        If async=false, the returned JobInfo will immediately reflect
        job status (success or failure.)
      */
-    Jobify::JobInfoPtr start(bool async=true);
+    Jobs::JobInfoPtr start(bool async=true);
   };
 }
 

@@ -9,16 +9,16 @@ int main()
   cout << "Downloading " << url << "...\n";
 
   Tasks::DownloadTask dlj(url, "_output.txt");
-  Jobify::JobInfoPtr info = dlj.getInfo();
+  Jobs::JobInfoPtr info = dlj.getInfo();
 
   dlj.run();
 
   if(info->isSuccess())
     cout << "Success!\n";
   else
-    cout << "Failure: " << info->message << endl;
+    cout << "Failure: " << info->getMessage() << endl;
 
-  cout << "Progress: " << info->current << "/" << info->total << endl;
+  cout << "Progress: " << info->getCurrent() << "/" << info->getTotal() << endl;
 
   return 0;
 }

@@ -28,11 +28,8 @@ namespace Tasks
         destDir/myfile1.txt
         destDir/directory/  (complete recursive copy)
    */
-  struct DirCopyTask : Jobify::Job
+  struct DirCopyTask : Jobs::Job
   {
-    DirCopyTask(Jobify::JobInfoPtr info = Jobify::JobInfoPtr())
-      : Jobify::Job(info) {}
-
     void setDest(const std::string &dst, bool move=false)
     { dest = dst; doMove = move; }
 

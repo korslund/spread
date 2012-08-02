@@ -5,7 +5,7 @@
 
 using namespace std;
 using namespace Spread;
-using namespace Jobify;
+using namespace Jobs;
 using namespace Mangle::Stream;
 
 // Some predefined data and hashes to play with

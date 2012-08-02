@@ -2,7 +2,7 @@
 #include <iostream>
 #include <stdexcept>
 
-using namespace Jobify;
+using namespace Jobs;
 using namespace std;
 
 struct MyJob : Job
@@ -34,7 +34,7 @@ struct MyJob : Job
   void cleanup()
   {
     cout << "Cleaning up " << i;
-    if(info->isError()) cout << " (Error: " << info->message << ")\n";
+    if(info->isError()) cout << " (Error: " << info->getMessage() << ")\n";
     else cout << " (Success!)\n";
   }
 };

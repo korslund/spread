@@ -57,12 +57,12 @@ void setup()
 void test(ActionInstaller &a, const std::string &msg)
 {
   cout << "\n" << msg << "\n";
-  Jobify::JobInfoPtr info = a.start(false);
+  Jobs::JobInfoPtr info = a.start(false);
   assert(info->isFinished());
   if(info->isError()) cout << "ERROR";
   else if(info->isSuccess()) cout << "DONE";
   else cout << "UNKNOWN STATUS";
-  cout << ": status=" << info->message << "\nprogress=" << info->getCurrent()
+  cout << ": status=" << info->getMessage() << "\nprogress=" << info->getCurrent()
        << "/" << info->getTotal() << endl;
 }
 

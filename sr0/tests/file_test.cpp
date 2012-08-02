@@ -8,7 +8,7 @@ using namespace std;
 
 using namespace Mangle::Stream;
 using namespace Spread;
-using namespace Jobify;
+using namespace Jobs;
 
 // This is used to generate the test set. It is NOT part of the test
 // itself.
@@ -56,10 +56,10 @@ void genData2()
 void check(JobInfoPtr info)
 {
   if(info->isSuccess())
-    cout << "SUCCESS: " << info->message << " prog=" << info->getCurrent()
+    cout << "SUCCESS: " << info->getMessage() << " prog=" << info->getCurrent()
          << "/" << info->getTotal() << endl;
   else
-    cout << "FAILURE: " << info->message << endl;
+    cout << "FAILURE: " << info->getMessage() << endl;
 }
 
 void test(const std::string &src, const std::string &dest, bool kill=true)

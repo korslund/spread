@@ -7,7 +7,7 @@
 #include "htasks/copyhash.hpp"
 
 using namespace Spread;
-using namespace Jobify;
+using namespace Jobs;
 
 /*
 #include <iostream>
@@ -395,8 +395,7 @@ struct InstallJob : Job
               allDone = false;
           }
 
-        info->total = tot;
-        info->current = cur;
+        setProgress(cur,tot);
 
         if(allDone)
           break;

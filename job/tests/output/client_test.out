@@ -1,0 +1,10 @@
+Outer job val=1
+Running job val=1
+Success!  - progress 0/1
+Outer job val=2
+Running job val=2
+Failure: Error  - progress 1/2
+Outer job val=3
+Abort!  - progress 0/0
+Outer job val=4
+Abort!  - progress 0/0

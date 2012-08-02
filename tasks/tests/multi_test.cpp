@@ -3,18 +3,16 @@
 #include <iostream>
 using namespace std;
 using namespace Tasks;
-using namespace Jobify;
+using namespace Jobs;
 
 struct Dummy : Job
 {
   int val;
-  Dummy(int i)
-    : Job(JobInfoPtr(new JobInfo)),
-      val(i) {}
+  Dummy(int i) : val(i) {}
 
   void doJob()
   {
-    info->current = info->total = val;
+    setProgress(val,val);
     cout << val << endl;
 
     if(val == 24) setError("Value was 24, DO NOT LIKE");
@@ -29,7 +27,7 @@ void testStatus(Job &j)
   if(info->isBusy()) cout << "Busy!";
   else if(!info->hasStarted()) cout << "Not started yet!";
   else if(info->isSuccess()) cout << "Success!";
-  else if(info->isNonSuccess()) cout << "Failure: " << info->message;
+  else if(info->isNonSuccess()) cout << "Failure: " << info->getMessage();
   cout << "  - progress " << info->getCurrent() << "/" << info->getTotal() << endl;
 }
 
@@ -76,16 +74,6 @@ int main()
     testStatus(mult);
     for(int i=0; i<10; i++)
       mult.add(new Dummy(i+19));
-    mult.run();
-    testStatus(mult);
-  }
-
-  {
-    cout << "\nTesting with 'wrong' JobInfo type:\n";
-    MultiTask mult(JobInfoPtr(new JobInfo));
-    testStatus(mult);
-    for(int i=0; i<5; i++)
-      mult.add(new Dummy(i));
     mult.run();
     testStatus(mult);
   }

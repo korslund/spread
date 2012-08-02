@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 using namespace Spread;
-using namespace Jobify;
+using namespace Jobs;
 
 int main()
 {

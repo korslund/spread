@@ -70,20 +70,20 @@ namespace Spread
 
        If async==true, the install is run in a background thread.
      */
-    static Jobify::JobInfoPtr fetchURL(const std::string &url,
-                                       const std::string &destDir,
-                                       Cache::Cache &cache,
-                                       bool async=true);
+    static Jobs::JobInfoPtr fetchURL(const std::string &url,
+                                     const std::string &destDir,
+                                     Cache::Cache &cache,
+                                     bool async=true);
 
     /* Same as fetchURL, but fetch from a filesystem dir instead.
 
        This may still cause files to be downloaded if the installation
        data itself uses URL rules.
      */
-    static Jobify::JobInfoPtr fetchFile(const std::string &dir,
-                                        const std::string &destDir,
-                                        Cache::Cache &cache,
-                                        bool async=true);
+    static Jobs::JobInfoPtr fetchFile(const std::string &dir,
+                                      const std::string &destDir,
+                                      Cache::Cache &cache,
+                                      bool async=true);
   };
 }
 #endif

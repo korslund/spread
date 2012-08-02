@@ -36,15 +36,6 @@ Not started yet!  - progress 0/0
 24
 Failure: Value was 24, DO NOT LIKE  - progress 24/24
 
-Testing with 'wrong' JobInfo type:
-Not started yet!  - progress 0/0
-0
-1
-2
-3
-4
-Success!  - progress 0/0
-
 Setting useInfo=false on some jobs:
 Not started yet!  - progress 0/0
 10

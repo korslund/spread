@@ -14,7 +14,7 @@ namespace Spread
     std::string source;
 
   private:
-    Jobify::Job *createJob();
+    Jobs::Job *createJob();
   };
 };
 

@@ -3,7 +3,7 @@
 
 using namespace Spread;
 
-Jobify::Job* DownloadHash::createJob()
+Jobs::Job* DownloadHash::createJob()
 {
   // Guess the hash from targets
   assert(outputs.size() > 0);

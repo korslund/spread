@@ -1,9 +1,9 @@
-#ifndef __JOBIFY_THREAD_HPP
-#define __JOBIFY_THREAD_HPP
+#ifndef __JOB_THREAD_HPP
+#define __JOB_THREAD_HPP
 
 #include "job.hpp"
 
-namespace Jobify
+namespace Jobs
 {
   /* This black-box module swallows any Job object, executes it in a
      separate thread, then deletes the object after it returns. (The

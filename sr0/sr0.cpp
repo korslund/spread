@@ -5,7 +5,6 @@
 #include <mangle/stream/servers/file_stream.hpp>
 #include <mangle/stream/servers/outfile_stream.hpp>
 #include <mangle/stream/clients/copy_stream.hpp>
-#include "tasks/curl.hpp"
 #include "htasks/unpackhash.hpp"
 #include "job/thread.hpp"
 #include "install/installer.hpp"
@@ -15,12 +14,9 @@
 using namespace Spread;
 using namespace Mangle::Stream;
 using namespace boost::filesystem;
-using namespace Jobify;
+using namespace Jobs;
 
 typedef UnpackHash::HashMap HMap;
-
-#include <iostream>
-using namespace std;
 
 struct Sr0Job : Job
 {
@@ -78,8 +74,8 @@ struct Sr0Job : Job
 
         if(isUrl)
           {
-            cURL::get(fetch, StringWriter::Open(netVer),
-                      Tasks::DownloadTask::userAgent);
+            Tasks::DownloadTask dl(fetch, StringWriter::Open(netVer));
+            if(runClient(dl)) return;
           }
         else
           {
@@ -95,7 +91,6 @@ struct Sr0Job : Job
             return;
           }
       }
-    if(checkStatus()) return;
 
     setBusy("Fetching update info");
 
@@ -105,15 +100,14 @@ struct Sr0Job : Job
       {
         std::string url = zipfile;
         zipfile = cache->createTmpFilename();
-        cURL::get(url, zipfile, Tasks::DownloadTask::userAgent);
+        Tasks::DownloadTask dl(url, zipfile);
+        if(runClient(dl)) return;
       }
     else if(!exists(zipfile))
       {
         setError("File not found: " + zipfile);
         return;
       }
-
-    if(checkStatus()) return;
 
     // Unpack the archive into a temporary directory
     HMap index;
@@ -177,7 +171,7 @@ struct Sr0Job : Job
 
     if(inf->isNonSuccess())
       {
-        setError(inf->message);
+        setError(inf->getMessage());
         return;
       }
 

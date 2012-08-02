@@ -5,13 +5,13 @@
 
 using namespace std;
 using namespace Tasks;
-using namespace Jobify;
+using namespace Jobs;
 
 struct MyJob : Job
 {
   int i;
 
-  MyJob(int _i) : Job(), i(_i) {}
+  MyJob(int _i) : i(_i) {}
 
   void doJob()
   {
@@ -36,7 +36,7 @@ struct MyJob : Job
   void cleanup()
   {
     cout << "Cleaning up " << i;
-    if(info->isError()) cout << " (Error: " << info->message << ")\n";
+    if(info->isError()) cout << " (Error: " << info->getMessage() << ")\n";
     else cout << " (Success!)\n";
   }
 };
@@ -48,7 +48,7 @@ struct TestNote : NotifyTask
   {}
 
   void onSuccess() { cout << "SUCCESS notified\n"; }
-  void onError() { cout << "ERROR notified: " << info->message << "\n"; }
+  void onError() { cout << "ERROR notified: " << info->getMessage() << "\n"; }
 };
 
 int main()

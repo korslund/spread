@@ -55,7 +55,7 @@ namespace Spread
        You are not required to handle error states in the JobInfo,
        finish will convert these to exceptions automatically.
     */
-    Jobify::JobInfoPtr run(bool async=true);
+    Jobs::JobInfoPtr run(bool async=true);
 
     /* Call this when a threaded job has finished running. Will throw
        an exception if errors were detected.
@@ -80,7 +80,7 @@ namespace Spread
 
   protected:
     // Create the job that performs this task.
-    virtual Jobify::Job *createJob() = 0;
+    virtual Jobs::Job *createJob() = 0;
 
   private:
     void closeStream();

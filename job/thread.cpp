@@ -3,7 +3,7 @@
 #include <boost/thread.hpp>
 #include <assert.h>
 
-using namespace Jobify;
+using namespace Jobs;
 
 struct ThreadObj
 {

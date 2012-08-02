@@ -7,7 +7,7 @@
 #include <stdexcept>
 
 using namespace Spread;
-using namespace Jobify;
+using namespace Jobs;
 using namespace Tasks;
 using namespace Mangle::Stream;
 
@@ -151,5 +151,5 @@ Job *UnpackHash::createJob()
   std::string file = inputs.begin()->second;
 
   // Set up the unpacking job
-  return new UnpackTask(file, mp, Jobify::JobInfoPtr(), list);
+  return new UnpackTask(file, mp, list);
 }
