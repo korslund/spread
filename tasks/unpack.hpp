@@ -13,9 +13,9 @@
   auto-detected. The backend code is found in the unpack/ module.
  */
 
-namespace Tasks
+namespace Spread
 {
-  struct UnpackTask : Jobs::Job
+  struct UnpackTask : Job
   {
     typedef std::set<std::string> FileList;
 

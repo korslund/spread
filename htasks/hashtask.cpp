@@ -6,7 +6,6 @@
 #include <stdexcept>
 
 using namespace Spread;
-using namespace Jobs;
 using namespace Mangle::Stream;
 namespace bs = boost::filesystem;
 

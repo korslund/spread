@@ -3,11 +3,11 @@
 
 using namespace Spread;
 
-Jobs::Job* DownloadHash::createJob()
+Job* DownloadHash::createJob()
 {
   // Guess the hash from targets
   assert(outputs.size() > 0);
   assert(url != "");
   const Hash &hash = outputs.begin()->first;
-  return new Tasks::DownloadTask(url, getOutStream(hash));
+  return new DownloadTask(url, getOutStream(hash));
 }

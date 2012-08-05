@@ -2,7 +2,7 @@
 #include <iostream>
 #include <unistd.h>
 
-using namespace Jobs;
+using namespace Spread;
 using namespace std;
 
 struct MyJob : Job

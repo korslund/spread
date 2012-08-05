@@ -2,7 +2,7 @@
 
 #include <iostream>
 using namespace std;
-using namespace Jobs;
+using namespace Spread;
 
 struct TestJob : Job
 {

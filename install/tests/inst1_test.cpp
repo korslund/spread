@@ -46,7 +46,7 @@ void test(const std::string &msg = "Empty")
 {
   Dummy a;
   cout << endl << msg << ":\n";
-  Jobs::JobInfoPtr info = a.run();
+  JobInfoPtr info = a.run();
   assert(info->isFinished());
   if(info->isError()) cout << "ERROR";
   else if(info->isSuccess()) cout << "DONE";

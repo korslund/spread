@@ -39,7 +39,7 @@ namespace Spread
                           const std::string &where = "");
 
   private:
-    Jobs::Job *createJob();
+    Job *createJob();
     FileList list;
   };
 };

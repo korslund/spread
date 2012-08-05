@@ -4,7 +4,7 @@
 #include <job/job.hpp>
 #include <mangle/stream/stream.hpp>
 
-namespace Tasks
+namespace Spread
 {
   /* Download a file. You can download either to a filename or to a
      Mangle::Stream.
@@ -15,7 +15,7 @@ namespace Tasks
      example.
    */
 
-  struct DownloadTask : Jobs::Job
+  struct DownloadTask : Job
   {
     DownloadTask(const std::string &_url, const std::string &_file)
       : url(_url), file(_file) {}

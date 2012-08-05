@@ -26,7 +26,7 @@
 
 namespace Spread
 {
-  struct HashTask : Jobs::Job
+  struct HashTask : Job
   {
     typedef std::multimap<Hash, std::string> HashDir;
     typedef std::pair<Hash, std::string> HDValue;
@@ -59,7 +59,7 @@ namespace Spread
 
   protected:
     // Create the job that performs this task.
-    virtual Jobs::Job *createJob() = 0;
+    virtual Job *createJob() = 0;
 
   private:
     void doJob();

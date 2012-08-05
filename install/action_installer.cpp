@@ -8,7 +8,6 @@
 #include <stdexcept>
 
 using namespace Spread;
-using namespace Jobs;
 
 enum Type
   {

@@ -2,8 +2,9 @@
 
 #include <assert.h>
 #include <exception>
+#include "thread.cpp"
 
-using namespace Jobs;
+using namespace Spread;
 
 Job::Job() : info(new JobInfo)
 {
@@ -43,6 +44,16 @@ bool Job::runClient(Job &job, bool includeStats)
   if(includeStats) setClient(job.getInfo());
   else setAbortClient(job.getInfo());
   job.run();
+  return clearClient();
+}
+
+bool Job::waitClient(JobInfoPtr client, bool includeStats)
+{
+  if(clearClient()) return true;
+  if(clearClient()) return true;
+  if(includeStats) setClient(client);
+  else setAbortClient(client);
+  while(!client->isFinished()) Thread::sleep(0.05);
   return clearClient();
 }
 

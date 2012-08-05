@@ -8,7 +8,6 @@ using namespace std;
 
 using namespace Mangle::Stream;
 using namespace Spread;
-using namespace Jobs;
 
 // This is used to generate the test set. It is NOT part of the test
 // itself.

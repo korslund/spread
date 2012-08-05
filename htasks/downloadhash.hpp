@@ -17,7 +17,7 @@ namespace Spread
 
   private:
     std::string url;
-    Jobs::Job *createJob();
+    Job *createJob();
   };
 };
 

@@ -3,7 +3,7 @@
 
 #include "job.hpp"
 
-namespace Jobs
+namespace Spread
 {
   /* This black-box module swallows any Job object, executes it in a
      separate thread, then deletes the object after it returns. (The
@@ -16,7 +16,7 @@ namespace Jobs
    */
   struct Thread
   {
-    static void run(Job *j, bool async=true);
+    static JobInfoPtr run(Job *j, bool async=true);
     static void sleep(double seconds);
   };
 }

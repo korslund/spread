@@ -3,13 +3,13 @@
 #include <boost/filesystem.hpp>
 #include <mangle/stream/servers/null_stream.hpp>
 
-using namespace Tasks;
+using namespace Spread;
 
 std::string DownloadTask::userAgent = "Tiggit/1.0 - see http://tiggit.net/";
 
 struct DLProgress : cURL::Progress
 {
-  Jobs::JobInfoPtr info;
+  JobInfoPtr info;
 
   bool progress(int64_t total, int64_t now)
   {

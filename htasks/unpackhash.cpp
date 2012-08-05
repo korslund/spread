@@ -7,8 +7,6 @@
 #include <stdexcept>
 
 using namespace Spread;
-using namespace Jobs;
-using namespace Tasks;
 using namespace Mangle::Stream;
 
 /* This output writer is used for indexing. It stores names + hashes

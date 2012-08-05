@@ -5,7 +5,7 @@
 #include <boost/smart_ptr.hpp>
 #include <stdint.h>
 
-namespace Jobs
+namespace Spread
 {
   enum JobStatus
     {
@@ -32,6 +32,7 @@ namespace Jobs
 
     int64_t getCurrent();
     int64_t getTotal();
+    std::string getMessage();
     void abort();
 
     bool isCreated() const { return status >= ST_CREATED; }
@@ -49,7 +50,6 @@ namespace Jobs
     void setDone() { status = ST_DONE; }
     void setError(const std::string &what);
 
-    std::string getMessage() const { return message; }
     void setProgress(int64_t cur, int64_t tot);
     void setProgress(int64_t cur);
     bool checkStatus();

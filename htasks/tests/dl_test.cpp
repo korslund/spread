@@ -3,7 +3,6 @@
 #include <iostream>
 using namespace std;
 using namespace Spread;
-using namespace Jobs;
 
 int main()
 {

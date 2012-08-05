@@ -1,7 +1,7 @@
 #include "jobinfo.hpp"
 #include <assert.h>
 
-using namespace Jobs;
+using namespace Spread;
 
 int64_t JobInfo::getCurrent()
 {
@@ -15,6 +15,13 @@ int64_t JobInfo::getTotal()
   JobInfoPtr p = statsClient.lock();
   if(p) total = p->getTotal();
   return total;
+}
+
+std::string JobInfo::getMessage()
+{
+  JobInfoPtr p = statsClient.lock();
+  if(p) message = p->getMessage();
+  return message;
 }
 
 void JobInfo::abort()
@@ -52,7 +59,7 @@ bool JobInfo::clearClient()
       if(p->isNonSuccess())
         {
           status = p->status;
-          message = p->message;
+          message = p->getMessage();
         }
     }
   p = statsClient.lock();
@@ -61,14 +68,12 @@ bool JobInfo::clearClient()
     {
       // Copy error states from the client info structs
       if(p->isNonSuccess())
-        {
-          status = p->status;
-          message = p->message;
-        }
+        status = p->status;
 
       // Copy final progress as well
       current = p->getCurrent();
       total = p->getTotal();
+      message = p->getMessage();
     }
 
   return checkStatus();

@@ -3,7 +3,7 @@
 
 #include "jobinfo.hpp"
 
-namespace Jobs
+namespace Spread
 {
   struct Job
   {
@@ -46,8 +46,19 @@ namespace Jobs
     /* Run a client job in the current thread. Calls setClient,
        job.run() and clearClient(). Returns the result of
        clearClient().
+
+       Exit doJob() immediately if the function returns true.
      */
     bool runClient(Job &job, bool includeStats=true);
+
+    /* Same as runClient, but instead waits for a job running in a
+       background thread. This is useful when you don't have access to
+       the client's Job directly, only the info ptr.
+
+       Like the above functions, you should exit doJob() immediately
+       if the function returns true.
+     */
+    bool waitClient(JobInfoPtr client, bool includeStats=true);
 
     void setClient(JobInfoPtr inf) { info->setClient(inf); }
     void setStatsClient(JobInfoPtr inf) { info->setStatsClient(inf); }

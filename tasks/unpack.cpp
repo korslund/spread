@@ -1,11 +1,11 @@
 #include "unpack.hpp"
 #include <unpack/auto.hpp>
 
-using namespace Tasks;
+using namespace Spread;
 
 struct UProgress : Unpack::Progress
 {
-  Jobs::JobInfoPtr info;
+  JobInfoPtr info;
 
   bool progress(int64_t total, int64_t now)
   {

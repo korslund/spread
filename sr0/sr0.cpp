@@ -14,7 +14,6 @@
 using namespace Spread;
 using namespace Mangle::Stream;
 using namespace boost::filesystem;
-using namespace Jobs;
 
 typedef UnpackHash::HashMap HMap;
 
@@ -74,7 +73,7 @@ struct Sr0Job : Job
 
         if(isUrl)
           {
-            Tasks::DownloadTask dl(fetch, StringWriter::Open(netVer));
+            DownloadTask dl(fetch, StringWriter::Open(netVer));
             if(runClient(dl)) return;
           }
         else
@@ -100,7 +99,7 @@ struct Sr0Job : Job
       {
         std::string url = zipfile;
         zipfile = cache->createTmpFilename();
-        Tasks::DownloadTask dl(url, zipfile);
+        DownloadTask dl(url, zipfile);
         if(runClient(dl)) return;
       }
     else if(!exists(zipfile))

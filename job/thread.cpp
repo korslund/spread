@@ -3,7 +3,7 @@
 #include <boost/thread.hpp>
 #include <assert.h>
 
-using namespace Jobs;
+using namespace Spread;
 
 struct ThreadObj
 {
@@ -22,10 +22,13 @@ void Thread::sleep(double seconds)
   boost::this_thread::sleep(boost::posix_time::microseconds(msecs));
 }
 
-void Thread::run(Job *j, bool async)
+JobInfoPtr Thread::run(Job *j, bool async)
 {
+  assert(j);
   ThreadObj to;
+  JobInfoPtr info = j->getInfo();
   to.j = j;
   if(async) boost::thread trd(to);
   else to();
+  return info;
 }

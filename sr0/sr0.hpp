@@ -49,7 +49,7 @@
      the zip.
  */
 
-#include "job/job.hpp"
+#include "job/jobinfo.hpp"
 #include "cache/cache.hpp"
 
 namespace Spread
@@ -70,20 +70,20 @@ namespace Spread
 
        If async==true, the install is run in a background thread.
      */
-    static Jobs::JobInfoPtr fetchURL(const std::string &url,
-                                     const std::string &destDir,
-                                     Cache::Cache &cache,
-                                     bool async=true);
+    static JobInfoPtr fetchURL(const std::string &url,
+                               const std::string &destDir,
+                               Cache::Cache &cache,
+                               bool async=true);
 
     /* Same as fetchURL, but fetch from a filesystem dir instead.
 
        This may still cause files to be downloaded if the installation
        data itself uses URL rules.
      */
-    static Jobs::JobInfoPtr fetchFile(const std::string &dir,
-                                      const std::string &destDir,
-                                      Cache::Cache &cache,
-                                      bool async=true);
+    static JobInfoPtr fetchFile(const std::string &dir,
+                                const std::string &destDir,
+                                Cache::Cache &cache,
+                                bool async=true);
   };
 }
 #endif

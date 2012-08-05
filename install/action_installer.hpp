@@ -13,7 +13,7 @@
 
 namespace Spread
 {
-  struct ActionInstaller : Jobs::Job
+  struct ActionInstaller : Job
   {
     /* Report a broken URL.
 
