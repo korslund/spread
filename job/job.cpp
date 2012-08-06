@@ -2,7 +2,7 @@
 
 #include <assert.h>
 #include <exception>
-#include "thread.cpp"
+#include "thread.hpp"
 
 using namespace Spread;
 

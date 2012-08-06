@@ -6,3 +6,4 @@ cmake_install.cmake
 tests/*_test
 old/
 */tests/_*
+*.a
