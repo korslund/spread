@@ -50,6 +50,9 @@ namespace Spread
     void setDone() { status = ST_DONE; }
     void setError(const std::string &what);
 
+    // Throw an exception on error or abort status
+    void failError();
+
     void setProgress(int64_t cur, int64_t tot);
     void setProgress(int64_t cur);
     bool checkStatus();

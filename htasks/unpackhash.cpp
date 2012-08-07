@@ -77,6 +77,8 @@ void UnpackHash::makeIndex(const std::string &arcFile, HashMap &index,
   unp.run();
   // Needed to include the last file
   m->open("");
+
+  unp.failError();
 }
 
 /* This output writer is used for unpacking. It looks up filenames and

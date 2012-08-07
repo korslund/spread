@@ -3,6 +3,7 @@
 #include "comp85.hpp"
 #include <stdexcept>
 #include <boost/thread/recursive_mutex.hpp>
+#include <boost/filesystem.hpp>
 
 using namespace Misc;
 
@@ -51,10 +52,19 @@ void JConfig::load()
 
 void JConfig::save()
 {
+  namespace bs = boost::filesystem;
+
   if(file == "")
     return;
 
   p->L();
+  if(bs::exists(file))
+    {
+      std::string old = file + ".old";
+      if(bs::exists(old))
+        bs::remove(old);
+      bs::rename(file,old);
+    }
   ReadJson::writeJson(file, p->val);
   p->U();
 }

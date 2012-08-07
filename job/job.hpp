@@ -19,6 +19,7 @@ namespace Spread
 
     JobInfoPtr run();
     JobInfoPtr getInfo() { return info; }
+    void failError() { info->failError(); }
 
   protected:
     /* Run the actual job. Overwrite this in child classes.

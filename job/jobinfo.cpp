@@ -1,5 +1,6 @@
 #include "jobinfo.hpp"
 #include <assert.h>
+#include <stdexcept>
 
 using namespace Spread;
 
@@ -29,6 +30,14 @@ void JobInfo::abort()
   JobInfoPtr p = abortClient.lock();
   if(p) p->abort();
   doAbort = true;
+}
+
+void JobInfo::failError()
+{
+  if(isError())
+    throw std::runtime_error(getMessage());
+  else if(isAbort())
+    throw std::runtime_error("Job aborted (last status: '" + getMessage() + "')");
 }
 
 void JobInfo::setClient(JobInfoPtr client)

@@ -4,6 +4,9 @@ include_directories("../")
 include_directories("../../libs/")
 include_directories("../../libs/jsoncpp/include/")
 
+find_package(Boost COMPONENTS filesystem system REQUIRED)
+set(BLIBS ${Boost_LIBRARIES})
+
 set(SPDIR ../..)
 set(LIBDIR ../../libs)
 
@@ -24,5 +27,6 @@ add_executable(comp85_test comp85_test.cpp ${C85})
 add_executable(json_test json_test.cpp ${READJSON})
 
 add_executable(conf_test conf_test.cpp ${CONF})
+target_link_libraries(conf_test ${BLIBS})
 
 add_executable(rand_test rand_test.cpp)
