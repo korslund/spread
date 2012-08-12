@@ -27,7 +27,7 @@ Hash ddd("dddd");
 
 int main()
 {
-  addRule(rules, "URL aaaa test-url 2 4.3");
+  addRule(rules, "URL aaaa 2 4.3 test-url");
   addRule(rules, "URL bbbb other-url");
   addRule(rules, "ARC bbbb cccc");
 

@@ -13,9 +13,6 @@ typedef std::vector<URLPtr> UVec;
 typedef std::map<Hash, UVec> UMap;
 typedef std::map<Hash, ArcPtr> AMap;
 
-#include <iostream>
-using namespace std;
-
 #define LOCK boost::lock_guard<boost::recursive_mutex> lock(ptr->mutex)
 
 struct RuleSet::_RuleSetInternal

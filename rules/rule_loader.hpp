@@ -21,6 +21,10 @@ namespace Spread
 
   // Add one rule from a rule string
   extern void addRule(RuleSet&, const std::string &ruleString);
+
+  // Decode an URL string on the format "[prio] [weight] <url>"
+  extern void decodeURL(const std::string &input, std::string &output,
+                        int &prio, float &weight);
 }
 
 #endif

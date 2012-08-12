@@ -1,6 +1,6 @@
 Rule search:
 aaaa - Rule found:
-  Rule: "URL aaaa test-url 2 4.3"
+  Rule: "URL aaaa 2 4.3 test-url"
   => aaaa
   URL: test-url
   Priority: 2
@@ -32,9 +32,9 @@ Archive search:
 
 Rule search:
 aaaa - Rule found:
-  Rule: "URL aaaa xyz 3"
+  Rule: "URL aaaa 3 url with spaces in it"
   => aaaa
-  URL: xyz
+  URL: url%20with%20spaces%20in%20it
   Priority: 3
   Weight: 1
 
@@ -54,7 +54,7 @@ Archive search:
 
 Rule search:
 cccc - Rule found:
-  Rule: "URL cccc something 1 1.9"
+  Rule: "URL cccc 1 1.9 something"
   => cccc
   URL: something
   Priority: 1

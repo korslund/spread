@@ -83,6 +83,21 @@ void Hash::copy(const void* source)
   memcpy(data, source, 40);
 }
 
+void Hash::copy(const Hash &other)
+{
+  copy(other.data);
+
+  // Copy context if any
+  sha256_ctx *them = (sha256_ctx*)other.context;
+  if(them)
+    {
+      assert(!context);
+      sha256_ctx *us = new sha256_ctx;
+      context = us;
+      *us = *them;
+    }
+}
+
 static char hexDigit(int i)
 {
   assert(i >= 0 && i < 16);

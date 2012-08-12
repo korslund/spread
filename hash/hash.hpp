@@ -15,12 +15,26 @@ namespace Spread
      A hash is a 40 byte structure, where the first 32 bytes is the
      SHA-256 hash of the object data, and the last 8 bytes represent
      the object's size.
+
+     Hashes can be computed in one go, or iteratively through
+     update()/finish().
+
+     Hashes are fully usable as value types, and can safely be copied
+     and passed by value. They can also be used as key values in STL
+     containers.
+
+     NOTE: Copying partial hashes (where you have called update() but
+     not finish()) will work, but make sure the assignment operator=
+     or the copy constructor is invoked (ie. NOT a bitwise copy.)
+     Otherwise results are undefined.
    */
   struct Hash
   {
     Hash() : context(NULL) { clear(); }
     Hash(const std::string &hex) : context(NULL) { fromString(hex); }
     Hash(const void *input, uint32_t len) : context(NULL) { hash(input, len); }
+    Hash(const Hash &h) : context(NULL) { copy(h); }
+    ~Hash() { dealloc(); }
 
     // Zeros out the hash digest
     void clear();
@@ -31,6 +45,10 @@ namespace Spread
     // Copy digest verbatim from another source. Must be 40 bytes
     // long.
     void copy(const void* source);
+
+    // Copy contents from another Hash. Will also copy partial hash
+    // state (from update()/finish() functions), if any.
+    void copy(const Hash &other);
 
     // Hash a complete buffer, and store the result in this struct.
     void hash(const void *input, uint32_t len);
@@ -45,13 +63,20 @@ namespace Spread
        returns this struct for convenience.
 
        Calling update() again after finish() starts a new hash
-       sequence.
+       sequence. Calling finish() with no preceding update() step
+       counts as hashing a zero-length buffer.
 
        Calls to clear(), copy(), hash() and fromString() will also
        abort the sequence.
     */
     void update(const void *input, uint32_t len);
     Hash finish();
+
+    Hash operator=(const Hash &other)
+    {
+      copy(other);
+      return *this;
+    }
 
     // Compare two hashes for equality
     bool operator==(const Hash &other) const

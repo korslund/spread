@@ -46,6 +46,52 @@ static Hash getHash(const char* &ptr)
   return h;
 }
 
+bool isNum(const std::string &tmp)
+{
+  if(tmp == "") return false;
+
+  char c = tmp[0];
+
+  return (c >= '0' && c <= '9') || c == '.' || c == '-' || c == '+';
+}
+
+void Spread::decodeURL(const std::string &input, std::string &url,
+                       int &prio, float &weight)
+{
+  prio = 1;
+  weight = 1.0;
+
+  const char *ptr = input.c_str();
+
+  std::string tmp = getNext(ptr);
+  if(isNum(tmp))
+    {
+      prio = atoi(tmp.c_str());
+
+      tmp = getNext(ptr);
+      if(isNum(tmp))
+        {
+          weight = atof(tmp.c_str());
+          url = getNext(ptr);
+        }
+      else
+        url = tmp;
+    }
+  else
+    url = tmp;
+
+  // 'url' now contains the first word in the URL. Add the rest, and
+  // replace spaces with %20
+  while(*ptr)
+    {
+      char c = *(ptr++);
+      if(c == ' ')
+        url += "%20";
+      else
+        url += c;
+    }
+}
+
 void Spread::addRule(RuleSet &rules, const std::string &str)
 {
   const char *ptr = str.c_str();
@@ -56,24 +102,17 @@ void Spread::addRule(RuleSet &rules, const std::string &str)
   if(tmp == "URL")
     {
       Hash hash = getHash(ptr);
-      std::string url = getNext(ptr); // Url
-      int prio = 1;
-      float w = 1.0;
+
+      int prio;
+      float w;
+      std::string url;
+
+      decodeURL(ptr, url, prio, w);
 
       if(hash.isNull() || url == "")
         fail("Invalid URL rule " + str);
 
-      tmp = getNext(ptr);
-      if(tmp != "")
-        {
-          prio = atoi(tmp.c_str());
-
-          tmp = getNext(ptr);
-          if(tmp != "")
-            w = atof(tmp.c_str());
-        }
-
-      rules.addURL(hash, url, prio, w, str);
+       rules.addURL(hash, url, prio, w, str);
     }
   else if(tmp == "ARC")
     {
