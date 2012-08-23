@@ -6,6 +6,15 @@ aaaa - Rule found:
   Priority: 2
   Weight: 4.3
 
+ALL RULES:
+Rule found:
+  Rule: "URL aaaa 2 4.3 test-url"
+  => aaaa
+  URL: test-url
+  Priority: 2
+  Weight: 4.3
+
+
 Archive search:
   Nothing
 
@@ -16,6 +25,15 @@ bbbb - Rule found:
   URL: other-url
   Priority: 1
   Weight: 1
+
+ALL RULES:
+Rule found:
+  Rule: "URL bbbb other-url"
+  => bbbb
+  URL: other-url
+  Priority: 1
+  Weight: 1
+
 
 Archive search:
   ARC arc=bbbb dir=cccc
@@ -38,6 +56,22 @@ aaaa - Rule found:
   Priority: 3
   Weight: 1
 
+ALL RULES:
+Rule found:
+  Rule: "URL aaaa 2 4.3 test-url"
+  => aaaa
+  URL: test-url
+  Priority: 2
+  Weight: 4.3
+
+Rule found:
+  Rule: "URL aaaa 3 url with spaces in it"
+  => aaaa
+  URL: url%20with%20spaces%20in%20it
+  Priority: 3
+  Weight: 1
+
+
 Archive search:
   ARC arc=dddd dir=aaaa
 
@@ -49,6 +83,15 @@ bbbb - Rule found:
   Priority: 1
   Weight: 1
 
+ALL RULES:
+Rule found:
+  Rule: "URL bbbb other-url"
+  => bbbb
+  URL: other-url
+  Priority: 1
+  Weight: 1
+
+
 Archive search:
   ARC arc=bbbb dir=cccc
 
@@ -59,6 +102,15 @@ cccc - Rule found:
   URL: something
   Priority: 1
   Weight: 1.9
+
+ALL RULES:
+Rule found:
+  Rule: "URL cccc 1 1.9 something"
+  => cccc
+  URL: something
+  Priority: 1
+  Weight: 1.9
+
 
 Archive search:
   ARC arc=bbbb dir=cccc

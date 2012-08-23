@@ -6,6 +6,8 @@
 
 namespace Spread
 {
+  typedef std::set<const Rule*> RuleList;
+
   struct RuleFinder
   {
     /* Return the best known Rule that produces the given hash. The
@@ -15,6 +17,11 @@ namespace Spread
        Returns NULL if no rule was found.
      */
     virtual const Rule *findRule(const Hash &hash) const = 0;
+
+    /* Insert ALL known rules for the given hash into 'output'.
+     */
+    virtual void findAllRules(const Hash &hash, RuleList &output) const = 0;
+
     virtual ~RuleFinder() {}
   };
 }

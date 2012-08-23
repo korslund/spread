@@ -3,6 +3,7 @@
 
 #include "hash/hash.hpp"
 #include <vector>
+#include <set>
 
 namespace Spread
 {

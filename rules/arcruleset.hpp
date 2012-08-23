@@ -39,6 +39,16 @@ namespace Spread
      */
     const Rule *findRule(const Hash &hash) const;
 
+    /* Find all rules for a given hash. In addition to inserting our
+       own archive rules (if any), this also calls
+       base->findAllRules().
+
+       NOTE: At the moment we only store one archive rule per hash, so
+       this will never insert more than one rule (not counting
+       whatever base->findAllRules inserts.)
+     */
+    void findAllRules(const Hash &hash, RuleList &output) const;
+
     /* Associate a given archive with files in a directory. The
        necessary data can be obtained from RuleSet::findArchive().
      */

@@ -28,6 +28,15 @@ ArcRuleSet::ArcRuleSet(RuleFinder *_base)
   ptr.reset(new _Internal);
 }
 
+void ArcRuleSet::findAllRules(const Hash &hash, RuleList &output) const
+{
+  const Rule *r = ptr->findFile(hash);
+  if(r) output.insert(r);
+
+  if(base)
+    base->findAllRules(hash, output);
+}
+
 const Rule *ArcRuleSet::findRule(const Hash &hash) const
 {
   const ArcRule *r = ptr->findFile(hash);

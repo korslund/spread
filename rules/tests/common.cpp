@@ -11,17 +11,8 @@ std::string h(const Hash &hash)
   return hash.toString().substr(0,8);
 }
 
-void test(const Hash &hash, RuleFinder &rules)
+void test(const Rule *r)
 {
-  cout << h(hash) << " - ";
-  const Rule *r = rules.findRule(hash);
-
-  if(!r)
-    {
-      cout << "NOT FOUND\n";
-      return;
-    }
-
   cout << "Rule found:\n  Rule: \"" << r->ruleString << "\"\n";
   for(int i=0; i<r->deps.size(); i++)
     cout << "  <= " << h(r->deps[i]) << endl;
@@ -44,4 +35,30 @@ void test(const Hash &hash, RuleFinder &rules)
            << "\n\n";
     }
   else assert(0);
+}
+
+void test(const Hash &hash, RuleFinder &rules)
+{
+  cout << h(hash) << " - ";
+  const Rule *r = rules.findRule(hash);
+
+  RuleList rlist;
+  rules.findAllRules(hash, rlist);
+
+  if(!r)
+    {
+      cout << "NOT FOUND\n";
+      assert(rlist.size() == 0);
+      return;
+    }
+
+  assert(rlist.size() != 0);
+  test(r);
+
+  cout << "ALL RULES:\n";
+  RuleList::iterator it;
+  for(it = rlist.begin(); it != rlist.end(); it++)
+    test(*it);
+
+  cout << "\n";
 }

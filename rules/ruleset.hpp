@@ -35,6 +35,13 @@ namespace Spread
      */
     const Rule *findRule(const Hash &hash) const;
 
+    /* Inherited from RuleFinder.
+
+       Find all rules corresponding to a hash and add them to the
+       given set.
+     */
+    void findAllRules(const Hash &hash, RuleList &output) const;
+
     /* Add an URL rule. URL rules are directly searchable through
        findRule().
     */
@@ -43,13 +50,15 @@ namespace Spread
                 std::string ruleString = "");
 
     /* Add an archive rule. These are searchable through
-       findArchive()
+       findArchive().
      */
     void addArchive(const Hash &hash, const Hash &dirHash,
                     std::string ruleString = "");
 
     /* Search archive database. Will return archives that matches
        EITHER the archive hash or the dir hash.
+
+       Returns NULL if nothing is found.
      */
     const ArcRuleData *findArchive(const Hash &hash) const;
 

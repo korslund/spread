@@ -38,6 +38,9 @@ struct MyFinder : RuleFinder
 
     return NULL;
   }
+
+  // Not used in this test
+  void findAllRules(const Hash&, RuleList&) const { assert(0); }
 };
 
 MyFinder rules;

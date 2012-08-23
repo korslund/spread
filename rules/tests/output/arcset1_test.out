@@ -8,6 +8,13 @@ HELLO - Rule found:
   <= ARC1
   => HELLO
   Produces 1 file(s)
+ALL RULES:
+Rule found:
+  Rule: "Rule1"
+  <= ARC1
+  => HELLO
+  Produces 1 file(s)
+
 WORLD - NOT FOUND
 ARC1 - NOT FOUND
 
@@ -18,12 +25,28 @@ HELLO - Rule found:
   => HELLO
   => WORLD
   Produces 2 file(s)
+ALL RULES:
+Rule found:
+  Rule: "Rule2"
+  <= ARC2
+  => HELLO
+  => WORLD
+  Produces 2 file(s)
+
 WORLD - Rule found:
   Rule: "Rule2"
   <= ARC2
   => HELLO
   => WORLD
   Produces 2 file(s)
+ALL RULES:
+Rule found:
+  Rule: "Rule2"
+  <= ARC2
+  => HELLO
+  => WORLD
+  Produces 2 file(s)
+
 ARC1 - NOT FOUND
 
 Adding archive 3:
@@ -33,11 +56,26 @@ HELLO - Rule found:
   => HELLO
   => WORLD
   Produces 2 file(s)
+ALL RULES:
+Rule found:
+  Rule: "Rule2"
+  <= ARC2
+  => HELLO
+  => WORLD
+  Produces 2 file(s)
+
 WORLD - Rule found:
   Rule: "Rule3"
   <= ARC1
   => WORLD
   Produces 1 file(s)
+ALL RULES:
+Rule found:
+  Rule: "Rule3"
+  <= ARC1
+  => WORLD
+  Produces 1 file(s)
+
 ARC1 - NOT FOUND
 
 Testing wrapper:
@@ -47,3 +85,11 @@ HELLO - Rule found:
   => HELLO
   => WORLD
   Produces 2 file(s)
+ALL RULES:
+Rule found:
+  Rule: "Rule2"
+  <= ARC2
+  => HELLO
+  => WORLD
+  Produces 2 file(s)
+

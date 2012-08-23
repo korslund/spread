@@ -23,23 +23,44 @@ struct RuleSet::_RuleSetInternal
   Misc::Random rnd;
   boost::recursive_mutex mutex;
 
-  const ArcRuleData* findArc(const Hash &hash)
+  const ArcRuleData* findArc(const Hash &hash) const
   {
-    AMap::iterator it = arcs.find(hash);
+    AMap::const_iterator it = arcs.find(hash);
     if(it == arcs.end())
       return NULL;
 
     return it->second.get();
   }
 
+  // Adds all URL rules for 'hash' to the given vector
+  void addURLs(const Hash &hash, RuleList &output) const
+  {
+    UMap::const_iterator it = urls.find(hash);
+    if(it == urls.end()) return;
+
+    const UVec &vec = it->second;
+    if(!vec.size()) return;
+
+    for(int i=0; i<vec.size(); i++)
+      {
+        const URLRule *r = vec[i].get();
+
+        // Skip disabled rules
+        if(r->isBroken) continue;
+
+        // Add it!
+        output.insert(r);
+      }
+  }
+
   // Returns an URL rule or NULL
   const Rule* findURL(const Hash &hash)
   {
-    UMap::iterator it = urls.find(hash);
+    UMap::const_iterator it = urls.find(hash);
     if(it == urls.end())
       return NULL;
 
-    UVec &vec = it->second;
+    const UVec &vec = it->second;
 
     if(!vec.size())
       return NULL;
@@ -113,6 +134,12 @@ struct RuleSet::_RuleSetInternal
 RuleSet::RuleSet()
 {
   ptr.reset(new _RuleSetInternal);
+}
+
+void RuleSet::findAllRules(const Hash &hash, RuleList &output) const
+{
+  LOCK;
+  ptr->addURLs(hash, output);
 }
 
 const Rule *RuleSet::findRule(const Hash &hash) const
