@@ -30,4 +30,8 @@ set(RULES ${RDIR}/install_finder.cpp ${RDIR}/ruleset.cpp ${RDIR}/arcruleset.cpp 
 set(INSTALL ${IDIR}/action_installer.cpp ${IDIR}/build_actions.cpp ${IDIR}/installer.cpp)
 set(SR0 ${S0DIR}/sr0.cpp)
 
-add_library(LibSpread ${JSON} ${JOB} ${MISC} ${UNPACK} ${TASKS} ${HASH} ${HTASKS} ${DIR} ${SCACHE} ${RULES} ${INSTALL} ${SR0})
+add_library(Spread ${JSON} ${JOB} ${MISC} ${UNPACK} ${TASKS} ${HASH} ${HTASKS} ${DIR} ${SCACHE} ${RULES} ${INSTALL} ${SR0})
+
+set(GEN gen/listwriter.cpp gen/packlister.cpp)
+
+add_library(SpreadGen ${GEN})

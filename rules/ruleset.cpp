@@ -4,6 +4,7 @@
 #include <map>
 #include "misc/random.hpp"
 #include <boost/thread/recursive_mutex.hpp>
+#include <cstdio>
 
 using namespace Spread;
 
@@ -179,7 +180,25 @@ void RuleSet::addURL(const Hash &hash, const std::string &url,
                      std::string ruleString)
 {
   if(ruleString == "")
-    ruleString = "URL " + hash.toString() + " " + url;
+    {
+      ruleString = "URL " + hash.toString() + " ";
+
+      bool hasWeight = (weight != 1.0);
+
+      char buf[40];
+      if(priority != 1 || hasWeight)
+        {
+          std::snprintf(buf,40,"%d ", priority);
+          ruleString += buf;
+        }
+      if(hasWeight)
+        {
+          std::snprintf(buf,40,"%f ", weight);
+          ruleString += buf;
+        }
+
+      ruleString += url;
+    }
 
   LOCK;
   ptr->urls[hash].push_back

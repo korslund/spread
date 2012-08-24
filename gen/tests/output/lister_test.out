@@ -1,0 +1,131 @@
+Non-existing dir:
+ERROR: Pack 'test1': could not load directory hash oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+
+Created dir file but nothing else:
+Dir FOUND
+  PACKS:
+    test1:
+      Dirs: oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+      Hints:
+  DIR-FILES:
+    oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+  RULES:
+  ARCHIVES:
+
+Added rules for one of the files:
+Dir FOUND
+  PACKS:
+    test1:
+      Dirs: oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+      Hints:
+  DIR-FILES:
+    oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+  RULES:
+    URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF url-to-hello
+    URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF 3 2.000000 other-hello-url
+  ARCHIVES:
+
+Testing with hint:
+Dir FOUND
+  PACKS:
+    test1:
+      Dirs: oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+      Hints: FAKE_ARC_HASH
+  DIR-FILES:
+    FAKE_ARC_HASH
+    oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+  RULES:
+    URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF url-to-hello
+    URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF 3 2.000000 other-hello-url
+  ARCHIVES:
+
+Added archive, but no hint:
+Dir FOUND
+  PACKS:
+    test1:
+      Dirs: oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+      Hints:
+  DIR-FILES:
+    oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+  RULES:
+    URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF url-to-hello
+    URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF 3 2.000000 other-hello-url
+  ARCHIVES:
+
+Both archive and hint:
+Dir FOUND
+  PACKS:
+    test1:
+      Dirs: oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+      Hints: FAKE_ARC_DIR
+  DIR-FILES:
+    FAKE_ARC_DIR
+    oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+  RULES:
+    URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF url-to-hello
+    URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF 3 2.000000 other-hello-url
+  ARCHIVES:
+    ARC FAKE_ARC_HASH FAKE_ARC_DIR
+
+Testing with full archive:
+Dir FOUND
+  PACKS:
+    test1:
+      Dirs: oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+      Hints:
+  DIR-FILES:
+    oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+  RULES:
+    URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF url-to-hello
+    URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF 3 2.000000 other-hello-url
+  ARCHIVES:
+    ARC ARC_WITH_DIR oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+
+Now with hint:
+Dir FOUND
+  PACKS:
+    test1:
+      Dirs: oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+      Hints: FAKE_ARC_DIR
+  DIR-FILES:
+    FAKE_ARC_DIR
+    oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+  RULES:
+    URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF url-to-hello
+    URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF 3 2.000000 other-hello-url
+  ARCHIVES:
+    ARC FAKE_ARC_HASH FAKE_ARC_DIR
+    ARC ARC_WITH_DIR oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+
+Add an URL for the hint as well:
+Dir FOUND
+  PACKS:
+    test1:
+      Dirs: oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+      Hints: FAKE_ARC_DIR
+  DIR-FILES:
+    FAKE_ARC_DIR
+    oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+  RULES:
+    URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF url-to-hello
+    URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF 3 2.000000 other-hello-url
+    URL FAKE_ARC_HASH 12 3.400000 fake-url
+  ARCHIVES:
+    ARC FAKE_ARC_HASH FAKE_ARC_DIR
+    ARC ARC_WITH_DIR oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+
+With URL rule for the full archive (no hint):
+Dir FOUND
+  PACKS:
+    test1:
+      Dirs: oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+      Hints:
+  DIR-FILES:
+    oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+  RULES:
+    URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF url-to-hello
+    URL LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF 3 2.000000 other-hello-url
+    URL ARC_WITH_DIR url-to-arc
+  ARCHIVES:
+    ARC ARC_WITH_DIR oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
+

@@ -14,7 +14,7 @@ namespace Unpack
     - open("filename") is called for all files in the archive. The
       returned stream is expected to be writable, except for directory
       entries. The data for each file is written to the stream, and
-      the StreamPtr is dereferenced.
+      the StreamPtr is reset.
 
     - Returning an empty StreamPtr is allowed, and will cause the file
       to be skipped. This can be used to index the archive.
