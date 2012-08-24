@@ -57,6 +57,10 @@ namespace SpreadGen
     void addHint(const std::string &packName,
                  const Spread::Hash &dirHash);
 
+    // Set (optional) version string describing this package release
+    void setVersion(const std::string &packName, const std::string &version)
+    { packs[packName].version = version; }
+
     // Output:
 
     typedef std::vector<Spread::Hash> HashList;
@@ -65,6 +69,7 @@ namespace SpreadGen
     struct PackInfo
     {
       HashList dirs, hints;
+      std::string version;
     };
 
     // Package list

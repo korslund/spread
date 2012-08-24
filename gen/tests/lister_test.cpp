@@ -39,7 +39,7 @@ void print(const PackLister &lst)
         cout << "\n      Hints:";
         for(int i=0; i<it->second.hints.size(); i++)
           cout << " " << it->second.hints[i];
-        cout << endl;
+        cout << "\n      Version: " << it->second.version << endl;
       }
   }
 
@@ -72,7 +72,11 @@ void test1(const std::string &msg, bool hint=false)
 
   PackLister lst(cache, rules);
 
-  if(hint) lst.addHint("test1", fakeArc);
+  if(hint)
+    {
+      lst.addHint("test1", fakeArc);
+      lst.setVersion("test1", "with-hint");
+    }
 
   try { lst.addDir("test1", dirHash); }
   catch(exception &e)

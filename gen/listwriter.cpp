@@ -35,8 +35,15 @@ void ListWriter::write(const PackLister &lst, StreamFactoryPtr output)
         for(int i=0; i<it->second.hints.size(); i++)
           hints.append(it->second.hints[i].toString());
 
-        total.append(dirs);
-        total.append(hints);
+        if(dirs.size() == 0)
+          throw runtime_error("Package '" + it->first + "' has no output directories.");
+        total["dirs"] = dirs;
+
+        if(hints.size() != 0)
+          total["hints"] = hints;
+
+        if(it->second.version != "")
+          total["version"] = it->second.version;
 
         packs[it->first] = total;
       }

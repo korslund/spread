@@ -202,9 +202,21 @@ std::string CacheIndex::findHash(const Hash &hash)
   Entry *ent = ptr->find(hash);
   while(ent)
     {
-      // Check the file before returning
-      if(addFile(ent->file) == hash)
-        return ent->file;
+      // Copy the string to make sure we don't delete then use it
+      std::string file = ent->file;
+
+      // Does the file still exist?
+      if(bf::exists(file))
+        {
+          // Check the file before returning it
+          if(addFile(file) == hash)
+            return file;
+        }
+      else
+        {
+          // Nope. Kill the entry before trying again.
+          removeFile(file);
+        }
 
       // Oops, that file didn't match after all. Try another one.
       ent = ptr->find(hash);

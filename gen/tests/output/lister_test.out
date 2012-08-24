@@ -7,6 +7,7 @@ Dir FOUND
     test1:
       Dirs: oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
       Hints:
+      Version: 
   DIR-FILES:
     oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
   RULES:
@@ -18,6 +19,7 @@ Dir FOUND
     test1:
       Dirs: oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
       Hints:
+      Version: 
   DIR-FILES:
     oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
   RULES:
@@ -31,6 +33,7 @@ Dir FOUND
     test1:
       Dirs: oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
       Hints: FAKE_ARC_HASH
+      Version: with-hint
   DIR-FILES:
     FAKE_ARC_HASH
     oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
@@ -45,6 +48,7 @@ Dir FOUND
     test1:
       Dirs: oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
       Hints:
+      Version: 
   DIR-FILES:
     oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
   RULES:
@@ -58,6 +62,7 @@ Dir FOUND
     test1:
       Dirs: oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
       Hints: FAKE_ARC_DIR
+      Version: with-hint
   DIR-FILES:
     FAKE_ARC_DIR
     oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
@@ -73,6 +78,7 @@ Dir FOUND
     test1:
       Dirs: oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
       Hints:
+      Version: 
   DIR-FILES:
     oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
   RULES:
@@ -87,6 +93,7 @@ Dir FOUND
     test1:
       Dirs: oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
       Hints: FAKE_ARC_DIR
+      Version: with-hint
   DIR-FILES:
     FAKE_ARC_DIR
     oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
@@ -103,6 +110,7 @@ Dir FOUND
     test1:
       Dirs: oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
       Hints: FAKE_ARC_DIR
+      Version: with-hint
   DIR-FILES:
     FAKE_ARC_DIR
     oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
@@ -120,6 +128,7 @@ Dir FOUND
     test1:
       Dirs: oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
       Hints:
+      Version: 
   DIR-FILES:
     oqlS8MHONKW6mOUZsgtaGJega3oflqzoMkNeGu7cDh9y
   RULES:

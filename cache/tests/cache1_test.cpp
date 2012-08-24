@@ -52,7 +52,6 @@ int main()
   Hash hello("hello",5);
   Hash testsh("ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ");
   add("test.sh");
-  add("Makefile");
   add("hello.dat", hello);
   add("hello.dat", Hash("WRONG!",6));
   add("nofile.dat");

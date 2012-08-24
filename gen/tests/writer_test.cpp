@@ -36,6 +36,7 @@ int main()
   rules.addURL(arcHash, "url-to-arc");
 
   lst.addDir("no-hint", dirHash);
+  lst.setVersion("no-hint", "1.2.3");
   lst.addHint("with-hint", arcHash2);
   lst.addDir("with-hint", dirHash);
 
