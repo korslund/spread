@@ -12,9 +12,9 @@
    source.
 
    SR0 itself uses the Spread rule system to update the directory, and
-   thus can much more bandwidth efficient than simply downloading a
-   full zip. If set up correctly, knowledge of existing files is used
-   to (sometimes greatly) reduce the amount of downloaded data needed.
+   can be much more bandwidth efficient than simply downloading a full
+   zip. If set up correctly, knowledge of existing files is used to
+   (sometimes greatly) reduce the amount of downloaded data needed.
 
    SR0 protocol:
 

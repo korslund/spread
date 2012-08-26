@@ -12,7 +12,7 @@ void PackLister::addHint(const std::string &packName, const Hash &dirHash)
   packs[packName].hints.push_back(dir);
 }
 
-void PackLister::addDir(const std::string &packName, const Hash &hash)
+Hash PackLister::addDir(const std::string &packName, const Hash &hash)
 {
   Hash dirHash = process(hash);
 
@@ -32,12 +32,14 @@ void PackLister::addDir(const std::string &packName, const Hash &hash)
   Directory::DirMap::const_iterator it;
   for(it = dir->dir.begin(); it != dir->dir.end(); it++)
     {
-      // Add any additional rules we can find to resolve this object
+      // Add any additional rules we can find to resolve each file
       const Hash &target = it->second;
       rules.findAllRules(target, ruleSet);
     }
 
   packs[packName].dirs.push_back(dirHash);
+
+  return dirHash;
 }
 
 Hash PackLister::process(const Hash &hash)

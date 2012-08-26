@@ -21,3 +21,6 @@ target_link_libraries(lister_test SpreadGen Spread ${LIBS})
 
 add_executable(writer_test writer_test.cpp ${MANGLE})
 target_link_libraries(writer_test SpreadGen Spread ${LIBS})
+
+add_executable(sr0_test sr0_test.cpp ${MANGLE})
+target_link_libraries(sr0_test SpreadGen Spread ${LIBS})

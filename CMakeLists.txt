@@ -32,6 +32,6 @@ set(SR0 ${S0DIR}/sr0.cpp)
 
 add_library(Spread ${JSON} ${JOB} ${MISC} ${UNPACK} ${TASKS} ${HASH} ${HTASKS} ${DIR} ${SCACHE} ${RULES} ${INSTALL} ${SR0})
 
-set(GEN gen/listwriter.cpp gen/packlister.cpp)
+set(GEN gen/listwriter.cpp gen/packlister.cpp gen/sr0_gen.cpp)
 
 add_library(SpreadGen ${GEN})

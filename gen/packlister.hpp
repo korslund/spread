@@ -25,9 +25,12 @@ namespace SpreadGen
 
        You may add multiple directories to the same output. They will
        be applied in the order given.
+
+       Returns the dir hash (which may differ from dirHash if dirHash
+       represented an archive file.)
      */
-    void addDir(const std::string &packName,
-                const Spread::Hash &dirHash);
+    Spread::Hash addDir(const std::string &packName,
+                        const Spread::Hash &dirHash);
 
     /* Add a hint to a package. Hints are used to provide archives
        that can help us fulfill the dependencies added with addDir(),
