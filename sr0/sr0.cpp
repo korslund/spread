@@ -10,6 +10,7 @@
 #include "install/installer.hpp"
 #include "tasks/download.hpp"
 #include "rules/rule_loader.hpp"
+#include "misc/readjson.hpp"
 
 using namespace Spread;
 using namespace Mangle::Stream;
@@ -42,6 +43,14 @@ struct Sr0Job : Job
     Hash h;
     h.copy(data);
     return h;
+  }
+
+  // Load output version from a pack file
+  Hash getPackVersion(const path &file)
+  {
+    if(!exists(file)) return Hash();
+    Json::Value val = ReadJson::readJson(file.string());
+    return Hash(val["index"]["dirs"][0].asString());
   }
 
   // Check a short version string against a hash. True if matches.
@@ -116,7 +125,12 @@ struct Sr0Job : Job
     // Load the new version
     Hash newHash = getVersion(tmpOut/"index.hash");
 
-    if(newHash == curHash ||
+    // If there was no index file, try loading the package "index"
+    // from packs.json instead
+    if(newHash.isNull())
+      newHash = getPackVersion(tmpOut/"packs.json");
+
+    if(newHash.isNull() || newHash == curHash ||
        (netVer != "" && !compVer(netVer, newHash)))
       {
         setError("Update version mismatch");

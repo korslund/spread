@@ -5,8 +5,13 @@
 
 using namespace Spread;
 
+namespace bf = boost::filesystem;
+
 InstallFinder::InstallFinder(const RuleFinder &_rules, Cache::CacheIndex &_cache)
   : rules(_rules), cache(_cache) {}
+
+static std::string abs(const bf::path &file)
+{ return bf::absolute(file).string(); }
 
 bool InstallFinder::handleDeps(const DepList &deps, ActionMap &output)
 {
@@ -14,7 +19,11 @@ bool InstallFinder::handleDeps(const DepList &deps, ActionMap &output)
 
   for(int i=0; i<deps.size(); i++)
     {
-      const std::string &dest = deps[i].first;
+      std::string dest = deps[i].first;
+
+      if(dest != "")
+        dest = abs(dest);
+
       const Hash &hash = deps[i].second;
 
       // Check if this hash has already been resolved.
@@ -23,7 +32,6 @@ bool InstallFinder::handleDeps(const DepList &deps, ActionMap &output)
         {
           // Add ourself to it's destination list, if we have one
           it->second.addDest(dest);
-
           continue;
         }
 
@@ -54,8 +62,14 @@ bool InstallFinder::handleDeps(const DepList &deps, ActionMap &output)
 
           if(existing != "")
             {
-              // Yup, it exists. Add a copy operation.
-              output[hash] = Action(existing, dest);
+              // Check if this path is truely another file, or if
+              // these are just two paths pointing to the same data on
+              // disk.
+              if(dest == "" || !bf::equivalent(dest, existing))
+                // File exists in another location. Add a copy
+                // operation.
+                output[hash] = Action(existing, dest);
+
               continue;
             }
         }

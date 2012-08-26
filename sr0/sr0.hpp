@@ -39,8 +39,7 @@
      unpacked to a temporary directory.
 
    - inside index.zip we expect to find the following files:
-     - index.hash - index of the new directory hash. This MUST match
-                    the hash in short.txt
+     - packs.json - package file - should contain one package named "index"
      - rules.json - (optional) rules needed to install the dir
 
      In addition, all files inside the archive are automatically

@@ -3,23 +3,23 @@ Adding test.sh
 Adding hello.dat (expecting LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF)
   Got: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
 Adding hello.dat (expecting lZ5oPKdWMISZA5jDyfBQeyndzkVx3MLEOarWExFR-YMG)
-  Error: Given hash doesn't match real file size: hello.dat
+  Error: Given hash doesn't match real file size: /home/mortennk/koding/spread/cache/tests/hello.dat
 Adding nofile.dat
-  Error: Cannot index non-existing file: nofile.dat
+  Error: Cannot index non-existing file: /home/mortennk/koding/spread/cache/tests/nofile.dat
 Adding hello2.dat
   Got: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
 Adding hello2.dat
   Got: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
 Searching for ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ
-  Found: test.sh
+  Found: /home/mortennk/koding/spread/cache/tests/test.sh
 Searching for ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ
   Found: 
 Searching for LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
-  Found: hello.dat
+  Found: /home/mortennk/koding/spread/cache/tests/hello.dat
 Searching for LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
-  Found: hello2.dat
+  Found: /home/mortennk/koding/spread/cache/tests/hello2.dat
 Searching for LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
-  Found: hello2.dat
+  Found: /home/mortennk/koding/spread/cache/tests/hello2.dat
 Searching for LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
   Found: 
 Checking status for nofile   Hash: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
@@ -30,8 +30,8 @@ Checking status for test.sh   Hash: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
 Checking status for hello2.dat   Hash: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
   File already matches
 Checking status for test.sh   Hash: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
-  Hash exists elsewhere: hello2.dat
+  Hash exists elsewhere: /home/mortennk/koding/spread/cache/tests/hello2.dat
 Checking status for hello.dat   Hash: ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ
-  Hash exists elsewhere: test.sh
+  Hash exists elsewhere: /home/mortennk/koding/spread/cache/tests/test.sh
 Checking status for hello.dat   Hash: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
-  Hash exists elsewhere: hello2.dat
+  Hash exists elsewhere: /home/mortennk/koding/spread/cache/tests/hello2.dat

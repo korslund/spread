@@ -9,6 +9,9 @@
 
 namespace bf = boost::filesystem;
 
+static std::string abs(const bf::path &file)
+{ return bf::absolute(file).string(); }
+
 using namespace Cache;
 using namespace Spread;
 
@@ -147,8 +150,10 @@ void CacheIndex::load(const std::string &conf)
   ptr->loadConf(conf);
 }
 
-int CacheIndex::getStatus(const std::string &where, const Hash &hash)
+int CacheIndex::getStatus(const std::string &_where, const Hash &hash)
 {
+  std::string where = abs(_where);
+
   LOCK lock(ptr->mutex);
 
   // Check the index first if we think this is a match.
@@ -202,7 +207,6 @@ std::string CacheIndex::findHash(const Hash &hash)
   Entry *ent = ptr->find(hash);
   while(ent)
     {
-      // Copy the string to make sure we don't delete then use it
       std::string file = ent->file;
 
       // Does the file still exist?
@@ -224,8 +228,9 @@ std::string CacheIndex::findHash(const Hash &hash)
   return "";
 }
 
-void CacheIndex::removeFile(const std::string &where)
+void CacheIndex::removeFile(const std::string &_where)
 {
+  std::string where = abs(_where);
   LOCK lock(ptr->mutex);
   ptr->remove(where);
   ptr->removeConf(where);
@@ -234,11 +239,11 @@ void CacheIndex::removeFile(const std::string &where)
 /* This is the main 'workhorse' of the indexer, and the function that
    does most of the actual interaction with the filesystem.
  */
-Hash CacheIndex::addFile(const std::string &where, const Hash &h)
+Hash CacheIndex::addFile(const std::string &_where, const Hash &h)
 {
+  assert(_where != "");
+  std::string where = abs(_where);
   LOCK lock(ptr->mutex);
-
-  assert(where != "");
 
   // First things first: does the file even exist?
   if(!bf::exists(where))

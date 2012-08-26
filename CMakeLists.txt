@@ -29,8 +29,9 @@ set(SCACHE ${CDIR}/index.cpp)
 set(RULES ${RDIR}/install_finder.cpp ${RDIR}/ruleset.cpp ${RDIR}/arcruleset.cpp ${RDIR}/rule_loader.cpp)
 set(INSTALL ${IDIR}/action_installer.cpp ${IDIR}/build_actions.cpp ${IDIR}/installer.cpp)
 set(SR0 ${S0DIR}/sr0.cpp)
+set(SPREADLIB spreadlib/spread.cpp)
 
-add_library(Spread ${JSON} ${JOB} ${MISC} ${UNPACK} ${TASKS} ${HASH} ${HTASKS} ${DIR} ${SCACHE} ${RULES} ${INSTALL} ${SR0})
+add_library(Spread ${JSON} ${JOB} ${MISC} ${UNPACK} ${TASKS} ${HASH} ${HTASKS} ${DIR} ${SCACHE} ${RULES} ${INSTALL} ${SR0} ${SPREADLIB})
 
 set(GEN gen/listwriter.cpp gen/packlister.cpp gen/sr0_gen.cpp)
 

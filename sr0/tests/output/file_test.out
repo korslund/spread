@@ -1,24 +1,24 @@
 Installing test1 into _outdir1/:
-SUCCESS: Updating prog=35/35
+SUCCESS: Installing prog=35/35
 
 Installing test1 into _outdir2/:
-SUCCESS: Updating prog=35/35
+SUCCESS: Installing prog=35/35
 
 Installing test1 into _outdir2/:
 SUCCESS: Checking for updates prog=0/0
 
 Installing test2 into _outdir3:
-SUCCESS: Updating prog=115/115
+SUCCESS: Installing prog=115/115
 
 Installing test1 into _outdir4_1to2:
-SUCCESS: Updating prog=35/35
+SUCCESS: Installing prog=35/35
 
 Installing test2 into _outdir4_1to2:
-SUCCESS: Updating prog=75/75
+SUCCESS: Installing prog=75/75
 
 Installing test2 into _outdir5_2to1:
-SUCCESS: Updating prog=115/115
+SUCCESS: Installing prog=115/115
 
 Installing test1 into _outdir5_2to1:
-SUCCESS: Updating prog=35/35
+SUCCESS: Installing prog=35/35
 
