@@ -6,6 +6,50 @@
 
 using namespace Spread;
 
+//#define PRINT
+
+#ifdef PRINT
+#include <iostream>
+
+void print(ActionMap &output)
+{
+  using namespace std;
+  cout << "Got " << output.size() << " actions:\n";
+  ActionMap::iterator it;
+  for(it = output.begin(); it != output.end(); it++)
+    {
+      Action &a = it->second;
+
+      cout << it->first << " : ";
+
+      if(a.isNone())
+        {
+          cout << "UNHANDLED\n";
+        }
+      else if(a.isRule())
+        {
+          const Rule &r = *a.rule;
+
+          cout << r.ruleString << endl;
+
+          // Print rule dependencies
+          for(int i=0; i<r.deps.size(); i++)
+            cout << "  <= " << r.deps[i] << endl;
+        }
+      else if(a.isCopy())
+        {
+          cout << "COPY from " << a.source << endl;
+        }
+      else assert(0);
+
+      // Print output files
+      std::set<std::string>::iterator it2;
+      for(it2 = a.destlist.begin(); it2 != a.destlist.end(); it2++)
+        cout << "  => " << *it2 << endl;
+    }
+}
+#endif
+
 void ActionBuilder::addHint(const Hash &hint)
 {
   // Find the matching archive
@@ -69,6 +113,10 @@ void ActionBuilder::build(ActionMap &output)
   }
 
   bool res = finder.perform(output);
+
+#ifdef PRINT
+  print(output);
+#endif
 
   if(!res)
     {

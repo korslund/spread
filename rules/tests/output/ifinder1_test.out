@@ -8,13 +8,13 @@ Wci-t_e_9EMxWOlZu9jW2XFOHM8I-OIdAomk4XA0xXgF = YEAH!
 nOYmHbSVYgh-BC4bhVen8JWujb124ib0UNBaY1UjMXkH = ZIPFILE
 
 Handled 9 input dependencies into 7 hashes (OK=0):
-LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from hello.txt
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from /home/mortennk/koding/spread/rules/tests/hello.txt
   => /home/mortennk/koding/spread/rules/tests/_file1_hello
 SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF : UNHANDLED
   => /home/mortennk/koding/spread/rules/tests/_file2_world
 Wci-t_e_9EMxWOlZu9jW2XFOHM8I-OIdAomk4XA0xXgF : UNHANDLED
 nOYmHbSVYgh-BC4bhVen8JWujb124ib0UNBaY1UjMXkH : URL for zipfile
-z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : COPY from dolly.txt
+z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : COPY from /home/mortennk/koding/spread/rules/tests/dolly.txt
   => /home/mortennk/koding/spread/rules/tests/_file3_dolly
   => /home/mortennk/koding/spread/rules/tests/_file4_dolly
 9VfWa-IYTB56akggQXlNjhZkwVcTA_k5AjBcLPF6u9sG : ZIP rule
@@ -25,13 +25,13 @@ z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : COPY from dolly.txt
   => /home/mortennk/koding/spread/rules/tests/_file5_inzip1
 
 Handled 9 input dependencies into 7 hashes (OK=0):
-LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from hello.txt
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from /home/mortennk/koding/spread/rules/tests/hello.txt
   => /home/mortennk/koding/spread/rules/tests/_file1_hello
 SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF : UNHANDLED
   => /home/mortennk/koding/spread/rules/tests/_file2_world
 Wci-t_e_9EMxWOlZu9jW2XFOHM8I-OIdAomk4XA0xXgF : UNHANDLED
 nOYmHbSVYgh-BC4bhVen8JWujb124ib0UNBaY1UjMXkH : URL for zipfile
-z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : COPY from dolly.txt
+z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : COPY from /home/mortennk/koding/spread/rules/tests/dolly.txt
   => /home/mortennk/koding/spread/rules/tests/_file3_dolly
   => /home/mortennk/koding/spread/rules/tests/_file4_dolly
 9VfWa-IYTB56akggQXlNjhZkwVcTA_k5AjBcLPF6u9sG : ZIP rule
@@ -42,13 +42,13 @@ z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : COPY from dolly.txt
   => /home/mortennk/koding/spread/rules/tests/_file5_inzip1
 
 Handled 9 input dependencies into 7 hashes (OK=0):
-LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from hello.txt
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from /home/mortennk/koding/spread/rules/tests/hello.txt
   => /home/mortennk/koding/spread/rules/tests/_file1_hello
-SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF : COPY from world.txt
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF : COPY from /home/mortennk/koding/spread/rules/tests/world.txt
   => /home/mortennk/koding/spread/rules/tests/_file2_world
 Wci-t_e_9EMxWOlZu9jW2XFOHM8I-OIdAomk4XA0xXgF : UNHANDLED
 nOYmHbSVYgh-BC4bhVen8JWujb124ib0UNBaY1UjMXkH : URL for zipfile
-z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : COPY from dolly.txt
+z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : COPY from /home/mortennk/koding/spread/rules/tests/dolly.txt
   => /home/mortennk/koding/spread/rules/tests/_file3_dolly
   => /home/mortennk/koding/spread/rules/tests/_file4_dolly
 9VfWa-IYTB56akggQXlNjhZkwVcTA_k5AjBcLPF6u9sG : ZIP rule

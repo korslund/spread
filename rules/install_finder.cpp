@@ -4,8 +4,16 @@
 #include <set>
 
 using namespace Spread;
-
 namespace bf = boost::filesystem;
+
+//#define PRINT_DEBUG
+
+#ifdef PRINT_DEBUG
+#include <iostream>
+#define PRINT(a) std::cout << a << "\n";
+#else
+#define PRINT(a)
+#endif
 
 InstallFinder::InstallFinder(const RuleFinder &_rules, Cache::CacheIndex &_cache)
   : rules(_rules), cache(_cache) {}
@@ -26,6 +34,8 @@ bool InstallFinder::handleDeps(const DepList &deps, ActionMap &output)
 
       const Hash &hash = deps[i].second;
 
+      PRINT("DEST=" << dest << " HASH=" << hash);
+
       // Check if this hash has already been resolved.
       ActionMap::iterator it = output.find(hash);
       if(it != output.end())
@@ -43,14 +53,9 @@ bool InstallFinder::handleDeps(const DepList &deps, ActionMap &output)
 
       if(stat == Cache::CI_Match)
         {
-          /* Add copy action with empty destination. This allows other
-             tasks to look up the same action later and add multiple
-             destinations.
+          PRINT("MATCH");
 
-             If no other actions need this file, then the action is
-             ignored, which is OK since the file is already installed.
-          */
-          output[hash] = Action(dest);
+          // This file already exists, ignore it.
           continue;
         }
 
@@ -62,6 +67,7 @@ bool InstallFinder::handleDeps(const DepList &deps, ActionMap &output)
 
           if(existing != "")
             {
+              PRINT("EXISTING: " << existing);
               // Check if this path is truely another file, or if
               // these are just two paths pointing to the same data on
               // disk.
@@ -73,6 +79,8 @@ bool InstallFinder::handleDeps(const DepList &deps, ActionMap &output)
               continue;
             }
         }
+
+      PRINT("RULE");
 
       /* If we are here, no existing file met our dependency. Look
          up the ruleset to see how else we can fetch the file.

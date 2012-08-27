@@ -16,7 +16,7 @@ z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : UNHANDLED
   => /home/mortennk/koding/spread/rules/tests/_file2_dolly
 
 Handled 2 input dependencies into 2 hashes (OK=1):
-LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from hello.txt
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from /home/mortennk/koding/spread/rules/tests/hello.txt
   => /home/mortennk/koding/spread/rules/tests/_file1_hello
 z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : URL z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F dolly-url
   => /home/mortennk/koding/spread/rules/tests/_file2_dolly
@@ -24,14 +24,14 @@ Broken URL hello-url
 Broken URL dolly-url
 
 Handled 2 input dependencies into 2 hashes (OK=1):
-LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from hello.txt
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from /home/mortennk/koding/spread/rules/tests/hello.txt
   => /home/mortennk/koding/spread/rules/tests/_file1_hello
 z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : URL z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F dolly-url
   => /home/mortennk/koding/spread/rules/tests/_file2_dolly
 Broken URL dolly-url
 
 Handled 2 input dependencies into 2 hashes (OK=0):
-LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from hello.txt
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from /home/mortennk/koding/spread/rules/tests/hello.txt
   => /home/mortennk/koding/spread/rules/tests/_file1_hello
 z5uehbmaSdLx6w2YGCXGTwadrwpgxfwZ-HRb9ePSkJ4F : UNHANDLED
   => /home/mortennk/koding/spread/rules/tests/_file2_dolly

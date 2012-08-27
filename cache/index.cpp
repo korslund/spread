@@ -7,13 +7,22 @@
 #include <boost/thread/recursive_mutex.hpp>
 #include "misc/jconfig.hpp"
 
+//#define PRINT_DEBUG
+
+#ifdef PRINT_DEBUG
+#include <iostream>
+#define PRINT(a) std::cout << a << "\n";
+#else
+#define PRINT(a)
+#endif
+
+using namespace Cache;
+using namespace Spread;
 namespace bf = boost::filesystem;
 
 static std::string abs(const bf::path &file)
 { return bf::absolute(file).string(); }
 
-using namespace Cache;
-using namespace Spread;
 
 struct Entry
 {
@@ -152,7 +161,9 @@ void CacheIndex::load(const std::string &conf)
 
 int CacheIndex::getStatus(const std::string &_where, const Hash &hash)
 {
+  PRINT("Cache::getStatus(" << _where << ", " << hash << ")");
   std::string where = abs(_where);
+  PRINT("where=" << where);
 
   LOCK lock(ptr->mutex);
 
@@ -202,6 +213,7 @@ int CacheIndex::getStatus(const std::string &_where, const Hash &hash)
 
 std::string CacheIndex::findHash(const Hash &hash)
 {
+  PRINT("Cache::findHash(" << hash << ")");
   LOCK lock(ptr->mutex);
 
   Entry *ent = ptr->find(hash);
@@ -209,21 +221,31 @@ std::string CacheIndex::findHash(const Hash &hash)
     {
       std::string file = ent->file;
 
-      // Does the file still exist?
-      if(bf::exists(file))
-        {
-          // Check the file before returning it
-          if(addFile(file) == hash)
-            return file;
-        }
-      else
-        {
-          // Nope. Kill the entry before trying again.
-          removeFile(file);
-        }
+      PRINT("Found " << file);
 
-      // Oops, that file didn't match after all. Try another one.
-      ent = ptr->find(hash);
+      // Does the file still exist, and does it match?
+      if(bf::exists(file) && addFile(file) == hash)
+        return file;
+
+      // That file didn't match after all. Try another one.
+      Entry *ent2 = ptr->find(hash);
+
+      /* If this still returned the same entry, we KNOW that this
+         entry is invalid (since we just tested it above.) So remove
+         it.
+
+         This happens in several cases (non-existing file, non-
+         matching file) and when the new entry added/replaced by
+         addFile doesn't overwrite or remove the old one.
+      */
+      while(ent2 && ent2->file == file)
+        {
+          ptr->remove(file);
+          ptr->removeConf(file);
+          PRINT("Removed " << file);
+          ent2 = ptr->find(hash);
+        }
+      ent = ent2;
     }
   return "";
 }

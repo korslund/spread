@@ -70,8 +70,7 @@ CAUGHT: Don't know how to satisfy the following dependencies:
     /home/mortennk/koding/spread/install/tests/test.sh
 
 Overwriting existing file with right data:
-Got 1 actions:
-ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ : COPY from /home/mortennk/koding/spread/install/tests/test.sh
+Got 0 actions:
 
 Unzipping two zips into one dir:
 Got 5 actions:

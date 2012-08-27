@@ -38,3 +38,9 @@ target_link_libraries(cache2_test ${LIBS})
 
 add_executable(cache3_test cache3_test.cpp ${CACHE})
 target_link_libraries(cache3_test ${LIBS})
+
+add_executable(cache4_test cache4_test.cpp ${CACHE})
+target_link_libraries(cache4_test ${LIBS})
+
+add_executable(cache5_test cache5_test.cpp ${CACHE})
+target_link_libraries(cache5_test ${LIBS})

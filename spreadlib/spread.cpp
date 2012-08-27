@@ -152,7 +152,10 @@ JobInfoPtr SpreadLib::install(const std::string &channel,
   for(int i=0; i<p.hints.size(); i++)
     inst->addHint(p.hints[i]);
 
-  return Thread::run(inst, async);
+  JobInfoPtr inf = Thread::run(inst, async);
+  return inf;
+
+  //return Thread::run(inst, async);
 }
 
 JobInfoPtr SpreadLib::unpackURL(const std::string &url, const std::string &where,
