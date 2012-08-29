@@ -5,7 +5,7 @@
 
 using namespace Spread;
 
-std::string DownloadTask::userAgent = "Tiggit/1.0 - see http://tiggit.net/";
+std::string DownloadTask::userAgent = "Spread/1.0 - see https://github.com/korslund/spread";
 
 struct DLProgress : cURL::Progress
 {

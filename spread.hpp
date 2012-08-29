@@ -9,6 +9,7 @@
  */
 namespace Spread
 {
+  struct Hash;
   struct SpreadLib
   {
     SpreadLib(const std::string &outDir, const std::string &tmpDir);
