@@ -31,7 +31,9 @@ ERROR: status=FileStream: failed to open file nofile progress=0/0
 Failed download:
 Broken url: http://tiggit.net/robots.txt
 Broken url: hello-BACKUP-URL
-ERROR: status=Error fetching hello-BACKUP-URL:
+ERROR: status=Error downloading hello-BACKUP-URL
+Details:
+Error fetching hello-BACKUP-URL:
 Couldn't resolve host name progress=35/35
 
 Successful download:

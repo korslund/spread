@@ -100,6 +100,8 @@ SpreadLib::SpreadLib(const std::string &outDir, const std::string &tmpDir)
   ptr->cache.tmpDir = abs(tmpDir);
 }
 
+void SpreadLib::setURLCallback(CBFunc cb) { ptr->rules.setURLCallback(cb); }
+
 JobInfoPtr SpreadLib::updateFromURL(const std::string &channel,
                                     const std::string &url,
                                     bool async)

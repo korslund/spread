@@ -3,6 +3,7 @@
 
 #include "job/jobinfo.hpp"
 #include <iostream>
+#include <boost/function.hpp>
 
 /* Top-level interface to the Spread system.
  */
@@ -41,6 +42,13 @@ namespace Spread
        unpacked from other sources.
      */
     std::string cacheFile(const std::string &file);
+
+    /* Set callback to handle broken URLs. This is invoked whenever
+       the system encounters a non-working URL, or an URL for which
+       the contents has changed. Setting the callback is optional.
+     */
+    typedef boost::function< void(const Hash &hash, const std::string &url) > CBFunc;
+    void setURLCallback(CBFunc cb);
 
   private:
     struct _Internal;

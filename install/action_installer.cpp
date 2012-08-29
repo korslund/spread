@@ -179,8 +179,8 @@ struct Target
           {
             // Try to get a replacement URL
             assert(url != "");
-            url = owner->brokenURL(hash, url);
-            if(url != "")
+            std::string newUrl = owner->brokenURL(hash, url);
+            if(newUrl != "")
               {
                 // There was a replacement! Silently take one step
                 // back to TS_Ready, pretend the botched job never
@@ -188,6 +188,7 @@ struct Target
                 // url.
                 info.reset();
                 status = TS_Ready;
+                url = newUrl;
                 startJob();
                 return;
               }
@@ -195,7 +196,12 @@ struct Target
 
         // Throw an exception if the job failed
         if(info->isNonSuccess())
-          throw std::runtime_error(info->getMessage());
+          {
+            std::string error = info->getMessage();
+            if(type == TT_Download)
+              error = "Error downloading " + url + "\nDetails:\n" + error;
+            throw std::runtime_error(error);
+          }
 
         // Make sure all newly created files are added to the cache
         // index.
