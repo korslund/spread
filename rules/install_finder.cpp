@@ -10,7 +10,7 @@ namespace bf = boost::filesystem;
 
 #ifdef PRINT_DEBUG
 #include <iostream>
-#define PRINT(a) std::cout << a << "\n";
+#define PRINT(a) std::cout << __LINE__ << ": " << a << "\n";
 #else
 #define PRINT(a)
 #endif
@@ -23,10 +23,14 @@ static std::string abs(const bf::path &file)
 
 bool InstallFinder::handleDeps(const DepList &deps, ActionMap &output)
 {
+  PRINT("ENTER handleDeps()");
+
   bool isOk = true;
 
   for(int i=0; i<deps.size(); i++)
     {
+      PRINT("LOOP");
+
       std::string dest = deps[i].first;
 
       if(dest != "")
@@ -80,15 +84,19 @@ bool InstallFinder::handleDeps(const DepList &deps, ActionMap &output)
             }
         }
 
-      PRINT("RULE");
+      PRINT("RULE, calling findRule()");
 
       /* If we are here, no existing file met our dependency. Look
          up the ruleset to see how else we can fetch the file.
       */
       const Rule *r = rules.findRule(hash);
 
+      PRINT("CHECKING R");
+
       if(r)
         {
+          PRINT("FOUND RULE");
+
           bool found = false;
 
           // Set up the output action
@@ -128,10 +136,16 @@ bool InstallFinder::handleDeps(const DepList &deps, ActionMap &output)
           continue;
         }
 
+      PRINT("Storing");
+
       // There was no way to resolve this hash. An empty copy action
       // represents an unhandled dependency.
       output[hash] = Action("", dest);
       isOk = false;
+
+      PRINT("END LOOP\n");
     }
+
+  PRINT("Returning " << isOk);
   return isOk;
 }

@@ -30,6 +30,43 @@ static void fail(const std::string &msg)
 struct SpreadLib::_Internal
 {
   Cache::Cache cache;
+  RuleSet rules;
+
+  // This keeps track of updates in progress for a given channel
+  std::map<std::string, JobInfoPtr> chanJobs;
+
+  /* True if the given channel has a JobInfoPtr entry that has
+     finished.
+
+     This means that a new ruleset has been installed since our last
+     run.
+  */
+  bool isUpdated(const std::string &channel)
+  {
+    JobInfoPtr &info = chanJobs[channel];
+    bool res = info && info->isSuccess();
+    if(res) info.reset();
+    assert(!chanJobs[channel]);
+    return res;
+  }
+
+  // Load the newest ruleset, if it has been updated since our last
+  // run
+  void update(const std::string &channel)
+  {
+    if(isUpdated(channel))
+      loadRulesJsonFile(rules, chanPath(channel, "rules.json"));
+  }
+
+  JobInfoPtr &setUpdateInfo(const std::string &channel)
+  {
+    JobInfoPtr &res = chanJobs[channel];
+
+    if(res && !res->isFinished())
+      fail("Update already in progress for channel 'channel'");
+
+    return res;
+  }
 
   bf::path repoDir;
 
@@ -67,14 +104,16 @@ JobInfoPtr SpreadLib::updateFromURL(const std::string &channel,
                                     const std::string &url,
                                     bool async)
 {
-  return SR0::fetchURL(url, ptr->chanPath(channel), ptr->cache, async);
+  return ptr->setUpdateInfo(channel) =
+    SR0::fetchURL(url, ptr->chanPath(channel), ptr->cache, async);
 }
 
 JobInfoPtr SpreadLib::updateFromFile(const std::string &channel,
                                      const std::string &path,
                                      bool async)
 {
-  return SR0::fetchFile(path, ptr->chanPath(channel), ptr->cache, async);
+  return ptr->setUpdateInfo(channel) =
+    SR0::fetchFile(path, ptr->chanPath(channel), ptr->cache, async);
 }
 
 typedef std::vector<Hash> HashVec;
@@ -133,29 +172,22 @@ JobInfoPtr SpreadLib::install(const std::string &channel,
                               std::string *version,
                               bool async)
 {
-  /* We assume installs are pretty rare, so for now just do it the
-     hard way and reload the data every time. We can optimize this
-     later.
-  */
-  RuleSet rules;
-  loadRulesJsonFile(rules, ptr->chanPath(channel, "rules.json"));
+  // Load the new ruleset, if there is one
+  ptr->update(channel);
 
   PackList packs(ptr->chanPath(channel, "packs.json"));
   const Pack& p = packs.get(package);
 
   if(version) *version = p.version;
 
-  Installer *inst = new Installer(ptr->cache, rules, abs(where));
+  Installer *inst = new Installer(ptr->cache, ptr->rules, abs(where));
 
   for(int i=0; i<p.dirs.size(); i++)
     inst->addDir(p.dirs[i]);
   for(int i=0; i<p.hints.size(); i++)
     inst->addHint(p.hints[i]);
 
-  JobInfoPtr inf = Thread::run(inst, async);
-  return inf;
-
-  //return Thread::run(inst, async);
+  return Thread::run(inst, async);
 }
 
 JobInfoPtr SpreadLib::unpackURL(const std::string &url, const std::string &where,

@@ -9,6 +9,15 @@
 
 using namespace Spread;
 
+//#define DEBUG_PRINT
+
+#ifdef DEBUG_PRINT
+#include <iostream>
+#define PRINT(a) std::cout << __LINE__ << ": " << a << "\n";
+#else
+#define PRINT(a)
+#endif
+
 enum Type
   {
     TT_FileCopy,
@@ -312,7 +321,11 @@ void ActionInstaller::doJob()
   ActionMap acts;
   TargetMap targets;
 
+  PRINT("GETTING ACTIONS");
+
   getActions(acts);
+
+  PRINT("A");
 
   // Convert ActionMap to TargetMap
   {
@@ -320,6 +333,8 @@ void ActionInstaller::doJob()
     for(it = acts.begin(); it != acts.end(); it++)
       targets[it->first].setup(&it->second, it->first, this);
   }
+
+  PRINT("B");
 
   // Set up output paths all targets
   TargetMap::iterator it;
@@ -332,6 +347,8 @@ void ActionInstaller::doJob()
         t.fixPaths(targets);
     }
 
+  PRINT("C");
+
   // Cull unwanted targets
   for(it = targets.begin(); it != targets.end();)
     {
@@ -342,11 +359,15 @@ void ActionInstaller::doJob()
 
   setBusy("Installing");
 
+  PRINT("D");
+
   /* Main loop. This updates and checks up on the status of all
      targets at regular intervals.
   */
   while(true)
     {
+      PRINT("LOOP");
+
       if(checkStatus())
         // Abondon ship. Running jobs are aborted automatically by
         // Target's destructor.
@@ -354,6 +375,8 @@ void ActionInstaller::doJob()
 
       // Progress counters
       int64_t cur = 0, tot = 0;
+
+      PRINT("UPDATING");
 
       // Loop through and update all the targets
       bool allDone = true;
@@ -372,8 +395,12 @@ void ActionInstaller::doJob()
       if(allDone)
         break;
 
+      PRINT("SLEEPING");
+
       // Don't busy-loop
       Thread::sleep(0.1);
+
+      PRINT("END LOOP\n");
     }
 
   setDone();

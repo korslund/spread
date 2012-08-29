@@ -6,10 +6,11 @@
 
 using namespace Spread;
 
-//#define PRINT
+//#define DEBUG_PRINT
 
-#ifdef PRINT
+#ifdef DEBUG_PRINT
 #include <iostream>
+#define PRINT(a) std::cout << __LINE__ << ": " << a << "\n";
 
 void print(ActionMap &output)
 {
@@ -48,6 +49,8 @@ void print(ActionMap &output)
         cout << "  => " << *it2 << endl;
     }
 }
+#else
+#define PRINT(a)
 #endif
 
 void ActionBuilder::addHint(const Hash &hint)
@@ -91,9 +94,13 @@ void ActionBuilder::addDir(const Hash &hash, bool alsoAsHint)
 
 void ActionBuilder::build(ActionMap &output)
 {
+  PRINT("build()");
+
   InstallFinder finder(arcs, cache.index);
 
   namespace bs = boost::filesystem;
+
+  PRINT("DEPLIST");
 
   // Build dependency list
   {
@@ -112,9 +119,11 @@ void ActionBuilder::build(ActionMap &output)
       }
   }
 
+  PRINT("PERFORMING");
+
   bool res = finder.perform(output);
 
-#ifdef PRINT
+#ifdef DEBUG_PRINT
   print(output);
 #endif
 
