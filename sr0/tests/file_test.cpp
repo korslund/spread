@@ -67,7 +67,10 @@ void test(const std::string &src, const std::string &dest, bool kill=true)
   Cache::Cache cache;
   cache.tmpDir = "_tmpdir/";
   if(kill) boost::filesystem::remove_all(dest);
-  check(SR0::fetchFile(src, dest, cache, false));
+  bool wasUpdated;
+  check(SR0::fetchFile(src, dest, cache, false, &wasUpdated));
+  if(wasUpdated) cout << "(UPDATED)\n";
+  else cout << "(NOT UPDATED)\n";
   cout << endl;
 }
 

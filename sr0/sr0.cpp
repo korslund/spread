@@ -26,6 +26,8 @@ struct Sr0Job : Job
 
   Cache::Cache *cache;
 
+  bool *wasUpdated;
+
   // Load current version file
   Hash getVersion(const path &file)
   {
@@ -69,6 +71,8 @@ struct Sr0Job : Job
   {
     setBusy("Checking for updates");
     assert(cache);
+
+    if(wasUpdated) *wasUpdated = false;
 
     // Load current version indicator, if it exists
     std::string hashFile = (dest/"current.hash").string();
@@ -184,31 +188,37 @@ struct Sr0Job : Job
     OutFileStream out(hashFile);
     out.write(newHash.getData(), 40);
 
+    // Notify the caller that we successfully updated the data, if
+    // they requested it.
+    if(wasUpdated) *wasUpdated = true;
+
     setDone();
   }
 };
 
 JobInfoPtr SR0::fetchFile(const std::string &dir, const std::string &destDir,
-                          Cache::Cache &cache, bool async)
+                          Cache::Cache &cache, bool async, bool *wasUpdated)
 {
   Sr0Job *j = new Sr0Job;
   j->source = dir;
   j->isUrl = false;
   j->dest = destDir;
   j->cache = &cache;
+  j->wasUpdated = wasUpdated;
   JobInfoPtr info = j->getInfo();
   Thread::run(j,async);
   return info;
 }
 
 JobInfoPtr SR0::fetchURL(const std::string &url, const std::string &destDir,
-                         Cache::Cache &cache, bool async)
+                         Cache::Cache &cache, bool async, bool *wasUpdated)
 {
   Sr0Job *j = new Sr0Job;
   j->source = url;
   j->isUrl = true;
   j->dest = destDir;
   j->cache = &cache;
+  j->wasUpdated = wasUpdated;
   JobInfoPtr info = j->getInfo();
   Thread::run(j,async);
   return info;

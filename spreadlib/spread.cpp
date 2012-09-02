@@ -35,6 +35,8 @@ struct SpreadLib::_Internal
   // This keeps track of updates in progress for a given channel
   std::map<std::string, JobInfoPtr> chanJobs;
 
+  std::map<std::string, bool> wasUpdated;
+
   /* True if the given channel has a JobInfoPtr entry that has
      finished.
 
@@ -102,12 +104,16 @@ SpreadLib::SpreadLib(const std::string &outDir, const std::string &tmpDir)
 
 void SpreadLib::setURLCallback(CBFunc cb) { ptr->rules.setURLCallback(cb); }
 
+bool SpreadLib::wasUpdated(const std::string &channel) const
+{ return ptr->wasUpdated[channel]; }
+
 JobInfoPtr SpreadLib::updateFromURL(const std::string &channel,
                                     const std::string &url,
                                     bool async)
 {
   return ptr->setUpdateInfo(channel) =
-    SR0::fetchURL(url, ptr->chanPath(channel), ptr->cache, async);
+    SR0::fetchURL(url, ptr->chanPath(channel), ptr->cache, async,
+                  &ptr->wasUpdated[channel]);
 }
 
 JobInfoPtr SpreadLib::updateFromFile(const std::string &channel,
@@ -115,7 +121,8 @@ JobInfoPtr SpreadLib::updateFromFile(const std::string &channel,
                                      bool async)
 {
   return ptr->setUpdateInfo(channel) =
-    SR0::fetchFile(path, ptr->chanPath(channel), ptr->cache, async);
+    SR0::fetchFile(path, ptr->chanPath(channel), ptr->cache, async,
+                   &ptr->wasUpdated[channel]);
 }
 
 typedef std::vector<Hash> HashVec;

@@ -25,6 +25,13 @@ namespace Spread
                               const std::string &path,
                               bool async=true);
 
+    /* Returns whether any new data was downloaded in the last call to
+       updateFromURL()/File() for this channel.
+
+       Only call this after the appropriate job has finished.
+    */
+    bool wasUpdated(const std::string &channel) const;
+
     JobInfoPtr install(const std::string &channel,
                        const std::string &package,
                        const std::string &where,

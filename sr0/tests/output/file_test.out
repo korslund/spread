@@ -1,24 +1,32 @@
 Installing test1 into _outdir1/:
 SUCCESS: Installing prog=35/35
+(UPDATED)
 
 Installing test1 into _outdir2/:
 SUCCESS: Installing prog=35/35
+(UPDATED)
 
 Installing test1 into _outdir2/:
 SUCCESS: Checking for updates prog=0/0
+(NOT UPDATED)
 
 Installing test2 into _outdir3:
 SUCCESS: Installing prog=115/115
+(UPDATED)
 
 Installing test1 into _outdir4_1to2:
 SUCCESS: Installing prog=35/35
+(UPDATED)
 
 Installing test2 into _outdir4_1to2:
 SUCCESS: Installing prog=75/75
+(UPDATED)
 
 Installing test2 into _outdir5_2to1:
 SUCCESS: Installing prog=115/115
+(UPDATED)
 
 Installing test1 into _outdir5_2to1:
 SUCCESS: Installing prog=35/35
+(UPDATED)
 

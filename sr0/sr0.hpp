@@ -68,11 +68,15 @@ namespace Spread
        output files.
 
        If async==true, the install is run in a background thread.
+
+       The wasUpdated bool, if present, is set (possibly from a
+       working thread) to true if updated data was downloaded.
      */
     static JobInfoPtr fetchURL(const std::string &url,
                                const std::string &destDir,
                                Cache::Cache &cache,
-                               bool async=true);
+                               bool async=true,
+                               bool *wasUpdated = NULL);
 
     /* Same as fetchURL, but fetch from a filesystem dir instead.
 
@@ -82,7 +86,8 @@ namespace Spread
     static JobInfoPtr fetchFile(const std::string &dir,
                                 const std::string &destDir,
                                 Cache::Cache &cache,
-                                bool async=true);
+                                bool async=true,
+                                bool *wasUpdated = NULL);
   };
 }
 #endif
