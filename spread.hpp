@@ -2,7 +2,6 @@
 #define __SPREAD_HPP_
 
 #include "job/jobinfo.hpp"
-#include <iostream>
 #include <boost/function.hpp>
 
 /* Top-level interface to the Spread system.
@@ -32,6 +31,19 @@ namespace Spread
     */
     bool wasUpdated(const std::string &channel) const;
 
+    /* Install the given package from 'channel' into the destination
+       directory 'where'. All necessary sub- and parent-directories
+       are created as necessary.
+
+       If a version string is given, it is set with the package's
+       version description, if any.
+
+       If async=true, returns the job controller for the given job.
+
+       Throws an exception if the package or channel does not
+       exist. All other errors are returned as error statuses in the
+       JobInfo.
+     */
     JobInfoPtr install(const std::string &channel,
                        const std::string &package,
                        const std::string &where,

@@ -136,7 +136,8 @@ struct Pack
 // TODO: Should move this to a separate file
 struct PackList
 {
-  std::map<std::string, Pack> packs;
+  typedef std::map<std::string, Pack> PackMap;
+  PackMap packs;
 
   void copy(const Json::Value &from, HashVec &to)
   {
@@ -171,8 +172,13 @@ struct PackList
       }
   }
 
-  const Pack& get(const std::string &pack)
-  { return packs[pack]; }
+  const Pack& get(const std::string &pack) const
+  {
+    PackMap::const_iterator it = packs.find(pack);
+    if(it == packs.end())
+      fail("Unknown package " + pack);
+    return it->second;
+  }
 };
 
 JobInfoPtr SpreadLib::install(const std::string &channel,
