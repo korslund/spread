@@ -4,6 +4,7 @@
 #include "rules/ruleset.hpp"
 #include "rules/rule_loader.hpp"
 #include "install/installer.hpp"
+#include "dir/directory.hpp"
 #include "job/thread.hpp"
 #include "misc/readjson.hpp"
 #include <boost/filesystem.hpp>
@@ -27,6 +28,64 @@ static void parent(const bf::path &file)
 static void fail(const std::string &msg)
 { throw std::runtime_error(msg); }
 
+typedef std::vector<Hash> HashVec;
+
+struct Pack
+{
+  HashVec dirs, hints;
+  std::string version;
+};
+
+// TODO: Should move this to a separate file
+struct PackList
+{
+  typedef std::map<std::string, Pack> PackMap;
+  PackMap packs;
+
+  void copy(const Json::Value &from, HashVec &to)
+  {
+    if(from.isNull()) return;
+    if(!from.isArray()) fail("Invalid pack file");
+
+    to.resize(from.size());
+
+    for(int i=0; i<from.size(); i++)
+      to[i] = Hash(from[i].asString());
+  }
+
+  void load(const std::string &file)
+  {
+    packs.clear();
+
+    using namespace Json;
+
+    Value root = ReadJson::readJson(file);
+
+    if(!root.isObject()) fail("Invalid pack file " + file);
+
+    Value::Members keys = root.getMemberNames();
+    for(int i=0; i<keys.size(); i++)
+      {
+        const std::string &key = keys[i];
+
+        Pack &p = packs[key];
+        Value v = root[key];
+
+        copy(v["dirs"], p.dirs);
+        copy(v["hints"], p.hints);
+        p.version = v["version"].asString();
+      }
+  }
+
+  const Pack& get(const std::string &pack) const
+  {
+    PackMap::const_iterator it = packs.find(pack);
+    if(it == packs.end())
+      fail("Unknown package " + pack);
+    return it->second;
+  }
+};
+
 struct SpreadLib::_Internal
 {
   Cache::Cache cache;
@@ -34,8 +93,8 @@ struct SpreadLib::_Internal
 
   // This keeps track of updates in progress for a given channel
   std::map<std::string, JobInfoPtr> chanJobs;
-
   std::map<std::string, bool> wasUpdated;
+  std::map<std::string, PackList> allPacks;
 
   /* True if the given channel has a JobInfoPtr entry that has
      finished.
@@ -52,12 +111,26 @@ struct SpreadLib::_Internal
     return res;
   }
 
-  // Load the newest ruleset, if it has been updated since our last
-  // run
+  const Pack& getPack(const std::string &channel,
+                      const std::string &pack)
+  {
+    update(channel);
+    try { return allPacks[channel].get(pack); }
+    catch(...)
+      {
+        fail("Unknown package " + channel + "/" + pack);
+      }
+  }
+
+  // Load the newest ruleset and packlist, if it has been updated
+  // since our last run
   void update(const std::string &channel)
   {
     if(isUpdated(channel))
-      loadRulesJsonFile(rules, chanPath(channel, "rules.json"));
+      {
+        loadRulesJsonFile(rules, chanPath(channel, "rules.json"));
+        allPacks[channel].load(chanPath(channel, "packs.json"));
+      }
   }
 
   JobInfoPtr &setUpdateInfo(const std::string &channel)
@@ -125,61 +198,42 @@ JobInfoPtr SpreadLib::updateFromFile(const std::string &channel,
                    &ptr->wasUpdated[channel]);
 }
 
-typedef std::vector<Hash> HashVec;
-
-struct Pack
+std::string SpreadLib::getPackVersion(const std::string &channel,
+                                      const std::string &package)
 {
-  HashVec dirs, hints;
-  std::string version;
-};
+  return ptr->getPack(channel, package).version;
+}
 
-// TODO: Should move this to a separate file
-struct PackList
+std::string SpreadLib::getPackHash(const std::string &channel,
+                                   const std::string &package)
 {
-  typedef std::map<std::string, Pack> PackMap;
-  PackMap packs;
+  const Pack& p = ptr->getPack(channel,package);
 
-  void copy(const Json::Value &from, HashVec &to)
-  {
-    if(from.isNull()) return;
-    if(!from.isArray()) fail("Invalid pack file");
+  /* The idea here is to return the DirHash for the final output
+     directory. This is done by "melding" all the output directories of
+     the package into one (hints are irrelevant), and then hashing that.
+  */
 
-    to.resize(from.size());
+  // If there's less than two, this is easy
+  if(p.dirs.size() == 0)
+    return "00";
+  if(p.dirs.size() == 1)
+    return p.dirs[0].toString();
 
-    for(int i=0; i<from.size(); i++)
-      to[i] = Hash(from[i].asString());
-  }
+  // Otherwise, collect all the dirs into one
+  Directory dir;
+  for(int i=0; i<p.dirs.size(); i++)
+    {
+      const Hash &dh = p.dirs[i];
+      DirectoryCPtr p = ptr->cache.loadDir(dh);
+      if(!p) fail("Failed to load dir " + dh.toString() + " from package " +
+                  channel + "/" + package);
+      dir.add(*p);
+    }
 
-  PackList(const std::string &file)
-  {
-    using namespace Json;
-
-    Value root = ReadJson::readJson(file);
-
-    if(!root.isObject()) fail("Invalid pack file " + file);
-
-    Value::Members keys = root.getMemberNames();
-    for(int i=0; i<keys.size(); i++)
-      {
-        const std::string &key = keys[i];
-
-        Pack &p = packs[key];
-        Value v = root[key];
-
-        copy(v["dirs"], p.dirs);
-        copy(v["hints"], p.hints);
-        p.version = v["version"].asString();
-      }
-  }
-
-  const Pack& get(const std::string &pack) const
-  {
-    PackMap::const_iterator it = packs.find(pack);
-    if(it == packs.end())
-      fail("Unknown package " + pack);
-    return it->second;
-  }
-};
+  // Return the collected dirhash
+  return dir.hash().toString();
+}
 
 JobInfoPtr SpreadLib::install(const std::string &channel,
                               const std::string &package,
@@ -187,12 +241,7 @@ JobInfoPtr SpreadLib::install(const std::string &channel,
                               std::string *version,
                               bool async)
 {
-  // Load the new ruleset, if there is one
-  ptr->update(channel);
-
-  PackList packs(ptr->chanPath(channel, "packs.json"));
-  const Pack& p = packs.get(package);
-
+  const Pack& p = ptr->getPack(channel,package);
   if(version) *version = p.version;
 
   Installer *inst = new Installer(ptr->cache, ptr->rules, abs(where));

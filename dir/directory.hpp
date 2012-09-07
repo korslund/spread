@@ -29,6 +29,18 @@ namespace Spread
     Hash write(const std::string &file) const;
     Hash write(Mangle::Stream::StreamPtr strm) const;
 
+    /* Return the hash of the dir, without actually writing the data
+       anywhere.
+     */
+    Hash hash() const;
+
+    /* "Meld" the given directory into this one. If you are adding
+       multiple directories, the order is important. Also note that
+       file path overwriting is case sensitive.
+     */
+    void add(const Directory &d) { add(d.dir); }
+    void add(const DirMap &d);
+
     // Find a member entry. Returns a null hash if not found.
     const Hash &find(const std::string &name) const;
   };

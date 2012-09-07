@@ -12,10 +12,13 @@ int main()
   cout << dir.find("name1") << endl;
   cout << dir.find("name2") << endl;
   cout << dir.find("dir/name2") << endl;
-  dir.write("test.bin");
+  Hash h = dir.write("test.bin");
+  cout << "Wrote hash: " << h << endl;
+  cout << "hash() returns: " << dir.hash() << endl;
 
   Directory dir2;
-  dir2.read("test.bin");
+  Hash h2 = dir2.read("test.bin");
+  cout << "Read hash: " << h2 << endl;
   cout << dir2.makeJson();
 
   return 0;

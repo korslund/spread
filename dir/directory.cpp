@@ -2,6 +2,7 @@
 #include "misc/readjson.hpp"
 #include <mangle/stream/servers/file_stream.hpp>
 #include <mangle/stream/servers/outfile_stream.hpp>
+#include <mangle/stream/servers/null_stream.hpp>
 #include "hash/hash_stream.hpp"
 #include <vector>
 
@@ -61,7 +62,7 @@ static void fail(const std::string &msg) { throw std::runtime_error(msg); }
 static void failDir(const std::string &msg)
 { fail("Error parsing directory file: " + msg); }
 
-Hash Directory::read(Mangle::Stream::StreamPtr strm)
+Hash Directory::read(StreamPtr strm)
 {
   HashStream inf(strm);
 
@@ -103,7 +104,7 @@ Hash Directory::read(Mangle::Stream::StreamPtr strm)
   return inf.finish();
 }
 
-Hash Directory::write(Mangle::Stream::StreamPtr strm) const
+Hash Directory::write(StreamPtr strm) const
 {
   HashStream ouf(strm);
 
@@ -136,3 +137,15 @@ Hash Directory::read(const std::string &file)
 
 Hash Directory::write(const std::string &file) const
 { return write(OutFileStream::Open(file)); }
+
+Hash Directory::hash() const
+{
+  return write(StreamPtr(new NullStream));
+}
+
+void Directory::add(const DirMap &d)
+{
+  for(DirMap::const_iterator it = d.begin();
+      it != d.end(); it++)
+    dir[it->first] = it->second;
+}
