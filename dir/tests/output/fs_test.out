@@ -1,0 +1,67 @@
+
+Default options
+U1VNugIOQyPQThzL66AQnSkWGuup7LCNYiF7vm1o5U8a       dir1/subdir/subfile
+ixFZo_zkoeNdlF5lnBkJxYa9poW9ygKxlImSoCHXPBcQ       dir2/dir2file
+ZqBFtFIQLFnYQOwJfVnZRn4To_NPZJTlOf_TLBuzXxgG       file1.txt
+ZqBFtFIQLFnYQOwJfVnZRn4To_NPZJTlOf_TLBuzXxgG       hello.txt
+ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ     test.sh
+Total 5 elements
+Hash: q3vv1arIW8aoWTNPJ-ePpeQTL63ErWvuki37pzJGz_8TAQ
+
+Slash added
+U1VNugIOQyPQThzL66AQnSkWGuup7LCNYiF7vm1o5U8a       dir1/subdir/subfile
+ixFZo_zkoeNdlF5lnBkJxYa9poW9ygKxlImSoCHXPBcQ       dir2/dir2file
+ZqBFtFIQLFnYQOwJfVnZRn4To_NPZJTlOf_TLBuzXxgG       file1.txt
+ZqBFtFIQLFnYQOwJfVnZRn4To_NPZJTlOf_TLBuzXxgG       hello.txt
+ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ     test.sh
+Total 5 elements
+Hash: q3vv1arIW8aoWTNPJ-ePpeQTL63ErWvuki37pzJGz_8TAQ
+
+No recursion
+ZqBFtFIQLFnYQOwJfVnZRn4To_NPZJTlOf_TLBuzXxgG       file1.txt
+ZqBFtFIQLFnYQOwJfVnZRn4To_NPZJTlOf_TLBuzXxgG       hello.txt
+ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ     test.sh
+Total 3 elements
+Hash: N9MRqTzZ9EjJV9gem9Us2bNtZKCEDhuJCeJEHx1n9Iqf
+
+Including dirs
+00                                                 dir1
+00                                                 dir2
+00                                                 empty_dir
+ZqBFtFIQLFnYQOwJfVnZRn4To_NPZJTlOf_TLBuzXxgG       file1.txt
+ZqBFtFIQLFnYQOwJfVnZRn4To_NPZJTlOf_TLBuzXxgG       hello.txt
+ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ     test.sh
+Total 6 elements
+Hash: mnNRyksaqo2zHe1K6gg6jQpdEdt88l-rMMq7rZyTFqkuAQ
+
+With prefix
+00                                                 prefix_dir1
+00                                                 prefix_dir2
+00                                                 prefix_empty_dir
+ZqBFtFIQLFnYQOwJfVnZRn4To_NPZJTlOf_TLBuzXxgG       prefix_file1.txt
+ZqBFtFIQLFnYQOwJfVnZRn4To_NPZJTlOf_TLBuzXxgG       prefix_hello.txt
+ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ     prefix_test.sh
+Total 6 elements
+Hash: DlUBxnY3SeTQvV7vlBbQASeC46A2FcH2OcBzhPgFPv1YAQ
+
+With everything
+00                                                 my/prefix/dir1
+00                                                 my/prefix/dir1/subdir
+U1VNugIOQyPQThzL66AQnSkWGuup7LCNYiF7vm1o5U8a       my/prefix/dir1/subdir/subfile
+00                                                 my/prefix/dir2
+ixFZo_zkoeNdlF5lnBkJxYa9poW9ygKxlImSoCHXPBcQ       my/prefix/dir2/dir2file
+00                                                 my/prefix/empty_dir
+ZqBFtFIQLFnYQOwJfVnZRn4To_NPZJTlOf_TLBuzXxgG       my/prefix/file1.txt
+ZqBFtFIQLFnYQOwJfVnZRn4To_NPZJTlOf_TLBuzXxgG       my/prefix/hello.txt
+ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ     my/prefix/test.sh
+Total 9 elements
+Hash: c5N6Z5AlxCh8jWOzkwo5pdZ20Tkscedy_VhtH47FWC0xAg
+
+Removing dirs again
+U1VNugIOQyPQThzL66AQnSkWGuup7LCNYiF7vm1o5U8a       my/prefix/dir1/subdir/subfile
+ixFZo_zkoeNdlF5lnBkJxYa9poW9ygKxlImSoCHXPBcQ       my/prefix/dir2/dir2file
+ZqBFtFIQLFnYQOwJfVnZRn4To_NPZJTlOf_TLBuzXxgG       my/prefix/file1.txt
+ZqBFtFIQLFnYQOwJfVnZRn4To_NPZJTlOf_TLBuzXxgG       my/prefix/hello.txt
+ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ     my/prefix/test.sh
+Total 5 elements
+Hash: rBHa9FTDJvMEd0Ya2EXF9L5kAnXn0yz1A7vCf_iQJYpFAQ

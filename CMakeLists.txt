@@ -24,7 +24,7 @@ set(UNPACK ${UDIR}/dirwriter.cpp ${UDIR}/base.cpp ${UDIR}/unpack_zip.cpp ${UDIR}
 set(TASKS ${TDIR}/unpack.cpp ${TDIR}/curl.cpp ${TDIR}/download.cpp ${JOB} ${UNPACK})
 set(HASH ${HDIR}/hash.cpp ${LIBDIR}/sha2/sha2.c)
 set(HTASKS ${HTDIR}/hashtask.cpp ${HTDIR}/unpackhash.cpp ${HTDIR}/downloadhash.cpp ${HTDIR}/copyhash.cpp)
-set(DIR ${DDIR}/directory.cpp)
+set(DIR ${DDIR}/directory.cpp ${DDIR}/from_fs.cpp)
 set(SCACHE ${CDIR}/index.cpp)
 set(RULES ${RDIR}/install_finder.cpp ${RDIR}/ruleset.cpp ${RDIR}/arcruleset.cpp ${RDIR}/rule_loader.cpp)
 set(INSTALL ${IDIR}/action_installer.cpp ${IDIR}/build_actions.cpp ${IDIR}/installer.cpp)
