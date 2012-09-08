@@ -2,6 +2,7 @@
 #define __SPREAD_CACHEINDEX_HPP_
 
 #include "hash/hash.hpp"
+#include <vector>
 
 /* The cache index holds a list over files and their hashes. It
    verifies and updates its own information on the fly as member
@@ -32,6 +33,15 @@ namespace Cache
                            place.
                         */
     };
+
+  struct CIEntry
+  {
+    Spread::Hash hash;
+    std::string file;
+    int64_t writeTime;
+  };
+
+  typedef std::vector<CIEntry> CIVector;
 
   struct CacheIndex
   {
@@ -84,6 +94,10 @@ namespace Cache
        created on demand.
      */
     void load(const std::string &conf);
+
+    /* Get a complete list of all the entries in the index.
+     */
+    void getEntries(CIVector &result) const;
 
     // The optional 'conf' parameter is passed on to load().
     CacheIndex(const std::string &conf = "");

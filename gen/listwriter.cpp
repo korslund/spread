@@ -2,6 +2,7 @@
 #include <mangle/stream/clients/copy_stream.hpp>
 #include <stdexcept>
 #include <assert.h>
+#include <algorithm>
 #include "unpack/dirwriter.hpp"
 #include "hash/hash_stream.hpp"
 #include "misc/readjson.hpp"
@@ -16,6 +17,21 @@ void ListWriter::write(const PackLister &lister, const string &where)
 {
   StreamFactoryPtr ptr(new Unpack::DirWriter(where));
   write(lister, ptr);
+}
+
+/* Used to sort a list of strings before appending it to a Json
+   array. The vector is sorted in place.
+ */
+void appendSorted(Json::Value &out, vector<string> &input)
+{
+  assert(out.isNull() || out.isArray());
+
+  sort(input.begin(), input.end());
+
+  int old = out.size();
+  out.resize(old + input.size());
+  for(int i=0; i<input.size(); i++)
+    out[old+i] = input[i];
 }
 
 void ListWriter::write(const PackLister &lst, StreamFactoryPtr output)
@@ -57,13 +73,26 @@ void ListWriter::write(const PackLister &lst, StreamFactoryPtr output)
 
     {
       RuleList::const_iterator it;
+      vector<string> tmp;
+      tmp.reserve(lst.ruleSet.size());
       for(it = lst.ruleSet.begin(); it != lst.ruleSet.end(); it++)
-        rules.append((*it)->ruleString);
+        tmp.push_back((*it)->ruleString);
+
+      /* Sort the rules before adding them. Otherwise they will be
+         ordered by pointer order (since RuleList is a set<> of
+         pointers.) This would make output non-deterministic, leading
+         to unnecessary hash changes, uploads and refreshes.
+       */
+      appendSorted(rules, tmp);
     }
     {
       set<const ArcRuleData*>::const_iterator it;
+      vector<string> tmp;
+      tmp.reserve(lst.arcSet.size());
       for(it = lst.arcSet.begin(); it != lst.arcSet.end(); it++)
-        rules.append((*it)->ruleString);
+        tmp.push_back((*it)->ruleString);
+
+      appendSorted(rules, tmp);
     }
 
     ReadJson::writeJson(output->open("rules.json"), rules);

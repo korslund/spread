@@ -23,7 +23,6 @@ namespace bf = boost::filesystem;
 static std::string abs(const bf::path &file)
 { return bf::absolute(file).string(); }
 
-
 struct Entry
 {
   Hash hash;
@@ -211,6 +210,21 @@ int CacheIndex::getStatus(const std::string &_where, const Hash &hash)
   return CI_Diff;
 }
 
+void CacheIndex::getEntries(CIVector &result) const
+{
+  LOCK lock(ptr->mutex);
+
+  result.reserve(ptr->paths.size());
+
+  PathToEntry::const_iterator it;
+  for(it = ptr->paths.begin(); it != ptr->paths.end(); it++)
+    {
+      Entry &e = *(it->second);
+      CIEntry e2 = { e.hash, e.file, e.writeTime };
+      result.push_back(e2);
+    }
+}
+
 std::string CacheIndex::findHash(const Hash &hash)
 {
   PRINT("Cache::findHash(" << hash << ")");
@@ -261,7 +275,7 @@ void CacheIndex::removeFile(const std::string &_where)
 /* This is the main 'workhorse' of the indexer, and the function that
    does most of the actual interaction with the filesystem.
  */
-Hash CacheIndex::addFile(const std::string &_where, const Hash &h)
+Hash CacheIndex::addFile(const std::string &_where, const Hash &given)
 {
   assert(_where != "");
   std::string where = abs(_where);
@@ -282,7 +296,7 @@ Hash CacheIndex::addFile(const std::string &_where, const Hash &h)
   uint64_t size = bf::file_size(where);
 
   // Check that the given hash, if any, isn't wrong.
-  if(!h.isNull() && h.size() != size)
+  if(!given.isNull() && given.size() != size)
     throw std::runtime_error("Given hash doesn't match real file size: " + where);
 
   // Find the index entry
@@ -294,7 +308,7 @@ Hash CacheIndex::addFile(const std::string &_where, const Hash &h)
       bool match=true;
       if(ent->writeTime != time ||
          ent->hash.size() != size) match = false;
-      if(!h.isNull() && h != ent->hash)
+      if(!given.isNull() && given != ent->hash)
         match = false;
 
       if(match)
@@ -307,7 +321,7 @@ Hash CacheIndex::addFile(const std::string &_where, const Hash &h)
      entry by the same name.
    */
 
-  Hash hash = h;
+  Hash hash = given;
   if(hash.isNull())
     // No hash provided. Hash the file ourselves.
     hash = HashStream::sum(where);

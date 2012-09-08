@@ -82,5 +82,14 @@ int main()
   index.load("_cache1.conf");
   index.addFile("CMakeLists.txt");
 
+  // Dump to screen
+  Cache::CIVector vec;
+  index.getEntries(vec);
+  for(int i=0; i<vec.size(); i++)
+    {
+      Cache::CIEntry &e = vec[i];
+      cout << e.hash << " " << e.file << " " << e.writeTime << endl;
+    }
+
   return 0;
 }

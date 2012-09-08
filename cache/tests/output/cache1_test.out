@@ -35,3 +35,10 @@ Checking status for hello.dat   Hash: ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5L
   Hash exists elsewhere: /home/mortennk/koding/spread/cache/tests/test.sh
 Checking status for hello.dat   Hash: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
   Hash exists elsewhere: /home/mortennk/koding/spread/cache/tests/hello2.dat
+drLHLL9OqVYvPmX0ScRjLMEkQ59BHzHJQLLBwimvtztEBQ /home/mortennk/koding/spread/cache/tests/CMakeLists.txt 1346044910
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF /home/mortennk/koding/spread/cache/tests/hello2.dat 1341232094
+ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ /home/mortennk/koding/spread/cache/tests/test.sh 1341224553
+E8nbKdyOhKpCrQTMKnsFqSz-Z074q8mpKswc0rNo1H-CB CMakeLists.txt 1345811653
+Q1NiBMXoK1tcYvTsMD7af_Ai-CBNLS03e3n3YSAnGDUnYw Makefile 1343814397
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF hello2.dat 1341232094
+ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ test.sh 1341224553
