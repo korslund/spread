@@ -1,6 +1,8 @@
 #include "sr0_gen.hpp"
 #include <iostream>
 
+#include "print_dir.hpp"
+
 using namespace SpreadGen;
 using namespace Spread;
 using namespace std;
@@ -28,6 +30,8 @@ int main()
 
   GenSR0 gen(cache, rules);
   gen.makeSR0(dirHash, "_sr0_output");
+
+  printDir("_sr0_output");
 
   return 0;
 }

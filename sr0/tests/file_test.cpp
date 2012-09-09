@@ -2,12 +2,14 @@
 
 #include <boost/filesystem.hpp>
 #include <mangle/stream/servers/outfile_stream.hpp>
+#include "print_dir.hpp"
 
 #include <iostream>
 using namespace std;
 
 using namespace Mangle::Stream;
 using namespace Spread;
+namespace bf = boost::filesystem;
 
 // This is used to generate the test set. It is NOT part of the test
 // itself.
@@ -66,7 +68,7 @@ void test(const std::string &src, const std::string &dest, bool kill=true)
   cout << "Installing " << src << " into " << dest << ":\n";
   Cache::Cache cache;
   cache.tmpDir = "_tmpdir/";
-  if(kill) boost::filesystem::remove_all(dest);
+  if(kill) bf::remove_all(dest);
   bool wasUpdated;
   check(SR0::fetchFile(src, dest, cache, false, &wasUpdated));
   if(wasUpdated) cout << "(UPDATED)\n";
@@ -80,7 +82,7 @@ int main()
   //genData2();
   //return 0;
 
-  boost::filesystem::remove_all("_tmpdir/");
+  bf::remove_all("_tmpdir/");
 
   test("test1", "_outdir1/");
   test("test1", "_outdir2/");
@@ -90,6 +92,12 @@ int main()
   test("test2", "_outdir4_1to2", false);
   test("test2", "_outdir5_2to1");
   test("test1", "_outdir5_2to1", false);
+
+  printDir("_outdir1");
+  printDir("_outdir2");
+  printDir("_outdir3");
+  printDir("_outdir4_1to2");
+  printDir("_outdir5_2to1");
 
   /* TODO: if/when we implement dir diffing later, we should recheck
      this example to make sure outdated files are actually deleted

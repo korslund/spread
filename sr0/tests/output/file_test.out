@@ -30,3 +30,49 @@ Installing test1 into _outdir5_2to1:
 SUCCESS: Installing prog=35/35
 (UPDATED)
 
+
+Directory: _outdir1
+ov9AaWeiL3FFW1rRHNHvacbJDmuOUy-L5lx8Ut2cDXUo       current.hash
+psjM8uDq9pmNUZQHCFw8zK4-ayXT5-gpFuksShg-GPUo       out_file1.txt
+g2lF9D0PACSgcFZUtHpxhrd6jbdnJmfUyXQ0uwO1VZo-       out_file2.txt
+psjM8uDq9pmNUZQHCFw8zK4-ayXT5-gpFuksShg-GPUo       out_file3.txt
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       out_robot.txt
+Total 5 elements
+Hash: JeA9uja-Tw_YO04Orp6Aw6JpMluTCWCXc_tS4YTpW-IaAQ
+
+Directory: _outdir2
+ov9AaWeiL3FFW1rRHNHvacbJDmuOUy-L5lx8Ut2cDXUo       current.hash
+psjM8uDq9pmNUZQHCFw8zK4-ayXT5-gpFuksShg-GPUo       out_file1.txt
+g2lF9D0PACSgcFZUtHpxhrd6jbdnJmfUyXQ0uwO1VZo-       out_file2.txt
+psjM8uDq9pmNUZQHCFw8zK4-ayXT5-gpFuksShg-GPUo       out_file3.txt
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       out_robot.txt
+Total 5 elements
+Hash: JeA9uja-Tw_YO04Orp6Aw6JpMluTCWCXc_tS4YTpW-IaAQ
+
+Directory: _outdir3
+YteynCcGuhqk1vsXL8D3cjqhmr0pB1qOpXEnZ_nvTk0o       current.hash
+psjM8uDq9pmNUZQHCFw8zK4-ayXT5-gpFuksShg-GPUo       out_file1.txt
+2-ZutRu-hTIPSAkddcskIPrYFVYK-J9oFSujhDD7bjEn       out_file2.txt
+sJjzhl8Vh7vq-hJYYbvYjPKlvPAWc6olCd3Mk_MMv_Qk       out_file4.txt
+Total 4 elements
+Hash: ghK_0zNxWFe5ApSvxJA7tQOyJq-bROaCGG7W1P9vSQnj
+
+Directory: _outdir4_1to2
+YteynCcGuhqk1vsXL8D3cjqhmr0pB1qOpXEnZ_nvTk0o       current.hash
+psjM8uDq9pmNUZQHCFw8zK4-ayXT5-gpFuksShg-GPUo       out_file1.txt
+2-ZutRu-hTIPSAkddcskIPrYFVYK-J9oFSujhDD7bjEn       out_file2.txt
+psjM8uDq9pmNUZQHCFw8zK4-ayXT5-gpFuksShg-GPUo       out_file3.txt
+sJjzhl8Vh7vq-hJYYbvYjPKlvPAWc6olCd3Mk_MMv_Qk       out_file4.txt
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       out_robot.txt
+Total 6 elements
+Hash: S69XWyS4zCHEr-Jh9Z0FOGUYZZfPt4QCIvDNeDclhSRRAQ
+
+Directory: _outdir5_2to1
+ov9AaWeiL3FFW1rRHNHvacbJDmuOUy-L5lx8Ut2cDXUo       current.hash
+psjM8uDq9pmNUZQHCFw8zK4-ayXT5-gpFuksShg-GPUo       out_file1.txt
+g2lF9D0PACSgcFZUtHpxhrd6jbdnJmfUyXQ0uwO1VZo-       out_file2.txt
+psjM8uDq9pmNUZQHCFw8zK4-ayXT5-gpFuksShg-GPUo       out_file3.txt
+sJjzhl8Vh7vq-hJYYbvYjPKlvPAWc6olCd3Mk_MMv_Qk       out_file4.txt
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       out_robot.txt
+Total 6 elements
+Hash: rl0d3IjFbniq_60E13vF258PII8bTh-V9R31CAuR9CpRAQ

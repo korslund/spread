@@ -1,5 +1,6 @@
 #include "installer.hpp"
 #include <iostream>
+#include "print_dir.hpp"
 
 using namespace std;
 using namespace Spread;
@@ -124,5 +125,7 @@ int main()
     TEST("Repeating previously non-existing file","t8");
     inst.addDep("output.dat", hello);
   }
+
+  printDir("_full");
   return 0;
 }

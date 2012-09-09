@@ -3,6 +3,8 @@
 #include <assert.h>
 #include <exception>
 
+#include "print_dir.hpp"
+
 using namespace std;
 using namespace Unpack;
 
@@ -27,5 +29,7 @@ int main()
   test("test.sh");
   test("doesn't exist");
   test("archives/test.zip");
+
+  printDir("_outdir3");
   return 0;
 }

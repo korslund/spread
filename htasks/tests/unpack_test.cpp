@@ -1,5 +1,6 @@
 #include "unpackhash.hpp"
 #include <iostream>
+#include "print_dir.hpp"
 
 using namespace std;
 using namespace Spread;
@@ -35,6 +36,9 @@ int main()
   unp.addOutput(H2, "_unp_test1/file2_again.txt");
 
   unp.run();
+
+  printDir("_unp_test1");
+  printDir("_unp_test2");
 
   return 0;
 }

@@ -2,25 +2,24 @@ cmake_minimum_required(VERSION 2.6)
 
 include_directories("../")
 include_directories("../../")
-include_directories("../../libs")
+include_directories("../../libs/")
+include_directories("../../libs/jsoncpp/include/")
+include_directories(${Boost_INCLUDE_DIRS})
 
 find_package(Boost COMPONENTS filesystem system REQUIRED)
-set(ZZip_LIBRARIES zzip)
 
-set(MDIR ../../libs/mangle/stream)
-set(UDIR ../../unpack)
-set(BASE ${UDIR}/dirwriter.cpp ${UDIR}/base.cpp)
-set(ZIP ${BASE} ${UDIR}/unpack_zip.cpp)
-set(AUTO ${UDIR}/auto.cpp ${ZIP})
+add_subdirectory("../../" "${CMAKE_CURRENT_BINARY_DIR}/_spread")
 
-set(BLIBS ${Boost_LIBRARIES})
-set(LIBS ${BLIBS} ${ZZip_LIBRARIES})
+set(LIBS Spread ${Boost_LIBRARIES} zzip ${CURL_LIBRARIES})
 
-add_executable(dummy1_test dummy1_test.cpp ${BASE})
-target_link_libraries(dummy1_test ${BLIBS})
+set(MDIR ../../libs/mangle)
+set(MANGLE ${MDIR}/stream/clients/io_stream.cpp)
 
-add_executable(zip_test zip_test.cpp ${ZIP})
+add_executable(dummy1_test dummy1_test.cpp ${MANGLE})
+target_link_libraries(dummy1_test ${LIBS})
+
+add_executable(zip_test zip_test.cpp ${MANGLE})
 target_link_libraries(zip_test ${LIBS})
 
-add_executable(auto_test auto_test.cpp ${AUTO})
+add_executable(auto_test auto_test.cpp ${MANGLE})
 target_link_libraries(auto_test ${LIBS})

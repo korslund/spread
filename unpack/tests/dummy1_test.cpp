@@ -2,6 +2,8 @@
 #include <iostream>
 #include <assert.h>
 
+#include "print_dir.hpp"
+
 using namespace std;
 using namespace Unpack;
 
@@ -34,6 +36,8 @@ int main()
   DummyUnpack dummy;
 
   dummy.unpack("dummy", "_outdir");
+
+  printDir("_outdir");
 
   cout << "Done\n";
   return 0;

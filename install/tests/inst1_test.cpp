@@ -2,6 +2,7 @@
 #include <iostream>
 #include "rules/urlrule.hpp"
 #include "rules/arcrule.hpp"
+#include "print_dir.hpp"
 
 using namespace std;
 using namespace Spread;

@@ -1,5 +1,7 @@
 #include "../unpack.hpp"
 
+#include "print_dir.hpp"
+
 #include <iostream>
 using namespace std;
 
@@ -19,6 +21,8 @@ int main()
     cout << "Failure: " << info->getMessage() << endl;
 
   cout << "Progress: " << info->getCurrent() << "/" << info->getTotal() << endl;
+
+  printDir("_outdir1");
 
   return 0;
 }

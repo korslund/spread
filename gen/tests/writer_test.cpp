@@ -1,6 +1,8 @@
 #include "listwriter.hpp"
 #include <iostream>
 
+#include "print_dir.hpp"
+
 using namespace SpreadGen;
 using namespace Spread;
 using namespace std;
@@ -43,6 +45,8 @@ int main()
   ListWriter wrt(cache);
 
   wrt.write(lst, "_writer/");
+
+  printDir("_writer");
 
   return 0;
 }

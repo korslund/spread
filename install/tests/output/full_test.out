@@ -34,3 +34,21 @@ progress=0/0
 Repeating previously non-existing file => _full/t8/
 DONE: status=Installing
 progress=0/0
+
+Directory: _full
+00                                                 t3
+b0pJQX7I8U2_IpfK3fsppNT10LS9Q09C2FchwEYXuJFy       t3/test.dir
+00                                                 t5
+bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ     t5/test.zip
+00                                                 t6
+bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ     t6/test.zip
+00                                                 t7
+00                                                 t7/dir
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       t7/dir/world.out
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       t7/hello.out
+ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ     t7/test.sh
+bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ     t7/testsh.zip
+00                                                 t8
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       t8/output.dat
+Total 14 elements
+Hash: H_YflANDG0rwCCGvW6pp_90iuodH3TmC0bUoCzHtZfLFAg

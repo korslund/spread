@@ -4,6 +4,8 @@
 #include <iostream>
 #include <stdexcept>
 
+#include "print_dir.hpp"
+
 using namespace std;
 using namespace Spread;
 using namespace Mangle::Stream;
@@ -21,9 +23,20 @@ Hash H3(D3.c_str(), D3.size());
 Hash H4(D4.c_str(), D4.size());
 Hash H5(D5.c_str(), D5.size());
 
+struct TestJob;
+struct TestTask : HashTask
+{
+  TestJob *j;
+
+  string outdir;
+
+  TestTask(TestJob *job);
+  Job *createJob();
+};
+
 struct TestJob : Job
 {
-  HashTask *task;
+  TestTask *task;
 
   void doJob()
   {
@@ -52,16 +65,11 @@ struct TestJob : Job
   virtual void test() = 0;
 };
 
-struct TestTask : HashTask
-{
-  TestJob *j;
+TestTask::TestTask(TestJob *job)
+  : j(job)
+{ job->task = this; }
 
-  TestTask(TestJob *job)
-    : j(job)
-  { job->task = this; }
-
-  Job *createJob() { return j; }
-};
+Job *TestTask::createJob() { return j; }
 
 void testJob(TestJob *j)
 {
@@ -69,6 +77,9 @@ void testJob(TestJob *j)
   t.run();
   if(t.getInfo()->isError())
     cout << "CAUGHT: " << t.getInfo()->getMessage() << endl;
+
+  if(t.outdir != "")
+    printDir(t.outdir);
 }
 
 struct T1 : TestJob
@@ -80,6 +91,8 @@ struct T1 : TestJob
     task->addOutput(H2, "_ht_test1/d2.txt");
     write(H1, D1);
     write(H2, D2);
+
+    task->outdir = "_ht_test1";
   }
 
   ~T1() { cout << "Jobs get deleted properly\n"; }
@@ -93,6 +106,8 @@ struct T2: TestJob
     task->addOutput(H1, "_ht_test2/d1.txt");
     write(H1, D1);
     write(H1, D2, false);
+
+    task->outdir = "_ht_test2";
   }
 };
 
@@ -117,6 +132,8 @@ struct T4 : TestJob
     write(H1, D1);
     write(H1, D1, false);
     write(H2, D2, false);
+
+    task->outdir = "_ht_test4";
   }
 };
 
@@ -127,6 +144,7 @@ struct T5 : TestJob
     cout << "TEST5: Wrong content\n";
     task->addOutput(H1, "_ht_test5/wrong.txt");
     write(H1, D4);
+    task->outdir = "_ht_test5";
   }
 };
 
@@ -199,6 +217,8 @@ int main()
 
   if(info->isError())
     cout << "CAUGHT2: " << info->getMessage() << endl;
+
+  printDir("_ht_test10");
 
   return 0;
 }
