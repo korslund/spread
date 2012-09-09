@@ -10,6 +10,7 @@
 #include <boost/filesystem.hpp>
 #include <stdexcept>
 #include <vector>
+#include <boost/thread/recursive_mutex.hpp>
 
 using namespace Spread;
 
@@ -86,10 +87,13 @@ struct PackList
   }
 };
 
+#define LOCK boost::lock_guard<boost::recursive_mutex> lock(ptr->mutex)
+
 struct SpreadLib::_Internal
 {
   Cache::Cache cache;
   RuleSet rules;
+  boost::recursive_mutex mutex;
 
   // This keeps track of updates in progress for a given channel
   std::map<std::string, JobInfoPtr> chanJobs;
@@ -106,8 +110,11 @@ struct SpreadLib::_Internal
   {
     JobInfoPtr &info = chanJobs[channel];
     bool res = info && info->isSuccess();
-    if(res) info.reset();
-    assert(!chanJobs[channel]);
+    if(res)
+      {
+        info.reset();
+        assert(!chanJobs[channel]);
+      }
     return res;
   }
 
@@ -184,6 +191,7 @@ JobInfoPtr SpreadLib::updateFromURL(const std::string &channel,
                                     const std::string &url,
                                     bool async)
 {
+  LOCK;
   return ptr->setUpdateInfo(channel) =
     SR0::fetchURL(url, ptr->chanPath(channel), ptr->cache, async,
                   &ptr->wasUpdated[channel]);
@@ -193,6 +201,7 @@ JobInfoPtr SpreadLib::updateFromFile(const std::string &channel,
                                      const std::string &path,
                                      bool async)
 {
+  LOCK;
   return ptr->setUpdateInfo(channel) =
     SR0::fetchFile(path, ptr->chanPath(channel), ptr->cache, async,
                    &ptr->wasUpdated[channel]);
@@ -201,12 +210,14 @@ JobInfoPtr SpreadLib::updateFromFile(const std::string &channel,
 std::string SpreadLib::getPackVersion(const std::string &channel,
                                       const std::string &package)
 {
+  LOCK;
   return ptr->getPack(channel, package).version;
 }
 
 std::string SpreadLib::getPackHash(const std::string &channel,
                                    const std::string &package)
 {
+  LOCK;
   const Pack& p = ptr->getPack(channel,package);
 
   /* The idea here is to return the DirHash for the final output
@@ -241,6 +252,7 @@ JobInfoPtr SpreadLib::install(const std::string &channel,
                               std::string *version,
                               bool async)
 {
+  LOCK;
   const Pack& p = ptr->getPack(channel,package);
   if(version) *version = p.version;
 
@@ -257,10 +269,12 @@ JobInfoPtr SpreadLib::install(const std::string &channel,
 JobInfoPtr SpreadLib::unpackURL(const std::string &url, const std::string &where,
                                 bool async)
 {
+  LOCK;
   return SR0::fetchURL(url, abs(where), ptr->cache, async);
 }
 
 std::string SpreadLib::cacheFile(const std::string &file)
 {
+  LOCK;
   return ptr->cache.index.addFile(abs(file)).toString();
 }
