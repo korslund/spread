@@ -2,7 +2,6 @@
 
 #include <assert.h>
 #include <exception>
-#include "thread.hpp"
 
 using namespace Spread;
 
@@ -50,10 +49,9 @@ bool Job::runClient(Job &job, bool includeStats)
 bool Job::waitClient(JobInfoPtr client, bool includeStats)
 {
   if(clearClient()) return true;
-  if(clearClient()) return true;
   if(includeStats) setClient(client);
   else setAbortClient(client);
-  while(!client->isFinished()) Thread::sleep(0.05);
+  client->wait();
   return clearClient();
 }
 

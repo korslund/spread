@@ -1,6 +1,7 @@
 #include "jobinfo.hpp"
 #include <assert.h>
 #include <stdexcept>
+#include "thread.hpp"
 
 using namespace Spread;
 
@@ -56,6 +57,11 @@ void JobInfo::setAbortClient(JobInfoPtr client)
 {
   assert(client.get() != this);
   abortClient = client;
+}
+
+void JobInfo::wait()
+{
+  while(!isFinished()) Thread::sleep(0.05);
 }
 
 bool JobInfo::clearClient()

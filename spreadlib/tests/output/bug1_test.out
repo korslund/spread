@@ -1,0 +1,9 @@
+Staring update job
+Attempting to install a package
+EXPECTED error: Error loading channel tiggit.net.
+DETAILS: FileStream: failed to open file /home/mortennk/koding/spread/spreadlib/tests/_bug1/channels/tiggit.net/rules.json (reading /home/mortennk/koding/spread/spreadlib/tests/_bug1/channels/tiggit.net/rules.json)
+Waiting for update to finish
+Repeating update job
+Installing package for real this time
+Waiting...
+Success!

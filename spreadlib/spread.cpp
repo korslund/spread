@@ -100,24 +100,6 @@ struct SpreadLib::_Internal
   std::map<std::string, bool> wasUpdated;
   std::map<std::string, PackList> allPacks;
 
-  /* True if the given channel has a JobInfoPtr entry that has
-     finished.
-
-     This means that a new ruleset has been installed since our last
-     run.
-  */
-  bool isUpdated(const std::string &channel)
-  {
-    JobInfoPtr &info = chanJobs[channel];
-    bool res = info && info->isSuccess();
-    if(res)
-      {
-        info.reset();
-        assert(!chanJobs[channel]);
-      }
-    return res;
-  }
-
   const Pack& getPack(const std::string &channel,
                       const std::string &pack)
   {
@@ -130,13 +112,42 @@ struct SpreadLib::_Internal
   }
 
   // Load the newest ruleset and packlist, if it has been updated
-  // since our last run
+  // since our last run or if it hasn't been loaded at all yet.
   void update(const std::string &channel)
   {
-    if(isUpdated(channel))
+    // Does the channel exist?
+    if(allPacks.find(channel) != allPacks.end())
+      {
+        // Yes. Check if it is currently being updated.
+        JobInfoPtr &info = chanJobs[channel];
+
+        // There has been no updates since our last load, so there's
+        // no point in reloading.
+        if(!info) return;
+
+        if(info->isSuccess())
+          {
+            // The job is done, the data is usable.
+            info.reset();
+            assert(!chanJobs[channel]);
+          }
+        else
+          /* The job is currently writing the data, meaning we can't
+             safely load it right now.
+           */
+          return;
+      }
+
+    /* Load the data. Will throw on errors, which is what we expect.
+     */
+    try
       {
         loadRulesJsonFile(rules, chanPath(channel, "rules.json"));
         allPacks[channel].load(chanPath(channel, "packs.json"));
+      }
+    catch(std::exception &e)
+      {
+        fail("Error loading channel " + channel + ".\nDETAILS: " + e.what());
       }
   }
 
