@@ -93,7 +93,6 @@ struct Target
 
     if(status == TS_Running)
       checkJob();
-
   }
 
   // Check all our dependencies are done. If so, move our status from
@@ -121,13 +120,24 @@ struct Target
     assert(status == TS_Ready);
     assert(!info);
 
+    PRINT("Starting job:");
+
     HashTask *htask;
     if(type == TT_FileCopy)
-      htask = new CopyHash(action->source);
+      {
+        htask = new CopyHash(action->source);
+        PRINT("  Copying " << action->source);
+      }
     else if(type == TT_Download)
-      htask = new DownloadHash(url);
+      {
+        htask = new DownloadHash(url);
+        PRINT("  Downloading " << url);
+      }
     else if(type == TT_Unpack)
-      htask = new UnpackHash(dir->dir);
+      {
+        htask = new UnpackHash(dir->dir);
+        PRINT("  Unpacking " << dir->dir.size() << " elements");
+      }
     else assert(0);
 
     assert(htask);
@@ -143,6 +153,7 @@ struct Target
           // Use the file that the Target has chosen for us
           assert(t.useForDeps != "");
           htask->addInput(h, t.useForDeps);
+          PRINT("  Input: " << h << " " << t.useForDeps);
         }
     }
 
@@ -153,13 +164,17 @@ struct Target
       {
         assert(type == TT_FileCopy);
         status = TS_Done;
+        PRINT("  File already exists");
         return;
       }
 
     // Add all our requests as task outputs
     assert(outFiles.size());
     for(int i=0; i<outFiles.size(); i++)
-      htask->addOutput(hash, outFiles[i]);
+      {
+        htask->addOutput(hash, outFiles[i]);
+        PRINT("  Output: " << hash << " " << outFiles[i]);
+      }
 
     info = htask->getInfo();
     assert(info);
@@ -174,9 +189,12 @@ struct Target
     assert(info);
     if(info->isFinished())
       {
+        PRINT("Job finished");
+
         // Check for recoverable errors
         if(info->isError() && type == TT_Download)
           {
+            PRINT("  Download error: URL=" << url);
             // Try to get a replacement URL
             assert(url != "");
             std::string newUrl = owner->brokenURL(hash, url);
@@ -189,6 +207,7 @@ struct Target
                 info.reset();
                 status = TS_Ready;
                 url = newUrl;
+                PRINT("  Found replacement URL: " << url);
                 startJob();
                 return;
               }
@@ -200,6 +219,7 @@ struct Target
             std::string error = info->getMessage();
             if(type == TT_Download)
               error = "Error downloading " + url + "\nDetails:\n" + error;
+            PRINT("  Throwing exception: " << error);
             throw std::runtime_error(error);
           }
 
@@ -266,7 +286,6 @@ struct Target
         SSet::const_iterator it;
         for(it = dest.begin(); it != dest.end(); it++)
           outFiles.push_back(*it);
-
       }
     else
       {

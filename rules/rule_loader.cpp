@@ -46,11 +46,11 @@ static Hash getHash(const char* &ptr)
   return h;
 }
 
-bool isNum(const std::string &tmp)
+bool isNum(const std::string &str)
 {
-  if(tmp == "") return false;
+  if(str == "") return false;
 
-  char c = tmp[0];
+  char c = str[0];
 
   return (c >= '0' && c <= '9') || c == '.' || c == '-' || c == '+';
 }
@@ -63,25 +63,28 @@ void Spread::decodeURL(const std::string &input, std::string &url,
 
   const char *ptr = input.c_str();
 
-  std::string tmp = getNext(ptr);
-  if(isNum(tmp))
+  std::string word = getNext(ptr);
+  if(isNum(word))
     {
-      prio = atoi(tmp.c_str());
+      prio = atoi(word.c_str());
 
-      tmp = getNext(ptr);
-      if(isNum(tmp))
+      word = getNext(ptr);
+      if(isNum(word))
         {
-          weight = atof(tmp.c_str());
+          weight = atof(word.c_str());
           url = getNext(ptr);
         }
       else
-        url = tmp;
+        url = word;
     }
   else
-    url = tmp;
+    url = word;
 
-  // 'url' now contains the first word in the URL. Add the rest, and
-  // replace spaces with %20
+  /*
+    'url' now contains the first (space-separated) word in the URL.
+    Now let's add the rest of the string, and replace spaces with
+    "%20".
+  */
   while(*ptr)
     {
       char c = *(ptr++);
@@ -97,9 +100,9 @@ void Spread::addRule(RuleSet &rules, const std::string &str)
   const char *ptr = str.c_str();
 
   // Decode rule string
-  std::string tmp = getNext(ptr);
+  std::string verb = getNext(ptr);
 
-  if(tmp == "URL")
+  if(verb == "URL")
     {
       Hash hash = getHash(ptr);
 
@@ -114,7 +117,7 @@ void Spread::addRule(RuleSet &rules, const std::string &str)
 
        rules.addURL(hash, url, prio, w, str);
     }
-  else if(tmp == "ARC")
+  else if(verb == "ARC")
     {
       Hash arcHash = getHash(ptr);
       Hash dirHash = getHash(ptr);
@@ -124,5 +127,10 @@ void Spread::addRule(RuleSet &rules, const std::string &str)
 
       rules.addArchive(arcHash, dirHash, str);
     }
-  else fail("Unknown rule " + str);
+
+  /* Ignore unknown rule verbs. More rules may be added later as
+     optimizations or new sources for obtaining data. Clients who are
+     not able to parse these rules should still be allowed to use the
+     rules they DO understand.
+   */
 }
