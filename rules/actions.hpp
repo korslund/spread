@@ -14,6 +14,11 @@ namespace Spread
      It represents an action required to produce a set of output
      files, either by copying an existing file or by generating the
      data from a rule.
+
+     Each Action represents one Hash and thus one unique data content
+     which the input and output must match. If the Action has multiple
+     output files listed, then all the created files will be identical
+     copies of the same data.
   */
   struct Action
   {

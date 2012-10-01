@@ -9,7 +9,7 @@ namespace bf = boost::filesystem;
 /* Regression test.
  */
 
-int main()
+int main(int argc, char **argv)
 {
   SpreadLib spread("_bug1", "_tmp");
 
@@ -59,13 +59,13 @@ int main()
       info2->wait();
       info2->failError();
       cout << "Success!\n";
+      if(argc == 1)
+        bf::remove_all("_bug1");
     }
   catch(exception &e)
     {
       cout << "ERROR: " << e.what() << endl;
     }
-
-  bf::remove_all("_bug1");
 
   return 0;
 }

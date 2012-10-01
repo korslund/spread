@@ -18,11 +18,21 @@ using namespace Spread;
 #define PRINT(a)
 #endif
 
+/* TODO: testing: There isn't yet a complete and exhaustive test for
+   this code. The current tests only test basic features. A complete
+   test of the unpacking coordination and all the other features, with
+   full output of all API functions called (file caching etc), for
+   various predefined normal and pathological input cases, would be
+   nice to have. Ideally it should also be possible to include
+   -DDEBUG_PRINT when compiling this file only.
+ */
+
 enum Type
   {
     TT_FileCopy,
     TT_Download,
-    TT_Unpack
+    TT_Unpack,
+    TT_Passive
   };
 
 enum Status
@@ -49,10 +59,19 @@ struct Target
 
   ActionInstaller *owner;
 
+  // Set on archive targets to point to the target responsible for
+  // unpacking.
+  Target *unpacker;
+
   // Dependencies we are waiting for, and their final locations when
   // done.
   typedef std::map<Hash, Target*> HTMap;
   HTMap waitingFor;
+
+  // Outputs that other targets want us to add to the final job. Used
+  // for archive unpacking, where one target is responsible for
+  // unpacking all the other targets.
+  HTMap otherOutputs;
 
   JobInfoPtr info;
 
@@ -65,6 +84,7 @@ struct Target
   // when we are TS_Done.
   std::string useForDeps;
 
+  Target() : unpacker(NULL) {}
   ~Target()
   {
     if(info && info->isBusy()) info->abort();
@@ -95,8 +115,8 @@ struct Target
       checkJob();
   }
 
-  // Check all our dependencies are done. If so, move our status from
-  // TS_Waiting to TS_Ready.
+  // Check if all our dependencies are done. If so, move our status
+  // from TS_Waiting to TS_Ready.
   void checkDeps()
   {
     assert(status == TS_Waiting);
@@ -106,6 +126,9 @@ struct Target
       {
         const Target *t = it->second;
         assert(t);
+
+        // If any of our dependencies are still busy, then we have to
+        // wait for it to finish.
         if(t->status != TS_Done)
           return;
       }
@@ -119,6 +142,7 @@ struct Target
   {
     assert(status == TS_Ready);
     assert(!info);
+    status = TS_Running;
 
     PRINT("Starting job:");
 
@@ -137,6 +161,19 @@ struct Target
       {
         htask = new UnpackHash(dir->dir);
         PRINT("  Unpacking " << dir->dir.size() << " elements");
+      }
+    else if(type == TT_Passive)
+      {
+        /* Passive tasks are used when all our output files have
+           already been created by our dependencies.
+
+           An example is unpacking targets from an archive: one target
+           is selected as the "unpacker" and does the actual work of
+           creating ALL the targets, the rest are passive and simply
+           wait for the unpacking target to finish.
+         */
+        PRINT("  Passive task (no job required)");
+        return;
       }
     else assert(0);
 
@@ -157,9 +194,11 @@ struct Target
         }
     }
 
-    // If we have no outputs, then we are done. This is only allowed
-    // for empty copy operations (which are basically just markers
-    // telling us about already existing files.)
+    /*
+      If we have no outputs, then we are done. This is only allowed
+      for empty copy operations (which are basically just markers
+      telling us about already existing files.)
+    */
     if(outFiles.size() == 0)
       {
         assert(type == TT_FileCopy);
@@ -176,18 +215,55 @@ struct Target
         PRINT("  Output: " << hash << " " << outFiles[i]);
       }
 
+    /* Add all outputs added by other targets. This is used for
+       unpacking jobs.
+     */
+    if(otherOutputs.size())
+      {
+        /* Sanity check - we should only get here if we are the
+           unpacker for an archive. You can remove this block later if
+           you want to use otherOutputs for other things as well.
+        */
+        {
+          assert(type == TT_Unpack);
+          assert(waitingFor.size() == 1);
+          Target *arc = waitingFor.begin()->second;
+          assert(arc->unpacker == this);
+        }
+
+        HTMap::iterator it;
+        for(it = otherOutputs.begin(); it != otherOutputs.end(); it++)
+        {
+          const Hash &h = it->first;
+          const Target &t = *it->second;
+
+          // For each target, add all the files in their outfile list
+          for(int i=0; i<t.outFiles.size(); i++)
+            {
+              htask->addOutput(h, t.outFiles[i]);
+              PRINT("  Ext Output: " << h << " " << t.outFiles[i]);
+            }
+        }
+      }
+
     info = htask->getInfo();
     assert(info);
     Thread::run(htask);
-    status = TS_Running;
   }
 
   void checkJob()
   {
     assert(status == TS_Running);
+    assert(info || type == TT_Passive);
 
-    assert(info);
-    if(info->isFinished())
+    bool finished = false;
+
+    if(type == TT_Passive)
+      {
+        finished = true;
+        assert(!info);
+      }
+    else if(info->isFinished())
       {
         PRINT("Job finished");
 
@@ -222,7 +298,11 @@ struct Target
             PRINT("  Throwing exception: " << error);
             throw std::runtime_error(error);
           }
+        finished = true;
+      }
 
+    if(finished)
+      {
         // Make sure all newly created files are added to the cache
         // index.
         for(int i=0; i<outFiles.size(); i++)
@@ -267,10 +347,16 @@ struct Target
 
   typedef std::set<std::string> SSet;
 
-  /* Set up outFiles and waitingFor, as well as moving status from
+  /* This sets up all inter-dependence relations between the targets.
+
+     It set up outFiles and waitingFor, as well as moving status from
      TS_Wanted/TS_Unwanted to TS_Waiting or TS_Ready.
+
+     Also sets up collective job control for targets that rely on
+     one-to-many jobs, such as unpacking an archive file into many
+     output files.
   */
-  void fixPaths(TargetMap &tmap)
+  void fixDeps(TargetMap &tmap)
   {
     // Don't reprocess an already fixed target
     if(status != TS_Wanted &&
@@ -329,7 +415,7 @@ struct Target
             it->second = &targ;
 
             // Set up the target.
-            targ.fixPaths(tmap);
+            targ.fixDeps(tmap);
             assert(targ.status == TS_Ready ||
                    targ.status == TS_Waiting);
             assert(targ.useForDeps != "");
@@ -338,6 +424,36 @@ struct Target
     else
       // This task is ready to be run directly
       status = TS_Ready;
+
+    /* Are we an unpack operation? If so, we have to notify the target
+       archive to coordinate our unpacking with the other targets.
+     */
+    if(type == TT_Unpack)
+      {
+        // Get the archive target
+        assert(waitingFor.size() == 1);
+        Target *arc = waitingFor.begin()->second;
+        assert(arc);
+
+        if(arc->unpacker)
+          {
+            // There is already an unpacker. Add ourselves as an
+            // output.
+            arc->unpacker->otherOutputs[hash] = this;
+
+            // We now depend on the unpacker to do our work. We have
+            // to wait for it to finish, but once it is we don't do
+            // any work ourselves.
+            waitingFor[arc->unpacker->hash] = arc->unpacker;
+            type = TT_Passive;
+          }
+        else
+          {
+            // No unpacker has been selected. Set ourselves up for the
+            // job.
+            arc->unpacker = this;
+          }
+      }
   }
 };
 
@@ -361,7 +477,7 @@ void ActionInstaller::doJob()
 
   PRINT("B");
 
-  // Set up output paths all targets
+  // Setup output paths on all targets
   TargetMap::iterator it;
   for(it = targets.begin(); it != targets.end(); it++)
     {
@@ -369,7 +485,7 @@ void ActionInstaller::doJob()
 
       // Only process targets with that have output requests
       if(t.status == TS_Wanted)
-        t.fixPaths(targets);
+        t.fixDeps(targets);
     }
 
   PRINT("C");
