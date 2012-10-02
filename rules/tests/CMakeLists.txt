@@ -41,6 +41,9 @@ target_link_libraries(urlrule_test ${LIBS})
 add_executable(ifinder2_test ifinder2_test.cpp ${RULES})
 target_link_libraries(ifinder2_test ${LIBS})
 
+add_executable(ifinder3_test ifinder3_test.cpp ${RULES})
+target_link_libraries(ifinder3_test ${LIBS})
+
 add_executable(arcrule1_test arcrule1_test.cpp ${RULES})
 target_link_libraries(arcrule1_test ${LIBS})
 

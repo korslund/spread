@@ -6,6 +6,7 @@
 #include "dir/directory.hpp"
 #include "cache/cache.hpp"
 #include "rules/actions.hpp"
+#include <vector>
 
 /* ActionBuilder produces an ActionMap list of actions from a
    requested list of output files or directories.
@@ -36,11 +37,17 @@ namespace Spread
     void addDir(const Directory *dir);
     void addDir(DirectoryCPtr dir) { addDir(dir.get()); }
 
-    /* Add a directory by hash. This assumes the directory is
-       available as a loadable cached object somewhere.
+    /* Add a directory by hash. This assumes that either the directory
+       is available as a loadable cached object somewhere, or that
+       there is a matching archive rule for the directory.
 
        If alsoAsHint==true (default), then any archive rule that
-       contains this directory is also loaded.
+       contains this directory is loaded, if it exists.
+
+       If the directory object does not exist, but an archive rule is
+       found, the directory is added as a "blind" unpack. That means
+       that whatever the archive contains is used as the output
+       directory.
      */
     void addDir(const Hash &hash, bool alsoAsHint = true);
 
@@ -55,6 +62,9 @@ namespace Spread
     Cache::Cache &cache;
     RuleSet &rules;
     ArcRuleSet arcs;
+
+    // List of blind archive unpacks
+    std::vector<Hash> blind;
 
     // Path prefix, added to every filename in the list
     std::string prefix;

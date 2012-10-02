@@ -13,7 +13,7 @@ LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF : COPY from /home/mortennk/koding/s
   => /home/mortennk/koding/spread/install/tests/prefix/output.dat
 
 Adding non-existing dir:
-CAUGHT: Directory not found: b0pJQX7I8U2_IpfK3fsppNT10LS9Q09C2FchwEYXuJFy
+CAUGHT: Hash b0pJQX7I8U2_IpfK3fsppNT10LS9Q09C2FchwEYXuJFy matches neither a directory file nor any archive rule.
 
 Add hint but not archive:
 CAUGHT: Don't know how to satisfy the following dependencies:

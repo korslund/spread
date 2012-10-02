@@ -34,7 +34,7 @@ Broken url: hello-BACKUP-URL
 ERROR: status=Error downloading hello-BACKUP-URL
 Details:
 Error fetching hello-BACKUP-URL:
-Couldn't resolve host name progress=35/35
+Couldn't resolve host name progress=0/0
 
 Successful download:
 Created: N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj  -  _robots.txt

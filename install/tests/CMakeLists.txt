@@ -27,3 +27,6 @@ target_link_libraries(build_test ${LIBS})
 
 add_executable(full_test full_test.cpp ${CPP})
 target_link_libraries(full_test ${LIBS})
+
+add_executable(full_blind_test full_blind_test.cpp ${CPP})
+target_link_libraries(full_blind_test ${LIBS})

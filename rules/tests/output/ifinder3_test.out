@@ -1,0 +1,6 @@
+
+Handled 0 input dependencies into 2 hashes (OK=1):
+ARC_nOYm : Blind Archive Unpack Rule
+  <= nOYmHbSVYgh-BC4bhVen8JWujb124ib0UNBaY1UjMXkH
+  => /home/mortennk/koding/spread/rules/tests/some/destination/
+nOYmHbSVYgh-BC4bhVen8JWujb124ib0UNBaY1UjMXkH : URL for zipfile

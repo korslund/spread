@@ -7,12 +7,11 @@
 using namespace Spread;
 
 //#define DEBUG_PRINT
-
 #ifdef DEBUG_PRINT
 #include <iostream>
 #define PRINT(a) std::cout << __LINE__ << ": " << a << "\n";
 
-void print(ActionMap &output)
+static void print(ActionMap &output)
 {
   using namespace std;
   cout << "Got " << output.size() << " actions:\n";
@@ -79,17 +78,38 @@ void ActionBuilder::addDir(const Directory *dir)
     addDep(it->first, it->second);
 }
 
-void ActionBuilder::addDir(const Hash &hash, bool alsoAsHint)
+void ActionBuilder::addDir(const Hash &search, bool alsoAsHint)
 {
-  DirectoryCPtr dir = cache.loadDir(hash);
+  PRINT("addDir(hash=" << hash << ", alsoAsHint=" << alsoAsHint << ")");
+
+  // Check if this is an archive hash, if so, pick out the dir hash.
+  Hash dirHash = search;
+  const ArcRuleData *data = rules.findArchive(search);
+  if(data)
+    dirHash = data->dirHash;
+
+  DirectoryCPtr dir = cache.loadDir(dirHash);
 
   if(!dir)
-    throw std::runtime_error("Directory not found: " + hash.toString());
+    {
+      PRINT("  No dir found, going blind.");
+
+      // Add blind. Requires a matching archive rule.
+      if(!data)
+        throw std::runtime_error("Hash " + search.toString() + " matches neither a directory file nor any archive rule.");
+
+      PRINT("  Adding archive " << data->arcHash);
+      blind.push_back(data->arcHash);
+      return;
+    }
+
+  PRINT("  Found directory with " << dir->dir.size() << " elements");
 
   addDir(dir);
 
-  if(alsoAsHint)
-    addHint(hash);
+  // Add the hint if the user requested it
+  if(alsoAsHint && data)
+    arcs.addArchive(data->arcHash, dir, data->ruleString);
 }
 
 void ActionBuilder::build(ActionMap &output)
@@ -118,6 +138,10 @@ void ActionBuilder::build(ActionMap &output)
         finder.addDep(file.string(), it->second);
       }
   }
+
+  // Add "blind" archives
+  for(int i=0; i<blind.size(); i++)
+    finder.addBlind(prefix, blind[i]);
 
   PRINT("PERFORMING");
 

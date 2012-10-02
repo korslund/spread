@@ -5,6 +5,7 @@
 #include "dir/directory.hpp"
 #include "misc/random.hpp"
 
+#include <iostream>
 /* Expand and test later.
  */
 

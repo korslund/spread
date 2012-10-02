@@ -38,11 +38,17 @@ namespace Spread
     void addDir(const Directory *dir);
     void addDir(DirectoryCPtr dir);
 
-    /* Add a directory by hash. This assumes the directory object is
-       available through Cache::loadDir().
+    /* Add a directory by hash. This assumes that either the directory
+       is available as a loadable cached object somewhere, or that
+       there is a matching archive rule for the directory.
 
        If alsoAsHint==true (default), then any archive rule that
-       contains this directory is also automatically loaded.
+       contains this directory is loaded, if it exists.
+
+       If the directory object does not exist, but an archive rule is
+       found, the directory is added as a "blind" unpack. That means
+       that whatever the archive contains is used as the output
+       directory.
      */
     void addDir(const Hash &hash, bool alsoAsHint = true);
 
