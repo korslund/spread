@@ -26,7 +26,7 @@ static void fail(const std::string &msg, const std::string &file)
 }
 
 void AutoUnpack::unpack(const std::string &file, Mangle::VFS::StreamFactoryPtr output,
-                        Progress *prog, const FileList &list)
+                        Progress *prog, const FileList *list)
 {
   UnpackBase *unp = NULL;
 

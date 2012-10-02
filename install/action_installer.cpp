@@ -10,7 +10,6 @@
 using namespace Spread;
 
 //#define DEBUG_PRINT
-
 #ifdef DEBUG_PRINT
 #include <iostream>
 #define PRINT(a) std::cout << __LINE__ << ": " << a << "\n";
@@ -25,6 +24,9 @@ using namespace Spread;
    various predefined normal and pathological input cases, would be
    nice to have. Ideally it should also be possible to include
    -DDEBUG_PRINT when compiling this file only.
+
+   Also, the Target struct could do well with some restructuring into
+   base and subclasses. That would also make piecewise testing easier.
  */
 
 enum Type
@@ -32,6 +34,7 @@ enum Type
     TT_FileCopy,
     TT_Download,
     TT_Unpack,
+    TT_UnpackBlind,
     TT_Passive
   };
 
@@ -54,6 +57,10 @@ struct Target
   const Action *action;
   std::string url; // For download actions only
   DirectoryCPtr dir; // For unpack actions only
+
+  // Used for "blind" unpacks to store the output filenames and the
+  // corresponding hashes. The paths stored are absolute paths.
+  Directory::DirMap dirmap;
 
   int type, status;
 
@@ -162,6 +169,14 @@ struct Target
         htask = new UnpackHash(dir->dir);
         PRINT("  Unpacking " << dir->dir.size() << " elements");
       }
+    else if(type == TT_UnpackBlind)
+      {
+        assert(useForDeps != "");
+        assert(hash.isNull());
+        // The 'true' means 'return absolute paths'.
+        htask = new UnpackHash(useForDeps, dirmap, true);
+        PRINT("  Unpacking BLIND into " << useForDeps);
+      }
     else if(type == TT_Passive)
       {
         /* Passive tasks are used when all our output files have
@@ -207,13 +222,15 @@ struct Target
         return;
       }
 
-    // Add all our requests as task outputs
+    // Add all our requests as task outputs.
     assert(outFiles.size());
-    for(int i=0; i<outFiles.size(); i++)
-      {
-        htask->addOutput(hash, outFiles[i]);
-        PRINT("  Output: " << hash << " " << outFiles[i]);
-      }
+    if(type != TT_UnpackBlind)
+      for(int i=0; i<outFiles.size(); i++)
+        {
+          assert(!hash.isNull());
+          htask->addOutput(hash, outFiles[i]);
+          PRINT("  Output: " << hash << " " << outFiles[i]);
+        }
 
     /* Add all outputs added by other targets. This is used for
        unpacking jobs.
@@ -305,8 +322,30 @@ struct Target
       {
         // Make sure all newly created files are added to the cache
         // index.
-        for(int i=0; i<outFiles.size(); i++)
-          owner->addToCache(hash, outFiles[i]);
+        if(type != TT_UnpackBlind)
+          {
+            // The "normal" case, with known output files
+            for(int i=0; i<outFiles.size(); i++)
+              owner->addToCache(hash, outFiles[i]);
+          }
+        else
+          {
+            // The "blind" archive case, where we depend on the info
+            // from the unpack operation to know what files were
+            // created.
+            assert(dirmap.size());
+            assert(useForDeps != "");
+            Directory::DirMap::const_iterator it;
+            for(it = dirmap.begin(); it != dirmap.end(); it++)
+              {
+                // The file paths created by UnpackHash in dirmap are
+                // absolute paths, so we can use them directly.
+                const std::string &file = it->first;
+                const Hash &hsh = it->second;
+                assert(!hsh.isNull());
+                owner->addToCache(hsh, file);
+              }
+          }
 
         status = TS_Done;
       }
@@ -329,8 +368,30 @@ struct Target
           }
         else if(r->type == RST_Archive)
           {
-            type = TT_Unpack;
-            dir = ArcRule::get(r)->dir;
+            const ArcRule *arc = ArcRule::get(r);
+
+            if(arc->dir)
+              {
+                dir = arc->dir;
+                type = TT_Unpack;
+              }
+            else
+              {
+                /* Archive rules may be "blind", which means we don't
+                   know up front what files are in it. This is the
+                   case when the directory associated with the archive
+                   could not be loaded. The default behavior then is
+                   to unpack the archive as-is, and use the archive
+                   itself as the directory.
+                */
+                type = TT_UnpackBlind;
+
+                // Blind unpacks use dummy hashes. We don't need it,
+                // so blank it out.
+                assert(hash.size() == 0);
+                hash.clear();
+                assert(!dir);
+              }
           }
         else assert(0);
 
@@ -338,6 +399,8 @@ struct Target
           waitingFor[r->deps[i]] = NULL;
       }
     else assert(0);
+
+    assert(type == TT_UnpackBlind || !hash.isNull());
 
     if(action->destlist.size())
       status = TS_Wanted;
@@ -376,18 +439,26 @@ struct Target
     else
       {
         assert(status == TS_Unwanted);
+        assert(!hash.isNull());
 
         // Set up a temporary output location, except for copy
-        // operations
+        // operations (where we can use the source file directly, see
+        // below.)
         if(type != TT_FileCopy)
           outFiles.push_back(owner->getTmpFile(hash));
       }
+
+    // Note that for blind archives (TT_UnpackBlind), the output list
+    // will contain an output directory rather than a filename. Make
+    // sure it's the only output.
+    assert(type != TT_UnpackBlind || outFiles.size() == 1);
 
     if(outFiles.size())
       {
         // Pick the first file in the list for dependencies. It
         // doesn't matter which one we use, they all have the same
-        // data.
+        // data. (For TT_UnpackBlind this is now the output
+        // directory.)
         useForDeps = outFiles[0];
       }
     else
@@ -428,7 +499,7 @@ struct Target
     /* Are we an unpack operation? If so, we have to notify the target
        archive to coordinate our unpacking with the other targets.
      */
-    if(type == TT_Unpack)
+    if(type == TT_Unpack || type == TT_UnpackBlind)
       {
         // Get the archive target
         assert(waitingFor.size() == 1);
@@ -437,6 +508,9 @@ struct Target
 
         if(arc->unpacker)
           {
+            // Blind archives can only have one target
+            assert(type != TT_UnpackBlind);
+
             // There is already an unpacker. Add ourselves as an
             // output.
             arc->unpacker->otherOutputs[hash] = this;
@@ -466,7 +540,7 @@ void ActionInstaller::doJob()
 
   getActions(acts);
 
-  PRINT("A");
+  PRINT("Converting ActionMap => TargetMap");
 
   // Convert ActionMap to TargetMap
   {
@@ -475,9 +549,10 @@ void ActionInstaller::doJob()
       targets[it->first].setup(&it->second, it->first, this);
   }
 
-  PRINT("B");
+  PRINT("Solving dependencies");
 
-  // Setup output paths on all targets
+  // Setup output paths and other inter-dependent information on all
+  // targets
   TargetMap::iterator it;
   for(it = targets.begin(); it != targets.end(); it++)
     {
@@ -488,7 +563,7 @@ void ActionInstaller::doJob()
         t.fixDeps(targets);
     }
 
-  PRINT("C");
+  PRINT("Culling unused targets");
 
   // Cull unwanted targets
   for(it = targets.begin(); it != targets.end();)
@@ -500,7 +575,7 @@ void ActionInstaller::doJob()
 
   setBusy("Installing");
 
-  PRINT("D");
+  PRINT("STARTING INSTALL");
 
   /* Main loop. This updates and checks up on the status of all
      targets at regular intervals.

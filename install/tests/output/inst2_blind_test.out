@@ -1,0 +1,13 @@
+Setting up blind unpack of testdir.zip to _blind1/
+
+Blind unpack:
+Created: SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF  -  _blind1/dir/world.out
+Created: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF  -  _blind1/hello.out
+DONE: status=Installing progress=10/10
+
+Directory: _blind1
+00                                                 dir
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       dir/world.out
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       hello.out
+Total 3 elements
+Hash: xH8HtfU57Pn5XJhyo-vv_mP6ZOBF8szJXehf8R14uDef

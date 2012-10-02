@@ -4,6 +4,14 @@
 #include <stdexcept>
 #include <vector>
 
+//#define DEBUG_PRINT
+#ifdef DEBUG_PRINT
+#include <iostream>
+#define PRINT(a) std::cout << a << "\n";
+#else
+#define PRINT(a)
+#endif
+
 using namespace Unpack;
 using namespace Mangle::Stream;
 
@@ -25,13 +33,17 @@ struct Ent
 };
 
 void UnpackZip::unpack(const std::string &file, Mangle::VFS::StreamFactoryPtr output,
-                       Progress *prog, const FileList &list)
+                       Progress *prog, const FileList *list)
 {
   assert(output);
+
+  PRINT("Opening ZIP " << file);
 
   zzip_error_t err;
   ZZIP_DIR *root = zzip_dir_open(file.c_str(), &err);
   checkErr(err, file);
+
+  PRINT("Building ZIP index:");
 
   // Build a directory of all the files in the archive, and count up
   // the total size
@@ -43,11 +55,16 @@ void UnpackZip::unpack(const std::string &file, Mangle::VFS::StreamFactoryPtr ou
       {
         std::string name(ent.d_name);
 
-        if(list.size())
+        PRINT("  " << name << " (" << ent.st_size << " bytes)");
+
+        if(list && list->size())
           // Is this file on the extract list?
-          if(list.count(name) == 0)
-            // Nope. Skip it.
-            continue;
+          if(list->count(name) == 0)
+            {
+              PRINT("    SKIPPED");
+              // Nope. Skip it.
+              continue;
+            }
 
         Ent e;
         e.name = name;
@@ -59,8 +76,10 @@ void UnpackZip::unpack(const std::string &file, Mangle::VFS::StreamFactoryPtr ou
     checkErr(zzip_error(root), file);
   }
 
-  if(list.size() > dir.size())
+  if(list && (list->size() > dir.size()))
     fail("Missing files in archive", file);
+
+  PRINT("Extracting " << dir.size() << " elements (" << total << " bytes)");
 
   bool abort = false;
 
@@ -74,6 +93,8 @@ void UnpackZip::unpack(const std::string &file, Mangle::VFS::StreamFactoryPtr ou
         break;
 
       std::string fname = dir[i].name;
+
+      PRINT("  Opening " << fname);
 
       // Fetch a writable stream
       StreamPtr outs = output->open(fname);
@@ -91,6 +112,8 @@ void UnpackZip::unpack(const std::string &file, Mangle::VFS::StreamFactoryPtr ou
           fail("Unknown ZIP error", file);
         }
 
+      int64_t ftot = 0;
+
       while(!abort)
         {
           char buf[10*1024];
@@ -102,6 +125,7 @@ void UnpackZip::unpack(const std::string &file, Mangle::VFS::StreamFactoryPtr ou
           outs->write(buf, r);
 
           current += r;
+          ftot += r;
 
           // Update progress and check for abort status
           if(prog)
@@ -110,8 +134,16 @@ void UnpackZip::unpack(const std::string &file, Mangle::VFS::StreamFactoryPtr ou
           if(r < 1024)
             break;
         }
+
+      PRINT("  Wrote " << ftot << " bytes, expected " << dir[i].size);
+
+      if(ftot != dir[i].size)
+        fail("Output size mismatch in " + fname, file);
+
       zzip_file_close(zf);
+      PRINT("  End of file\n");
     }
 
+  PRINT("Closing ZIP");
   zzip_dir_close(root);
 }

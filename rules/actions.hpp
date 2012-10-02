@@ -28,6 +28,9 @@ namespace Spread
     /* List of target files. The action should create all these
        files. Output actions with empty target lists can safely be
        ignored, unless other actions depend on them.
+
+       NOTE: A special case for blind archive rules: the dest list
+       will contain an output directory instead of a filename.
     */
     std::set<std::string> destlist;
 

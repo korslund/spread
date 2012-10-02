@@ -5,6 +5,14 @@
 #include <assert.h>
 #include <stdexcept>
 
+//#define DEBUG_PRINT
+#ifdef DEBUG_PRINT
+#include <iostream>
+#define PRINT(a) std::cout << __LINE__ << ": " << a << "\n";
+#else
+#define PRINT(a)
+#endif
+
 using namespace Spread;
 using namespace Mangle::Stream;
 namespace bs = boost::filesystem;
@@ -41,7 +49,9 @@ void HashTask::doJob()
   assert(job);
   boost::shared_ptr<Job> deleter(job);
 
+  PRINT("Running job");
   if(runClient(*job)) return;
+  PRINT("Closing up");
   closeStream();
 
   // Check that all outputs were satisfied

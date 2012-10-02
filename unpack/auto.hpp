@@ -25,7 +25,7 @@ namespace Unpack
     void unpack(const std::string &file,
                 Mangle::VFS::StreamFactoryPtr output,
                 Progress *prog = NULL,
-                const FileList &list = FileList());
+                const FileList *list = NULL);
 
     using UnpackBase::unpack;
   };

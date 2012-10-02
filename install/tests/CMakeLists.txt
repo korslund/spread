@@ -19,6 +19,9 @@ set(CPP ${MDIR}/stream/clients/io_stream.cpp)
 add_executable(inst1_test inst1_test.cpp ${CPP})
 target_link_libraries(inst1_test ${LIBS})
 
+add_executable(inst2_blind_test inst2_blind_test.cpp ${CPP})
+target_link_libraries(inst2_blind_test ${LIBS})
+
 add_executable(build_test build_test.cpp ${CPP})
 target_link_libraries(build_test ${LIBS})
 

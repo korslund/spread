@@ -30,6 +30,18 @@ namespace Spread
     UnpackHash() {}
     UnpackHash(const HashMap &_index) : index(_index) {}
 
+    /* Do a "blind" unpack. Blind unpacks are unpacks where we do not
+       know the directory before unpacking.
+
+       This is similar to the makeIndex() function below, except it
+       runs as a job while makeIndex() does not.
+
+       If absPaths is true, 'output' filenames are absolute (includes
+       'dir') rather than local.
+     */
+    UnpackHash(const std::string &dir, HashMap &output, bool _absPaths=false)
+      : blindDir(dir), blindOut(&output), absPaths(_absPaths) {}
+
     /* Generate an index from an archive file.
 
        An optional dir 'where' can be used to specify an output
@@ -41,6 +53,11 @@ namespace Spread
   private:
     Job *createJob();
     FileList list;
+
+    // Only used for blind unpacks
+    HashMap *blindOut;
+    bool absPaths;
+    std::string blindDir;
   };
 };
 

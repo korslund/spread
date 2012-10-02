@@ -62,12 +62,12 @@ namespace Unpack
     virtual void unpack(const std::string &file,
                         Mangle::VFS::StreamFactoryPtr output,
                         Progress *prog = NULL,
-                        const FileList &list = FileList()) = 0;
+                        const FileList *list = NULL) = 0;
 
     // Directory writer version
     void unpack(const std::string &file, const std::string &dir,
                 Progress *prog = NULL,
-                const FileList &list = FileList());
+                const FileList *list = NULL);
 
     /* Generate an index of an archive. This is the same as running
        unpack() and gathering up the names generated through the

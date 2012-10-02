@@ -9,6 +9,14 @@
 using namespace Spread;
 using namespace Mangle::Stream;
 
+//#define DEBUG_PRINT
+#ifdef DEBUG_PRINT
+#include <iostream>
+#define PRINT(a) std::cout << __LINE__ << ": " << a << "\n";
+#else
+#define PRINT(a)
+#endif
+
 /* This output writer is used for indexing. It stores names + hashes
    in an index, and can optionally write data to files.
  */
@@ -21,17 +29,23 @@ struct UH_ListHasher : Mangle::VFS::StreamFactory
   std::string lastName;
   bool lastDir;
   std::string where;
+  bool absPaths;
+
+  ~UH_ListHasher() { open(""); }
 
   // This follows the same close-then-open mechanics as
   // getOutStream()/closeStream() in HashTask.
   StreamPtr open(const std::string &name)
   {
+    PRINT("open(" << name << ")  lastName=" << lastName);
+
     // Store the last hash, if any
-    if(stream)
+    if(stream && lastName != "")
       {
         // Ignore directories
         if(!lastDir)
           (*index)[lastName] = stream->finish();
+        lastName = "";
       }
 
     // Allow an empty name to close the last file (above) without
@@ -45,22 +59,35 @@ struct UH_ListHasher : Mangle::VFS::StreamFactory
 
     if(where == "")
       {
+        // If we're not writing anything, just reuse a NullStream as
+        // the final output.
         if(!stream)
           stream.reset(new HashStream(StreamPtr(new NullStream)));
       }
     else
       {
+        using namespace boost::filesystem;
+        path abs = where;
+        abs /= name;
+
+        PRINT("  abs=" << abs);
+
+        if(absPaths)
+          lastName = abs.string();
+
         stream.reset();
         if(!lastDir)
           {
-            using namespace boost::filesystem;
-            path file = where;
-            file /= name;
-            create_directories(file.parent_path());
-            stream.reset(new HashStream(file.string(), true));
+            create_directories(abs.parent_path());
+            stream.reset(new HashStream(abs.string(), true));
+          }
+        else
+          {
+            create_directories(abs);
           }
       }
 
+    if(lastDir) return StreamPtr();
     return stream;
   }
 };
@@ -71,6 +98,7 @@ void UnpackHash::makeIndex(const std::string &arcFile, HashMap &index,
   UH_ListHasher *m = new UH_ListHasher;
   m->index = &index;
   m->where = where;
+  m->absPaths = false;
   Mangle::VFS::StreamFactoryPtr mp(m);
 
   UnpackTask unp(arcFile, mp);
@@ -107,6 +135,31 @@ struct UH_ListUser : Mangle::VFS::StreamFactory
 
 Job *UnpackHash::createJob()
 {
+  // Get the input filename
+  assert(inputs.size() == 1);
+  std::string file = inputs.begin()->second;
+
+  PRINT("UnpackHash::createJob: file=" << file);
+
+  // Figure out if we are doing a "blind" unpack
+  if(blindDir != "")
+    {
+      PRINT("  Blind unpack to: " << blindDir << " absPahts=" <<
+            (absPaths?"true":"false"));
+
+      UH_ListHasher *m = new UH_ListHasher;
+      assert(blindOut);
+      m->index = blindOut;
+      m->where = blindDir;
+      m->absPaths = absPaths;
+      Mangle::VFS::StreamFactoryPtr mp(m);
+
+      PRINT("Returning job");
+      return new UnpackTask(file, mp);
+    }
+
+  // The rest is for non-blind unpacking
+
   UH_ListUser *m = new UH_ListUser(this);
   Mangle::VFS::StreamFactoryPtr mp(m);
 
@@ -118,6 +171,8 @@ Job *UnpackHash::createJob()
   // hashes from the file list
   std::set<Hash> hashes;
 
+  // Loop through the zip index and only pick the files we actually
+  // want to use for unpacking.
   for(it = index.begin(); it != index.end(); ++it)
     {
       const std::string &name = it->first;
@@ -146,10 +201,6 @@ Job *UnpackHash::createJob()
       hashes.insert(hsh);
     }
 
-  // Get the input filename
-  assert(inputs.size() == 1);
-  std::string file = inputs.begin()->second;
-
   // Set up the unpacking job
-  return new UnpackTask(file, mp, list);
+  return new UnpackTask(file, mp, &list);
 }

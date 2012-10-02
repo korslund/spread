@@ -13,7 +13,7 @@ struct DummyUnpack : UnpackBase
   void unpack(const std::string &file,
               Mangle::VFS::StreamFactoryPtr out,
               Progress *prog = NULL,
-              const FileList &list = FileList())
+              const FileList *list = NULL)
   {
     Mangle::Stream::StreamPtr s;
 

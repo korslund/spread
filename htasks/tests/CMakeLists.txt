@@ -22,6 +22,9 @@ target_link_libraries(hashtask_test ${LIBS})
 add_executable(unpack_test unpack_test.cpp ${CPP})
 target_link_libraries(unpack_test ${LIBS})
 
+add_executable(blindunpack_test blindunpack_test.cpp ${CPP})
+target_link_libraries(blindunpack_test ${LIBS})
+
 add_executable(dl_test dl_test.cpp ${CPP})
 target_link_libraries(dl_test ${LIBS})
 

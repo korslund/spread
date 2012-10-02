@@ -10,7 +10,7 @@ using namespace Unpack;
 void UnpackBase::unpack(const std::string &file,
                         const std::string &dir,
                         Progress *prog,
-                        const FileList &list)
+                        const FileList *list)
 {
   StreamFactoryPtr ptr(new Unpack::DirWriter(dir));
   unpack(file, ptr, prog, list);

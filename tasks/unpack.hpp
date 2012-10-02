@@ -20,11 +20,11 @@ namespace Spread
     typedef std::set<std::string> FileList;
 
     UnpackTask(const std::string &_file, const std::string &_dir,
-               const FileList &_list = FileList())
+               const FileList *_list = NULL)
       : file(_file), dir(_dir), list(_list) {}
 
     UnpackTask(const std::string &_file, Mangle::VFS::StreamFactoryPtr _writeTo,
-               const FileList &_list = FileList())
+               const FileList *_list = NULL)
       : file(_file), writeTo(_writeTo), list(_list) {}
 
   private:
@@ -32,7 +32,7 @@ namespace Spread
 
     std::string file, dir;
     Mangle::VFS::StreamFactoryPtr writeTo;
-    const FileList &list;
+    const FileList *list;
   };
 }
 
