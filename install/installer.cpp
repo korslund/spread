@@ -4,6 +4,14 @@
 
 using namespace Spread;
 
+//#define DEBUG_PRINT
+#ifdef DEBUG_PRINT
+#include <iostream>
+#define PRINT(a) std::cout << a << "\n";
+#else
+#define PRINT(a)
+#endif
+
 Installer::Installer(Cache::Cache &_cache, RuleSet &_rules,
                      const std::string &_prefix)
   : cache(_cache), rules(_rules)
@@ -24,13 +32,22 @@ void Installer::getActions(ActionMap &acts)
 { build->build(acts); }
 
 void Installer::addToCache(const Hash &h, const std::string &file)
-{ cache.index.addFile(file, h); }
+{
+  PRINT("Caching " << file << "  hash=" << h);
+  Hash res = cache.index.addFile(file, h);
+  assert(res == h);
+}
 
 std::string Installer::getTmpFile(const Hash &h)
-{ return cache.createTmpFilename(h); }
+{
+  std::string res = cache.createTmpFilename(h);
+  PRINT("getTmpFile(" << h << ")  =>  " << res);
+  return res;
+}
 
 std::string Installer::brokenURL(const Hash &hash, const std::string &url)
 {
+  PRINT("Reporting broken URL: " << url << "  hash=" << hash);
   rules.reportBrokenURL(hash, url);
 
   // Find a replacement

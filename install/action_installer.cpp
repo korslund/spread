@@ -277,6 +277,7 @@ struct Target
 
     if(type == TT_Passive)
       {
+        PRINT("Finishing passive job");
         finished = true;
         assert(!info);
       }

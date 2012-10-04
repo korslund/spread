@@ -180,7 +180,7 @@ struct SpreadLib::_Internal
   }
 
   ~_Internal()
-  { bf::remove_all(cache.tmpDir); }
+  { try { bf::remove_all(cache.tmpDir); } catch(...) {} }
 };
 
 SpreadLib::SpreadLib(const std::string &outDir, const std::string &tmpDir)
