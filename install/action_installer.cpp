@@ -12,7 +12,7 @@ using namespace Spread;
 //#define DEBUG_PRINT
 #ifdef DEBUG_PRINT
 #include <iostream>
-#define PRINT(a) std::cout << __LINE__ << ": " << a << "\n";
+#define PRINT(a) std::cout << __LINE__ << ": " << a << "\n"
 #else
 #define PRINT(a)
 #endif
@@ -25,8 +25,14 @@ using namespace Spread;
    nice to have. Ideally it should also be possible to include
    -DDEBUG_PRINT when compiling this file only.
 
-   Also, the Target struct could do well with some restructuring into
-   base and subclasses. That would also make piecewise testing easier.
+   Also:
+
+   - Target struct could do well with some restructuring into base and
+     subclasses. That would also make piecewise testing easier.
+
+   - outFiles and otherOutputs are now redundant, we could store
+     anything directly in the dirmap instead. For blind unpacks we can
+     use useForDeps directly to store the output dir.
  */
 
 enum Type
@@ -58,9 +64,10 @@ struct Target
   std::string url; // For download actions only
   DirectoryCPtr dir; // For unpack actions only
 
-  // Used for "blind" unpacks to store the output filenames and the
-  // corresponding hashes. The paths stored are absolute paths.
-  Directory::DirMap dirmap;
+  /* This us used to store all the output files from this operation,
+     in filename => hash format. All file paths must be absolute.
+   */
+  Hash::DirMap dirmap;
 
   int type, status;
 
@@ -82,9 +89,16 @@ struct Target
 
   JobInfoPtr info;
 
-  // List of all output files. If there are no directly requested
-  // outputs, but the target is implicitly required by other
-  // targets, this list will contain a tmp file instead.
+  /* List of all output files for this target. If there are no
+     directly requested outputs, but the target is implicitly required
+     by other targets, this list will contain a tmp file instead.
+
+     All files listed here are expected to be created with 'hash' as
+     their hash. The file list is copied over to dirmap in startJob().
+
+     For a blind unpack, it contains only the output directory, and
+     the output file list is instead stored directly into dirmap.
+  */
   std::vector<std::string> outFiles;
 
   // Targets that depend on us should use this file as their input
@@ -222,13 +236,15 @@ struct Target
         return;
       }
 
-    // Add all our requests as task outputs.
+    // Add all our requests as task outputs, and also add all outputs
+    // to 'dirmap'.
     assert(outFiles.size());
     if(type != TT_UnpackBlind)
       for(int i=0; i<outFiles.size(); i++)
         {
           assert(!hash.isNull());
           htask->addOutput(hash, outFiles[i]);
+          dirmap[outFiles[i]] = hash;
           PRINT("  Output: " << hash << " " << outFiles[i]);
         }
 
@@ -258,6 +274,7 @@ struct Target
           for(int i=0; i<t.outFiles.size(); i++)
             {
               htask->addOutput(h, t.outFiles[i]);
+              dirmap[t.outFiles[i]] = h;
               PRINT("  Ext Output: " << h << " " << t.outFiles[i]);
             }
         }
@@ -273,13 +290,21 @@ struct Target
     assert(status == TS_Running);
     assert(info || type == TT_Passive);
 
-    bool finished = false;
+#ifdef DEBUG_PRINT
+    if(type == TT_Download)
+      PRINT("DOWNLOAD " << url << ": " << info->getCurrent() << "/" << info->getTotal());
+    else if(type == TT_Unpack)
+      PRINT("UNPACK: " << info->getCurrent() << "/" << info->getTotal());
+    else if(type == TT_UnpackBlind)
+      PRINT("BLIND: " << info->getCurrent() << "/" << info->getTotal());
+#endif
 
     if(type == TT_Passive)
       {
         PRINT("Finishing passive job");
-        finished = true;
+        assert(useForDeps != "");
         assert(!info);
+        status = TS_Done;
       }
     else if(info->isFinished())
       {
@@ -316,38 +341,21 @@ struct Target
             PRINT("  Throwing exception: " << error);
             throw std::runtime_error(error);
           }
-        finished = true;
-      }
 
-    if(finished)
-      {
-        // Make sure all newly created files are added to the cache
-        // index.
-        if(type != TT_UnpackBlind)
-          {
-            // The "normal" case, with known output files
-            for(int i=0; i<outFiles.size(); i++)
-              owner->addToCache(hash, outFiles[i]);
-          }
-        else
-          {
-            // The "blind" archive case, where we depend on the info
-            // from the unpack operation to know what files were
-            // created.
-            assert(dirmap.size());
-            assert(useForDeps != "");
-            Directory::DirMap::const_iterator it;
-            for(it = dirmap.begin(); it != dirmap.end(); it++)
-              {
-                // The file paths created by UnpackHash in dirmap are
-                // absolute paths, so we can use them directly.
-                const std::string &file = it->first;
-                const Hash &hsh = it->second;
-                assert(!hsh.isNull());
-                owner->addToCache(hsh, file);
-              }
-          }
+        /* Finally make sure all newly created files are added to the
+           cache index.
 
+           All files created should be listed in dirmap. This includes
+           other passive targets from an unpack operation, or the
+           runtime generated archive index from a blind unpack.
+
+           The file paths in dirmap are always absolute paths, so we
+           can pass them directly to addToCache().
+         */
+        assert(dirmap.size());
+        owner->addToCache(dirmap);
+
+        assert(useForDeps != "");
         status = TS_Done;
       }
   }
@@ -517,8 +525,8 @@ struct Target
             arc->unpacker->otherOutputs[hash] = this;
 
             // We now depend on the unpacker to do our work. We have
-            // to wait for it to finish, but once it is we don't do
-            // any work ourselves.
+            // to wait for it to finish, but we don't have to do any
+            // work ourselves.
             waitingFor[arc->unpacker->hash] = arc->unpacker;
             type = TT_Passive;
           }

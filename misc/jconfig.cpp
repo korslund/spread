@@ -7,22 +7,29 @@
 
 using namespace Misc;
 
+//#define PRINT_DEBUG
+#ifdef PRINT_DEBUG
+#include <iostream>
+#define PRINT(a) std::cout << a << "\n"
+#else
+#define PRINT(a)
+#endif
+
 struct JConfig::_JConfig_Hidden
 {
   Json::Value val; 
   boost::recursive_mutex mutex;
 
-  void L() { mutex.lock(); }
-  void U() { mutex.unlock(); }
-
   Json::Value LG(const std::string &name, const Json::Value &v)
   {
-    L();
+    mutex.lock();
     Json::Value res = val.get(name, v);
-    U();
+    mutex.unlock();
     return res;
   }
 };
+
+#define LOCK boost::lock_guard<boost::recursive_mutex> lock(p->mutex)
 
 JConfig::JConfig(const std::string &_file)
   : file(_file)
@@ -41,13 +48,27 @@ JConfig::~JConfig() { delete p; }
 
 void JConfig::load()
 {
-  // Never fail. A missing or invalid file is OK.
+  namespace bs = boost::filesystem;
+
+  // We never fail. A missing or invalid file is OK.
   if(file == "") return;
 
-  p->L();
-  try { p->val = ReadJson::readJson(file); }
+  LOCK;
+  try
+    {
+      std::string toLoad = file;
+
+      // If the file does not exist, but .old does, revert to the
+      // transactional backup.
+      if(!bs::exists(toLoad))
+        {
+          toLoad += ".old";
+          if(!bs::exists(toLoad))
+            return;
+        }
+      p->val = ReadJson::readJson(toLoad);
+    }
   catch(...) {}
-  p->U();
 }
 
 void JConfig::save()
@@ -57,26 +78,38 @@ void JConfig::save()
   if(file == "")
     return;
 
-  p->L();
+  std::string newFile = file + ".new";
+  std::string oldFile = file + ".old";
+
+  LOCK;
+
+  // First, write to .new
+  ReadJson::writeJson(newFile, p->val);
+
+  // Then rename existing file (if any) to .old
   if(bs::exists(file))
     {
-      std::string old = file + ".old";
-      if(bs::exists(old))
-        bs::remove(old);
-      bs::rename(file,old);
+      if(bs::exists(oldFile))
+        bs::remove(oldFile);
+      bs::rename(file,oldFile);
     }
-  ReadJson::writeJson(file, p->val);
-  p->U();
+
+  // Finally, move .new into place
+  bs::rename(newFile, file);
 }
 
 void JConfig::setBool(const std::string &name, bool b)
-{ p->L(); p->val[name] = b; save(); p->U(); }
+{ LOCK; p->val[name] = b; save(); }
 
 void JConfig::setInt(const std::string &name, int i)
-{ p->L(); p->val[name] = i; save(); p->U(); }
+{ LOCK; p->val[name] = i; save(); }
 
 void JConfig::set(const std::string &name, const std::string &value)
-{ p->L(); p->val[name] = value; save(); p->U(); }
+{
+  LOCK;
+  p->val[name] = value;
+  save();
+}
 
 bool JConfig::getBool(const std::string &name, bool def)
 { return p->LG(name,def).asBool(); }
@@ -97,11 +130,19 @@ int64_t JConfig::getInt64(const std::string &name, int64_t def)
 
 bool JConfig::remove(const std::string &name)
 {
-  p->L();
+  LOCK;
   // removeMember() returns a Null value if nothing was removed.
   bool res = !p->val.removeMember(name).isNull();
   save();
-  p->U();
+}
+
+void JConfig::setMany(const std::map<std::string,std::string> &entries)
+{
+  LOCK;
+  std::map<std::string,std::string>::const_iterator it;
+  for(it = entries.begin(); it != entries.end(); it++)
+    p->val[it->first] = it->second;
+  save();
 }
 
 std::string JConfig::get(const std::string &name, const std::string &def)

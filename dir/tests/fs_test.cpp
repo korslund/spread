@@ -9,7 +9,7 @@ DirFromFS dfs(index);
 
 void print(Directory &dir)
 {
-  Directory::DirMap::const_iterator it;
+  Hash::DirMap::const_iterator it;
   for(it = dir.dir.begin(); it != dir.dir.end(); it++)
     {
       string hstring = it->second.toString();

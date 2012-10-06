@@ -4,7 +4,7 @@ include_directories("../")
 include_directories("../../libs/")
 include_directories("../../libs/jsoncpp/include/")
 
-find_package(Boost COMPONENTS filesystem system REQUIRED)
+find_package(Boost COMPONENTS filesystem system thread REQUIRED)
 set(BLIBS ${Boost_LIBRARIES})
 
 set(SPDIR ../..)
@@ -28,5 +28,11 @@ add_executable(json_test json_test.cpp ${READJSON})
 
 add_executable(conf_test conf_test.cpp ${CONF})
 target_link_libraries(conf_test ${BLIBS})
+
+add_executable(conf2_test conf2_test.cpp ${CONF})
+target_link_libraries(conf2_test ${BLIBS})
+
+add_executable(conf_reg1_test conf_reg1_test.cpp ${CONF})
+target_link_libraries(conf_reg1_test ${BLIBS})
 
 add_executable(rand_test rand_test.cpp)

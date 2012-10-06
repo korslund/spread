@@ -3,12 +3,10 @@
 #include <time.h>
 #include <boost/filesystem.hpp>
 #include "hash/hash_stream.hpp"
-#include <stdint.h>
 #include <boost/thread/recursive_mutex.hpp>
 #include "misc/jconfig.hpp"
 
 //#define PRINT_DEBUG
-
 #ifdef PRINT_DEBUG
 #include <iostream>
 #define PRINT(a) std::cout << a << "\n";
@@ -49,11 +47,22 @@ struct CacheIndex::_CacheIndex_Hidden
   Misc::JConfig conf;
   boost::recursive_mutex mutex;
 
-  void addConf(const std::string &file, const Hash &hash, time_t wtime)
+  std::string makeConf(const Hash &hash, time_t wtime)
   {
     char buf[16];
     snprintf(buf, 16, "%ld", wtime);
-    conf.set(file, hash.toString() + " " + std::string(buf));
+    return hash.toString() + " " + std::string(buf);
+  }
+
+  void addConf(const std::string &file, const Hash &hash, time_t wtime)
+  {
+    PRINT("addConf: file=" << file << " str=" << makeConf(hash, wtime));
+    conf.set(file, makeConf(hash, wtime));
+  }
+
+  void addConf(const std::map<std::string,std::string> &entries)
+  {
+    conf.setMany(entries);
   }
 
   void removeConf(const std::string &file)
@@ -272,14 +281,37 @@ void CacheIndex::removeFile(const std::string &_where)
   ptr->removeConf(where);
 }
 
+void CacheIndex::addMany(const Hash::DirMap &files)
+{
+  PRINT("addMany: " << files.size() << " entries");
+
+  LOCK lock(ptr->mutex);
+
+  // This is the list fed to the config file
+  std::map<std::string,std::string> entries;
+
+  Hash::DirMap::const_iterator it;
+  for(it = files.begin(); it != files.end(); it++)
+    {
+      std::string file = it->first;
+      uint64_t time;
+      Hash hash = addEntry(file, it->second, time);
+      entries[file] = ptr->makeConf(hash, time);
+    }
+  ptr->addConf(entries);
+}
+
 /* This is the main 'workhorse' of the indexer, and the function that
    does most of the actual interaction with the filesystem.
  */
-Hash CacheIndex::addFile(const std::string &_where, const Hash &given)
+Hash CacheIndex::addEntry(std::string &where, const Hash &given, uint64_t &time)
 {
-  assert(_where != "");
-  std::string where = abs(_where);
-  LOCK lock(ptr->mutex);
+  PRINT("addEntry: where=" << where << "  given=" << given);
+
+  assert(where != "");
+  where = abs(where);
+
+  PRINT("  abs path=" << where);
 
   // First things first: does the file even exist?
   if(!bf::exists(where))
@@ -291,19 +323,24 @@ Hash CacheIndex::addFile(const std::string &_where, const Hash &given)
       throw std::runtime_error("Cannot index non-existing file: " + where);
     }
 
+  PRINT("File exists, getting stats");
+
   // Get file information
-  uint64_t time = bf::last_write_time(where);
+  time = bf::last_write_time(where);
   uint64_t size = bf::file_size(where);
+
+  PRINT("time=" << time << " size=" << size);
 
   // Check that the given hash, if any, isn't wrong.
   if(!given.isNull() && given.size() != size)
     throw std::runtime_error("Given hash doesn't match real file size: " + where);
 
-  // Find the index entry
+  // Find the index entry, if any
   Entry *ent = ptr->find(where);
-
   if(ent)
     {
+      PRINT("Matching entry found");
+
       // The entry already exists. Check if it matches reality.
       bool match=true;
       if(ent->writeTime != time ||
@@ -320,14 +357,28 @@ Hash CacheIndex::addFile(const std::string &_where, const Hash &given)
      reality. Create a new one. ptr->add() will kill any existing
      entry by the same name.
    */
-
   Hash hash = given;
   if(hash.isNull())
-    // No hash provided. Hash the file ourselves.
-    hash = HashStream::sum(where);
+    {
+      // No hash provided. Hash the file ourselves.
+      PRINT("Hashing the file...");
+      hash = HashStream::sum(where);
+      PRINT("  Done.");
+    }
   assert(!hash.isNull());
+  PRINT("Adding to index");
   ptr->add(where, hash, time);
-  ptr->addConf(where, hash, time);
+  PRINT("Done, returning hash=" << hash);
+  return hash;
+}
 
+Hash CacheIndex::addFile(std::string where, const Hash &given)
+{
+  PRINT("addFile(" << where << ", " << given << ")");
+  LOCK lock(ptr->mutex);
+  uint64_t time;
+  Hash hash = addEntry(where, given, time);
+  PRINT("Entry added, now adding to config.");
+  ptr->addConf(where, hash, time);
   return hash;
 }

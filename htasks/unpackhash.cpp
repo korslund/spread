@@ -23,7 +23,7 @@ using namespace Mangle::Stream;
 
 struct UH_ListHasher : Mangle::VFS::StreamFactory
 {
-  UnpackHash::HashMap *index;
+  Hash::DirMap *index;
 
   HashStreamPtr stream;
   std::string lastName;
@@ -92,7 +92,7 @@ struct UH_ListHasher : Mangle::VFS::StreamFactory
   }
 };
 
-void UnpackHash::makeIndex(const std::string &arcFile, HashMap &index,
+void UnpackHash::makeIndex(const std::string &arcFile, Hash::DirMap &index,
                            const std::string &where)
 {
   UH_ListHasher *m = new UH_ListHasher;
@@ -114,7 +114,7 @@ void UnpackHash::makeIndex(const std::string &arcFile, HashMap &index,
  */
 struct UH_ListUser : Mangle::VFS::StreamFactory
 {
-  UnpackHash::HashMap index;
+  Hash::DirMap index;
   HashTask *owner;
 
   UH_ListUser(HashTask *t) : owner(t) { assert(owner); }
@@ -165,7 +165,7 @@ Job *UnpackHash::createJob()
 
   // Copy requested items from the full index over to the working
   // index
-  HashMap::iterator it;
+  Hash::DirMap::iterator it;
 
   // Just to optimize a tiny bit more - use this to prune repeated
   // hashes from the file list

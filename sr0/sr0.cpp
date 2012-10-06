@@ -12,11 +12,19 @@
 #include "rules/rule_loader.hpp"
 #include "misc/readjson.hpp"
 
+//#define DEBUG_PRINT
+#ifdef DEBUG_PRINT
+#include <iostream>
+#define PRINT(a) std::cout << __LINE__ << ": " << a << "\n"
+#else
+#define PRINT(a)
+#endif
+
 using namespace Spread;
 using namespace Mangle::Stream;
 using namespace boost::filesystem;
 
-typedef UnpackHash::HashMap HMap;
+typedef Hash::DirMap HMap;
 
 struct Sr0Job : Job
 {
@@ -69,6 +77,7 @@ struct Sr0Job : Job
 
   void doJob()
   {
+    PRINT("Starting SR0 job");
     setBusy("Checking for updates");
     assert(cache);
 
@@ -86,8 +95,10 @@ struct Sr0Job : Job
 
         if(isUrl)
           {
+            PRINT("Downloading " << fetch);
             DownloadTask dl(fetch, StringWriter::Open(netVer));
             if(runClient(dl)) return;
+            PRINT("   Got: " << netVer);
           }
         else
           {
@@ -99,12 +110,14 @@ struct Sr0Job : Job
         if(compVer(netVer, curHash))
           {
             // Nothing to do, exit.
+            PRINT("No update necessary");
             setDone();
             return;
           }
       }
 
     setBusy("Fetching update info");
+    PRINT("Fetching update info");
 
     // Next, get the the zip file
     std::string zipfile = source + "/index.zip";
@@ -112,8 +125,10 @@ struct Sr0Job : Job
       {
         std::string url = zipfile;
         zipfile = cache->createTmpFilename();
+        PRINT("Downloading " << url << " => " << zipfile);
         DownloadTask dl(url, zipfile);
         if(runClient(dl)) return;
+        PRINT("  Done.");
       }
     else if(!exists(zipfile))
       {
@@ -124,6 +139,7 @@ struct Sr0Job : Job
     // Unpack the archive into a temporary directory
     HMap index;
     path tmpOut = cache->createTmpFilename();
+    PRINT("Unpacking " << zipfile << " => " << tmpOut);
     UnpackHash::makeIndex(zipfile, index, tmpOut.string());
 
     // Load the new version
@@ -142,11 +158,16 @@ struct Sr0Job : Job
       }
 
     // Index all the extracted files
+    PRINT("Adding files to cache index");
     for(HMap::iterator it = index.begin(); it != index.end(); it++)
       {
-        Hash h = cache->index.addFile((tmpOut/it->first).string(), it->second);
-        assert(h == it->second);
+        std::string file = (tmpOut/it->first).string();
+        const Hash &hsh = it->second;
+        PRINT(hsh << "  " << file);
+        Hash res = cache->index.addFile(file, hsh);
+        assert(res == hsh);
       }
+    PRINT("  Done.");
 
     if(checkStatus()) return;
 
@@ -182,7 +203,9 @@ struct Sr0Job : Job
 
     // Run the install!
     setBusy("Updating");
+    PRINT("Running main installer => " << dest);
     if(runClient(inst)) return;
+    PRINT("  Done.");
 
     // On success, write back the new version file
     OutFileStream out(hashFile);
@@ -213,6 +236,8 @@ JobInfoPtr SR0::fetchFile(const std::string &dir, const std::string &destDir,
 JobInfoPtr SR0::fetchURL(const std::string &url, const std::string &destDir,
                          Cache::Cache &cache, bool async, bool *wasUpdated)
 {
+  PRINT("SR0: Fetching URL " << url << " => " << destDir);
+
   Sr0Job *j = new Sr0Job;
   j->source = url;
   j->isUrl = true;

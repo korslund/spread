@@ -5,7 +5,7 @@
 using namespace std;
 using namespace Spread;
 
-typedef UnpackHash::HashMap HMap;
+typedef Hash::DirMap HMap;
 
 void print(const HMap &mp)
 {

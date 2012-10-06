@@ -5,6 +5,7 @@
 #include <string>
 #include <assert.h>
 #include <ostream>
+#include <map>
 
 namespace Spread
 {
@@ -30,6 +31,8 @@ namespace Spread
    */
   struct Hash
   {
+    typedef std::map<std::string,Hash> DirMap;
+
     Hash() : context(NULL) { clear(); }
     Hash(const std::string &hex) : context(NULL) { fromString(hex); }
     Hash(const void *input, uint32_t len) : context(NULL) { hash(input, len); }

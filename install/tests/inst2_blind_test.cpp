@@ -27,9 +27,11 @@ struct Dummy : ActionInstaller
     return "_tmp_hashes/" + h.toString();
   }
 
-  void addToCache(const Hash &h, const std::string &file)
+  void addToCache(const Hash::DirMap &list)
   {
-    cout << "Created: " << h << "  -  " << file << endl;
+    for(Hash::DirMap::const_iterator it = list.begin();
+        it != list.end(); it++)
+      cout << "Created: " << it->second << "  -  " << it->first << endl;
   }
 };
 

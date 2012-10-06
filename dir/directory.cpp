@@ -11,6 +11,8 @@ using namespace std;
 using namespace Json;
 using namespace Mangle::Stream;
 
+typedef Hash::DirMap DirMap;
+
 void Directory::parseJson(const Value &root)
 {
   Value::Members keys = root.getMemberNames();

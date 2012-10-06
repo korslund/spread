@@ -29,7 +29,7 @@ Hash PackLister::addDir(const std::string &packName, const Hash &hash)
     }
 
   // Loop through all the files in the output dir
-  Directory::DirMap::const_iterator it;
+  Hash::DirMap::const_iterator it;
   for(it = dir->dir.begin(); it != dir->dir.end(); it++)
     {
       // Add any additional rules we can find to resolve each file

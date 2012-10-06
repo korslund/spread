@@ -2,6 +2,7 @@
 #define __SPREAD_CACHEINDEX_HPP_
 
 #include "hash/hash.hpp"
+#include <stdint.h>
 #include <vector>
 
 /* The cache index holds a list over files and their hashes. It
@@ -77,8 +78,21 @@ namespace Cache
        Return value: the hash of the file, either from cache or from
        rehashing the file.
      */
-    Spread::Hash addFile(const std::string &where,
-                         const Spread::Hash &h = Spread::Hash());
+    Spread::Hash addFile(std::string where, const Spread::Hash &h = Spread::Hash());
+
+    /* Used to mass add a bunch of files to the index. The function
+       works more or less like addFile(), but is called on a list of
+       files in a DirMap, with their associated hashes. Entries with
+       null-hashes are read from disk and hashed. Entries with
+       non-null hashes must match the data in the file system.
+
+       For large groups of files, this is potentially much faster than
+       running addFile() on each individual file. This is because
+       addFile() will normally write out the cache config file after
+       each addition, which can be very time consuming when the index
+       is large.
+     */
+    void addMany(const Spread::Hash::DirMap &files);
 
     /* Remove a file entry from the cache. Doesn't actually delete the
        file.
@@ -105,7 +119,9 @@ namespace Cache
   private:
     struct _CacheIndex_Hidden;
     _CacheIndex_Hidden *ptr;
+    Spread::Hash addEntry(std::string &where, const Spread::Hash &given,
+                          uint64_t &time);
+
   };
 }
-
 #endif

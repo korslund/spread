@@ -21,7 +21,7 @@ void test(Random &r)
   cout << "\n\n";
 }
 
-int main()
+int main(int argc, char **argv)
 {
   Random r1(1);
   test(r1);
@@ -29,10 +29,14 @@ int main()
   Random r2(239874);
   test(r2);
 
-  Random r;
-  test(r);
+  if(argc >= 2)
+    {
+      Random r;
+      test(r);
 
-  cout << r.genBelow(3) << endl;
+      cout << r.genBelow(3) << endl;
+    }
+  else cout << "Pass any parameter to generate real random numbers\n";
 
   return 0;
 }

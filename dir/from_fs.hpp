@@ -39,7 +39,7 @@ namespace Spread
       , includeDirs(false)
     {}
 
-    void load(const std::string &path, Directory::DirMap &dir) const;
+    void load(const std::string &path, Hash::DirMap &dir) const;
     void load(const std::string &path, Directory &dir) const;
   };
 }

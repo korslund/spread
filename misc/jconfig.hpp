@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 #include <stdint.h>
 
 namespace Misc
@@ -41,8 +42,24 @@ namespace Misc
     // if the entry existed before removal.
     bool remove(const std::string &name);
 
+    // Set or get string entries
     void set(const std::string &name, const std::string &value);
     std::string get(const std::string &name, const std::string &def="");
+
+    /* Mass set string entries. Use this if you are writing large
+       amounts of data.
+
+       JConfig rewrites the file after every single set* operation.
+       This is usually OK for low-traffic config files. For some uses
+       however, a file may have many thousands of entries. Rewriting a
+       config file of several megabytes thousands of times is highly
+       impractical.
+
+       This function lets you set any number of entries (currently as
+       strings only) in one operation, and thus only perform one
+       single file write.
+     */
+    void setMany(const std::map<std::string,std::string> &entries);
 
     bool has(const std::string &name);
 

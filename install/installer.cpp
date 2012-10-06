@@ -31,11 +31,14 @@ void Installer::addDir(const Hash &hash, bool alsoAsHint)
 void Installer::getActions(ActionMap &acts)
 { build->build(acts); }
 
-void Installer::addToCache(const Hash &h, const std::string &file)
+void Installer::addToCache(const Hash::DirMap &list)
 {
-  PRINT("Caching " << file << "  hash=" << h);
-  Hash res = cache.index.addFile(file, h);
-  assert(res == h);
+#ifdef DEBUG_PRINT
+  for(Hash::DirMap::const_iterator it = list.begin();
+      it != list.end(); it++)
+    PRINT("Caching " << it->first << "  hash=" << it->second);
+#endif
+  cache.index.addMany(list);
 }
 
 std::string Installer::getTmpFile(const Hash &h)

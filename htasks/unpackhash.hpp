@@ -15,7 +15,6 @@ namespace Spread
 {
   struct UnpackHash : HashTask
   {
-    typedef std::map<std::string, Hash> HashMap;
     typedef std::set<std::string> FileList;
 
     /* The parameter is the index used to look up the archive file. The
@@ -26,9 +25,9 @@ namespace Spread
        extract. Files not requested with HashTask::addOutput() will
        still be ignored.
      */
-    HashMap index;
+    Hash::DirMap index;
     UnpackHash() {}
-    UnpackHash(const HashMap &_index) : index(_index) {}
+    UnpackHash(const Hash::DirMap &_index) : index(_index) {}
 
     /* Do a "blind" unpack. Blind unpacks are unpacks where we do not
        know the directory before unpacking.
@@ -39,7 +38,7 @@ namespace Spread
        If absPaths is true, 'output' filenames are absolute (includes
        'dir') rather than local.
      */
-    UnpackHash(const std::string &dir, HashMap &output, bool _absPaths=false)
+    UnpackHash(const std::string &dir, Hash::DirMap &output, bool _absPaths=false)
       : blindDir(dir), blindOut(&output), absPaths(_absPaths) {}
 
     /* Generate an index from an archive file.
@@ -47,7 +46,7 @@ namespace Spread
        An optional dir 'where' can be used to specify an output
        directory. If empty, no files are written.
      */
-    static void makeIndex(const std::string &arcFile, HashMap &index,
+    static void makeIndex(const std::string &arcFile, Hash::DirMap &index,
                           const std::string &where = "");
 
   private:
@@ -55,7 +54,7 @@ namespace Spread
     FileList list;
 
     // Only used for blind unpacks
-    HashMap *blindOut;
+    Hash::DirMap *blindOut;
     bool absPaths;
     std::string blindDir;
   };

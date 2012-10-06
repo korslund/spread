@@ -30,9 +30,9 @@ namespace Spread
      */
     virtual std::string getTmpFile(const Hash &h) = 0;
 
-    /* Notify the system that a new file has been created.
+    /* Notify the system that a set of new files have been created.
      */
-    virtual void addToCache(const Hash &h, const std::string &file) = 0;
+    virtual void addToCache(const Hash::DirMap &list) = 0;
 
   private:
     void doJob();

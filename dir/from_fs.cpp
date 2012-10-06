@@ -9,7 +9,7 @@ namespace bf = boost::filesystem;
 void DirFromFS::load(const std::string &path, Directory &dir) const
 { load(path, dir.dir); }
 
-void DirFromFS::load(const std::string &where, Directory::DirMap &dir) const
+void DirFromFS::load(const std::string &where, Hash::DirMap &dir) const
 {
   assert(where != "");
 

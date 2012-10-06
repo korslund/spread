@@ -73,14 +73,14 @@ void ActionBuilder::addDep(const std::string &file, const Hash &hash)
 
 void ActionBuilder::addDir(const Directory *dir)
 {
-  Directory::DirMap::const_iterator it;
+  Hash::DirMap::const_iterator it;
   for(it = dir->dir.begin(); it != dir->dir.end(); it++)
     addDep(it->first, it->second);
 }
 
 void ActionBuilder::addDir(const Hash &search, bool alsoAsHint)
 {
-  PRINT("addDir(hash=" << hash << ", alsoAsHint=" << alsoAsHint << ")");
+  PRINT("addDir(hash=" << search << ", alsoAsHint=" << alsoAsHint << ")");
 
   // Check if this is an archive hash, if so, pick out the dir hash.
   Hash dirHash = search;
@@ -125,7 +125,7 @@ void ActionBuilder::build(ActionMap &output)
   // Build dependency list
   {
     bs::path pdir = prefix;
-    Directory::DirMap::const_iterator it;
+    Hash::DirMap::const_iterator it;
     for(it = list.dir.begin(); it != list.dir.end(); it++)
       {
         // Add path prefix, if any

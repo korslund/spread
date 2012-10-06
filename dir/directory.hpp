@@ -12,8 +12,7 @@ namespace Spread
 {
   struct Directory
   {
-    typedef std::map<std::string,Hash> DirMap;
-    DirMap dir;
+    Hash::DirMap dir;
 
     // Read and write JSON data
     void readJson(const std::string &file);
@@ -39,7 +38,7 @@ namespace Spread
        file path overwriting is case sensitive.
      */
     void add(const Directory &d) { add(d.dir); }
-    void add(const DirMap &d);
+    void add(const Hash::DirMap &d);
 
     // Find a member entry. Returns a null hash if not found.
     const Hash &find(const std::string &name) const;

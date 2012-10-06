@@ -57,7 +57,7 @@ namespace Spread
     std::string brokenURL(const Hash &hash, const std::string &url);
     void getActions(ActionMap &acts);
     std::string getTmpFile(const Hash &h);
-    void addToCache(const Hash &h, const std::string &file);
+    void addToCache(const Hash::DirMap &list);
 
     Cache::Cache &cache;
     RuleSet &rules;
