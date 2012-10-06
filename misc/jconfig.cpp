@@ -106,6 +106,7 @@ void JConfig::setInt(const std::string &name, int i)
 
 void JConfig::set(const std::string &name, const std::string &value)
 {
+  PRINT("Conf: Setting " << name << " => " << value);
   LOCK;
   p->val[name] = value;
   save();
@@ -138,6 +139,8 @@ bool JConfig::remove(const std::string &name)
 
 void JConfig::setMany(const std::map<std::string,std::string> &entries)
 {
+  if(entries.size() == 0) return;
+
   LOCK;
   std::map<std::string,std::string>::const_iterator it;
   for(it = entries.begin(); it != entries.end(); it++)

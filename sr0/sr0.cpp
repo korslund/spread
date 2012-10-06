@@ -161,6 +161,8 @@ struct Sr0Job : Job
     PRINT("Adding files to cache index");
     for(HMap::iterator it = index.begin(); it != index.end(); it++)
       {
+        // Don't use reference, because silly boost paths returns
+        // a reference
         std::string file = (tmpOut/it->first).string();
         const Hash &hsh = it->second;
         PRINT(hsh << "  " << file);

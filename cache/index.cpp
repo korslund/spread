@@ -296,13 +296,17 @@ void CacheIndex::addMany(const Hash::DirMap &files)
       std::string file = it->first;
       uint64_t time;
       Hash hash = addEntry(file, it->second, time);
-      entries[file] = ptr->makeConf(hash, time);
+      if(time)
+        entries[file] = ptr->makeConf(hash, time);
     }
   ptr->addConf(entries);
 }
 
 /* This is the main 'workhorse' of the indexer, and the function that
    does most of the actual interaction with the filesystem.
+
+   Also returns the file time if the entry is to be added to
+   config. If not, time is set to 0.
  */
 Hash CacheIndex::addEntry(std::string &where, const Hash &given, uint64_t &time)
 {
@@ -339,7 +343,7 @@ Hash CacheIndex::addEntry(std::string &where, const Hash &given, uint64_t &time)
   Entry *ent = ptr->find(where);
   if(ent)
     {
-      PRINT("Matching entry found");
+      PRINT("File entry found");
 
       // The entry already exists. Check if it matches reality.
       bool match=true;
@@ -349,8 +353,12 @@ Hash CacheIndex::addEntry(std::string &where, const Hash &given, uint64_t &time)
         match = false;
 
       if(match)
-        // The existing entry looks right. We're done.
-        return ent->hash;
+        {
+          // The existing entry looks right. We're done.
+          time = 0;
+          PRINT("Existing entry matches, keep it.");
+          return ent->hash;
+        }
     }
 
   /* Either there was no entry, or the entry didn't match
@@ -378,7 +386,10 @@ Hash CacheIndex::addFile(std::string where, const Hash &given)
   LOCK lock(ptr->mutex);
   uint64_t time;
   Hash hash = addEntry(where, given, time);
-  PRINT("Entry added, now adding to config.");
-  ptr->addConf(where, hash, time);
+  if(time)
+    {
+      PRINT("Entry added, now adding to config.");
+      ptr->addConf(where, hash, time);
+    }
   return hash;
 }
