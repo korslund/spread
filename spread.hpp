@@ -78,8 +78,31 @@ namespace Spread
        this data (as identified by the file's hashed value) will be
        copied from this location, instead of being downloaded or
        unpacked from other sources.
+
+       Returns a string version of the file hash.
      */
     std::string cacheFile(const std::string &file);
+
+    /* Convenience function. Copy a file from one location to another,
+       and add both the source and the destination to the cache
+       index. This is more efficient than copying the file and calling
+       cacheFile() manually, since the data is only read and cached
+       once.
+
+       Returns a string version of the file hash.
+     */
+    std::string cacheCopy(const std::string &from, const std::string &to);
+
+    /* Download a file from 'url' to the given location. This is a
+       convenience function that is entirely independent of the rest
+       of the Spread system, except for using Spread code to perform
+       the download.
+
+       Parent directories of 'dest' are created as necessary.
+     */
+    static JobInfoPtr download(const std::string &url,
+                               const std::string &dest,
+                               bool async=true);
 
     /* Set callback to handle broken URLs. This is invoked whenever
        the system encounters a non-working URL, or an URL for which

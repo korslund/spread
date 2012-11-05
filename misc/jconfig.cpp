@@ -30,9 +30,10 @@ struct JConfig::_JConfig_Hidden
 };
 
 #define LOCK boost::lock_guard<boost::recursive_mutex> lock(p->mutex)
+#define WLOCK assert(!readOnly);LOCK
 
-JConfig::JConfig(const std::string &_file)
-  : file(_file)
+JConfig::JConfig(const std::string &_file, bool _readOnly)
+  : readOnly(_readOnly), file(_file)
 {
   p = new _JConfig_Hidden;
   load();
@@ -81,7 +82,7 @@ void JConfig::save()
   std::string newFile = file + ".new";
   std::string oldFile = file + ".old";
 
-  LOCK;
+  WLOCK;
 
   // First, write to .new
   ReadJson::writeJson(newFile, p->val);
@@ -99,15 +100,15 @@ void JConfig::save()
 }
 
 void JConfig::setBool(const std::string &name, bool b)
-{ LOCK; p->val[name] = b; save(); }
+{ WLOCK; p->val[name] = b; save(); }
 
 void JConfig::setInt(const std::string &name, int i)
-{ LOCK; p->val[name] = i; save(); }
+{ WLOCK; p->val[name] = i; save(); }
 
 void JConfig::set(const std::string &name, const std::string &value)
 {
   PRINT("Conf: Setting " << name << " => " << value);
-  LOCK;
+  WLOCK;
   p->val[name] = value;
   save();
 }
@@ -131,7 +132,7 @@ int64_t JConfig::getInt64(const std::string &name, int64_t def)
 
 bool JConfig::remove(const std::string &name)
 {
-  LOCK;
+  WLOCK;
   // removeMember() returns a Null value if nothing was removed.
   bool res = !p->val.removeMember(name).isNull();
   save();
@@ -141,7 +142,7 @@ void JConfig::setMany(const std::map<std::string,std::string> &entries)
 {
   if(entries.size() == 0) return;
 
-  LOCK;
+  WLOCK;
   std::map<std::string,std::string>::const_iterator it;
   for(it = entries.begin(); it != entries.end(); it++)
     p->val[it->first] = it->second;

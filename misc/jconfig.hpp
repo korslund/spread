@@ -12,7 +12,9 @@ namespace Misc
    */
   struct JConfig
   {
-    JConfig(const std::string &_file = "");
+    bool readOnly;
+
+    JConfig(const std::string &_file = "", bool _readOnly=false);
     ~JConfig();
 
     void load();

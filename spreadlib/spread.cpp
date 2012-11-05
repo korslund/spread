@@ -7,12 +7,24 @@
 #include "dir/directory.hpp"
 #include "job/thread.hpp"
 #include "misc/readjson.hpp"
+#include "tasks/download.hpp"
+#include "hash/hash_stream.hpp"
+#include <mangle/stream/servers/file_stream.hpp>
+#include <mangle/stream/clients/copy_stream.hpp>
 #include <boost/filesystem.hpp>
 #include <stdexcept>
 #include <vector>
 #include <boost/thread/recursive_mutex.hpp>
 
 using namespace Spread;
+
+JobInfoPtr SpreadLib::download(const std::string &url,
+                               const std::string &dest,
+                               bool async)
+{
+  DownloadTask *job = new DownloadTask(url, dest);
+  return Thread::run(job, async);
+}
 
 namespace bf = boost::filesystem;
 
@@ -286,6 +298,21 @@ JobInfoPtr SpreadLib::unpackURL(const std::string &url, const std::string &where
 
 std::string SpreadLib::cacheFile(const std::string &file)
 {
-  LOCK;
+  // Doesn't need LOCK, since CacheIndex does its own internal locking
   return ptr->cache.index.addFile(abs(file)).toString();
+}
+
+std::string SpreadLib::cacheCopy(const std::string &from, const std::string &to)
+{
+  using namespace Mangle::Stream;
+  parent(to);
+  Hash res;
+  {
+    HashStreamPtr out(new HashStream(to, true));
+    CopyStream::copy(FileStream::Open(from), out);
+    res = out->finish();
+  }
+  ptr->cache.index.addFile(from, res);
+  ptr->cache.index.addFile(to, res);
+  return res.toString();
 }
