@@ -15,6 +15,13 @@ using namespace Misc;
 #define PRINT(a)
 #endif
 
+namespace bs = boost::filesystem;
+
+static void parent(const bs::path &file)
+{
+  bs::create_directories(file.parent_path());
+}
+
 struct JConfig::_JConfig_Hidden
 {
   Json::Value val; 
@@ -49,8 +56,6 @@ JConfig::~JConfig() { delete p; }
 
 void JConfig::load()
 {
-  namespace bs = boost::filesystem;
-
   // We never fail. A missing or invalid file is OK.
   if(file == "") return;
 
@@ -74,8 +79,6 @@ void JConfig::load()
 
 void JConfig::save()
 {
-  namespace bs = boost::filesystem;
-
   if(file == "")
     return;
 
@@ -85,6 +88,7 @@ void JConfig::save()
   WLOCK;
 
   // First, write to .new
+  parent(newFile);
   ReadJson::writeJson(newFile, p->val);
 
   // Then rename existing file (if any) to .old
