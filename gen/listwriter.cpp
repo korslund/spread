@@ -45,11 +45,23 @@ void ListWriter::write(const PackLister &lst, StreamFactoryPtr output)
       {
         Json::Value dirs, hints, total;
 
-        for(int i=0; i<it->second.dirs.size(); i++)
-          dirs.append(it->second.dirs[i].toString());
+        const PackLister::PackInfo &pinf = it->second;
+        assert(pinf.dirs.size() == pinf.paths.size());
 
-        for(int i=0; i<it->second.hints.size(); i++)
-          hints.append(it->second.hints[i].toString());
+        for(int i=0; i<pinf.dirs.size(); i++)
+          {
+            // Add the hash string first
+            std::string out = pinf.dirs[i].toString();
+
+            // Append the path string, if any
+            std::string path = pinf.paths[i];
+            if(path != "") out += " " + path;
+
+            dirs.append(out);
+          }
+
+        for(int i=0; i<pinf.hints.size(); i++)
+          hints.append(pinf.hints[i].toString());
 
         if(dirs.size() == 0)
           throw runtime_error("Package '" + it->first + "' has no output directories.");
@@ -58,8 +70,8 @@ void ListWriter::write(const PackLister &lst, StreamFactoryPtr output)
         if(hints.size() != 0)
           total["hints"] = hints;
 
-        if(it->second.version != "")
-          total["version"] = it->second.version;
+        if(pinf.version != "")
+          total["version"] = pinf.version;
 
         packs[it->first] = total;
       }

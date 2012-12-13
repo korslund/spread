@@ -23,10 +23,12 @@ void Installer::addHint(const Hash &hint)
 { build->addHint(hint); }
 void Installer::addDep(const std::string &file, const Hash &hash)
 { build->addDep(file,hash); }
-void Installer::addDir(const Directory *dir)
-{ build->addDir(dir); }
-void Installer::addDir(const Hash &hash, bool alsoAsHint)
-{ build->addDir(hash, alsoAsHint); }
+void Installer::addDir(const Directory *dir, const std::string &path)
+{ build->addDir(dir, path); }
+void Installer::addDir(DirectoryCPtr dir, const std::string &path)
+{ build->addDir(dir, path); }
+void Installer::addDir(const Hash &hash, bool alsoAsHint, const std::string &path)
+{ build->addDir(hash, alsoAsHint, path); }
 
 void Installer::getActions(ActionMap &acts)
 { build->build(acts); }

@@ -34,8 +34,9 @@ namespace Spread
     void addDep(const std::string &file, const Hash &hash);
 
     // Add a directory of dependencies
-    void addDir(const Directory *dir);
-    void addDir(DirectoryCPtr dir) { addDir(dir.get()); }
+    void addDir(const Directory *dir, const std::string &path = "");
+    void addDir(DirectoryCPtr dir, const std::string &path = "")
+    { addDir(dir.get(), path); }
 
     /* Add a directory by hash. This assumes that either the directory
        is available as a loadable cached object somewhere, or that
@@ -49,7 +50,7 @@ namespace Spread
        that whatever the archive contains is used as the output
        directory.
      */
-    void addDir(const Hash &hash, bool alsoAsHint = true);
+    void addDir(const Hash &hash, bool alsoAsHint = true, const std::string &path = "");
 
     /* Build the complete install action list from the given
        dependencies.

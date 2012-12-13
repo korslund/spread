@@ -12,7 +12,8 @@ void PackLister::addHint(const std::string &packName, const Hash &dirHash)
   packs[packName].hints.push_back(dir);
 }
 
-Hash PackLister::addDir(const std::string &packName, const Hash &hash)
+Hash PackLister::addDir(const std::string &packName, const Hash &hash,
+                        const std::string &path)
 {
   Hash dirHash = process(hash);
 
@@ -37,7 +38,10 @@ Hash PackLister::addDir(const std::string &packName, const Hash &hash)
       rules.findAllRules(target, ruleSet);
     }
 
-  packs[packName].dirs.push_back(dirHash);
+  PackInfo &pinf = packs[packName];
+  pinf.dirs.push_back(dirHash);
+  pinf.paths.push_back(path);
+  assert(pinf.dirs.size() == pinf.paths.size());
 
   return dirHash;
 }

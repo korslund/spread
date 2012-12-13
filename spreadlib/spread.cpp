@@ -42,10 +42,12 @@ static void fail(const std::string &msg)
 { throw std::runtime_error(msg); }
 
 typedef std::vector<Hash> HashVec;
+typedef std::vector<std::string> StrVec;
 
 struct Pack
 {
   HashVec dirs, hints;
+  StrVec paths;
   std::string version;
 };
 
@@ -55,15 +57,34 @@ struct PackList
   typedef std::map<std::string, Pack> PackMap;
   PackMap packs;
 
-  void copy(const Json::Value &from, HashVec &to)
+  static void copy(const Json::Value &from, HashVec &to, StrVec *paths = NULL)
   {
+    using namespace std;
+
     if(from.isNull()) return;
     if(!from.isArray()) fail("Invalid pack file");
 
     to.resize(from.size());
+    if(paths) paths->resize(from.size());
 
     for(int i=0; i<from.size(); i++)
-      to[i] = Hash(from[i].asString());
+      {
+        // Get the input string from the hash list
+        string hash = from[i].asString();
+        string path;
+
+        // Split out the path part, if any
+        size_t pos = hash.find(' ');
+        if(pos != string::npos)
+          {
+            path = hash.substr(pos+1);
+            hash = hash.substr(0,pos);
+          }
+
+        to[i] = Hash(hash);
+
+        if(paths) (*paths)[i] = path;
+      }
   }
 
   void load(const std::string &file)
@@ -84,7 +105,7 @@ struct PackList
         Pack &p = packs[key];
         Value v = root[key];
 
-        copy(v["dirs"], p.dirs);
+        copy(v["dirs"], p.dirs, &p.paths);
         copy(v["hints"], p.hints);
         p.version = v["version"].asString();
       }
@@ -237,6 +258,7 @@ std::string SpreadLib::getPackVersion(const std::string &channel,
   return ptr->getPack(channel, package).version;
 }
 
+/*
 std::string SpreadLib::getPackHash(const std::string &channel,
                                    const std::string &package)
 {
@@ -246,7 +268,7 @@ std::string SpreadLib::getPackHash(const std::string &channel,
   /* The idea here is to return the DirHash for the final output
      directory. This is done by "melding" all the output directories of
      the package into one (hints are irrelevant), and then hashing that.
-  */
+  * /
 
   // If there's less than two, this is easy
   if(p.dirs.size() == 0)
@@ -268,6 +290,7 @@ std::string SpreadLib::getPackHash(const std::string &channel,
   // Return the collected dirhash
   return dir.hash().toString();
 }
+*/
 
 JobInfoPtr SpreadLib::install(const std::string &channel,
                               const std::string &package,
@@ -282,7 +305,7 @@ JobInfoPtr SpreadLib::install(const std::string &channel,
   Installer *inst = new Installer(ptr->cache, ptr->rules, abs(where));
 
   for(int i=0; i<p.dirs.size(); i++)
-    inst->addDir(p.dirs[i]);
+    inst->addDir(p.dirs[i], true, p.paths[i]);
   for(int i=0; i<p.hints.size(); i++)
     inst->addHint(p.hints[i]);
 

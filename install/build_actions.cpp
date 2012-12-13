@@ -71,14 +71,14 @@ void ActionBuilder::addDep(const std::string &file, const Hash &hash)
   list.dir[file] = hash;
 }
 
-void ActionBuilder::addDir(const Directory *dir)
+void ActionBuilder::addDir(const Directory *dir, const std::string &path)
 {
   Hash::DirMap::const_iterator it;
   for(it = dir->dir.begin(); it != dir->dir.end(); it++)
-    addDep(it->first, it->second);
+    addDep(path + it->first, it->second);
 }
 
-void ActionBuilder::addDir(const Hash &search, bool alsoAsHint)
+void ActionBuilder::addDir(const Hash &search, bool alsoAsHint, const std::string &path)
 {
   PRINT("addDir(hash=" << search << ", alsoAsHint=" << alsoAsHint << ")");
 
@@ -105,7 +105,7 @@ void ActionBuilder::addDir(const Hash &search, bool alsoAsHint)
 
   PRINT("  Found directory with " << dir->dir.size() << " elements");
 
-  addDir(dir);
+  addDir(dir, path);
 
   // Add the hint if the user requested it
   if(alsoAsHint && data)

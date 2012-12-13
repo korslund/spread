@@ -35,9 +35,6 @@ namespace Spread
        defined and may be empty. It may not be a reliable indicator of
        package updates, unless creator of the dataset has specifically
        declared it to be.
-
-       To get a reliable, machine-generated version indicator that
-       always updates on new releases, use getPackHash() instead.
      */
     std::string getPackVersion(const std::string &channel,
                                const std::string &package);
@@ -45,9 +42,13 @@ namespace Spread
     /* Get a unique, machine-generated hash that represents the output
        of a given package. You are statistically guaranteed that this
        string changes if the contents of a package has changed.
+
+       Currently DISABLED.
      */
+    /*
     std::string getPackHash(const std::string &channel,
                             const std::string &package);
+    */
 
     /* Install the given package from 'channel' into the destination
        directory 'where'. All necessary sub- and parent-directories

@@ -33,10 +33,15 @@ namespace Spread
     // to 'prefix'.
     void addDep(const std::string &file, const Hash &hash);
 
-    // Add a directory of dependencies. All paths are relative to
-    // 'prefix'.
-    void addDir(const Directory *dir);
-    void addDir(DirectoryCPtr dir);
+    /* Add a directory of dependencies. All paths are relative to
+       'prefix'. You can also specify an optional path to prepend to
+       all file paths. The path must be slash terminated if you want
+       it to become a directory! The final path becomes:
+
+       prefix + path + path_in_directory
+    */
+    void addDir(const Directory *dir, const std::string &path = "");
+    void addDir(DirectoryCPtr dir, const std::string &path = "");
 
     /* Add a directory by hash. This assumes that either the directory
        is available as a loadable cached object somewhere, or that
@@ -50,7 +55,8 @@ namespace Spread
        that whatever the archive contains is used as the output
        directory.
      */
-    void addDir(const Hash &hash, bool alsoAsHint = true);
+    void addDir(const Hash &hash, bool alsoAsHint = true,
+                const std::string &path = "");
 
   private:
     // Implemented from ActionInstaller:

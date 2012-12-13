@@ -126,6 +126,11 @@ int main()
     inst.addDep("output.dat", hello);
   }
 
+  {
+    TEST("Unpack with prefix","t9");
+    inst.addDir(testDirH, true, "pref/");
+  }
+
   printDir("_full");
   return 0;
 }

@@ -35,6 +35,10 @@ Repeating previously non-existing file => _full/t8/
 DONE: status=Installing
 progress=0/0
 
+Unpack with prefix => _full/t9/
+DONE: status=Installing
+progress=0/0
+
 Directory: _full
 00                                                 t3
 b0pJQX7I8U2_IpfK3fsppNT10LS9Q09C2FchwEYXuJFy       t3/test.dir
@@ -50,5 +54,10 @@ ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ     t7/test.sh
 bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ     t7/testsh.zip
 00                                                 t8
 LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       t8/output.dat
-Total 14 elements
-Hash: H_YflANDG0rwCCGvW6pp_90iuodH3TmC0bUoCzHtZfLFAg
+00                                                 t9
+00                                                 t9/pref
+00                                                 t9/pref/dir
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       t9/pref/dir/world.out
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       t9/pref/hello.out
+Total 19 elements
+Hash: Tfq62SMq1_MX0mcxojeW5gxohN5haNOUSdCbDibwM4nRAw

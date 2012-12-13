@@ -24,13 +24,16 @@ namespace SpreadGen
        directory is findable and loadable through the cache.
 
        You may add multiple directories to the same output. They will
-       be applied in the order given.
+       be applied in the order given. You can also specify an optional
+       prefix to add to all the names in the dir (make sure to
+       slash-terminate it if you want to create subdirectories!)
 
        Returns the dir hash (which may differ from dirHash if dirHash
        represented an archive file.)
      */
     Spread::Hash addDir(const std::string &packName,
-                        const Spread::Hash &dirHash);
+                        const Spread::Hash &dirHash,
+                        const std::string &path = "");
 
     /* Add a hint to a package. Hints are used to provide archives
        that can help us fulfill the dependencies added with addDir(),
@@ -67,11 +70,13 @@ namespace SpreadGen
     // Output:
 
     typedef std::vector<Spread::Hash> HashList;
+    typedef std::vector<std::string> StrList;
     typedef std::set<Spread::Hash> HashSet;
 
     struct PackInfo
     {
       HashList dirs, hints;
+      StrList paths;
       std::string version;
     };
 
