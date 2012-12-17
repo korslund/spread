@@ -358,12 +358,17 @@ void SpreadLib::cacheCopy(const std::vector<std::string> &inputs,
       Hash hash = out->finish();
       cur += hash.size();
 
-      if(info)
-        info->setProgress(cur, totalSize);
-
       // Store both files in the output
       dirmap[from] = hash;
       dirmap[to] = hash;
+
+      if(info)
+        {
+          // Update progress, and also check for user aborts
+          info->setProgress(cur, totalSize);
+          if(info->checkStatus())
+            break;
+        }
     }
 
   // Add the entries to the cache index
