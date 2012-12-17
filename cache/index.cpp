@@ -293,7 +293,7 @@ void CacheIndex::addMany(const Hash::DirMap &files)
   Hash::DirMap::const_iterator it;
   for(it = files.begin(); it != files.end(); it++)
     {
-      std::string file = it->first;
+      std::string file = abs(it->first);
       uint64_t time;
       Hash hash = addEntry(file, it->second, time);
       if(time)

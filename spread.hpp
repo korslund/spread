@@ -3,6 +3,7 @@
 
 #include "job/jobinfo.hpp"
 #include <boost/function.hpp>
+#include <vector>
 
 /* Top-level interface to the Spread system.
  */
@@ -93,6 +94,24 @@ namespace Spread
        Returns a string version of the file hash.
      */
     std::string cacheCopy(const std::string &from, const std::string &to);
+
+    /* Copy a list of files to new destinations, adding all sources
+       and destinations to the cache. When copying many files, this is
+       much faster than running cacheCopy on each file individually,
+       because it uses the faster CacheIndex::addMany() interface
+       internally.
+
+       The inputs and outputs vectors must be exactly the same
+       length. Each file is copied from the path in inputs[] to the
+       corresponding path in outputs[].
+
+       An optional JobInfoPtr can be provided if the function is being
+       run from a thread; cacheCopy() will call info->setProgress()
+       with size information.
+     */
+    void cacheCopy(const std::vector<std::string> &inputs,
+                   const std::vector<std::string> &outputs,
+                   JobInfoPtr info = JobInfoPtr());
 
     /* Download a file from 'url' to the given location. This is a
        convenience function that is entirely independent of the rest

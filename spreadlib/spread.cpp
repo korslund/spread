@@ -325,6 +325,51 @@ std::string SpreadLib::cacheFile(const std::string &file)
   return ptr->cache.index.addFile(abs(file)).toString();
 }
 
+void SpreadLib::cacheCopy(const std::vector<std::string> &inputs,
+                          const std::vector<std::string> &outputs,
+                          JobInfoPtr info)
+{
+  assert(inputs.size() == outputs.size());
+
+  int64_t totalSize = 0, cur = 0;
+
+  // If we're keeping stats, add up the input file sizes
+  if(info)
+    {
+      for(int i=0; i<inputs.size(); i++)
+        totalSize += bf::file_size(inputs[i]);
+      info->setProgress(0, totalSize);
+    }
+
+  // Output list of files and hashes
+  Hash::DirMap dirmap;
+
+  // Start copying
+  using namespace Mangle::Stream;
+  for(int i=0; i<inputs.size(); i++)
+    {
+      const std::string &from = inputs[i];
+      const std::string &to = outputs[i];
+
+      parent(to);
+      HashStreamPtr out(new HashStream(to, true));
+      CopyStream::copy(FileStream::Open(from), out);
+
+      Hash hash = out->finish();
+      cur += hash.size();
+
+      if(info)
+        info->setProgress(cur, totalSize);
+
+      // Store both files in the output
+      dirmap[from] = hash;
+      dirmap[to] = hash;
+    }
+
+  // Add the entries to the cache index
+  ptr->cache.index.addMany(dirmap);
+}
+
 std::string SpreadLib::cacheCopy(const std::string &from, const std::string &to)
 {
   using namespace Mangle::Stream;
