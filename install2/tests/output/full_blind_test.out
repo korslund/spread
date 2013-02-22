@@ -1,0 +1,26 @@
+Setup
+Setup done
+
+Unpacking zip 1 => _blind/t1/
+DONE: status=Installing
+progress=10/10
+
+Unpacking zip 2 => _blind/t2/
+DONE: status=Installing
+progress=420/420
+
+Unpacking zip that was inside 2 => _blind/t3/
+DONE: status=Installing
+progress=479/479
+
+Directory: _blind
+00                                                 t1
+00                                                 t1/dir
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       t1/dir/world.out
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       t1/hello.out
+00                                                 t2
+bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ     t2/testsh.zip
+00                                                 t3
+ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ     t3/test.sh
+Total 8 elements
+Hash: 1EugR_6TkHqUhBLwtnC2WaFKWu_kGSE8k0u3C_o3rruXAQ

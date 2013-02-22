@@ -6,12 +6,6 @@
 using namespace SpreadGen;
 using namespace Spread;
 
-void PackLister::addHint(const std::string &packName, const Hash &dirHash)
-{
-  Hash dir = process(dirHash);
-  packs[packName].hints.push_back(dir);
-}
-
 Hash PackLister::addDir(const std::string &packName, const Hash &hash,
                         const std::string &path)
 {

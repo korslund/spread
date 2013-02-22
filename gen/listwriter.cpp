@@ -43,7 +43,7 @@ void ListWriter::write(const PackLister &lst, StreamFactoryPtr output)
     map<string, PackLister::PackInfo>::const_iterator it;
     for(it = lst.packs.begin(); it != lst.packs.end(); it++)
       {
-        Json::Value dirs, hints, total;
+        Json::Value dirs, total;
 
         const PackLister::PackInfo &pinf = it->second;
         assert(pinf.dirs.size() == pinf.paths.size());
@@ -60,15 +60,9 @@ void ListWriter::write(const PackLister &lst, StreamFactoryPtr output)
             dirs.append(out);
           }
 
-        for(int i=0; i<pinf.hints.size(); i++)
-          hints.append(pinf.hints[i].toString());
-
         if(dirs.size() == 0)
           throw runtime_error("Package '" + it->first + "' has no output directories.");
         total["dirs"] = dirs;
-
-        if(hints.size() != 0)
-          total["hints"] = hints;
 
         if(pinf.version != "")
           total["version"] = pinf.version;

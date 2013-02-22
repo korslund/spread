@@ -1,0 +1,63 @@
+
+Empty installer => _full/t1/
+DONE: status=Installing
+progress=0/0
+
+Requesting non-existing file => _full/t2/
+ERROR: status=Don't know how to satisfy the following dependencies:
+  LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
+    /home/mortennk/koding/spread/install/tests/_full/t2/output.dat
+progress=0/0
+
+Requesting existing file => _full/t3/
+DONE: status=Installing
+progress=0/0
+
+File from zip (no hint) => _full/t4/
+ERROR: status=Don't know how to satisfy the following dependencies:
+  bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ
+    /home/mortennk/koding/spread/install/tests/_full/t4/test.zip
+progress=0/0
+
+File from zip (with hint) => _full/t5/
+DONE: status=Installing
+progress=0/0
+
+Repeating with no hint (using cache) => _full/t6/
+DONE: status=Installing
+progress=0/0
+
+Unpack two zips into one dir => _full/t7/
+DONE: status=Installing
+progress=0/0
+
+Repeating previously non-existing file => _full/t8/
+DONE: status=Installing
+progress=0/0
+
+Unpack with prefix => _full/t9/
+DONE: status=Installing
+progress=0/0
+
+Directory: _full
+00                                                 t3
+b0pJQX7I8U2_IpfK3fsppNT10LS9Q09C2FchwEYXuJFy       t3/test.dir
+00                                                 t5
+bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ     t5/test.zip
+00                                                 t6
+bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ     t6/test.zip
+00                                                 t7
+00                                                 t7/dir
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       t7/dir/world.out
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       t7/hello.out
+ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ     t7/test.sh
+bJUN2VkwS-cRpIlPRil-yWIxuoOfiWUG4li9IxH5MGWkAQ     t7/testsh.zip
+00                                                 t8
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       t8/output.dat
+00                                                 t9
+00                                                 t9/pref
+00                                                 t9/pref/dir
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       t9/pref/dir/world.out
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       t9/pref/hello.out
+Total 19 elements
+Hash: Tfq62SMq1_MX0mcxojeW5gxohN5haNOUSdCbDibwM4nRAw

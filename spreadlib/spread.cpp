@@ -46,7 +46,7 @@ typedef std::vector<std::string> StrVec;
 
 struct Pack
 {
-  HashVec dirs, hints;
+  HashVec dirs;
   StrVec paths;
   std::string version;
 };
@@ -106,7 +106,6 @@ struct PackList
         Value v = root[key];
 
         copy(v["dirs"], p.dirs, &p.paths);
-        copy(v["hints"], p.hints);
         p.version = v["version"].asString();
       }
   }
@@ -265,30 +264,10 @@ std::string SpreadLib::getPackHash(const std::string &channel,
   LOCK;
   const Pack& p = ptr->getPack(channel,package);
 
-  /* The idea here is to return the DirHash for the final output
-     directory. This is done by "melding" all the output directories of
-     the package into one (hints are irrelevant), and then hashing that.
-  * /
-
-  // If there's less than two, this is easy
   if(p.dirs.size() == 0)
     return "00";
-  if(p.dirs.size() == 1)
-    return p.dirs[0].toString();
 
-  // Otherwise, collect all the dirs into one
-  Directory dir;
-  for(int i=0; i<p.dirs.size(); i++)
-    {
-      const Hash &dh = p.dirs[i];
-      DirectoryCPtr p = ptr->cache.loadDir(dh);
-      if(!p) fail("Failed to load dir " + dh.toString() + " from package " +
-                  channel + "/" + package);
-      dir.add(*p);
-    }
-
-  // Return the collected dirhash
-  return dir.hash().toString();
+  // TODO
 }
 */
 
@@ -306,8 +285,6 @@ JobInfoPtr SpreadLib::install(const std::string &channel,
 
   for(int i=0; i<p.dirs.size(); i++)
     inst->addDir(p.dirs[i], true, p.paths[i]);
-  for(int i=0; i<p.hints.size(); i++)
-    inst->addHint(p.hints[i]);
 
   return Thread::run(inst, async);
 }

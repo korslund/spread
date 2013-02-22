@@ -35,34 +35,6 @@ namespace SpreadGen
                         const Spread::Hash &dirHash,
                         const std::string &path = "");
 
-    /* Add a hint to a package. Hints are used to provide archives
-       that can help us fulfill the dependencies added with addDir(),
-       but which do not themselves contribute to the actual output
-       directory.
-
-       For example, you could have multiple independent output
-       directories added through addDir(), but one big archive
-       containing all the actual files. Or conversely, many small
-       archives covering up one output dir. Adding the archives as a
-       hints will let Spread resolve all the dependencies correctly.
-
-       Throws exception on error.
-
-       TODO: We intend to automate the hint generation in a separate
-       layer later on, or possibly replacing it entirely.
-
-       IOW, the system will find all possible sources of all files
-       automatically, at gen time, then optimize the dataset so that
-       the minimal amount of data needs to be downloaded at runtime
-       (but non- optimal paths are included as fallback in case of
-       download errors etc.)
-
-       This is all complicated stuff and isn't a high priority at the
-       moment.
-     */
-    void addHint(const std::string &packName,
-                 const Spread::Hash &dirHash);
-
     // Set (optional) version string describing this package release
     void setVersion(const std::string &packName, const std::string &version)
     { packs[packName].version = version; }
@@ -75,7 +47,7 @@ namespace SpreadGen
 
     struct PackInfo
     {
-      HashList dirs, hints;
+      HashList dirs;
       StrList paths;
       std::string version;
     };
