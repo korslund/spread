@@ -16,3 +16,6 @@ target_link_libraries(cleanup_test ${Boost_LIBRARIES})
 
 add_executable(client_test client_test.cpp ${JOB})
 target_link_libraries(client_test ${Boost_LIBRARIES})
+
+add_executable(delete_test delete_test.cpp ${JOB})
+target_link_libraries(delete_test ${Boost_LIBRARIES})

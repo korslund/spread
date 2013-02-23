@@ -1,0 +1,27 @@
+
+Direct execution:
+Running job
+Going out of scope
+Destroying object
+
+Thread::run() with async=false:
+Running job
+Destroying object
+Going out of scope
+
+Thread::run(), waiting for thread:
+Running job
+Destroying object
+Going out of scope
+
+Thread::run(JobPtr) with async=false:
+Running job
+Going out of scope
+Destroying object
+
+Thread::run(JobPtr), waiting for thread:
+Running job
+Going out of scope
+Destroying object
+
+Done

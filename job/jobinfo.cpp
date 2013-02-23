@@ -49,13 +49,13 @@ void JobInfo::setClient(JobInfoPtr client)
 
 void JobInfo::setStatsClient(JobInfoPtr client)
 {
-  assert(client.get() != this);
+  assert(!client || client.get() != this);
   statsClient = client;
 }
 
 void JobInfo::setAbortClient(JobInfoPtr client)
 {
-  assert(client.get() != this);
+  assert(!client || client.get() != this);
   abortClient = client;
 }
 
@@ -64,14 +64,14 @@ void JobInfo::wait()
   while(!isFinished()) Thread::sleep(0.05);
 }
 
-bool JobInfo::clearClient()
+bool JobInfo::clearClient(bool copyFail)
 {
   JobInfoPtr p = abortClient.lock();
   abortClient.reset();
   if(p)
     {
       // Copy error states from the client info structs
-      if(p->isNonSuccess())
+      if(copyFail && p->isNonSuccess())
         {
           status = p->status;
           message = p->getMessage();
@@ -82,7 +82,7 @@ bool JobInfo::clearClient()
   if(p)
     {
       // Copy error states from the client info structs
-      if(p->isNonSuccess())
+      if(copyFail && p->isNonSuccess())
         status = p->status;
 
       // Copy final progress as well

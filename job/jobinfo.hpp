@@ -60,7 +60,8 @@ namespace Spread
     void setClient(JobInfoPtr client);
     void setStatsClient(JobInfoPtr client);
     void setAbortClient(JobInfoPtr client);
-    bool clearClient();
+    void resetClient() { setClient(JobInfoPtr()); }
+    bool clearClient(bool copyFail=true);
     void wait();
 
   private:

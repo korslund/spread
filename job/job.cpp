@@ -37,22 +37,27 @@ JobInfoPtr Job::run()
   return info;
 }
 
-bool Job::runClient(Job &job, bool includeStats)
+bool Job::runClient(Job &job, bool includeStats, bool copyFail)
 {
-  if(clearClient()) return true;
+  if(clearClient(copyFail)) return true;
   if(includeStats) setClient(job.getInfo());
   else setAbortClient(job.getInfo());
   job.run();
-  return clearClient();
+  return clearClient(copyFail);
 }
 
-bool Job::waitClient(JobInfoPtr client, bool includeStats)
+bool Job::runClient(JobPtr job, bool includeStats, bool copyFail)
 {
-  if(clearClient()) return true;
+  return runClient(*job.get(), includeStats, copyFail);
+}
+
+bool Job::waitClient(JobInfoPtr client, bool includeStats, bool copyFail)
+{
+  if(clearClient(copyFail)) return true;
   if(includeStats) setClient(client);
   else setAbortClient(client);
   client->wait();
-  return clearClient();
+  return clearClient(copyFail);
 }
 
 void Job::setBusy(const std::string &what)

@@ -5,6 +5,9 @@
 
 namespace Spread
 {
+  typedef boost::shared_ptr<Job> JobPtr;
+  typedef boost::weak_ptr<Job> JobWPtr;
+
   struct Job
   {
     /* The constructor creates a new JobInfo struct and sets it to
@@ -41,16 +44,21 @@ namespace Spread
 
        This implicitly calls checkStatus() as well, so you don't need
        to check both.
+
+       If copyFail=true, copy the clients error status on non-success.
+       If copyFail=false, the client job is allowed to fail without
+       affecting the current job status.
     */
-    bool clearClient() { return info->clearClient(); }
+    bool clearClient(bool copyFail=true) { return info->clearClient(copyFail); }
 
     /* Run a client job in the current thread. Calls setClient,
-       job.run() and clearClient(). Returns the result of
+       job.run() and clearClient(copyFail). Returns the result of
        clearClient().
 
        Exit doJob() immediately if the function returns true.
      */
-    bool runClient(Job &job, bool includeStats=true);
+    bool runClient(Job &job, bool includeStats=true, bool copyFail=true);
+    bool runClient(JobPtr job, bool includeStats=true, bool copyFail=true);
 
     /* Same as runClient, but instead waits for a job running in a
        background thread. This is useful when you don't have access to
@@ -59,7 +67,7 @@ namespace Spread
        Like the above functions, you should exit doJob() immediately
        if the function returns true.
      */
-    bool waitClient(JobInfoPtr client, bool includeStats=true);
+    bool waitClient(JobInfoPtr client, bool includeStats=true, bool copyFail=true);
 
     void setClient(JobInfoPtr inf) { info->setClient(inf); }
     void setStatsClient(JobInfoPtr inf) { info->setStatsClient(inf); }
