@@ -78,6 +78,11 @@ namespace Spread
     void setBusy(const std::string &what = "");
     void setDone() { info->setDone(); }
     void setError(const std::string &what) { info->setError(what); }
+
+  private:
+    // Jobs are NEVER copied, so disable implicit copy functions.
+    Job(const Job&);
+    Job& operator=(const Job&);
   };
 }
 

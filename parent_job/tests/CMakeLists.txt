@@ -19,5 +19,5 @@ set(SPDIR ../..)
 set(JDIR ${SPDIR}/job)
 set(JOB ${JDIR}/job.cpp ${JDIR}/jobinfo.cpp ${JDIR}/thread.cpp)
 
-add_executable(test1 test1.cpp ${JOB})
-target_link_libraries(test1 ${LIBS})
+#add_executable(test1 test1.cpp ${JOB})
+#target_link_libraries(test1 ${LIBS})
