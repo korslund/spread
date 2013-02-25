@@ -1,23 +1,44 @@
-#include <iostream>
-#include "listjob.hpp"
-//#include "common.cpp"
+#include "andjob.hpp"
+#include "common.cpp"
 
-using namespace std;
-using namespace Spread;
+struct TestJob : ParentJob
+{
+  int i;
 
-/*
-  Things to test:
+  TestJob(int _i) : i(_i) {}
 
-  - one or multiple jobs
-  - success
-  - single-source failure or abort
-  - progress counting
-  - that lists are sorted correctly
- */
+  void doJob()
+  {
+    setProgress(i,4);
+    if(i==3) throw runtime_error("Fail on 3");
+
+    setDone();
+  }
+};
 
 int main()
 {
-  cout << "Hello\n";
+  {
+    AndJob *aj = new AndJob;
+    JobPtr ptr(aj);
+
+    aj->add(new TestJob(1));
+    aj->add(new TestJob(2));
+    aj->add(new TestJob(4));
+    ptr->run();
+    print(ptr);
+  }
+  {
+    AndJob *aj = new AndJob;
+    JobPtr ptr(aj);
+
+    aj->add(new TestJob(1));
+    aj->add(new TestJob(2));
+    aj->add(new TestJob(3));
+    aj->add(new TestJob(4));
+    ptr->run();
+    print(ptr);
+  }
 
   return 0;
 }

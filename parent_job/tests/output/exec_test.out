@@ -1,0 +1,43 @@
+Staring main job
+start 0
+Testing bwait
+Returned from bwait
+start 2
+end 2
+start 1
+Taking a break
+Back in MAIN, while the job is taking a break!
+BUS: LUNCH BREAK 3/4
+  DONE:
+  SUC: Success 0/0
+  JOBS:
+  BUS: LUNCH BREAK 3/4
+Break's over, time to work
+end 1
+Got: LUNCH BREAK
+start 3
+Got expected abort
+start 4
+Got expected error: I'm allergic to the number 4
+Next job will abort us.
+start 5
+MAIN: Aborting caller thread now.
+BUS:  0/0
+  DONE:
+  SUC: Success 0/0
+  SUC: Success 3/4
+  ABO:  0/0
+  ERR: I'm allergic to the number 4 5/6
+  JOBS:
+  BUS:  0/0
+Ok, returning.
+Got ABORT in i=5 thread, exiting.
+Got ABORT in main job, exiting.
+ABO:  0/0
+  DONE:
+  SUC: Success 0/0
+  SUC: Success 3/4
+  ABO:  0/0
+  ERR: I'm allergic to the number 4 5/6
+  ABO:  0/0
+EXIT

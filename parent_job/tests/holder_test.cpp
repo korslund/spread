@@ -1,22 +1,48 @@
-#include <iostream>
 #include "jobholder.hpp"
-//#include "common.cpp"
+#include "common.cpp"
 
-using namespace std;
-using namespace Spread;
+struct TestJob : Job
+{
+  int i;
+  TestJob(int i_) : i(i_) {}
+  ~TestJob() { cout << "Deleting i=" << i << endl; }
 
-/*
-  Things to test:
+  void doJob()
+  {
+    cout << "Running i=" << i << endl;
 
-  - job adding and auto-deletion
-  - startup() and tick()
-  - finish and waitFinish()
-  - proper sorting of jobs, keeping of failed jobs
- */
+    if(i == 2) Thread::sleep(3);
+    if(i == 3) throw runtime_error("Failing yo!");
+    setDone();
+  }
+};
+
+struct MyJobHolder : JobHolder
+{
+  void startup() { cout << "STARTUP\n"; }
+  void tick() { cout << "TICK\n"; }
+};
 
 int main()
 {
-  cout << "Hello\n";
+  JobHolder *jh = new MyJobHolder;
+  JobPtr ptr(jh);
 
+  Thread::run(ptr);
+  print(ptr);
+  cout << "Adding jobs:\n";
+  jh->add(new TestJob(1));
+  jh->add(new TestJob(2));
+  jh->add(new TestJob(3));
+  print(ptr);
+  cout << "\nWaiting for finish:\n";
+  jh->waitFinish();
+  print(ptr);
+
+  cout << "\nClearing failed list:\n";
+  jh->clearFailed();
+  print(ptr);
+
+  cout << "EXIT\n";
   return 0;
 }

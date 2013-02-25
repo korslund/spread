@@ -35,6 +35,9 @@ namespace Spread
     // Wait for all jobs to terminate
     void waitFinish() { finish(); info->wait(); }
 
+    // Clear the list of failed jobs in getDone()
+    void clearFailed();
+
     JobHolder() : finishOnEmpty(false) {}
 
   private:

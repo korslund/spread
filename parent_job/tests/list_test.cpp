@@ -1,21 +1,40 @@
-#include <iostream>
 #include "listjob.hpp"
-//#include "common.cpp"
+#include "common.cpp"
 
-using namespace std;
-using namespace Spread;
+struct ListTest : ListJob
+{
+  int i;
 
-/*
-  Things to test:
+  ListTest(int _i) : i(_i) {}
 
-  - both add functions
-  - that lists are set up correctly
-  - that start() does what it's supposed to do
- */
+  void doJob()
+  {
+    cout << "Starting list " << i << endl;
+    start();
+    Thread::sleep(0.5);
+    setDone();
+  }
+};
 
 int main()
 {
-  cout << "Hello\n";
+  ListJob *lst = new ListTest(0);
+  JobPtr ptr(lst);
+
+  cout << "\nADDING BEFORE START:\n";
+  lst->add(JobPtr(new ListTest(1)));
+  lst->add(new ListTest(2));
+  print(ptr);
+
+  cout << "\nSTARTING NOW:\n";
+  ptr->run();
+  print(ptr);
+
+  cout << "\nADDING MORE STUFF:\n";
+  lst->add(JobPtr(new ListTest(3)));
+  lst->add(new ListTest(4));
+  Thread::sleep(1.0);
+  print(ptr);
 
   return 0;
 }

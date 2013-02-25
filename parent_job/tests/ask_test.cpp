@@ -1,9 +1,5 @@
-#include <iostream>
 #include "askqueue.hpp"
-//#include "common.cpp"
-
-using namespace std;
-using namespace Spread;
+#include "common.cpp"
 
 /*
   Things to test:

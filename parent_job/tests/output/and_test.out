@@ -1,0 +1,11 @@
+SUC: Success 7/12
+  DONE:
+  SUC: Success 1/4
+  SUC: Success 2/4
+  SUC: Success 4/4
+ERR: One or more child jobs did not succeed 3/4
+  JOBS:
+  ERR: Fail on 3 3/4
+  SUC: Success 2/4
+  SUC: Success 1/4
+  SUC: Success 4/4

@@ -6,6 +6,12 @@
 
 using namespace Spread;
 
+void JobHolder::clearFailed()
+{
+  LOCK;
+  done.clear();
+}
+
 void JobHolder::doJob()
 {
   startup();

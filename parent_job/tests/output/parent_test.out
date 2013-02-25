@@ -1,0 +1,65 @@
+Hello
+Making i=10
+UNK:  0/0
+Making i=11
+Making i=12
+Making i=1
+Making i=2
+Making i=3
+Making i=4
+Making i=20
+SUC: Success 0/0
+  DONE:
+  ABO:  0/0
+  SUC: Success 0/0
+  ERR: Job3 0/0
+  ERR: Job4 0/0
+  JOBS:
+  UNK:  0/0
+  UNK:  0/0
+  ABO:  0/0
+Killing i=10
+Killing i=1
+Killing i=2
+Killing i=3
+Killing i=4
+Killing i=20
+Killing i=12
+Killing i=11
+Making i=30
+Thread-unlocked
+Thread-locked
+Thread-unlocked
+Thread-locked
+Thread-unlocked
+Thread-locked
+Thread-unlocked
+Thread-locked
+Thread-unlocked
+Thread-locked
+Thread-unlocked
+Thread-locked
+Thread-unlocked
+Thread-locked
+Thread-unlocked
+LOCKED!
+UNLOCKED
+Thread-locked
+Thread-unlocked
+Thread-locked
+Thread-unlocked
+Thread-locked
+Thread-unlocked
+Thread-locked
+Thread-unlocked
+Thread-locked
+Thread-unlocked
+Thread-locked
+Thread-unlocked
+Thread-locked
+Thread-unlocked
+Thread-locked
+Aborting...
+Waiting...
+EXIT
+Killing i=30

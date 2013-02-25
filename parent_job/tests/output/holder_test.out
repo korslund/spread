@@ -1,0 +1,29 @@
+UNK:  0/0
+Adding jobs:
+UNK:  0/0
+  JOBS:
+  UNK:  0/0
+  UNK:  0/0
+  UNK:  0/0
+
+Waiting for finish:
+STARTUP
+TICK
+Running i=3
+Running i=2
+Running i=1
+Deleting i=1
+TICK
+TICK
+TICK
+TICK
+TICK
+Deleting i=2
+SUC: Success 0/0
+  DONE:
+  ERR: Failing yo! 0/0
+
+Clearing failed list:
+Deleting i=3
+SUC: Success 0/0
+EXIT
