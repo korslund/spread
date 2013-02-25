@@ -17,7 +17,10 @@ set(LIBS ${Boost_LIBRARIES})
 
 set(SPDIR ../..)
 set(JDIR ${SPDIR}/job)
-set(JOB ${JDIR}/job.cpp ${JDIR}/jobinfo.cpp ${JDIR}/thread.cpp)
+set(PJDIR ${SPDIR}/parent_job)
 
-#add_executable(test1 test1.cpp ${JOB})
-#target_link_libraries(test1 ${LIBS})
+set(JOB ${JDIR}/job.cpp ${JDIR}/jobinfo.cpp ${JDIR}/thread.cpp)
+set(PJOB ${PJDIR}/parentjob.cpp)
+
+add_executable(parent_test parent_test.cpp ${JOB} ${PJOB})
+target_link_libraries(parent_test ${LIBS})

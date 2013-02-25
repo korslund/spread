@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <assert.h>
+#include <boost/smart_ptr.hpp>
 
 namespace Spread
 {
@@ -16,8 +17,13 @@ namespace Spread
 
     UserAsk(const std::string &msg)
       : ready(false), abort(false) {}
+
+    // This makes the class polymorphic, which means we can use
+    // dynamic_cast<> on child classes.
     virtual ~UserAsk() {}
   };
+
+  typedef boost::shared_ptr<UserAsk> AskPtr;
 
   struct StringAsk : UserAsk
   {
@@ -33,7 +39,7 @@ namespace Spread
 
     StringAsk() : selection(-1) {}
 
-    static StringAsk* handle(UserAsk *ask) { return dynamic_cast<StringAsk*>(ask); }
+    static StringAsk* handle(AskPtr ask) { return dynamic_cast<StringAsk*>(ask.get()); }
   };
 }
 #endif

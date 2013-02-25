@@ -61,77 +61,8 @@ struct WaitIntJob : Job
   }
 };
 
-template <class T>
-class SafeQueue
-{
-  std::queue<T> queue;
-  boost::mutex mutex;
-
-public:
-
-  void push(const T& t)
-  {
-    LOCK;
-    queue.push(t);
-  }
-
-  bool pop(T &t)
-  {
-    LOCK;
-    if(queue.empty()) return false;
-
-    t = queue.front();
-    queue.pop();
-    return true;
-  }
-};
-
-SafeQueue<UserAsk*> g_askList;
-
 struct AskJob : Job
 {
-  void handleAsk(UserAsk &ask)
-  {
-    g_askList.push(&ask);
-    while(!ask.ready)
-      {
-        Thread::sleep(0.02);
-
-        if(ask.abort) info->abort();
-        if(checkStatus()) return;
-      }
-  }
-
-  int ask(const std::string &msg, const std::string &opt1="",
-          const std::string &opt2="", const std::string &opt3="",
-          const std::string &opt4="", const std::string &opt5="")
-  {
-    StringAsk ask(msg);
-
-    // This is aweful code ;-)
-    if(opt1 != "")
-      {
-        ask.options.push_back(opt1);
-        if(opt2 != "")
-          {
-            ask.options.push_back(opt2);
-            if(opt3 != "")
-              {
-                ask.options.push_back(opt3);
-                if(opt4 != "")
-                  {
-                    ask.options.push_back(opt4);
-                    if(opt5 != "")
-                      ask.options.push_back(opt5);
-                  }
-              }
-          }
-      }
-
-    handleAsk(ask);
-    return ask.selection;
-  }
-
   void doJob()
   {
     setBusy("Asking the user something");

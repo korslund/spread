@@ -3,6 +3,8 @@
 
 #include <job/job.hpp>
 #include <boost/thread/mutex.hpp>
+#include <set>
+#include <vector>
 
 /* ParentJob: base class for jobs that have children.
 
