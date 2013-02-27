@@ -23,19 +23,6 @@ namespace Spread
         addOut(it->second);
     }
 
-    /* Used for "blind" archives, ie. ones where we don't preload the
-       directory up front, but rather use whatever is in the archive
-       as our filename guide. Since we are working with hashed
-       archives with known content, this is still 100% predictable and
-       deterministic, and saves us the trouble of downloading the
-       directory file separately.
-    */
-    ArcRule(const Hash &arc, const std::string &rulestr)
-      : Rule(RST_Archive, rulestr)
-    {
-      addDep(arc);
-    }
-
     // Get ArcRule pointer from a Rule pointer
     static const ArcRule *get(const Rule *r)
     {

@@ -1,0 +1,30 @@
+
+Searching for HASH=file1 FILE=
+  File exists at file1
+
+Searching for HASH=file2 FILE=
+  File exists at file2
+
+Searching for HASH=file1 FILE=blah
+  File exists at file1
+
+Searching for HASH=file1 FILE=file2
+  File exists at file1
+
+Searching for HASH=file1 FILE=file1
+  File is in place at file1
+
+Searching for HASH=file2 FILE=file1
+  File exists at file2
+
+Searching for HASH=file2 FILE=file2
+  File is in place at file2
+
+Searching for HASH=file3 FILE=
+  File is at URL=http://example.com/url
+
+Searching for HASH=file4 FILE=
+  File is in archive HASH=archive
+
+Searching for HASH=file5 FILE=
+  Not found

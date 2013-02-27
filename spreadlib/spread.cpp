@@ -5,7 +5,6 @@
 #include "rules/rule_loader.hpp"
 #include "install/installer.hpp"
 #include "dir/directory.hpp"
-#include "job/thread.hpp"
 #include "misc/readjson.hpp"
 #include "tasks/download.hpp"
 #include "hash/hash_stream.hpp"
@@ -23,6 +22,7 @@ JobInfoPtr SpreadLib::download(const std::string &url,
                                bool async)
 {
   DownloadTask *job = new DownloadTask(url, dest);
+  // TODO: We should no longer be starting threads manually here
   return Thread::run(job, async);
 }
 
@@ -286,6 +286,7 @@ JobInfoPtr SpreadLib::install(const std::string &channel,
   for(int i=0; i<p.dirs.size(); i++)
     inst->addDir(p.dirs[i], true, p.paths[i]);
 
+  // TODO: This will be started by the job system instead
   return Thread::run(inst, async);
 }
 

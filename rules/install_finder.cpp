@@ -83,85 +83,10 @@ bool InstallFinder::handleDeps(const DepList &deps, ActionMap &output, bool base
           continue;
         }
 
-      // Hash not previously resolved. Check if the cache knows
-      // anything about the hash.
-      int stat = Cache::CI_ElseWhere;
-      if(dest != "")
-        stat = cache.getStatus(dest, hash);
+      // CUT OUT FROM HERE
 
-      if(stat == Cache::CI_Match)
-        {
-          PRINT("MATCH");
-
-          // This file already exists, ignore it.
-          continue;
-        }
-
-      if(stat == Cache::CI_ElseWhere)
-        {
-          // File either exists elsewhere, or dest == "". Get cache
-          // location, if any.
-          const std::string &existing = cache.findHash(hash);
-
-          if(existing != "")
-            {
-              PRINT("EXISTING: " << existing);
-              // Check if this path is truely another file, or if
-              // these are just two paths pointing to the same data on
-              // disk.
-              if(dest == "" || !bf::equivalent(dest, existing))
-                // File exists in another location. Add a copy
-                // operation.
-                output[hash] = Action(existing, dest);
-
-              continue;
-            }
-        }
-
-      PRINT("RULE, calling findRule()");
-
-      /* If we are here, no existing file met our dependency. Look
-         up the ruleset to see how else we can fetch the file.
-      */
-      const Rule *r = rules.findRule(hash);
-
-      PRINT("CHECKING R");
-
-      if(r)
-        {
-          PRINT("FOUND RULE");
-
-          bool found = false;
-
-          // Set up the output action
-          Action a(r);
-
-          // Loop through and add the action for all the hashes it
-          // produces, not just the one we are looking for.
-          // Non-wanted targets are culled at a later stage.
-          for(int k=0; k<r->outputs.size(); k++)
-            {
-              const Hash &h = r->outputs[k];
-              output[h] = a;
-              if(h == hash)
-                {
-                  // Add our output destination to the right output
-                  output[h].addDest(dest);
-                  found = true;
-                }
-            }
-          assert(found);
-
-          // Then loop through this rule's dependencies, and expand
-          // those as well
-          DepList subdeps;
-          for(int k=0; k<r->deps.size(); k++)
-            {
-              const Hash &h = r->deps[k];
-              subdeps.push_back(DepPair("",h));
-              if(!handleDeps(subdeps, output))
-                isOk = false;
-            }
+      if(!handleDeps(subdeps, output))
+        isOk = false;
 
           /* TODO: Handle recursion. Recursion happens when a hash
              implicitly depends upon itself. We would also have to

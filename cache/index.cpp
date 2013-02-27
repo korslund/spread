@@ -190,7 +190,16 @@ int CacheIndex::getStatus(const std::string &_where, const Hash &hash)
       checkAlt = true;
       std::string alt = findHash(hash);
       if(alt != "")
-        return CI_ElseWhere;
+        {
+          /* Sometimes the paths DO refer to the same file, even
+             though the strings are different. Boost lets us check
+             for this.
+           */
+          if(bf::equivalent(alt, where))
+            return CI_Match;
+
+          return CI_ElseWhere;
+        }
     }
 
   // If nothing was found, tell the user
@@ -212,7 +221,11 @@ int CacheIndex::getStatus(const std::string &_where, const Hash &hash)
     {
       std::string alt = findHash(hash);
       if(alt != "")
-        return CI_ElseWhere;
+        {
+          if(bf::equivalent(alt, where))
+            return CI_Match;
+          return CI_ElseWhere;
+        }
     }
 
   // Just found a mismatch.

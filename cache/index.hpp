@@ -1,9 +1,7 @@
 #ifndef __SPREAD_CACHEINDEX_HPP_
 #define __SPREAD_CACHEINDEX_HPP_
 
-#include "hash/hash.hpp"
-#include <stdint.h>
-#include <vector>
+#include "iindex.hpp"
 
 /* The cache index holds a list over files and their hashes. It
    verifies and updates its own information on the fly as member
@@ -17,34 +15,7 @@
 
 namespace Cache
 {
-  // Status of a file location
-  enum CIStatus
-    {
-      CI_None,          // The file does not exist
-      CI_Match,         // File exists, and matches the given hash
-      CI_Diff,          // File exists, but differs from the given
-                        // hash. Use addFile() to get it.
-
-      CI_ElseWhere      /* File does not match, but we have this file
-                           somewhere else. Use findHash() to get
-                           it. This takes precedence over CI_Diff if
-                           both apply, since we assume a complete file
-                           somewhere else is more valuable than a
-                           potentially patchable file in the correct
-                           place.
-                        */
-    };
-
-  struct CIEntry
-  {
-    Spread::Hash hash;
-    std::string file;
-    int64_t writeTime;
-  };
-
-  typedef std::vector<CIEntry> CIVector;
-
-  struct CacheIndex
+  struct CacheIndex : ICacheIndex
   {
     /* Returns a CIStatus result for a given file location and
        hash. Will check the file and cache to make sure returned

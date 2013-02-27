@@ -22,6 +22,12 @@ namespace Spread
      */
     virtual void findAllRules(const Hash &hash, RuleList &output) const = 0;
 
+    /* Report a broken URL back to the rule manager. MUST ensure that
+       the URL is no longer returned by future calls to findRule() or
+       findAllRules().
+     */
+    virtual void reportBrokenURL(const Hash &hash, const std::string &url) = 0;
+
     virtual ~RuleFinder() {}
   };
 }
