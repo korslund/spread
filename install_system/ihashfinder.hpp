@@ -21,6 +21,7 @@ namespace Spread
     int type;                   // Where you can find it
     std::string value;          // URL or file location
     std::vector<Hash> deps;     // Dependencies
+    const Hash::DirMap *dir;    // Archive directory
   };
 
   struct IHashFinder

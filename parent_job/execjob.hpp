@@ -21,15 +21,17 @@ namespace Spread
        in-thread. The child lists are set up accordingly, making the
        child visible to the outside.
 
-       Child jobs are allowed to fail. On non-success, execJob()
-       returns false. You may inspect lastJob for details.
+       If failOnError=false, child jobs are allowed to fail. On
+       non-success, execJob() returns false. You may inspect lastJob
+       for details.
      */
-    bool execJob(JobPtr p);
+    bool execJob(JobPtr p, bool failOnError=false);
 
     /* Convenience pointer version. Must be called with a newly
        created object that is not yet owned by a shared_ptr.
     */
-    bool execJob(Job *p) { return execJob(JobPtr(p)); }
+    bool execJob(Job *p, bool failOnError=false)
+    { return execJob(JobPtr(p), failOnError); }
   };
 }
 #endif

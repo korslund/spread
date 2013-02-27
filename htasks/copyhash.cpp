@@ -8,19 +8,26 @@ using namespace Mangle::Stream;
 // This just reads from a file and dumps the data into a stream
 struct CopyTask : Job
 {
-  CopyTask(const std::string &input, StreamPtr output)
-    : in(input), out(output) {}
+  CopyTask(const std::string &input, StreamPtr output, size_t s)
+    : in(input), out(output), size(s) {}
 
   void doJob()
   {
     setBusy("Copying " + in);
-    CopyStream::copy(FileStream::Open(in), out);
-    setDone();
+    assert(out);
+    setProgress(0,size);
+    size_t cpy = CopyStream::copy(FileStream::Open(in), out);
+    setProgress(cpy,size);
+    if(cpy != size)
+      setError("Size mismatch when copying " + in);
+    else
+      setDone();
   }
 
 private:
   std::string in;
   StreamPtr out;
+  size_t size;
 };
 
 Job* CopyHash::createJob()
@@ -29,5 +36,6 @@ Job* CopyHash::createJob()
   assert(outputs.size() > 0);
   assert(source != "");
   const Hash &hash = outputs.begin()->first;
-  return new CopyTask(source, getOutStream(hash));
+  assert(!hash.isNull());
+  return new CopyTask(source, getOutStream(hash), hash.size());
 }

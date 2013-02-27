@@ -19,6 +19,7 @@ namespace Spread
       addDep(arc);
 
       Hash::DirMap::const_iterator it;
+      assert(dir);
       for(it = dir->dir.begin(); it != dir->dir.end(); it++)
         addOut(it->second);
     }
