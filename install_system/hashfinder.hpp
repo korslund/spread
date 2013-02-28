@@ -19,6 +19,9 @@ namespace Spread
 
     void brokenURL(const Hash &hash, const std::string &url)
     { rules.reportBrokenURL(hash, url); }
+
+    void addToCache(const Hash::DirMap &files)
+    { cache.addMany(files); }
   };
 }
 

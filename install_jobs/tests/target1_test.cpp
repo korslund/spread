@@ -1,28 +1,4 @@
 #include "target.hpp"
-
-/*
-  There are only THREE STATES:
-
-  - the file DOES NOT EXIST and nobody is getting it
-  - the file IS BEING FETCHED - a target exists for it
-  - the file EXISTS and is found through the cache
-
-  We have to make sure the cache entry is written before the target
-  entry is removed. The target list should ONLY ever list running
-  jobs.
- */
-/*
-  This is used for blind unpacks, which are NOT handled in Target,
-  because it's not a known target:
-
-  new UnpackHash(outDir, outDirMap);
-
-  We then need to store the outDirMap into the global dir cache as
-  well, then set up our dirmap to include list all the output files
-  converted to absolute paths, so our cache adding code below works
-  correctly.
- */
-
 #include <boost/filesystem.hpp>
 #include <iostream>
 
@@ -39,9 +15,10 @@ Hash zipH("UZuuyrHbX1c57drq6a6SObKZQrkr58Y09SrBFtEHm9rSAg");
 
 struct TestOwner : TargetOwner
 {
-  std::string fetchTmpFile(const Hash &hash, JobPtr &job)
+  std::string fetchFile(const Hash &hash, JobPtr &job, const std::string &target)
   {
-    cout << "fetchTmpFile(" << hash << ")\n";
+    assert(target == "");
+    cout << "fetchFile(" << hash << ")\n";
     if(hash == zipH) return "test.zip";
     assert(0);
   }
@@ -51,13 +28,7 @@ struct TestOwner : TargetOwner
     cout << "Reporting broken URL=" << url << " HASH=" << hash << endl;
   }
 
-  const Hash::DirMap &fetchArcDir(const Hash &hash)
-  {
-    cout << "fetchArcDir(" << hash << ")\n";
-    assert(0);
-  }
-
-  void addToCache(const Hash::DirMap &files)
+  void notifyFiles(const Hash::DirMap &files)
   {
     cout << "Adding " << files.size() << " files to cache:\n";
     Hash::DirMap::const_iterator it;

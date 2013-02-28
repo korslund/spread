@@ -22,16 +22,27 @@ set(PJDIR ${SPDIR}/parent_job)
 set(IJDIR ${SPDIR}/install_jobs)
 set(HDIR ${SPDIR}/hash)
 set(HTDIR ${SPDIR}/htasks)
+set(ISDIR ${SPDIR}/install_system)
 
 set(HASH ${HDIR}/hash.cpp ${SPDIR}/libs/sha2/sha2.c)
 set(UNPACK ${UDIR}/dirwriter.cpp ${UDIR}/base.cpp ${UDIR}/unpack_zip.cpp ${UDIR}/auto.cpp)
 set(HTASKS ${HTDIR}/hashtask.cpp ${HTDIR}/unpackhash.cpp ${HTDIR}/downloadhash.cpp ${HTDIR}/copyhash.cpp)
 set(DIR ${DDIR}/directory.cpp ${DDIR}/from_fs.cpp)
 set(TASKS ${TDIR}/unpack.cpp ${TDIR}/curl.cpp ${TDIR}/download.cpp ${JOB} ${UNPACK})
+set(ISYS ${ISDIR}/hashfinder.cpp)
 
 set(JOB ${JDIR}/job.cpp ${JDIR}/jobinfo.cpp ${JDIR}/thread.cpp)
 set(PJOB ${PJDIR}/parentjob.cpp ${PJDIR}/listjob.cpp ${PJDIR}/jobholder.cpp ${PJDIR}/execjob.cpp ${PJDIR}/andjob.cpp)
 
-set(IJOBS ${IJDIR}/target.cpp ${JOB} ${PJOB} ${IJOBS} ${HASH} ${UNPACK} ${HTASKS} ${TASKS})
-add_executable(target_test target_test.cpp ${IJOBS})
-target_link_libraries(target_test ${LIBS})
+set(IJOBS ${IJDIR}/target.cpp ${IJDIR}/filejob.cpp)
+
+set(ALL ${IJOBS} ${JOB} ${PJOB} ${IJOBS} ${HASH} ${UNPACK} ${HTASKS} ${TASKS} ${ISYS})
+
+add_executable(target1_test target1_test.cpp ${ALL})
+target_link_libraries(target1_test ${LIBS})
+
+add_executable(target2_test target2_test.cpp ${ALL})
+target_link_libraries(target2_test ${LIBS})
+
+add_executable(file1_test file1_test.cpp ${ALL})
+target_link_libraries(file1_test ${LIBS})

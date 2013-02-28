@@ -10,11 +10,11 @@ using namespace Spread;
 std::string Target::fetchFile(const Hash &hash)
 {
   JobPtr fetchTask;
-  std::string output = owner->fetchTmpFile(hash, fetchTask);
+  std::string output = owner->fetchFile(hash, fetchTask);
   assert(output != "");
 
-  /* If there is a job required to fetch this file, then
-     fetchTmpFile() will have set it up for us. Execute it.
+  /* If there is a job required to fetch this file, then fetchFile()
+     will have set it up for us. Execute it.
   */
   if(fetchTask)
     execJob(fetchTask, true);
@@ -66,7 +66,15 @@ void Target::doJob()
   else assert(0);
   if(checkStatus()) return;
 
+  /* The order is important here: we might have other threads waiting
+     for us, thus we cannot set 'done' status until AFTER have added
+     our output files to cache.
+
+     notifyFiles() implementations must also make sure to add the
+     files to cache before removing them from target lists used by
+     other jobs.
+   */
   assert(output.size());
-  owner->addToCache(output);
+  owner->notifyFiles(output);
   setDone();
 }

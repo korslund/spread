@@ -24,7 +24,7 @@ Couldn't resolve host name
   prog=0/0
   FAILURE!
 
-fetchTmpFile(UZuuyrHbX1c57drq6a6SObKZQrkr58Y09SrBFtEHm9rSAg)
+fetchFile(UZuuyrHbX1c57drq6a6SObKZQrkr58Y09SrBFtEHm9rSAg)
 Adding 1 files to cache:
   ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ _target/test
   msg=Unpacking test.zip

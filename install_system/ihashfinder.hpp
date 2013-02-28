@@ -40,6 +40,11 @@ namespace Spread
        to obtain a replacement URL.
      */
     virtual void brokenURL(const Hash &hash, const std::string &url) = 0;
+
+    /* Adds the listed files to the cache, meaning that future calls
+       to findHash() may return them as cached files.
+     */
+    virtual void addToCache(const Hash::DirMap &files) = 0;
   };
 }
 

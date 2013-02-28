@@ -1,0 +1,8 @@
+
+fetchFile(world)
+Running a test job!
+DONE
+fetchFile(FISH)
+  msg=This is supposed to fail
+  prog=0/0
+  FAILURE!
