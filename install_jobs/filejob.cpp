@@ -55,7 +55,7 @@ std::string FileJob::fetchFile(const Hash &hash, JobPtr &job, const std::string 
          t->src.type == TST_Archive);
 
   // Fetch any existing targets for this hash
-  TargetPtr out = t;
+  JobPtr out = t;
   bool found = owner.getTarget(hash, out);
   // We no longer need to hold up the list
   if(lock) lock.reset();

@@ -1,9 +1,15 @@
+/* This is exactly equal to file1_test, except it uses a dummy
+   IJobMaker. This means we can run the output jobs without producing
+   any actual files.
+ */
+
 #include "filejob.hpp"
 #include <iostream>
 #include <rules/urlrule.hpp>
 #include <rules/arcrule.hpp>
 #include <install_system/hashfinder.hpp>
-#include "jobmaker.hpp"
+#include "ijobmaker.hpp"
+#include "tlist.hpp"
 
 using namespace std;
 using namespace Spread;
@@ -32,8 +38,21 @@ struct DummyCache : Cache::ICacheIndex
 
   string findHash(const Hash &hash) { return files[hash]; }
 
+  void addMany(const Hash::DirMap &dir)
+  {
+    cout << "Adding " << dir.size() << " files to cache:\n";
+    Hash::DirMap::const_iterator it;
+    for(it = dir.begin(); it != dir.end(); it++)
+    {
+      const std::string &file = it->first;
+      const Hash &hash = it->second;
+      cout << "  " << hash << " " << file << endl;
+
+      files[hash] = file;
+    }
+  }
+
   Hash addFile(string,const Hash&) { assert(0); }
-  void addMany(const Hash::DirMap&) { assert(0); }
   void removeFile(const string&) { assert(0); }
   void getEntries(Cache::CIVector&) const { assert(0); }
 };
@@ -44,6 +63,8 @@ struct DummyRules : RuleFinder
   {
     if(hash == file3)
       return new URLRule(hash, "RULESTR", "http://example.com/url");
+    if(hash == arcHash)
+      return new URLRule(hash, "RULE", "url://to/archive.zip");
     if(hash == file4)
       return new ArcRule(arcHash, DirectoryCPtr(new Directory), "RULESTR");
     return NULL;
@@ -62,10 +83,13 @@ struct DummyRules : RuleFinder
 
 struct DummyOwner : FileJobOwner
 {
-  // Never executed because we're not running the actual jobs in this
-  // example
+  TargetList list;
+
   void notifyFiles(const Hash::DirMap &files)
-  { assert(0); }
+  {
+    cout << "Removing targets from list.\n";
+    list.remove(files);
+  }
 
   std::string getTmpName(const Hash &hash)
   { return "tmp_" + hash.toString(); }
@@ -73,17 +97,57 @@ struct DummyOwner : FileJobOwner
   bool getTarget(const Hash &hash, JobPtr &job)
   {
     cout << "getTarget(" << hash << ")\n";
-    return false;
+    return list.fetchOrInsert(hash, job);
   }
 
-  MovableLock lock() { return MovableLock(); }
+  MovableLock lock() { return list.lock(); }
+};
+
+struct DummyTask : HashTaskBase
+{
+  typedef HashTaskBase::HashDir::const_iterator HDI;
+  std::string name;
+  DummyTask(const std::string &nm) : name(nm) {}
+
+  void doJob()
+  {
+    cout << "JOB " << name << ":\n";
+    HDI it;
+
+    cout << "INPUTS:\n";
+    for(it = inputs.begin(); it != inputs.end(); it++)
+      cout << "  " << it->first << " " << it->second << endl;
+    cout << "OUTPUTS:\n";
+    for(it = outputs.begin(); it != outputs.end(); it++)
+      cout << "  " << it->first << " " << it->second << endl;
+    setDone();
+  }
+};
+
+struct DummyMaker : IJobMaker
+{
+  HashTaskBase* copyJob(const std::string &from)
+  {
+    return new DummyTask("COPY " + from);
+  }
+
+  HashTaskBase* downloadJob(const std::string &url)
+  {
+    return new DummyTask("DOWNLOAD " + url);
+  }
+
+  HashTaskBase* unpackJob(const Hash::DirMap &index)
+  {
+    return new DummyTask("UNPACK");
+  }
 };
 
 DummyRules rules;
 DummyCache cache;
 HashFinder fnd(rules, cache);
 DummyOwner owner;
-JobMaker maker;
+DummyMaker maker;
+
 FileJob file(fnd, owner, maker);
 
 void test(const Hash &hash, const string &where="")
@@ -95,7 +159,7 @@ void test(const Hash &hash, const string &where="")
   try { res = file.fetchFile(hash, job, where); }
   catch(std::exception &e)
     {
-      cout << "ERROR: " << e.what() << endl;
+      cout << "ERROR1: " << e.what() << endl;
       return;
     }
   cout << "  GOT: " << res << endl;
@@ -121,18 +185,29 @@ void test(const Hash &hash, const string &where="")
       Hash::DirMap::const_iterator it;
       for(it = t->output.begin(); it != t->output.end(); it++)
         cout << "      " << it->second << " " << it->first << endl;
+
+      cout << "  Running:\n";
+      JobInfoPtr info = job->run();
+      if(info->isError()) cout << "ERROR2: " << info->getMessage() << endl;
     }
 }
 
 int main()
 {
+  /* These are the standard tests used in file1_test and
+     file2_Test. The results differ somewhat though:
+
+     - since we have a working cache, the copy operations will copy
+       different files back and forth
+
+     - file2_test failed silently on the 'file4' test, since the
+       archive couldn't find it's input target. We've added a rule for
+       arcHash now, and it gets downloaded in a separate job.
+   */
   test(file1);
   test(file2);
   test(file1, "blah");
   test(file1, "file2");
-  test(file1, "file1");
-  test(file2, "file1");
-  test(file2, "file2");
   test(file3);
   test(file4);
   test(file5);

@@ -34,9 +34,12 @@ set(ISYS ${ISDIR}/hashfinder.cpp)
 set(JOB ${JDIR}/job.cpp ${JDIR}/jobinfo.cpp ${JDIR}/thread.cpp)
 set(PJOB ${PJDIR}/parentjob.cpp ${PJDIR}/listjob.cpp ${PJDIR}/jobholder.cpp ${PJDIR}/execjob.cpp ${PJDIR}/andjob.cpp)
 
-set(IJOBS ${IJDIR}/target.cpp ${IJDIR}/filejob.cpp ${IJDIR}/jobmaker.cpp)
+set(IJOBS ${IJDIR}/target.cpp ${IJDIR}/filejob.cpp ${IJDIR}/jobmaker.cpp ${IJDIR}/tlist.cpp)
 
 set(ALL ${IJOBS} ${JOB} ${PJOB} ${IJOBS} ${HASH} ${UNPACK} ${HTASKS} ${TASKS} ${ISYS})
+
+add_executable(list_test list_test.cpp ${ALL})
+target_link_libraries(list_test ${LIBS})
 
 add_executable(target1_test target1_test.cpp ${ALL})
 target_link_libraries(target1_test ${LIBS})
@@ -49,3 +52,9 @@ target_link_libraries(target3_test ${LIBS})
 
 add_executable(file1_test file1_test.cpp ${ALL})
 target_link_libraries(file1_test ${LIBS})
+
+add_executable(file2_test file2_test.cpp ${ALL})
+target_link_libraries(file2_test ${LIBS})
+
+add_executable(file3_test file3_test.cpp ${ALL})
+target_link_libraries(file3_test ${LIBS})

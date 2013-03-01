@@ -2,13 +2,11 @@
 #define __SPREAD_FILEJOB_HPP_
 
 #include "target.hpp"
+#include "movablelock.hpp"
 #include <install_system/ihashfinder.hpp>
-#include <boost/thread/mutex.hpp>
 
 namespace Spread
 {
-  typedef boost::shared_ptr<boost::lock_guard<boost::mutex> > MovableLock;
-
   /* System callback used by FileJob. All implementations must of
      course be fully thread safe.
    */
@@ -28,10 +26,8 @@ namespace Spread
        - if no target exists, return false. The given job is inserted
          into the list, and will be returned by future calls to
          getTarget().
-
-       This function REQUIRES that the object is currently locked.
      */
-    virtual bool getTarget(const Hash &hash, TargetPtr &job) = 0;
+    virtual bool getTarget(const Hash &hash, JobPtr &job) = 0;
 
     /* Create a copyable lock object. This guarantees that no targets
        are added or removed from the target list while the lock is in

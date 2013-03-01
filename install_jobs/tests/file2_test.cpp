@@ -1,15 +1,31 @@
+/* This is exactly equal to file1_test, except it uses a dummy
+   IJobMaker. This means we can run the output jobs without producing
+   any actual files.
+ */
+
 #include "filejob.hpp"
 #include <iostream>
 #include <rules/urlrule.hpp>
 #include <rules/arcrule.hpp>
 #include <install_system/hashfinder.hpp>
+#include "ijobmaker.hpp"
 
 using namespace std;
 using namespace Spread;
 
+Hash
+  file1("file1"), file2("file2"), file3("file3"),
+  file4("file4"), file5("file5"), arcHash("archive");
+
 struct DummyCache : Cache::ICacheIndex
 {
   map<Hash,string> files;
+
+  DummyCache()
+  {
+    files[file1] = "file1";
+    files[file2] = "file2";
+  }
 
   int getStatus(const std::string &where, const Hash &hash)
   {
@@ -23,7 +39,16 @@ struct DummyCache : Cache::ICacheIndex
 
   void addMany(const Hash::DirMap &dir)
   {
-    assert(0);
+    cout << "Adding " << dir.size() << " files to cache:\n";
+    Hash::DirMap::const_iterator it;
+    for(it = dir.begin(); it != dir.end(); it++)
+    {
+      const std::string &file = it->first;
+      const Hash &hash = it->second;
+      cout << "  " << hash << " " << file << endl;
+
+      //files[hash] = file;
+    }
   }
 
   Hash addFile(string,const Hash&) { assert(0); }
@@ -56,12 +81,14 @@ struct DummyRules : RuleFinder
 struct DummyOwner : FileJobOwner
 {
   void notifyFiles(const Hash::DirMap &files)
-  { assert(0); }
+  {
+    cout << "notifyFiles()\n";
+  }
 
   std::string getTmpName(const Hash &hash)
   { return "tmp_" + hash.toString(); }
 
-  bool getTarget(const Hash &hash, TargetPtr &job)
+  bool getTarget(const Hash &hash, JobPtr &job)
   {
     cout << "getTarget(" << hash << ")\n";
     return false;
@@ -70,11 +97,52 @@ struct DummyOwner : FileJobOwner
   MovableLock lock() { return MovableLock(); }
 };
 
+struct DummyTask : HashTaskBase
+{
+  typedef HashTaskBase::HashDir::const_iterator HDI;
+  std::string name;
+  DummyTask(const std::string &nm) : name(nm) {}
+
+  void doJob()
+  {
+    cout << "JOB " << name << ":\n";
+    HDI it;
+
+    cout << "INPUTS:\n";
+    for(it = inputs.begin(); it != inputs.end(); it++)
+      cout << "  " << it->first << " " << it->second << endl;
+    cout << "OUTPUTS:\n";
+    for(it = outputs.begin(); it != outputs.end(); it++)
+      cout << "  " << it->first << " " << it->second << endl;
+    setError("Failing all jobs");
+  }
+};
+
+struct DummyMaker : IJobMaker
+{
+  HashTaskBase* copyJob(const std::string &from)
+  {
+    return new DummyTask("COPY " + from);
+  }
+
+  HashTaskBase* downloadJob(const std::string &url)
+  {
+    return new DummyTask("DOWNLOAD " + url);
+  }
+
+  HashTaskBase* unpackJob(const Hash::DirMap &index)
+  {
+    return new DummyTask("UNPACK");
+  }
+};
+
 DummyRules rules;
 DummyCache cache;
 HashFinder fnd(rules, cache);
 DummyOwner owner;
-FileJob file(fnd, owner);
+DummyMaker maker;
+
+FileJob file(fnd, owner, maker);
 
 void test(const Hash &hash, const string &where="")
 {
@@ -113,7 +181,8 @@ void test(const Hash &hash, const string &where="")
         cout << "      " << it->second << " " << it->first << endl;
 
       cout << "  Running:\n";
-      job.run();
+      JobInfoPtr info = job->run();
+      assert(info->isError());
     }
 }
 
