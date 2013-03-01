@@ -3,6 +3,7 @@
 
 #include <install_system/ihashfinder.hpp>
 #include <parent_job/execjob.hpp>
+#include "ijobmaker.hpp"
 
 namespace Spread
 {
@@ -19,12 +20,13 @@ namespace Spread
   {
     HashSource src;
     Hash::DirMap output;
-    Target(TargetOwner *o) : owner(o) {}
+    Target(TargetOwner *o, IJobMaker &m) : owner(o), maker(m) {}
 
   private:
     TargetOwner *owner;
+    IJobMaker &maker;
     std::string fetchFile(const Hash &hash);
-    bool execHashTask(HashTask *htask, bool failOnError);
+    bool execHashTask(HashTaskBase *htask, bool failOnError);
     void doJob();
   };
 

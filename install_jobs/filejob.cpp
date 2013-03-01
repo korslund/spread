@@ -4,7 +4,7 @@ using namespace Spread;
 
 std::string FileJob::fetchFile(const Hash &hash, JobPtr &job, const std::string &target)
 {
-  TargetPtr t(new Target(this));
+  TargetPtr t(new Target(this, maker));
 
   /* Lock the target list to avoid race conditions. Possible scenario:
 

@@ -1,8 +1,4 @@
 #include "target.hpp"
-
-#include <htasks/copyhash.hpp>
-#include <htasks/downloadhash.hpp>
-#include <htasks/unpackhash.hpp>
 #include <stdexcept>
 
 using namespace Spread;
@@ -22,7 +18,7 @@ std::string Target::fetchFile(const Hash &hash)
   return output;
 }
 
-bool Target::execHashTask(HashTask *htask, bool failOnError)
+bool Target::execHashTask(HashTaskBase *htask, bool failOnError)
 {
   assert(htask);
   assert(!src.hash.isNull());
@@ -48,10 +44,10 @@ void Target::doJob()
 {
   assert(owner);
   if(src.type == TST_File)
-    execHashTask(new CopyHash(src.value), true);
+    execHashTask(maker.copyJob(src.value), true);
   else if(src.type == TST_Download)
     {
-      if(!execHashTask(new DownloadHash(src.value), false))
+      if(!execHashTask(maker.downloadJob(src.value), false))
         {
           // Let the caller try to find a replacement
           owner->brokenURL(src.hash, src.value);
@@ -61,7 +57,7 @@ void Target::doJob()
   else if(src.type == TST_Archive)
     {
       assert(src.dir);
-      execHashTask(new UnpackHash(*src.dir), true);
+      execHashTask(maker.unpackJob(*src.dir), true);
     }
   else assert(0);
   if(checkStatus()) return;

@@ -1,10 +1,8 @@
 #ifndef __HASH_TASK_HPP_
 #define __HASH_TASK_HPP_
 
-#include "job/job.hpp"
-#include "hash/hash.hpp"
+#include "hashtaskbase.hpp"
 #include <mangle/stream/stream.hpp>
-#include <map>
 
 /* HashTask is the base class for jobs that depend on or produce a
    verified set of input/output data. Exactly what data is needed or
@@ -26,22 +24,8 @@
 
 namespace Spread
 {
-  struct HashTask : Job
+  struct HashTask : HashTaskBase
   {
-    typedef std::multimap<Hash, std::string> HashDir;
-    typedef std::pair<Hash, std::string> HDValue;
-
-    /* Set these up before running the job. Do not touch after calling
-       run().
-     */
-    HashDir inputs;
-    HashDir outputs;
-
-    void addInput(Hash h, const std::string &file)
-    { inputs.insert(HDValue(h,file)); }
-
-    void addOutput(Hash h, const std::string &file)
-    { outputs.insert(HDValue(h,file)); }
 
     /* Use this in subclasses to write data. Produces an output stream
        for the requested hash, or an empty ptr if nobody requested the

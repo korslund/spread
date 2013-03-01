@@ -3,24 +3,13 @@
 #include <rules/urlrule.hpp>
 #include <rules/arcrule.hpp>
 #include <install_system/hashfinder.hpp>
-#include "jobmaker.hpp"
 
 using namespace std;
 using namespace Spread;
 
-Hash
-  file1("file1"), file2("file2"), file3("file3"),
-  file4("file4"), file5("file5"), arcHash("archive");
-
 struct DummyCache : Cache::ICacheIndex
 {
   map<Hash,string> files;
-
-  DummyCache()
-  {
-    files[file1] = "file1";
-    files[file2] = "file2";
-  }
 
   int getStatus(const std::string &where, const Hash &hash)
   {
@@ -32,8 +21,12 @@ struct DummyCache : Cache::ICacheIndex
 
   string findHash(const Hash &hash) { return files[hash]; }
 
+  void addMany(const Hash::DirMap &dir)
+  {
+    assert(0);
+  }
+
   Hash addFile(string,const Hash&) { assert(0); }
-  void addMany(const Hash::DirMap&) { assert(0); }
   void removeFile(const string&) { assert(0); }
   void getEntries(Cache::CIVector&) const { assert(0); }
 };
@@ -62,8 +55,6 @@ struct DummyRules : RuleFinder
 
 struct DummyOwner : FileJobOwner
 {
-  // Never executed because we're not running the actual jobs in this
-  // example
   void notifyFiles(const Hash::DirMap &files)
   { assert(0); }
 
@@ -83,8 +74,7 @@ DummyRules rules;
 DummyCache cache;
 HashFinder fnd(rules, cache);
 DummyOwner owner;
-JobMaker maker;
-FileJob file(fnd, owner, maker);
+FileJob file(fnd, owner);
 
 void test(const Hash &hash, const string &where="")
 {
@@ -121,6 +111,9 @@ void test(const Hash &hash, const string &where="")
       Hash::DirMap::const_iterator it;
       for(it = t->output.begin(); it != t->output.end(); it++)
         cout << "      " << it->second << " " << it->first << endl;
+
+      cout << "  Running:\n";
+      job.run();
     }
 }
 

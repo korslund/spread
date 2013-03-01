@@ -43,8 +43,8 @@ namespace Spread
 
   struct FileJob : ExecJob, TargetOwner
   {
-    FileJob(IHashFinder &fnd, FileJobOwner &own)
-      : finder(fnd), owner(own) {}
+    FileJob(IHashFinder &fnd, FileJobOwner &own, IJobMaker &mkr)
+      : finder(fnd), owner(own), maker(mkr) {}
 
     std::string outFile;
 
@@ -65,6 +65,7 @@ namespace Spread
   private:
     IHashFinder &finder;
     FileJobOwner &owner;
+    IJobMaker &maker;
   };
 }
 

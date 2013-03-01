@@ -2,6 +2,7 @@
 #include <boost/filesystem.hpp>
 #include <iostream>
 #include <job/thread.hpp>
+#include "jobmaker.hpp"
 
 using namespace std;
 using namespace Spread;
@@ -72,6 +73,7 @@ struct TestOwner : TargetOwner
 };
 
 TestOwner owner;
+JobMaker maker;
 
 void run(Job &j)
 {
@@ -89,7 +91,7 @@ int main()
 {
   bf::remove_all("_target2");
   {
-    Target t(&owner);
+    Target t(&owner, maker);
     t.src.type = TST_File;
     t.src.value = "hello.dat";
     t.src.hash = hello;
