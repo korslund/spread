@@ -49,10 +49,10 @@ const Rule *ArcRuleSet::findRule(const Hash &hash) const
   return NULL;
 }
 
-void ArcRuleSet::addArchive(const Hash arcHash, DirectoryCPtr dir,
-                            const std::string &ruleString)
+void ArcRuleSet::addArchive(const Hash &arcHash, const Hash &dirHash,
+                            DirectoryCPtr dir, const std::string &ruleString)
 {
-  ArcPtr arcPtr(new ArcRule(arcHash, dir, ruleString));
+  ArcPtr arcPtr(new ArcRule(arcHash, dir, dirHash, ruleString));
 
   /* Loop through all the output hashes, and add a lookup for each of
      them pointing to this archive.

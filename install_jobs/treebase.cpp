@@ -13,8 +13,9 @@ TreeBase::TreeBase(TreeOwner &o)
 {}
 
 void TreeBase::addOutput(const Hash &h, const std::string &where) { assert(0); }
+void TreeBase::addInput(const Hash &h) { assert(0); }
 
-void TreeBase::fetchFiles(const HashDir &outputs, HashMap *results)
+void TreeBase::fetchFiles(const HashDir &outputs, HashMap &results)
 {
   std::string oldMsg = setBusy("Setting up child jobs");
 
@@ -63,20 +64,23 @@ void TreeBase::fetchFiles(const HashDir &outputs, HashMap *results)
           job = owner.downloadTarget(src.value);
         else if(src.type == TST_Archive)
           {
-            assert(!src.arcHash.isNull() && !src.dirHash.isNull());
+            assert(!src.dirHash.isNull());
+            assert(src.value == "");
+            assert(src.deps.size() == 1);
+            Hash arcHash = src.deps[0];
 
             // Check if we have already created an archive
             // unpacker for this archive
-            if(unpackers.find(src.arcHash) != unpackers.end())
+            if(unpackers.find(arcHash) != unpackers.end())
               {
                 // Add this target to the output list of the
                 // already existing unpacker.
-                unpackers[src.arcHash]->addOutput(hash, outfile);
+                unpackers[arcHash]->addOutput(hash, outfile);
                 continue;
               }
 
-            job = owner.unpackTarget(src.arcHash, src.dirHash);
-            unpackers[src.arcHash] = job;
+            job = owner.unpackTarget(src.dirHash);
+            unpackers[arcHash] = job;
           }
         else assert(0);
 
@@ -84,6 +88,10 @@ void TreeBase::fetchFiles(const HashDir &outputs, HashMap *results)
 
         // Add this target to the jobs output list
         job->addOutput(hash, outfile);
+
+        // Add input dependencies
+        for(int i=0; i<src.deps.size(); i++)
+          job->addInput(src.deps[i]);
 
         // Let the outside world know about our target
         owner.setRunningTarget(hash, job->getInfo());
@@ -110,9 +118,7 @@ void TreeBase::fetchFiles(const HashDir &outputs, HashMap *results)
   // Finally check all the cache values, and set up 'results'
   // based on what we find. Fail if anything is missing.
   HashDir::const_iterator it;
-  HashMap res;
-  if(!results) results = &res;
-  results->clear();
+  results.clear();
   for(it = outputs.begin(); it != outputs.end(); it++)
     {
       const Hash &hash = it->first;
@@ -138,7 +144,7 @@ void TreeBase::fetchFiles(const HashDir &outputs, HashMap *results)
       assert(src.value != "");
 
       // Store the result
-      (*results)[hash] = src.value;
+      results[hash] = src.value;
     }
 
   setBusy(oldMsg);

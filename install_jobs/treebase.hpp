@@ -18,6 +18,7 @@ namespace Spread
     TreeBase(TreeOwner &o);
 
     virtual void addOutput(const Hash &h, const std::string &where = "");
+    virtual void addInput(const Hash &h);
 
   protected:
     TreeOwner &owner;
@@ -28,14 +29,14 @@ namespace Spread
        created and added to cache, or the function will throw an
        error.
 
-       If the 'results' map is given, it will be filled with one file
-       location for each hash in 'outputs'.
+       The 'results' map is filled with one file location for each
+       hash in 'outputs'.
 
        For files with no location given, the returned/cached file may
        be a temporary file or a file that already existed before
        fetchFiles() was called.
      */
-    void fetchFiles(const HashDir &outputs, HashMap *results = NULL);
+    void fetchFiles(const HashDir &outputs, HashMap &results);
   };
 
   typedef boost::shared_ptr<TreeBase> TreePtr;
@@ -49,7 +50,7 @@ namespace Spread
 
     virtual TreePtr copyTarget(const std::string &from) = 0;
     virtual TreePtr downloadTarget(const std::string &url) = 0;
-    virtual TreePtr unpackTarget(const Hash &arc, const Hash &dir) = 0;
+    virtual TreePtr unpackTarget(const Hash &dir) = 0;
 
     // Notify our owner that the following files are done.
     virtual void notifyFiles(const Hash::DirMap &files) = 0;

@@ -34,7 +34,7 @@ void AndJob::doJob()
             else
               if(inf->isNonSuccess())
                 {
-                  setError("One or more child jobs did not succeed");
+                  setError("One or more child jobs did not succeed:\n" + inf->getMessage());
                   return;
                 }
           }

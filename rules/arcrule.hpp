@@ -11,15 +11,17 @@ namespace Spread
   struct ArcRule : Rule
   {
     DirectoryCPtr dir;
+    Hash dirHash;
 
     ArcRule(const Hash &arc, DirectoryCPtr _dir,
-            const std::string &rulestr)
-      : Rule(RST_Archive, rulestr), dir(_dir)
+            const Hash &dirH, const std::string &rulestr)
+      : Rule(RST_Archive, rulestr), dir(_dir), dirHash(dirH)
     {
       addDep(arc);
 
       Hash::DirMap::const_iterator it;
       assert(dir);
+      assert(!dirHash.isNull());
       for(it = dir->dir.begin(); it != dir->dir.end(); it++)
         addOut(it->second);
     }

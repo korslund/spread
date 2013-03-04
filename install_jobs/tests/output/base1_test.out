@@ -1,34 +1,26 @@
 
 RUNNING fetchFiles():
-LOCKING
 getRunningTarget(00)
 findHash(hash=00, target=)
-UNLOCKING
 ERROR: No source for target 00 
 
 RUNNING fetchFiles():
-LOCKING
 getRunningTarget(nofile)
 findHash(hash=nofile, target=file)
-UNLOCKING
 ERROR: No source for target nofile file
 
 RUNNING fetchFiles():
-LOCKING
 getRunningTarget(nofile)
 findHash(hash=nofile, target=)
-UNLOCKING
 ERROR: No source for target nofile 
 
 RUNNING fetchFiles():
-LOCKING
 getRunningTarget(LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF)
 findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=out_hello)
 getRunningTarget(LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF)
 findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=out_hello2)
 getRunningTarget(SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF)
 findHash(hash=SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF, target=out_world)
-UNLOCKING
 findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=out_hello)
 TARGET: COPY cache/LPJN
   Outputs:
@@ -36,15 +28,15 @@ TARGET: COPY cache/LPJN
 Adding 1 files to cache:
   LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF out_hello
 notifyFiles():
-  LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF out_hello
+  LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
 findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=out_hello2)
-TARGET: COPY cache/LPJN
+TARGET: COPY out_hello
   Outputs:
     LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF out_hello2
 Adding 1 files to cache:
   LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF out_hello2
 notifyFiles():
-  LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF out_hello2
+  LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
 findHash(hash=SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF, target=out_world)
 TARGET: COPY cache/SG6k
   Outputs:
@@ -52,13 +44,12 @@ TARGET: COPY cache/SG6k
 Adding 1 files to cache:
   SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF out_world
 notifyFiles():
-  SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF out_world
+  SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF
 Results returned:
 LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF out_hello2
 SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF out_world
 
 RUNNING fetchFiles():
-LOCKING
 getRunningTarget(LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF)
 findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=cache/LPJN)
 getRunningTarget(LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF)
@@ -67,7 +58,6 @@ getRunningTarget(SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF)
 findHash(hash=SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF, target=cache/SG6k)
 getRunningTarget(SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF)
 findHash(hash=SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF, target=)
-UNLOCKING
 findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=cache/LPJN)
 findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=)
 findHash(hash=SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF, target=cache/SG6k)
@@ -75,3 +65,214 @@ findHash(hash=SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF, target=)
 Results returned:
 LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF cache/LPJN
 SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF cache/SG6k
+
+RUNNING fetchFiles():
+getRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
+findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=)
+setRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
+TARGET: DOWNLOAD url://SOME/URL/
+  Outputs:
+    U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F 
+Adding 1 files to cache:
+  U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F tmp_U_l4zp
+notifyFiles():
+  U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F
+findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=)
+Results returned:
+U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F tmp_U_l4zp
+
+RUNNING fetchFiles():
+getRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
+findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=blah)
+setRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
+TARGET: DOWNLOAD url://SOME/URL/
+  Outputs:
+    U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F blah
+Adding 1 files to cache:
+  U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F blah
+notifyFiles():
+  U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F
+findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=blah)
+Results returned:
+U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F blah
+
+RUNNING fetchFiles():
+getRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
+findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=)
+setRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
+getRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
+  FOUND!
+TARGET: DOWNLOAD url://SOME/URL/
+  Outputs:
+    U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F 
+Adding 1 files to cache:
+  U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F tmp_U_l4zp
+notifyFiles():
+  U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F
+findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=)
+findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=blah)
+TARGET: COPY tmp_U_l4zp
+  Outputs:
+    U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F blah
+Adding 1 files to cache:
+  U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F blah
+notifyFiles():
+  U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F
+Results returned:
+U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F blah
+
+RUNNING fetchFiles():
+getRunningTarget(QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG)
+findHash(hash=QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG, target=postei)
+setRunningTarget(QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG)
+TARGET: UNPACK
+  Inputs:
+    U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F 
+getRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
+findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=)
+setRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
+TARGET: DOWNLOAD url://SOME/URL/
+  Outputs:
+    U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F 
+Adding 1 files to cache:
+  U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F tmp_U_l4zp
+notifyFiles():
+  U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F
+findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=)
+  Processed inputs:
+    U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F tmp_U_l4zp
+  Outputs:
+    QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG postei
+Adding 1 files to cache:
+  QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG postei
+notifyFiles():
+  QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG
+findHash(hash=QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG, target=postei)
+Results returned:
+QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG postei
+
+RUNNING fetchFiles():
+getRunningTarget(QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG)
+findHash(hash=QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG, target=postei)
+setRunningTarget(QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG)
+getRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
+findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=keiko)
+setRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
+TARGET: UNPACK
+  Inputs:
+    U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F 
+getRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
+  FOUND!
+-- end dlsleep
+TARGET: DOWNLOAD url://SOME/URL/
+  Outputs:
+    U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F keiko
+Adding 1 files to cache:
+  U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F keiko
+notifyFiles():
+  U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F
+findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=)
+  Processed inputs:
+    U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F keiko
+  Outputs:
+    QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG postei
+Adding 1 files to cache:
+  QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG postei
+notifyFiles():
+  QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG
+findHash(hash=QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG, target=postei)
+findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=keiko)
+Results returned:
+QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG postei
+U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F keiko
+
+RUNNING fetchFiles():
+getRunningTarget(QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG)
+findHash(hash=QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG, target=postei)
+setRunningTarget(QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG)
+getRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
+findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=keiko)
+setRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
+TARGET: DOWNLOAD url://SOME/URL/
+  Outputs:
+    U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F keiko
+Adding 1 files to cache:
+  U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F keiko
+notifyFiles():
+  U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F
+-- end arcsleep
+TARGET: UNPACK
+  Inputs:
+    U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F 
+getRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
+findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=)
+findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=)
+  Processed inputs:
+    U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F keiko
+  Outputs:
+    QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG postei
+Adding 1 files to cache:
+  QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG postei
+notifyFiles():
+  QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG
+findHash(hash=QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG, target=postei)
+findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=keiko)
+Results returned:
+QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG postei
+U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F keiko
+
+RUNNING fetchFiles():
+getRunningTarget(A1)
+findHash(hash=A1, target=__a1_file)
+setRunningTarget(A1)
+getRunningTarget(A2)
+findHash(hash=A2, target=__a2_file)
+getRunningTarget(A2)
+findHash(hash=A2, target=__a2_file2)
+getRunningTarget(A3)
+findHash(hash=A3, target=__a3_file)
+TARGET: UNPACK
+  Inputs:
+    ARCME 
+getRunningTarget(ARCME)
+findHash(hash=ARCME, target=)
+findHash(hash=ARCME, target=)
+  Processed inputs:
+    ARCME cache/ARCM
+  Outputs:
+    A1 __a1_file
+    A2 __a2_file
+    A2 __a2_file2
+    A3 __a3_file
+Adding 4 files to cache:
+  A1 __a1_file
+  A2 __a2_file
+  A2 __a2_file2
+  A3 __a3_file
+notifyFiles():
+  A1
+  A2
+  A2
+  A3
+findHash(hash=A1, target=__a1_file)
+findHash(hash=A2, target=__a2_file)
+TARGET: COPY __a2_file2
+  Outputs:
+    A2 __a2_file
+Adding 1 files to cache:
+  A2 __a2_file
+notifyFiles():
+  A2
+findHash(hash=A2, target=__a2_file2)
+TARGET: COPY __a2_file
+  Outputs:
+    A2 __a2_file2
+Adding 1 files to cache:
+  A2 __a2_file2
+notifyFiles():
+  A2
+findHash(hash=A3, target=__a3_file)
+Results returned:
+A1 __a1_file
+A2 __a2_file2
+A3 __a3_file

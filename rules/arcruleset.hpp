@@ -52,8 +52,8 @@ namespace Spread
     /* Associate a given archive with files in a directory. The
        necessary data can be obtained from RuleSet::findArchive().
      */
-    void addArchive(const Hash arcHash, DirectoryCPtr dir,
-                    const std::string &ruleString = "");
+    void addArchive(const Hash &arcHash, const Hash &dirHash,
+                    DirectoryCPtr dir, const std::string &ruleString = "");
 
   private:
     RuleFinder *base;

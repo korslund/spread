@@ -1,9 +1,8 @@
-#include "filejob.hpp"
+#include "hashfinder.hpp"
 #include <iostream>
+
 #include <rules/urlrule.hpp>
 #include <rules/arcrule.hpp>
-#include <install_system/hashfinder.hpp>
-#include "jobmaker.hpp"
 
 using namespace std;
 using namespace Spread;
@@ -45,7 +44,7 @@ struct DummyRules : RuleFinder
     if(hash == file3)
       return new URLRule(hash, "RULESTR", "http://example.com/url");
     if(hash == file4)
-      return new ArcRule(arcHash, DirectoryCPtr(new Directory), "RULESTR");
+      return new ArcRule(arcHash, DirectoryCPtr(new Directory), arcHash, "RULESTR");
     return NULL;
   }
 
@@ -60,68 +59,30 @@ struct DummyRules : RuleFinder
   }
 };
 
-struct DummyOwner : FileJobOwner
-{
-  // Never executed because we're not running the actual jobs in this
-  // example
-  void notifyFiles(const Hash::DirMap &files)
-  { assert(0); }
-
-  std::string getTmpName(const Hash &hash)
-  { return "tmp_" + hash.toString(); }
-
-  bool getTarget(const Hash &hash, JobPtr &job)
-  {
-    cout << "getTarget(" << hash << ")\n";
-    return false;
-  }
-
-  MovableLock lock() { return MovableLock(); }
-};
-
 DummyRules rules;
 DummyCache cache;
 HashFinder fnd(rules, cache);
-DummyOwner owner;
-JobMaker maker;
-FileJob file(fnd, owner, maker);
+IHashFinder &ifn = fnd;
 
 void test(const Hash &hash, const string &where="")
 {
   cout << "\nSearching for HASH=" << hash << " FILE=" << where << endl;
+  HashSource out;
+  ifn.findHash(hash, out, where);
 
-  JobPtr job;
-  string res;
-  try { res = file.fetchFile(hash, job, where); }
-  catch(std::exception &e)
-    {
-      cout << "ERROR: " << e.what() << endl;
-      return;
-    }
-  cout << "  GOT: " << res << endl;
-
-  if(job)
-    {
-      cout << "  JOB:\n";
-      Target *t = dynamic_cast<Target*>(job.get());
-      assert(t);
-      const HashSource &out = t->src;
-
-      cout << "    SRC: ";
-      if(out.type == TST_File)
-        cout << "Copy from " << out.value;
-      else if(out.type == TST_Download)
-        cout << "Download from " << out.value;
-      else if(out.type == TST_Archive)
-        cout << "Unpack from " << out.deps[0];
-      else assert(0);
-      cout << endl;
-
-      cout << "    DST:\n";
-      Hash::DirMap::const_iterator it;
-      for(it = t->output.begin(); it != t->output.end(); it++)
-        cout << "      " << it->second << " " << it->first << endl;
-    }
+  cout << "  ";
+  if(out.type == TST_None)
+    cout << "Not found";
+  else if(out.type == TST_InPlace)
+    cout << "File is in place at " << out.value;
+  else if(out.type == TST_File)
+    cout << "File exists at " << out.value;
+  else if(out.type == TST_Download)
+    cout << "File is at URL=" << out.value;
+  else if(out.type == TST_Archive)
+    cout << "File is in archive HASH=" << out.deps[0];
+  else assert(0);
+  cout << endl;
 }
 
 int main()
@@ -136,8 +97,5 @@ int main()
   test(file3);
   test(file4);
   test(file5);
-
-  file.brokenURL(file1, "hello");
-
   return 0;
 }

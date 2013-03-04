@@ -10,7 +10,7 @@ bool HashFinder::findHash(const Hash &hash, HashSource &out, const std::string &
   out.type = TST_None;
   out.value.clear();
   out.deps.clear();
-  out.dir = NULL;
+  out.dirHash.clear();
 
   // Check for existing files first
   int stat = Cache::CI_ElseWhere;
@@ -55,7 +55,7 @@ bool HashFinder::findHash(const Hash &hash, HashSource &out, const std::string &
   else if(r->type == RST_Archive)
     {
       out.type = TST_Archive;
-      out.dir = &ArcRule::get(r)->dir->dir;
+      out.dirHash = ArcRule::get(r)->dirHash;
       assert(out.deps.size() == 1);
     }
   else assert(0);
