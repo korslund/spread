@@ -75,7 +75,7 @@ namespace Spread
     void setProgress(int64_t cur, int64_t tot) { info->setProgress(cur, tot); }
     void setProgress(int64_t cur) { info->setProgress(cur); }
 
-    void setBusy(const std::string &what = "");
+    std::string setBusy(const std::string &what = "");
     void setDone() { info->setDone(); }
     void setError(const std::string &what) { info->setError(what); }
 

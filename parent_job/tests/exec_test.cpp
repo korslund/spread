@@ -73,18 +73,18 @@ struct TestJob : ExecJob
         assert(lastJob->isSuccess());
         cout << "Got: " << lastJob->getMessage() << endl;
 
-        execJob(new TestJob(3));
+        execJob(new TestJob(3), false);
         if(lastJob->isAbort())
           cout << "Got expected abort\n";
         else assert(0);
 
-        execJob(new TestJob(4));
+        execJob(new TestJob(4), false);
         if(lastJob->isError())
           cout << "Got expected error: " << lastJob->getMessage() << endl;
         else assert(0);
 
         cout << "Next job will abort us.\n";
-        execJob(new TestJob(5));
+        execJob(new TestJob(5), false);
         if(checkStatus())
           {
             cout << "Got ABORT in main job, exiting.\n";

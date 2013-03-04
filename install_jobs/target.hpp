@@ -7,29 +7,20 @@
 
 namespace Spread
 {
-  struct TargetOwner
-  {
-    virtual std::string fetchFile(const Hash &hash, JobPtr &job,
-                                  const std::string &target="") = 0;
-    virtual void brokenURL(const Hash &hash, const std::string &url) = 0;
-    virtual void notifyFiles(const Hash::DirMap &files) = 0;
-  };
-
-  struct HashTask;
   struct Target : ExecJob
   {
     HashSource src;
     Hash::DirMap output;
-    Target(TargetOwner *o, IJobMaker &m) : owner(o), maker(m) {}
+    Target(IJobMaker &m) : maker(m) {}
+
+    virtual std::string fetchFile(const Hash &hash) = 0;
+    virtual void brokenURL(const Hash &hash, const std::string &url) = 0;
+    virtual void notifyFiles(const Hash::DirMap &files) = 0;
 
   private:
-    TargetOwner *owner;
     IJobMaker &maker;
-    std::string fetchFile(const Hash &hash);
     bool execHashTask(HashTaskBase *htask, bool failOnError);
     void doJob();
   };
-
-  typedef boost::shared_ptr<Target> TargetPtr;
 }
 #endif

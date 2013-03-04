@@ -59,9 +59,13 @@ void JobInfo::setAbortClient(JobInfoPtr client)
   abortClient = client;
 }
 
-void JobInfo::wait()
+void JobInfo::wait(JobInfoPtr inf)
 {
-  while(!isFinished()) Thread::sleep(0.05);
+  while(!isFinished())
+    {
+      if(inf && inf->checkStatus()) return;
+      Thread::sleep(0.05);
+    }
 }
 
 bool JobInfo::clearClient(bool copyFail)

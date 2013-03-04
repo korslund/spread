@@ -19,18 +19,18 @@ namespace Spread
 
     /* Execute 'p' as a child of this job. The job is executed
        in-thread. The child lists are set up accordingly, making the
-       child visible to the outside.
+       child visible to the outside. Throws on error.
 
        If failOnError=false, child jobs are allowed to fail. On
-       non-success, execJob() returns false. You may inspect lastJob
-       for details.
+       non-success, execJob() will then return false. You may inspect
+       lastJob for details.
      */
-    bool execJob(JobPtr p, bool failOnError=false);
+    bool execJob(JobPtr p, bool failOnError=true);
 
     /* Convenience pointer version. Must be called with a newly
        created object that is not yet owned by a shared_ptr.
     */
-    bool execJob(Job *p, bool failOnError=false)
+    bool execJob(Job *p, bool failOnError=true)
     { return execJob(JobPtr(p), failOnError); }
   };
 }

@@ -19,9 +19,9 @@ namespace Spread
   {
     Hash hash;                  // The object this struct describes
     int type;                   // Where you can find it
+    Hash arcHash, dirHash;      // Archive hashes
     std::string value;          // URL or file location
     std::vector<Hash> deps;     // Dependencies
-    const Hash::DirMap *dir;    // Archive directory
   };
 
   struct IHashFinder

@@ -1,0 +1,77 @@
+
+RUNNING fetchFiles():
+LOCKING
+getRunningTarget(00)
+findHash(hash=00, target=)
+UNLOCKING
+ERROR: No source for target 00 
+
+RUNNING fetchFiles():
+LOCKING
+getRunningTarget(nofile)
+findHash(hash=nofile, target=file)
+UNLOCKING
+ERROR: No source for target nofile file
+
+RUNNING fetchFiles():
+LOCKING
+getRunningTarget(nofile)
+findHash(hash=nofile, target=)
+UNLOCKING
+ERROR: No source for target nofile 
+
+RUNNING fetchFiles():
+LOCKING
+getRunningTarget(LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF)
+findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=out_hello)
+getRunningTarget(LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF)
+findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=out_hello2)
+getRunningTarget(SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF)
+findHash(hash=SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF, target=out_world)
+UNLOCKING
+findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=out_hello)
+TARGET: COPY cache/LPJN
+  Outputs:
+    LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF out_hello
+Adding 1 files to cache:
+  LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF out_hello
+notifyFiles():
+  LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF out_hello
+findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=out_hello2)
+TARGET: COPY cache/LPJN
+  Outputs:
+    LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF out_hello2
+Adding 1 files to cache:
+  LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF out_hello2
+notifyFiles():
+  LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF out_hello2
+findHash(hash=SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF, target=out_world)
+TARGET: COPY cache/SG6k
+  Outputs:
+    SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF out_world
+Adding 1 files to cache:
+  SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF out_world
+notifyFiles():
+  SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF out_world
+Results returned:
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF out_hello2
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF out_world
+
+RUNNING fetchFiles():
+LOCKING
+getRunningTarget(LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF)
+findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=cache/LPJN)
+getRunningTarget(LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF)
+findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=)
+getRunningTarget(SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF)
+findHash(hash=SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF, target=cache/SG6k)
+getRunningTarget(SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF)
+findHash(hash=SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF, target=)
+UNLOCKING
+findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=cache/LPJN)
+findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=)
+findHash(hash=SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF, target=cache/SG6k)
+findHash(hash=SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF, target=)
+Results returned:
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF cache/LPJN
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF cache/SG6k

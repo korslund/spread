@@ -60,8 +60,10 @@ bool Job::waitClient(JobInfoPtr client, bool includeStats, bool copyFail)
   return clearClient(copyFail);
 }
 
-void Job::setBusy(const std::string &what)
+std::string Job::setBusy(const std::string &what)
 {
+  std::string old = info->message;
   info->message = what;
   info->status = ST_BUSY;
+  return old;
 }

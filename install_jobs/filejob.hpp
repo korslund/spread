@@ -37,15 +37,12 @@ namespace Spread
     virtual MovableLock lock() = 0;
   };
 
-  struct FileJob : ExecJob, TargetOwner
+  struct FileJob : Target
   {
     FileJob(IHashFinder &fnd, FileJobOwner &own, IJobMaker &mkr)
-      : finder(fnd), owner(own), maker(mkr) {}
+      : Target(mrk), finder(fnd), owner(own) {}
 
-    std::string outFile;
-
-    std::string fetchFile(const Hash &hash, JobPtr &job,
-                          const std::string &target="");
+    std::string fetchFile(const Hash &hash);
 
     void brokenURL(const Hash &hash, const std::string &url)
     { finder.brokenURL(hash, url); }
@@ -56,12 +53,9 @@ namespace Spread
       owner.notifyFiles(files);
     }
 
-    void doJob();
-
   private:
     IHashFinder &finder;
     FileJobOwner &owner;
-    IJobMaker &maker;
   };
 }
 
