@@ -4,12 +4,8 @@
 
 using namespace Spread;
 
-TreeBase::TreeBase(TreeOwner &o, IHashFinder &f)
-  : owner(o), finder(f)
-{}
-
 TreeBase::TreeBase(TreeOwner &o)
-  : owner(o), finder(o.finder)
+  : owner(o)
 {}
 
 std::string TreeBase::setStatus(const std::string &msg)
@@ -31,6 +27,8 @@ void TreeBase::addInput(const Hash &h) { assert(0); }
 
 void TreeBase::fetchFiles(const HashDir &outputs, HashMap &results)
 {
+  assert(finder);
+
   std::string oldMsg = setStatus("Setting up child jobs");
 
   std::map<Hash,JobInfoPtr> waitList;
@@ -62,7 +60,7 @@ void TreeBase::fetchFiles(const HashDir &outputs, HashMap &results)
         }
 
         HashSource src;
-        if(!finder.findHash(hash, src, outfile))
+        if(!finder->findHash(hash, src, outfile))
           fail("No source for target " + hash.toString() + " " + outfile);
         assert(src.hash == hash);
 
@@ -99,6 +97,7 @@ void TreeBase::fetchFiles(const HashDir &outputs, HashMap &results)
         else assert(0);
 
         assert(job);
+        job->finder = finder;
 
         // Add this target to the jobs output list
         job->addOutput(hash, outfile);
@@ -141,7 +140,7 @@ void TreeBase::fetchFiles(const HashDir &outputs, HashMap &results)
       // Look up and check if the requested file has been created
       // somewhere.
       HashSource src;
-      if(!finder.findHash(hash, src, outfile) ||
+      if(!finder->findHash(hash, src, outfile) ||
          (src.type != TST_File && src.type != TST_InPlace))
         fail("Failed to create target " + hash.toString() + " " + outfile);
       assert(src.hash == hash);
@@ -151,6 +150,7 @@ void TreeBase::fetchFiles(const HashDir &outputs, HashMap &results)
       if(src.type == TST_File && outfile != "")
         {
           TreePtr job = owner.copyTarget(src.value);
+          job->finder = finder;
           job->addOutput(hash, outfile);
           execJob(job);
           src.value = outfile;

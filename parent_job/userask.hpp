@@ -30,6 +30,9 @@ namespace Spread
     std::vector<std::string> options;
     int selection;
 
+    void addOption(const std::string &opt)
+    { options.push_back(opt); }
+
     void select(int i)
     {
       assert(i >= 0 && i < options.size());
@@ -37,7 +40,8 @@ namespace Spread
       ready = true;
     }
 
-    StringAsk() : selection(-1) {}
+    StringAsk(const std::string &question)
+      : UserAsk(question), selection(-1) {}
 
     static StringAsk* handle(AskPtr ask) { return dynamic_cast<StringAsk*>(ask.get()); }
   };

@@ -35,6 +35,7 @@ struct Target : TreeBase
 
   void doJob()
   {
+    assert(finder);
     Hash::DirMap arcdir;
 
   restart:
@@ -137,9 +138,9 @@ struct Target : TreeBase
             const Hash &hash = outs.begin()->first;
 
             // Report the broken URL, and try getting another one
-            finder.brokenURL(hash, value);
+            finder->brokenURL(hash, value);
             HashSource src;
-            finder.findHash(hash, src);
+            finder->findHash(hash, src);
             if(src.type == TST_Download && src.value != value)
               {
                 // A new URL was found, try it.
@@ -164,7 +165,7 @@ struct Target : TreeBase
           dir[(base/it->first).string()] = it->second;
       }
 
-    finder.addToCache(dir);
+    finder->addToCache(dir);
     owner.notifyFiles(dir);
 
     setDone();

@@ -14,15 +14,15 @@ namespace Spread
     typedef std::pair<Hash, std::string> HDValue;
     typedef std::map<Hash, std::string> HashMap;
 
-    TreeBase(TreeOwner &o, IHashFinder &f);
     TreeBase(TreeOwner &o);
 
     virtual void addOutput(const Hash &h, const std::string &where = "");
     virtual void addInput(const Hash &h);
 
+    HashFinderPtr finder;
+
   protected:
     TreeOwner &owner;
-    IHashFinder &finder;
 
     std::string setStatus(const std::string &msg);
     void fail(const std::string &msg);
@@ -48,9 +48,6 @@ namespace Spread
   struct TreeOwner
   {
     typedef boost::shared_ptr<void> Lock;
-    IHashFinder &finder;
-
-    TreeOwner(IHashFinder &f) : finder(f) {}
 
     virtual void log(const std::string &msg) = 0;
 

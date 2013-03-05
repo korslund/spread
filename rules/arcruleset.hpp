@@ -1,8 +1,8 @@
 #ifndef __SPREAD_ARCRULESET_HPP_
 #define __SPREAD_ARCRULESET_HPP_
 
+#include "arcrule.hpp"
 #include "rulefinder.hpp"
-#include "dir/directory.hpp"
 #include <boost/shared_ptr.hpp>
 
 /* ArcRuleSet is a filter on top of another RuleFinder, that adds the
@@ -24,9 +24,12 @@ namespace Spread
 {
   struct ArcRuleSet : RuleFinder
   {
-    /* If base is specified, all failed searches in findRule() is
-       redirected to base. Otherwise, failed searches always return
-       NULL.
+    /* If set to non-NULL, all calls to findRule() and findAllRules()
+       will include matches found 'base' as well as in the ArcRuleSet
+       itself.
+
+       Calls to reportBrokenURL() is passed through to base
+       unfiltered, or ignored if base is NULL.
      */
     ArcRuleSet(RuleFinder *_base = NULL);
 
@@ -53,7 +56,9 @@ namespace Spread
        necessary data can be obtained from RuleSet::findArchive().
      */
     void addArchive(const Hash &arcHash, const Hash &dirHash,
-                    DirectoryCPtr dir, const std::string &ruleString = "");
+                    ArcRule::DirCPtr dir, const std::string &ruleString = "");
+
+    void reportBrokenURL(const Hash &hash, const std::string &url);
 
   private:
     RuleFinder *base;

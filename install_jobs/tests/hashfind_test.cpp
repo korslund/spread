@@ -59,9 +59,8 @@ struct DummyRules : RuleFinder
   }
 };
 
-DummyRules rules;
 DummyCache cache;
-HashFinder fnd(rules, cache);
+HashFinder fnd(RuleFinderPtr(new DummyRules), cache);
 IHashFinder &ifn = fnd;
 
 void test(const Hash &hash, const string &where="")

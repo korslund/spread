@@ -40,7 +40,7 @@ bool HashFinder::findHash(const Hash &hash, HashSource &out, const std::string &
     }
 
   // File does not exist in the file system. Check the rules.
-  const Rule *r = rules.findRule(hash);
+  const Rule *r = rules->findRule(hash);
   if(!r) return false;
 
   // Copy dependency list

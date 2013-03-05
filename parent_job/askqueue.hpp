@@ -8,8 +8,7 @@ namespace Spread
 {
   struct AskQueue
   {
-    /* Push as new Ask request onto the queue. Note that the object
-       must be kept alive until the request has been handled.
+    /* Push as new Ask request onto the queue.
      */
     void push(AskPtr ask);
 

@@ -80,8 +80,6 @@ struct DummyOwner : TreeOwner
 {
   LeafFactory fact;
 
-  DummyOwner(IHashFinder &f) : TreeOwner(f) {}
-
   TreePtr copyTarget(const std::string &from)
   { return fact.copyTarget(*this, from); }
 
@@ -145,11 +143,12 @@ struct DummyOwner : TreeOwner
   {}
 };
 
-DummyFind fnd;
-DummyOwner own(fnd);
+DummyOwner own;
+HashFinderPtr find(new DummyFind);
 
 void test(TreePtr job)
 {
+  job->finder = ::find;
   JobInfoPtr info = job->run();
   if(info->isSuccess()) cout << "SUCCESS!\n";
   else cout << "ERROR: " << info->getMessage() << endl;

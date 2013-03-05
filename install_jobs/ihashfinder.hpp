@@ -2,6 +2,7 @@
 #define __SPREAD_IHASHFINDER_HPP_
 
 #include <hash/hash.hpp>
+#include <boost/shared_ptr.hpp>
 #include <vector>
 
 namespace Spread
@@ -46,6 +47,8 @@ namespace Spread
      */
     virtual void addToCache(const Hash::DirMap &files) = 0;
   };
+
+  typedef boost::shared_ptr<IHashFinder> HashFinderPtr;
 }
 
 #endif

@@ -114,6 +114,7 @@ struct DummyTarget : TreeBase
 
   void doJob()
   {
+    assert(finder);
     if(type == 1 && dlsleep != 0)
       {
         Thread::sleep(dlsleep);
@@ -164,7 +165,7 @@ struct DummyTarget : TreeBase
               name = owner.getTmpName(hash);
             dir[name] = hash;
           }
-        finder.addToCache(dir);
+        finder->addToCache(dir);
         owner.notifyFiles(dir);
       }
     setDone();
@@ -173,8 +174,6 @@ struct DummyTarget : TreeBase
 
 struct DummyOwner : TreeOwner
 {
-  DummyOwner(IHashFinder &f) : TreeOwner(f) {}
-
   TreePtr target(const std::string &what, int type)
   { return TreePtr(new DummyTarget(*this, what, type)); }
 
@@ -244,10 +243,14 @@ struct DummyOwner : TreeOwner
 
 struct MyBase : TreeBase
 {
-  DummyFind fnd;
+  DummyFind *fnd;
   DummyOwner own;
 
-  MyBase() : own(fnd), TreeBase(own, fnd) {}
+  MyBase() : TreeBase(own)
+  {
+    fnd = new DummyFind;
+    finder.reset(fnd);
+  }
 
   // Circumvent protected function for testing purposes
   void fetch(const HashDir &outputs, HashMap &results)
@@ -255,7 +258,7 @@ struct MyBase : TreeBase
 
   void doJob() { assert(0); }
 
-  void reset() { fnd.reset(); own.reset(); }
+  void reset() { fnd->reset(); own.reset(); }
 };
 
 TreeBase::HashDir makeList;
