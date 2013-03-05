@@ -44,7 +44,7 @@ struct DummyRules : RuleFinder
     if(hash == file3)
       return new URLRule(hash, "RULESTR", "http://example.com/url");
     if(hash == file4)
-      return new ArcRule(arcHash, DirectoryCPtr(new Directory), arcHash, "RULESTR");
+      return new ArcRule(arcHash, ArcRule::DirCPtr(new Hash::DirMap), arcHash, "RULESTR");
     return NULL;
   }
 

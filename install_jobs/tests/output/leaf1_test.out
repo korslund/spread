@@ -1,0 +1,72 @@
+LOG: STATUS: Copying file nofile
+ERROR: FileStream: failed to open file nofile
+
+LOG: STATUS: Copying file hello.dat
+ERROR: Size mismatch when copying hello.dat
+
+LOG: STATUS: Copying file hello.dat
+Adding 2 files to cache:
+  LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _leaf1/copy_hello1
+  LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _leaf1/copy_hello2
+notifyFiles():
+  LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
+  LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
+SUCCESS!
+
+LOG: STATUS: Downloading URL url://broken
+brokenURL(N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj, url://broken)
+findHash(hash=N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj, target=)
+ERROR: Error fetching url://broken:
+Unsupported protocol
+
+LOG: STATUS: Downloading URL url://broken
+brokenURL(N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj, url://broken)
+findHash(hash=N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj, target=)
+LOG: STATUS: Downloading URL http://tiggit.net/robots.txt
+Adding 1 files to cache:
+  N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj _leaf1/url_robots1
+notifyFiles():
+  N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj
+SUCCESS!
+
+LOG: STATUS: Blind unpacking into _leaf1/blind1
+LOG: STATUS: Setting up child jobs
+findHash(hash=UZuuyrHbX1c57drq6a6SObKZQrkr58Y09SrBFtEHm9rSAg, target=)
+LOG: ERROR: No source for target UZuuyrHbX1c57drq6a6SObKZQrkr58Y09SrBFtEHm9rSAg 
+ERROR: No source for target UZuuyrHbX1c57drq6a6SObKZQrkr58Y09SrBFtEHm9rSAg 
+
+LOG: STATUS: Blind unpacking into _leaf1/blind1
+LOG: STATUS: Setting up child jobs
+findHash(hash=UZuuyrHbX1c57drq6a6SObKZQrkr58Y09SrBFtEHm9rSAg, target=)
+findHash(hash=UZuuyrHbX1c57drq6a6SObKZQrkr58Y09SrBFtEHm9rSAg, target=)
+LOG: STATUS: Blind unpacking into _leaf1/blind1
+storeDir():
+  rSdU-hHwettk1icc_gOrTKGJKe3BWeMSCHFkDKgmnf4M dir/dolly.txt
+  ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ test.sh
+  HASH: ldb-BnGAabOLmO01u_JYstx8f_oFyGO-mzbzuzsgHi9w
+Adding 2 files to cache:
+  rSdU-hHwettk1icc_gOrTKGJKe3BWeMSCHFkDKgmnf4M _leaf1/blind1/dir/dolly.txt
+  ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ _leaf1/blind1/test.sh
+notifyFiles():
+  rSdU-hHwettk1icc_gOrTKGJKe3BWeMSCHFkDKgmnf4M
+  ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ
+SUCCESS!
+
+LOG: STATUS: Unpacking dirHash ldb-BnGAabOLmO01u_JYstx8f_oFyGO-mzbzuzsgHi9w
+LOG: STATUS: Setting up child jobs
+findHash(hash=ldb-BnGAabOLmO01u_JYstx8f_oFyGO-mzbzuzsgHi9w, target=)
+findHash(hash=ldb-BnGAabOLmO01u_JYstx8f_oFyGO-mzbzuzsgHi9w, target=)
+LOG: STATUS: Unpacking dirHash ldb-BnGAabOLmO01u_JYstx8f_oFyGO-mzbzuzsgHi9w
+loadDir(_leaf1/dir1.dat):
+LOG: STATUS: Setting up child jobs
+findHash(hash=UZuuyrHbX1c57drq6a6SObKZQrkr58Y09SrBFtEHm9rSAg, target=)
+findHash(hash=UZuuyrHbX1c57drq6a6SObKZQrkr58Y09SrBFtEHm9rSAg, target=)
+LOG: STATUS: Unpacking dirHash ldb-BnGAabOLmO01u_JYstx8f_oFyGO-mzbzuzsgHi9w
+Adding 2 files to cache:
+  rSdU-hHwettk1icc_gOrTKGJKe3BWeMSCHFkDKgmnf4M _leaf1/zip_dolly1
+  rSdU-hHwettk1icc_gOrTKGJKe3BWeMSCHFkDKgmnf4M _leaf1/zip_dolly2
+notifyFiles():
+  rSdU-hHwettk1icc_gOrTKGJKe3BWeMSCHFkDKgmnf4M
+  rSdU-hHwettk1icc_gOrTKGJKe3BWeMSCHFkDKgmnf4M
+SUCCESS!
+

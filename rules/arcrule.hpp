@@ -2,7 +2,7 @@
 #define __SPREAD_ARCRULE_HPP_
 
 #include "rule.hpp"
-#include "dir/directory.hpp"
+#include <boost/shared_ptr.hpp>
 #include <assert.h>
 
 namespace Spread
@@ -10,10 +10,12 @@ namespace Spread
   // Archive rule
   struct ArcRule : Rule
   {
-    DirectoryCPtr dir;
+    typedef boost::shared_ptr<const Hash::DirMap> DirCPtr;
+
+    DirCPtr dir;
     Hash dirHash;
 
-    ArcRule(const Hash &arc, DirectoryCPtr _dir,
+    ArcRule(const Hash &arc, DirCPtr _dir,
             const Hash &dirH, const std::string &rulestr)
       : Rule(RST_Archive, rulestr), dir(_dir), dirHash(dirH)
     {
@@ -22,7 +24,7 @@ namespace Spread
       Hash::DirMap::const_iterator it;
       assert(dir);
       assert(!dirHash.isNull());
-      for(it = dir->dir.begin(); it != dir->dir.end(); it++)
+      for(it = dir->begin(); it != dir->end(); it++)
         addOut(it->second);
     }
 

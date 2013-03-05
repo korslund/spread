@@ -63,7 +63,7 @@ void JobInfo::wait(JobInfoPtr inf)
 {
   while(!isFinished())
     {
-      if(inf && inf->checkStatus()) return;
+      if(inf && inf->checkStatus()) break;
       Thread::sleep(0.05);
     }
 }

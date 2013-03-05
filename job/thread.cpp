@@ -25,12 +25,7 @@ void Thread::sleep(double seconds)
 JobInfoPtr Thread::run(Job *j, bool async)
 {
   assert(j);
-  ThreadObj to;
-  JobInfoPtr info = j->getInfo();
-  to.j.reset(j);
-  if(async) boost::thread trd(to);
-  else to();
-  return info;
+  return run(JobPtr(j), async);
 }
 
 JobInfoPtr Thread::run(JobPtr j, bool async)

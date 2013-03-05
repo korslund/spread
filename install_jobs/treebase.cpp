@@ -12,12 +12,26 @@ TreeBase::TreeBase(TreeOwner &o)
   : owner(o), finder(o.finder)
 {}
 
+std::string TreeBase::setStatus(const std::string &msg)
+{
+  log("STATUS: " + msg);
+  return setBusy(msg);
+}
+void TreeBase::fail(const std::string &msg)
+{
+  log("ERROR: " + msg);
+  throw std::runtime_error(msg);
+}
+void TreeBase::log(const std::string &msg)
+{ owner.log(msg); }
+
+
 void TreeBase::addOutput(const Hash &h, const std::string &where) { assert(0); }
 void TreeBase::addInput(const Hash &h) { assert(0); }
 
 void TreeBase::fetchFiles(const HashDir &outputs, HashMap &results)
 {
-  std::string oldMsg = setBusy("Setting up child jobs");
+  std::string oldMsg = setStatus("Setting up child jobs");
 
   std::map<Hash,JobInfoPtr> waitList;
   AndJob *aj = NULL;
@@ -49,7 +63,7 @@ void TreeBase::fetchFiles(const HashDir &outputs, HashMap &results)
 
         HashSource src;
         if(!finder.findHash(hash, src, outfile))
-          throw std::runtime_error("No source for target " + hash.toString() + " " + outfile);
+          fail("No source for target " + hash.toString() + " " + outfile);
         assert(src.hash == hash);
 
         // If the file already exists, deal with it later.
@@ -111,7 +125,7 @@ void TreeBase::fetchFiles(const HashDir &outputs, HashMap &results)
   std::map<Hash,JobInfoPtr>::const_iterator wit;
   for(wit = waitList.begin(); wit != waitList.end(); wit++)
     {
-      setBusy("Waiting for target " + wit->first.toString());
+      setStatus("Waiting for target " + wit->first.toString());
       wit->second->wait(getInfo());
     }
 
@@ -129,7 +143,7 @@ void TreeBase::fetchFiles(const HashDir &outputs, HashMap &results)
       HashSource src;
       if(!finder.findHash(hash, src, outfile) ||
          (src.type != TST_File && src.type != TST_InPlace))
-        throw std::runtime_error("Failed to create target " + hash.toString() + " " + outfile);
+        fail("Failed to create target " + hash.toString() + " " + outfile);
       assert(src.hash == hash);
       assert(src.value != "");
 
@@ -147,5 +161,5 @@ void TreeBase::fetchFiles(const HashDir &outputs, HashMap &results)
       results[hash] = src.value;
     }
 
-  setBusy(oldMsg);
+  setStatus(oldMsg);
 }

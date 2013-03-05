@@ -1,8 +1,7 @@
 #ifndef __SPREAD_DIR_FROM_FS_HPP_
 #define __SPREAD_DIR_FROM_FS_HPP_
 
-#include "directory.hpp"
-#include "cache/index.hpp"
+#include "cache/iindex.hpp"
 
 namespace Spread
 {
@@ -17,9 +16,9 @@ namespace Spread
    */
   struct DirFromFS
   {
-    // Hash index cache to use. All files processed are added to the
-    // cache.
-    Cache::CacheIndex &cache;
+    // Hash index cache to use. The cache.addFile() member function is
+    // used to obtain all hashes.
+    Cache::ICacheIndex &cache;
 
     // Set to true (default) to recurse into subdirectories
     bool recurse;
@@ -33,14 +32,13 @@ namespace Spread
     // path.
     std::string prefix;
 
-    DirFromFS(Cache::CacheIndex &_cache)
+    DirFromFS(Cache::ICacheIndex &_cache)
       : cache(_cache)
       , recurse(true)
       , includeDirs(false)
     {}
 
     void load(const std::string &path, Hash::DirMap &dir) const;
-    void load(const std::string &path, Directory &dir) const;
   };
 }
 #endif

@@ -4,18 +4,20 @@
 #include <boost/thread/recursive_mutex.hpp>
 #include <job/thread.hpp>
 
+/* This test illustrates what happens when there are cycles in the
+   ruleset, ie. rules that depend on themselves directly or indirectly.
+
+   We have NOT implemented any kind of deadlock detection yet. The
+   test is currently disabled because it locks up. We currently assume
+   the ruleset to be acyclic. In fact it is probably better to test
+   untrusted rulesets for cycles up front than to try to recover from
+   them at runtime.
+ */
+
 using namespace std;
 using namespace Spread;
 
-Hash empty;
-Hash nofile("nofile");
-Hash hello("hello", 5), world("world", 5);
-Hash keiko("keiko", 5), postei("postei", 6);
-
-Hash multiArc("ARCME");
-Hash a1("A1"), a2("A2"), a3("A3");
-
-float dlsleep = 0, arcsleep = 0;
+Hash arc1("ARC1"), arc2("ARC2"), arc3("ARC3");
 
 struct DummyFind : IHashFinder
 {
@@ -41,35 +43,29 @@ struct DummyFind : IHashFinder
         return true;
       }
 
-    if(hash == hello || hash == world || hash == multiArc)
-      {
-        out.type = TST_File;
-        out.value = "cache/" + hash.toString().substr(0,4);
-        if(target == out.value)
-          out.type = TST_InPlace;
-        return true;
-      }
-
-    if(hash == keiko)
-      {
-        out.type = TST_Download;
-        out.value = "url://SOME/URL/";
-        return true;
-      }
-
-    if(hash == postei)
+    // Direct self dependence
+    if(hash == arc1)
       {
         out.type = TST_Archive;
-        out.dirHash = postei;
-        out.deps.push_back(keiko);
+        out.dirHash = arc1;
+        out.deps.push_back(arc1);
         return true;
       }
 
-    if(hash == a1 || hash == a2 || hash == a3)
+    // Indirect self dependence
+    if(hash == arc2)
       {
         out.type = TST_Archive;
-        out.dirHash = postei;
-        out.deps.push_back(multiArc);
+        out.dirHash = arc3;
+        out.deps.push_back(arc3);
+        return true;
+      }
+
+    if(hash == arc3)
+      {
+        out.type = TST_Archive;
+        out.dirHash = arc1;
+        out.deps.push_back(arc2);
         return true;
       }
 
@@ -114,17 +110,6 @@ struct DummyTarget : TreeBase
 
   void doJob()
   {
-    if(type == 1 && dlsleep != 0)
-      {
-        Thread::sleep(dlsleep);
-        cout << "-- end dlsleep\n";
-      }
-    if(type == 2 && arcsleep != 0)
-      {
-        Thread::sleep(arcsleep);
-        cout << "-- end arcsleep\n";
-      }
-
     cout << "TARGET: " << what << endl;
     if(ins.size())
       {
@@ -292,58 +277,13 @@ void test()
 
 int main()
 {
-  add(empty);
+  cout << "This test is DISABLED\n";
+  /*
+  add(arc1, "arc1");
   test();
 
-  add(nofile, "file");
+  add(arc2, "arc2");
   test();
-
-  add(nofile);
-  test();
-
-  add(hello, "out_hello");
-  add(hello, "out_hello2");
-  add(world, "out_world");
-  test();
-
-  add(hello, "cache/LPJN");
-  add(hello, "");
-  add(world, "cache/SG6k");
-  add(world, "");
-  test();
-
-  add(keiko, "");
-  test();
-
-  add(keiko, "blah");
-  test();
-
-  add(keiko, "");
-  add(keiko, "blah");
-  test();
-
-  add(postei, "postei");
-  test();
-
-  dlsleep = 0.1;
-  add(keiko, "keiko");
-  add(postei, "postei");
-  test();
-
-  dlsleep = 0;
-  arcsleep = 0.1;
-  add(keiko, "keiko");
-  add(postei, "postei");
-  test();
-
-  arcsleep = 0;
-  dlsleep = 0;
-
-  add(a1, "__a1_file");
-  add(a2, "__a2_file");
-  add(a3, "__a3_file");
-  add(a2, "__a2_file2");
-  test();
-
+  */
   return 0;
 }

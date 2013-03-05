@@ -36,6 +36,9 @@ namespace Spread
     /* "Meld" the given directory into this one. If you are adding
        multiple directories, the order is important. Also note that
        file path overwriting is case sensitive.
+
+       TODO: These go into the "tools" module. We should also add
+       tools to find, add and remove common subdirectories.
      */
     void add(const Directory &d) { add(d.dir); }
     void add(const Hash::DirMap &d);
