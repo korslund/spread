@@ -143,6 +143,13 @@ void RuleSet::findAllRules(const Hash &hash, RuleList &output) const
   ptr->addURLs(hash, output);
 }
 
+const std::vector<Hash>* RuleSet::findHints(const Hash &dirHash) const
+{
+  LOCK;
+  // Currently not implemented
+  return NULL;
+}
+
 const Rule *RuleSet::findRule(const Hash &hash) const
 {
   LOCK;

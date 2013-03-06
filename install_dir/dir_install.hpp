@@ -1,9 +1,9 @@
 #ifndef __SPREAD_DIR_INSTALLER_HPP__
 #define __SPREAD_DIR_INSTALLER_HPP__
 
-#include "treebase.hpp"
-#include "hashfinder.hpp"
-#include <rules/rulefinder.hpp>
+#include <install_jobs/treebase.hpp>
+#include <dir/ptr.hpp>
+#include <rules/ruleset.hpp>
 #include <cache/iindex.hpp>
 #include <parent_job/userask.hpp>
 
@@ -12,7 +12,7 @@ namespace Spread
   struct DirOwner;
   struct DirInstaller : TreeBase
   {
-    DirInstaller(DirOwner &owner, RuleFinder &rules,
+    DirInstaller(DirOwner &owner, RuleSet &rules,
                  Cache::ICacheIndex &cache, const std::string &prefix);
 
     /* Add a single file to the install list. The file path is taken
@@ -114,6 +114,15 @@ namespace Spread
   private:
     struct _Internal;
     boost::shared_ptr<_Internal> ptr;
+
+  protected:
+    // Internal functions:
+    void loadHints(const Hash &dirHash);
+    DirPtr addDirFile(Hash::DirMap &out, const Hash &dirHash,
+                      const std::string &path);
+    void handleHash(Hash::DirMap &out, const Hash &dirHash,
+                    HashDir &blinds, const std::string &path);
+    void sortInput();
   };
 
   struct DirOwner : TreeOwner

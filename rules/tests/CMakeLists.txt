@@ -26,23 +26,14 @@ set(MANGLE ${MDIR}/stream/clients/io_stream.cpp)
 set(JSON ${JS}/json_reader.cpp ${JS}/json_writer.cpp ${JS}/json_value.cpp)
 set(READJSON ${JSON} ${MANGLE} ${MIDIR}/readjson.cpp)
 
-set(DIR ${DDIR}/directory.cpp)
+set(DIR ${DDIR}/binary.cpp)
 set(CONF ${READJSON} ${MIDIR}/jconfig.cpp)
 set(CACHE ${CONF} ${HASH} ${CDIR}/index.cpp)
 
 set(RULES ${DIR} ${CACHE} ${RDIR}/ruleset.cpp ${RDIR}/arcruleset.cpp ${RDIR}/rule_loader.cpp)
 
-add_executable(ifinder1_test ifinder1_test.cpp ${RULES})
-target_link_libraries(ifinder1_test ${LIBS})
-
 add_executable(urlrule_test urlrule_test.cpp ${RULES})
 target_link_libraries(urlrule_test ${LIBS})
-
-add_executable(ifinder2_test ifinder2_test.cpp ${RULES})
-target_link_libraries(ifinder2_test ${LIBS})
-
-add_executable(ifinder3_test ifinder3_test.cpp ${RULES})
-target_link_libraries(ifinder3_test ${LIBS})
 
 add_executable(arcrule1_test arcrule1_test.cpp ${RULES})
 target_link_libraries(arcrule1_test ${LIBS})

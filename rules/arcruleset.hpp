@@ -1,8 +1,8 @@
 #ifndef __SPREAD_ARCRULESET_HPP_
 #define __SPREAD_ARCRULESET_HPP_
 
-#include "arcrule.hpp"
 #include "rulefinder.hpp"
+#include <dir/ptr.hpp>
 #include <boost/shared_ptr.hpp>
 
 /* ArcRuleSet is a filter on top of another RuleFinder, that adds the
@@ -28,8 +28,8 @@ namespace Spread
        will include matches found 'base' as well as in the ArcRuleSet
        itself.
 
-       Calls to reportBrokenURL() is passed through to base
-       unfiltered, or ignored if base is NULL.
+       Calls to reportBrokenURL() and findHints() are passed through
+       to base unfiltered.
      */
     ArcRuleSet(RuleFinder *_base = NULL);
 
@@ -56,9 +56,14 @@ namespace Spread
        necessary data can be obtained from RuleSet::findArchive().
      */
     void addArchive(const Hash &arcHash, const Hash &dirHash,
-                    ArcRule::DirCPtr dir, const std::string &ruleString = "");
+                    DirCPtr dir, const std::string &ruleString = "");
 
-    void reportBrokenURL(const Hash &hash, const std::string &url);
+    // These are simply deferred to base (if set)
+    const std::vector<Hash>* findHints(const Hash &dirHash) const
+    { if(base) return base->findHints(dirHash); return NULL; }
+    void reportBrokenURL(const Hash &hash, const std::string &url)
+    { if(base) base->reportBrokenURL(hash, url); }
+
 
   private:
     RuleFinder *base;

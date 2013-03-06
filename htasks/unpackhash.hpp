@@ -27,7 +27,8 @@ namespace Spread
      */
     Hash::DirMap index;
     UnpackHash() {}
-    UnpackHash(const Hash::DirMap &_index) : index(_index) {}
+    UnpackHash(const Hash::DirMap &_index)
+      : index(_index), blindOut(NULL) {}
 
     /* Do a "blind" unpack. Blind unpacks are unpacks where we do not
        know the directory before unpacking.
@@ -37,6 +38,9 @@ namespace Spread
 
        If absPaths is true, 'output' filenames are absolute (includes
        'dir') rather than local.
+
+       A missing dir (empty string) is allowed, meaning the job should
+       just index the archive without unpacking anything.
      */
     UnpackHash(const std::string &dir, Hash::DirMap &output, bool _absPaths=false)
       : blindDir(dir), blindOut(&output), absPaths(_absPaths) {}

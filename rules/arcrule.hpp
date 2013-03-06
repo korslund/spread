@@ -2,7 +2,7 @@
 #define __SPREAD_ARCRULE_HPP_
 
 #include "rule.hpp"
-#include <boost/shared_ptr.hpp>
+#include <dir/ptr.hpp>
 #include <assert.h>
 
 namespace Spread
@@ -10,8 +10,6 @@ namespace Spread
   // Archive rule
   struct ArcRule : Rule
   {
-    typedef boost::shared_ptr<const Hash::DirMap> DirCPtr;
-
     DirCPtr dir;
     Hash dirHash;
 

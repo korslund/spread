@@ -41,6 +41,9 @@ namespace Spread
        fetchFiles() was called.
      */
     void fetchFiles(const HashDir &outputs, HashMap &results);
+
+    // Single-file convenience version of fetchFiles()
+    std::string fetchFile(const Hash &hash, const std::string &target="");
   };
 
   typedef boost::shared_ptr<TreeBase> TreePtr;

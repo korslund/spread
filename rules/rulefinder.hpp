@@ -28,6 +28,14 @@ namespace Spread
      */
     virtual void reportBrokenURL(const Hash &hash, const std::string &url) = 0;
 
+    /* Get a list of archive hints for a given dirhash. The hashes in
+       the list are of archives containing files relevant to the usage
+       of the dirhash, possibly including the dir-object itself.
+
+       Returns NULL if nothing was found.
+     */
+    virtual const std::vector<Hash>* findHints(const Hash &dirHash) const = 0;
+
     virtual ~RuleFinder() {}
   };
 }

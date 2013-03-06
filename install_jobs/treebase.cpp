@@ -25,6 +25,18 @@ void TreeBase::log(const std::string &msg)
 void TreeBase::addOutput(const Hash &h, const std::string &where) { assert(0); }
 void TreeBase::addInput(const Hash &h) { assert(0); }
 
+std::string TreeBase::fetchFile(const Hash &hash, const std::string &target)
+{
+  HashDir tmp;
+  HashMap res;
+  tmp.insert(HDValue(hash, target));
+  fetchFiles(tmp, res);
+  assert(res.size() == 1);
+  std::string file = res[hash];
+  assert(file != "");
+  return file;
+}
+
 void TreeBase::fetchFiles(const HashDir &outputs, HashMap &results)
 {
   assert(finder);

@@ -44,13 +44,19 @@ struct DummyRules : RuleFinder
     if(hash == file3)
       return new URLRule(hash, "RULESTR", "http://example.com/url");
     if(hash == file4)
-      return new ArcRule(arcHash, ArcRule::DirCPtr(new Hash::DirMap), arcHash, "RULESTR");
+      return new ArcRule(arcHash, DirCPtr(new Hash::DirMap), arcHash, "RULESTR");
     return NULL;
   }
 
   void findAllRules(const Hash &hash, RuleList &output) const
   {
     assert(0);
+  }
+
+  const std::vector<Hash>* findHints(const Hash&) const
+  {
+    assert(0);
+    return NULL;
   }
 
   void reportBrokenURL(const Hash &hash, const std::string &url)

@@ -43,7 +43,7 @@ LOG: STATUS: Blind unpacking into _leaf1/blind1
 storeDir():
   rSdU-hHwettk1icc_gOrTKGJKe3BWeMSCHFkDKgmnf4M dir/dolly.txt
   ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ test.sh
-  HASH: ldb-BnGAabOLmO01u_JYstx8f_oFyGO-mzbzuzsgHi9w
+DIR: ldb-BnGAabOLmO01u_JYstx8f_oFyGO-mzbzuzsgHi9w => _leaf1/dir1.dat
 Adding 2 files to cache:
   rSdU-hHwettk1icc_gOrTKGJKe3BWeMSCHFkDKgmnf4M _leaf1/blind1/dir/dolly.txt
   ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ _leaf1/blind1/test.sh
@@ -68,5 +68,16 @@ Adding 2 files to cache:
 notifyFiles():
   rSdU-hHwettk1icc_gOrTKGJKe3BWeMSCHFkDKgmnf4M
   rSdU-hHwettk1icc_gOrTKGJKe3BWeMSCHFkDKgmnf4M
+SUCCESS!
+
+LOG: STATUS: Blind indexing archive
+LOG: STATUS: Setting up child jobs
+findHash(hash=UZuuyrHbX1c57drq6a6SObKZQrkr58Y09SrBFtEHm9rSAg, target=)
+findHash(hash=UZuuyrHbX1c57drq6a6SObKZQrkr58Y09SrBFtEHm9rSAg, target=)
+LOG: STATUS: Blind indexing archive
+storeDir():
+  rSdU-hHwettk1icc_gOrTKGJKe3BWeMSCHFkDKgmnf4M dir/dolly.txt
+  ctEjJBRstghw4_UpmjBdhwJZFl8faISyIeEk2sOH5LLfAQ test.sh
+DIR: ldb-BnGAabOLmO01u_JYstx8f_oFyGO-mzbzuzsgHi9w => _leaf1/dir2.dat
 SUCCESS!
 

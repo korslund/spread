@@ -142,13 +142,12 @@ Job *UnpackHash::createJob()
   PRINT("UnpackHash::createJob: file=" << file);
 
   // Figure out if we are doing a "blind" unpack
-  if(blindDir != "")
+  if(blindOut)
     {
-      PRINT("  Blind unpack to: " << blindDir << " absPahts=" <<
+      PRINT("  Blind unpack to: '" << blindDir << "' absPahts=" <<
             (absPaths?"true":"false"));
 
       UH_ListHasher *m = new UH_ListHasher;
-      assert(blindOut);
       m->index = blindOut;
       m->where = blindDir;
       m->absPaths = absPaths;

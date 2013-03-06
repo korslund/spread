@@ -1,5 +1,5 @@
 #include "arcruleset.hpp"
-#include <map>
+#include "arcrule.hpp"
 #include <assert.h>
 
 using namespace Spread;
@@ -27,9 +27,6 @@ ArcRuleSet::ArcRuleSet(RuleFinder *_base)
   ptr.reset(new _Internal);
 }
 
-void ArcRuleSet::reportBrokenURL(const Hash &hash, const std::string &url)
-{ if(base) base->reportBrokenURL(hash, url); }
-
 void ArcRuleSet::findAllRules(const Hash &hash, RuleList &output) const
 {
   const Rule *r = ptr->findFile(hash);
@@ -52,7 +49,7 @@ const Rule *ArcRuleSet::findRule(const Hash &hash) const
 }
 
 void ArcRuleSet::addArchive(const Hash &arcHash, const Hash &dirHash,
-                            ArcRule::DirCPtr dir, const std::string &ruleString)
+                            DirCPtr dir, const std::string &ruleString)
 {
   ArcPtr arcPtr(new ArcRule(arcHash, dir, dirHash, ruleString));
 

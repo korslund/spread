@@ -42,6 +42,10 @@ namespace Spread
      */
     void findAllRules(const Hash &hash, RuleList &output) const;
 
+    /* Inherited from RuleFinder.
+     */
+    const std::vector<Hash>* findHints(const Hash &dirHash) const;
+
     /* Add an URL rule. URL rules are directly searchable through
        findRule().
     */

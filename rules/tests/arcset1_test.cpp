@@ -1,5 +1,4 @@
 #include "common.cpp"
-
 #include "arcruleset.hpp"
 
 ArcRuleSet rules;
@@ -27,22 +26,22 @@ int main()
   test();
 
   cout << "Adding archive 1:\n";
-  DirectoryPtr dir1(new Directory);
-  dir1->dir["file1"] = hello;
-  rules.addArchive(arc1, dir1, "Rule1");
+  DirPtr dir1(new Hash::DirMap);
+  (*dir1)["file1"] = hello;
+  rules.addArchive(arc1, Dir::hash(*dir1), dir1, "Rule1");
   test();
 
   cout << "Adding archive 2:\n";
-  DirectoryPtr dir2(new Directory);
-  dir2->dir["file2"] = hello;
-  dir2->dir["file3"] = world;
-  rules.addArchive(arc2, dir2, "Rule2");
+  DirPtr dir2(new Hash::DirMap);
+  (*dir2)["file2"] = hello;
+  (*dir2)["file3"] = world;
+  rules.addArchive(arc2, Dir::hash(*dir2), dir2, "Rule2");
   test();
 
   cout << "Adding archive 3:\n";
-  DirectoryPtr dir3(new Directory);
-  dir3->dir["file4"] = world;
-  rules.addArchive(arc1, dir3, "Rule3");
+  DirPtr dir3(new Hash::DirMap);
+  (*dir3)["file4"] = world;
+  rules.addArchive(arc1, Dir::hash(*dir3), dir3, "Rule3");
   test();
 
   cout << "Testing wrapper:\n";

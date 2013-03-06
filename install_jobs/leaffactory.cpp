@@ -89,11 +89,16 @@ struct Target : TreeBase
            which hash.
 
            Instead we simply dump the archive contents to a directory,
-           and generate the hash information on the fly.
+           and generate the hash information on the fly. If no
+           directory is given, the archive is just indexed (meaning
+           all files are hashed in memory and a dir is created.)
          */
         assert(ins.size() == 1);
         assert(outs.size() == 0);
-        setStatus("Blind unpacking into " + value);
+        if(value != "")
+          setStatus("Blind unpacking into " + value);
+        else
+          setStatus("Blind indexing archive");
         task = new UnpackHash(value, arcdir);
       }
     else assert(0);
@@ -158,15 +163,20 @@ struct Target : TreeBase
         owner.storeDir(arcdir, dirHash);
 
         // Add all the generated files to the 'dir' output.
-        assert(value != "");
-        bf::path base(value);
-        for(Hash::DirMap::const_iterator it = arcdir.begin();
-            it != arcdir.end(); ++it)
-          dir[(base/it->first).string()] = it->second;
+        if(value != "")
+          {
+            bf::path base(value);
+            for(Hash::DirMap::const_iterator it = arcdir.begin();
+                it != arcdir.end(); ++it)
+              dir[(base/it->first).string()] = it->second;
+          }
       }
 
-    finder->addToCache(dir);
-    owner.notifyFiles(dir);
+    if(dir.size())
+      {
+        finder->addToCache(dir);
+        owner.notifyFiles(dir);
+      }
 
     setDone();
   }

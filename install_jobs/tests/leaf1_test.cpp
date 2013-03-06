@@ -15,7 +15,7 @@ Hash testzip("UZuuyrHbX1c57drq6a6SObKZQrkr58Y09SrBFtEHm9rSAg");
 Hash zipdir;
 Hash dolly("rSdU-hHwettk1icc_gOrTKGJKe3BWeMSCHFkDKgmnf4M");
 
-string dirFile = "_leaf1/dir1.dat";
+string dirFile;
 
 bool enableFallback = false;
 bool enableZip = false;
@@ -116,7 +116,7 @@ struct DummyOwner : TreeOwner
         cout << "  " << hash << " " << file << endl;
       }
     Hash h2 = Dir::write(dir, dirFile);
-    cout << "  HASH: " << h2 << endl;
+    cout << "DIR: " << h2 << " => " << dirFile << endl;
     assert(check.isNull() || check == h2);
     zipdir = h2;
   }
@@ -191,12 +191,16 @@ int main()
     test(job);
   }
 
+  dirFile = "_leaf1/dir1.dat";
+
+  // Blind unpack without finding the zip
   {
     TreePtr job = own.unpackBlindTarget("_leaf1/blind1");
     job->addInput(testzip);
     test(job);
   }
 
+  // Adding zip to cache
   enableZip = true;
   {
     TreePtr job = own.unpackBlindTarget("_leaf1/blind1");
@@ -204,6 +208,8 @@ int main()
     test(job);
   }
 
+  // Non-blind unpack (with known directory, allows us to pick
+  // individual files from archive based on hash.)
   {
     TreePtr job = own.unpackTarget(zipdir);
     job->addInput(testzip);
@@ -211,5 +217,14 @@ int main()
     job->addOutput(dolly, "_leaf1/zip_dolly2");
     test(job);
   }
+
+  // Blind index (create dirfile but don't unpack files anywhere)
+  dirFile = "_leaf1/dir2.dat";
+  {
+    TreePtr job = own.unpackBlindTarget("");
+    job->addInput(testzip);
+    test(job);
+  }
+
   return 0;
 }

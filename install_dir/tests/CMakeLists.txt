@@ -19,10 +19,11 @@ set(UDIR ${SPDIR}/unpack)
 set(TDIR ${SPDIR}/tasks)
 set(JDIR ${SPDIR}/job)
 set(PJDIR ${SPDIR}/parent_job)
-set(IJDIR ${SPDIR}/install_jobs)
 set(HDIR ${SPDIR}/hash)
 set(HTDIR ${SPDIR}/htasks)
 set(RDIR ${SPDIR}/rules)
+set(IJDIR ${SPDIR}/install_jobs)
+set(IDDIR ${SPDIR}/install_dir)
 
 set(HASH ${HDIR}/hash.cpp ${SPDIR}/libs/sha2/sha2.c)
 set(UNPACK ${UDIR}/dirwriter.cpp ${UDIR}/base.cpp ${UDIR}/unpack_zip.cpp ${UDIR}/auto.cpp)
@@ -32,20 +33,10 @@ set(TASKS ${TDIR}/unpack.cpp ${TDIR}/curl.cpp ${TDIR}/download.cpp ${JOB} ${UNPA
 set(RULES ${RDIR}/arcruleset.cpp ${RDIR}/ruleset.cpp)
 set(JOB ${JDIR}/job.cpp ${JDIR}/jobinfo.cpp ${JDIR}/thread.cpp)
 set(PJOB ${PJDIR}/parentjob.cpp ${PJDIR}/listjob.cpp ${PJDIR}/jobholder.cpp ${PJDIR}/execjob.cpp ${PJDIR}/andjob.cpp)
+set(IJOBS ${IJDIR}/treebase.cpp ${IJDIR}/hashfinder.cpp ${IJDIR}/leaffactory.cpp)
+set(IDIR ${IDDIR}/dir_install.cpp)
 
-set(IJOBS ${IJDIR}/treebase.cpp ${IJDIR}/hashfinder.cpp)
+set(ALL ${IDIR} ${IJOBS} ${JOB} ${PJOB} ${HASH} ${UNPACK} ${HTASKS} ${TASKS} ${DIR} ${RULES})
 
-set(ALL ${IJOBS} ${JOB} ${PJOB} ${HASH})
-set(LEAF ${ALL} ${DIR} ${HTASKS} ${TASKS} ${UNPACK} ${IJDIR}/leaffactory.cpp)
-
-add_executable(base1_test base1_test.cpp ${ALL})
-target_link_libraries(base1_test ${LIBS})
-
-add_executable(leaf1_test leaf1_test.cpp ${LEAF})
-target_link_libraries(leaf1_test ${LIBS})
-
-add_executable(deadlock_test deadlock_test.cpp ${ALL})
-target_link_libraries(deadlock_test ${LIBS})
-
-add_executable(hashfind_test hashfind_test.cpp ${ALL})
-target_link_libraries(hashfind_test ${LIBS})
+add_executable(hints1_test hints1_test.cpp ${ALL})
+target_link_libraries(hints1_test ${LIBS})

@@ -2,6 +2,8 @@
 #include "arcrule.hpp"
 #include "urlrule.hpp"
 
+#include <dir/binary.hpp>
+
 #include <iostream>
 using namespace std;
 using namespace Spread;
@@ -22,7 +24,7 @@ void test(const Rule *r)
   if(r->type == RST_Archive)
     {
       const ArcRule *arc = ArcRule::get(r);
-      cout << "  Produces " << arc->dir->dir.size() << " file(s)\n";
+      cout << "  Produces " << arc->dir->size() << " file(s)\n";
     }
   else if(r->type == RST_URL)
     {
