@@ -11,10 +11,6 @@ struct DirInstaller::_Internal
   RuleSet *origRules;
   ArcRuleSet *arcRules;
   DirOwner *owner;
-  std::string prefix;
-
-  Hash::DirMap pre, post;
-  TreeBase::HashDir preHash, postHash, preBlinds, postBlinds;
 };
 
 void DirInstaller::loadHints(const Hash &dirHash)
@@ -106,6 +102,8 @@ void DirInstaller::handleHash(Hash::DirMap &out, const Hash &dirHash,
 
   if(!arc)
     {
+      log("Hash " + dirHash.toString() + " does NOT match any archive rule, assuming it is a directory");
+
       /* Just load the dir and add it to 'out', along with any hints
          associated with it. We assume this is enough to find all the
          files we need. Throws on error.
@@ -119,6 +117,9 @@ void DirInstaller::handleHash(Hash::DirMap &out, const Hash &dirHash,
      available through the rule system, where the fetchFiles() system
      can find them. This is the preferred solution.
    */
+  log("FOUND archive rule: dir=" + arc->dirHash.toString() +
+      " arc=" + arc->arcHash.toString());
+
   try
     {
       DirPtr arcDir = addDirFile(out, arc->dirHash, path);
@@ -133,8 +134,8 @@ void DirInstaller::handleHash(Hash::DirMap &out, const Hash &dirHash,
        */
       log("FAILED loading dirHash=" + arc->dirHash.toString() +
           "\n   Error message: " + std::string(e.what()) +
-          ".\n   Reverting to blind unpack");
-      blinds.insert(HDValue(arc->dirHash, path));
+          "\n   Reverting to blind unpack");
+      blinds.insert(HDValue(arc->arcHash, path));
     }
 }
 
@@ -171,16 +172,18 @@ void DirInstaller::handleHash(Hash::DirMap &out, const Hash &dirHash,
 void DirInstaller::sortInput()
 {
   HashDir::const_iterator it;
-  for(it = ptr->preHash.begin(); it != ptr->preHash.end(); it++)
+  for(it = preHash.begin(); it != preHash.end(); it++)
     {
-      handleHash(ptr->pre, it->first, ptr->preBlinds, it->second);
+      handleHash(pre, it->first, preBlinds, it->second);
       if(checkStatus()) return;
     }
-  for(it = ptr->postHash.begin(); it != ptr->postHash.end(); it++)
+  for(it = postHash.begin(); it != postHash.end(); it++)
     {
-      handleHash(ptr->post, it->first, ptr->postBlinds, it->second);
+      handleHash(post, it->first, postBlinds, it->second);
       if(checkStatus()) return;
     }
+  preHash.clear();
+  postHash.clear();
 }
 
 void DirInstaller::doJob()
@@ -192,15 +195,14 @@ void DirInstaller::doJob()
 }
 
 DirInstaller::DirInstaller(DirOwner &owner, RuleSet &rules,
-                           Cache::ICacheIndex &cache, const std::string &prefix)
-  : TreeBase(owner)
+                           Cache::ICacheIndex &cache, const std::string &pref)
+  : TreeBase(owner), prefix(pref)
 {
   ptr.reset(new _Internal);
   ptr->origRules = &rules;
   ptr->arcRules = new ArcRuleSet(ptr->origRules);
   ptr->rulePtr.reset(ptr->arcRules);
   ptr->owner = &owner;
-  ptr->prefix = prefix;
 
   finder.reset(new HashFinder(ptr->rulePtr, cache));
 }
@@ -208,35 +210,35 @@ DirInstaller::DirInstaller(DirOwner &owner, RuleSet &rules,
 void DirInstaller::addFile(const std::string &file, const Hash &hash)
 {
   assert(!getInfo()->hasStarted());
-  ptr->pre[file] = hash;
+  post[file] = hash;
 }
 
 void DirInstaller::remFile(const std::string &file, const Hash &hash)
 {
   assert(!getInfo()->hasStarted());
-  ptr->post[file] = hash;
+  pre[file] = hash;
 }
 
 void DirInstaller::addDir(const Hash::DirMap &dir, const std::string &path)
 {
   assert(!getInfo()->hasStarted());
-  Dir::add(ptr->pre, dir, path);
+  Dir::add(post, dir, path);
 }
 
 void DirInstaller::remDir(const Hash::DirMap &dir, const std::string &path)
 {
   assert(!getInfo()->hasStarted());
-  Dir::add(ptr->post, dir, path);
+  Dir::add(pre, dir, path);
 }
 
 void DirInstaller::addDir(const Hash &hash, const std::string &path)
 {
   assert(!getInfo()->hasStarted());
-  ptr->preHash.insert(HDValue(hash,path));
+  postHash.insert(HDValue(hash,path));
 }
 
 void DirInstaller::remDir(const Hash &hash, const std::string &path)
 {
   assert(!getInfo()->hasStarted());
-  ptr->postHash.insert(HDValue(hash,path));
+  preHash.insert(HDValue(hash,path));
 }

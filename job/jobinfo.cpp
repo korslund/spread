@@ -94,7 +94,6 @@ bool JobInfo::clearClient(bool copyFail)
       total = p->getTotal();
       message = p->getMessage();
     }
-
   return checkStatus();
 }
 

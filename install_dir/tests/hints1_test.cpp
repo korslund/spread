@@ -1,20 +1,6 @@
-#include "dir_install.hpp"
-#include <iostream>
+#include "common.cpp"
 
-using namespace Spread;
-using namespace std;
-
-struct MyCache : Cache::ICacheIndex
-{
-};
-
-struct MyOwner : DirOwner
-{
-};
-
-MyOwner own;
-RuleSet rules;
-MyCache cache;
+Hash hello("HELLO");
 
 struct MyTest : DirInstaller
 {
@@ -23,11 +9,18 @@ struct MyTest : DirInstaller
 
   void doJob()
   {
+    loadHints(hello);
     setDone();
   }
 };
 
 int main()
 {
+  /* TODO: There's a lot more to test here obviously. The hint rule
+     system isn't done yet.
+   */
+
+  MyTest test("hint1");
+  test.run();
   return 0;
 }

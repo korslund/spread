@@ -1,83 +1,24 @@
-#include "treebase.hpp"
-
+#include "dir_install.hpp"
 #include <iostream>
 #include <boost/thread/recursive_mutex.hpp>
-#include <job/thread.hpp>
+#include <dir/binary.hpp>
 
-/* This test illustrates what happens when there are cycles in the
-   ruleset, ie. rules that depend on themselves directly or indirectly.
-
-   We have NOT implemented any kind of deadlock detection yet. The
-   test is currently disabled because it locks up. We currently assume
-   the ruleset to be acyclic. In fact it is probably better to test
-   untrusted rulesets for cycles up front than to try to recover from
-   them at runtime.
- */
-
-using namespace std;
 using namespace Spread;
+using namespace std;
 
-Hash arc1("ARC1"), arc2("ARC2"), arc3("ARC3");
-
-struct DummyFind : IHashFinder
+struct MyCache : Cache::ICacheIndex
 {
-  TreeBase::HashMap files;
-  void reset() { files.clear(); }
+  map<Hash,string> files;
 
-  bool findHash(const Hash &hash, HashSource &out,
-                const std::string &target="")
+  int getStatus(const std::string &where, const Hash &hash)
   {
-    cout << "findHash(hash=" << hash << ", target=" << target << ")\n";
-    out.hash = hash;
-    out.type = TST_None;
-    out.dirHash.clear();
-    out.value.clear();
-    out.deps.clear();
-
-    if(files[hash] != "")
-      {
-        out.type = TST_File;
-        out.value = files[hash];
-        if(out.value == target)
-          out.type = TST_InPlace;
-        return true;
-      }
-
-    // Direct self dependence
-    if(hash == arc1)
-      {
-        out.type = TST_Archive;
-        out.dirHash = arc1;
-        out.deps.push_back(arc1);
-        return true;
-      }
-
-    // Indirect self dependence
-    if(hash == arc2)
-      {
-        out.type = TST_Archive;
-        out.dirHash = arc3;
-        out.deps.push_back(arc3);
-        return true;
-      }
-
-    if(hash == arc3)
-      {
-        out.type = TST_Archive;
-        out.dirHash = arc1;
-        out.deps.push_back(arc2);
-        return true;
-      }
-
-    return false;
+    using namespace Cache;
+    if(files[hash] == where) return CI_Match;
+    if(files[hash] != "") return CI_ElseWhere;
+    return CI_None;
   }
 
-  void brokenURL(const Hash &hash, const std::string &url)
-  {
-    cout << "brokenURL(" << hash << ", " << url << ")\n";
-  }
-
-  void addToCache(const Hash::DirMap &dir)
+  void addMany(const Hash::DirMap &dir)
   {
     cout << "Adding " << dir.size() << " files to cache:\n";
     Hash::DirMap::const_iterator it;
@@ -88,10 +29,20 @@ struct DummyFind : IHashFinder
         assert(!hash.isNull());
         assert(file != "");
         cout << "  " << hash << " " << file << endl;
-
         files[hash] = file;
       }
   }
+
+  string findHash(const Hash &hash) { return files[hash]; }
+
+  void add(const std::string &s, const Hash& h)
+  { files[h] = s; }
+
+  Hash addFile(string,const Hash&) { assert(0); }
+  void removeFile(const string&) { assert(0); }
+  void getEntries(Cache::CIVector&) const { assert(0); }
+
+  void reset() { files.clear(); }
 };
 
 struct DummyTarget : TreeBase
@@ -101,7 +52,8 @@ struct DummyTarget : TreeBase
   int type;
 
   DummyTarget(TreeOwner &o, const std::string &w, int t)
-    : TreeBase(o), what(w), type(t) {}
+    : TreeBase(o), what(w), type(t)
+  { cout << "CREATING Target what=" << what << endl; }
 
   void addOutput(const Hash &h, const std::string &where)
   { outs.insert(HDValue(h,where)); }
@@ -157,7 +109,7 @@ struct DummyTarget : TreeBase
   }
 };
 
-struct DummyOwner : TreeOwner
+struct MyOwner : DirOwner
 {
   TreePtr target(const std::string &what, int type)
   { return TreePtr(new DummyTarget(*this, what, type)); }
@@ -177,9 +129,22 @@ struct DummyOwner : TreeOwner
   boost::recursive_mutex mutex;
   Lock lock() { return Lock(new boost::lock_guard<boost::recursive_mutex>(mutex)); }
 
+  std::map<std::string, Hash::DirMap> dirs;
+
   void loadDir(const std::string &file, Hash::DirMap &output,
                const Hash &check = Hash())
-  { assert(0); }
+  {
+    cout << "loadDir(" << file << ")\n";
+    if(dirs.find(file) == dirs.end())
+      throw std::runtime_error("NO DIR FILE " + file);
+    output = dirs[file];
+    Hash h = Dir::hash(output);
+    cout << "  DIR = " << h << endl;
+    if(check.isOk() && check != h)
+      throw std::runtime_error("HASH MISMATCH! dir=" + h.toString() +
+                               " check=" + check.toString());
+  }
+
   void storeDir(const Hash::DirMap &dir, const Hash &check = Hash())
   { assert(0); }
 
@@ -190,7 +155,6 @@ struct DummyOwner : TreeOwner
     Hash::DirMap::const_iterator it;
     for(it = dir.begin(); it != dir.end(); it++)
       {
-        const std::string &file = it->first;
         const Hash &hash = it->second;
         cout << "  " << hash << endl;
         stuff[hash] = JobInfoPtr();
@@ -203,6 +167,7 @@ struct DummyOwner : TreeOwner
 
   void reset()
   {
+    dirs.clear();
     stuff.clear();
   }
 
@@ -217,6 +182,7 @@ struct DummyOwner : TreeOwner
     if(ptr) cout << "  FOUND!\n";
     return ptr;
   }
+
   void setRunningTarget(const Hash &hash, JobInfoPtr ptr)
   {
     Lock l = lock();
@@ -224,70 +190,53 @@ struct DummyOwner : TreeOwner
     assert(ptr);
     stuff[hash] = ptr;
   }
+
+  bool askWait(AskPtr ask, JobInfoPtr info) { assert(0); }
+  void deleteFile(const std::string &path) { assert(0); }
+ 
 };
 
-struct MyBase : TreeBase
+void print(const Hash::DirMap &dir, const std::string &what)
 {
-  DummyFind *fnd;
-  DummyOwner own;
-
-  MyBase() : TreeBase(own)
-  {
-    fnd = new DummyFind;
-    finder.reset(fnd);
-    setBusy();
-  }
-
-  // Circumvent protected function for testing purposes
-  void fetch(const HashDir &outputs, HashMap &results)
-  { fetchFiles(outputs, results); }
-
-  void doJob() { assert(0); }
-
-  void reset() { fnd->reset(); own.reset(); }
-};
-
-TreeBase::HashDir makeList;
-
-void add(const Hash &h, const std::string &file="")
-{
-  makeList.insert(TreeBase::HDValue(h, file));
+  cout << what << ":\n";
+  Hash::DirMap::const_iterator it;
+  for(it = dir.begin(); it != dir.end(); it++)
+    {
+      const std::string &file = it->first;
+      const Hash &hash = it->second;
+      assert(file != "");
+      cout << "  " << hash << " " << file << endl;
+    }
 }
 
-MyBase base;
-
-void test()
+void print(const TreeBase::HashDir &dir, const std::string &what)
 {
-  try
+  cout << what << ":\n";
+  TreeBase::HashDir::const_iterator it;
+  for(it = dir.begin(); it != dir.end(); it++)
     {
-      TreeBase::HashMap res;
-
-      cout << "\nRUNNING fetchFiles():\n";
-      base.fetch(makeList, res);
-
-      cout << "Results returned:\n";
-      TreeBase::HashMap::const_iterator it;
-      for(it = res.begin(); it != res.end(); it++)
-        cout << it->first << " " << it->second << endl;
+      const std::string &file = it->second;
+      const Hash &hash = it->first;
+      cout << "  " << hash << " " << file << endl;
     }
-  catch(std::exception &e)
-    {
-      cout << "ERROR: " << e.what() << endl;
-    }
-
-  makeList.clear();
-  base.reset();
 }
 
-int main()
-{
-  cout << "This test is DISABLED\n";
-  /*
-  add(arc1, "arc1");
-  test();
+MyOwner own;
+RuleSet rules;
+MyCache cache;
 
-  add(arc2, "arc2");
-  test();
-  */
-  return 0;
+Hash makeDir(const Hash::DirMap &dir, const std::string &filename)
+{
+  print(dir, "makeDir(): creating directory");
+  Hash h = Dir::hash(dir);
+  cache.add(filename, h);
+  own.dirs[filename] = dir;
+  cout << "  => " << filename << " " << h << endl;
+  return h;
+}
+
+void resetAll()
+{
+  own.reset();
+  cache.reset();
 }

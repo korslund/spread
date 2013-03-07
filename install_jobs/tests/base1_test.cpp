@@ -105,7 +105,10 @@ struct DummyTarget : TreeBase
   int type;
 
   DummyTarget(TreeOwner &o, const std::string &w, int t)
-    : TreeBase(o), what(w), type(t) {}
+    : TreeBase(o), what(w), type(t)
+  {
+    cout << "Creating target WHAT=" << what << endl;
+  }
 
   void addOutput(const Hash &h, const std::string &where)
   { outs.insert(HDValue(h,where)); }
@@ -250,6 +253,9 @@ struct MyBase : TreeBase
   {
     fnd = new DummyFind;
     finder.reset(fnd);
+
+    // Cheat and set busy status even though we are not running.
+    setBusy();
   }
 
   // Circumvent protected function for testing purposes

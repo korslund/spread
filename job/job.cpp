@@ -39,6 +39,8 @@ JobInfoPtr Job::run()
 
 bool Job::runClient(Job &job, bool includeStats, bool copyFail)
 {
+  assert(info->hasStarted());
+  assert(!info->isFinished());
   if(clearClient(copyFail)) return true;
   if(includeStats) setClient(job.getInfo());
   else setAbortClient(job.getInfo());

@@ -21,7 +21,6 @@ void TreeBase::fail(const std::string &msg)
 void TreeBase::log(const std::string &msg)
 { owner.log(msg); }
 
-
 void TreeBase::addOutput(const Hash &h, const std::string &where) { assert(0); }
 void TreeBase::addInput(const Hash &h) { assert(0); }
 
@@ -40,12 +39,10 @@ std::string TreeBase::fetchFile(const Hash &hash, const std::string &target)
 void TreeBase::fetchFiles(const HashDir &outputs, HashMap &results)
 {
   assert(finder);
-
-  std::string oldMsg = setStatus("Setting up child jobs");
+  assert(getInfo()->hasStarted());
 
   std::map<Hash,JobInfoPtr> waitList;
   AndJob *aj = NULL;
-
   {
     std::map<Hash,TreePtr> unpackers;
     HashDir::const_iterator it;
@@ -172,6 +169,4 @@ void TreeBase::fetchFiles(const HashDir &outputs, HashMap &results)
       // Store the result
       results[hash] = src.value;
     }
-
-  setStatus(oldMsg);
 }

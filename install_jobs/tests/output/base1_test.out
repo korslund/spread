@@ -1,27 +1,23 @@
 
 RUNNING fetchFiles():
-LOG: STATUS: Setting up child jobs
 getRunningTarget(00)
 findHash(hash=00, target=)
 LOG: ERROR: No source for target 00 
 ERROR: No source for target 00 
 
 RUNNING fetchFiles():
-LOG: STATUS: Setting up child jobs
 getRunningTarget(nofile)
 findHash(hash=nofile, target=file)
 LOG: ERROR: No source for target nofile file
 ERROR: No source for target nofile file
 
 RUNNING fetchFiles():
-LOG: STATUS: Setting up child jobs
 getRunningTarget(nofile)
 findHash(hash=nofile, target=)
 LOG: ERROR: No source for target nofile 
 ERROR: No source for target nofile 
 
 RUNNING fetchFiles():
-LOG: STATUS: Setting up child jobs
 getRunningTarget(LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF)
 findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=out_hello)
 getRunningTarget(LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF)
@@ -29,6 +25,7 @@ findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=out_hello2)
 getRunningTarget(SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF)
 findHash(hash=SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF, target=out_world)
 findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=out_hello)
+Creating target WHAT=COPY cache/LPJN
 TARGET: COPY cache/LPJN
   Outputs:
     LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF out_hello
@@ -37,6 +34,7 @@ Adding 1 files to cache:
 notifyFiles():
   LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
 findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=out_hello2)
+Creating target WHAT=COPY out_hello
 TARGET: COPY out_hello
   Outputs:
     LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF out_hello2
@@ -45,6 +43,7 @@ Adding 1 files to cache:
 notifyFiles():
   LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
 findHash(hash=SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF, target=out_world)
+Creating target WHAT=COPY cache/SG6k
 TARGET: COPY cache/SG6k
   Outputs:
     SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF out_world
@@ -52,13 +51,11 @@ Adding 1 files to cache:
   SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF out_world
 notifyFiles():
   SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF
-LOG: STATUS: Setting up child jobs
 Results returned:
 LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF out_hello2
 SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF out_world
 
 RUNNING fetchFiles():
-LOG: STATUS: Setting up child jobs
 getRunningTarget(LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF)
 findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=cache/LPJN)
 getRunningTarget(LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF)
@@ -71,15 +68,14 @@ findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=cache/LPJN)
 findHash(hash=LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF, target=)
 findHash(hash=SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF, target=cache/SG6k)
 findHash(hash=SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF, target=)
-LOG: STATUS: Setting up child jobs
 Results returned:
 LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF cache/LPJN
 SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF cache/SG6k
 
 RUNNING fetchFiles():
-LOG: STATUS: Setting up child jobs
 getRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
 findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=)
+Creating target WHAT=DOWNLOAD url://SOME/URL/
 setRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
 TARGET: DOWNLOAD url://SOME/URL/
   Outputs:
@@ -89,14 +85,13 @@ Adding 1 files to cache:
 notifyFiles():
   U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F
 findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=)
-LOG: STATUS: Setting up child jobs
 Results returned:
 U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F tmp_U_l4zp
 
 RUNNING fetchFiles():
-LOG: STATUS: Setting up child jobs
 getRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
 findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=blah)
+Creating target WHAT=DOWNLOAD url://SOME/URL/
 setRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
 TARGET: DOWNLOAD url://SOME/URL/
   Outputs:
@@ -106,14 +101,13 @@ Adding 1 files to cache:
 notifyFiles():
   U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F
 findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=blah)
-LOG: STATUS: Setting up child jobs
 Results returned:
 U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F blah
 
 RUNNING fetchFiles():
-LOG: STATUS: Setting up child jobs
 getRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
 findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=)
+Creating target WHAT=DOWNLOAD url://SOME/URL/
 setRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
 getRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
   FOUND!
@@ -127,6 +121,7 @@ notifyFiles():
 LOG: STATUS: Waiting for target U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F
 findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=)
 findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=blah)
+Creating target WHAT=COPY tmp_U_l4zp
 TARGET: COPY tmp_U_l4zp
   Outputs:
     U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F blah
@@ -134,21 +129,20 @@ Adding 1 files to cache:
   U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F blah
 notifyFiles():
   U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F
-LOG: STATUS: Setting up child jobs
 Results returned:
 U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F blah
 
 RUNNING fetchFiles():
-LOG: STATUS: Setting up child jobs
 getRunningTarget(QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG)
 findHash(hash=QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG, target=postei)
+Creating target WHAT=UNPACK
 setRunningTarget(QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG)
 TARGET: UNPACK
   Inputs:
     U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F 
-LOG: STATUS: Setting up child jobs
 getRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
 findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=)
+Creating target WHAT=DOWNLOAD url://SOME/URL/
 setRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
 TARGET: DOWNLOAD url://SOME/URL/
   Outputs:
@@ -158,7 +152,6 @@ Adding 1 files to cache:
 notifyFiles():
   U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F
 findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=)
-LOG: STATUS: 
   Processed inputs:
     U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F tmp_U_l4zp
   Outputs:
@@ -168,22 +161,21 @@ Adding 1 files to cache:
 notifyFiles():
   QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG
 findHash(hash=QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG, target=postei)
-LOG: STATUS: Setting up child jobs
 Results returned:
 QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG postei
 
 RUNNING fetchFiles():
-LOG: STATUS: Setting up child jobs
 getRunningTarget(QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG)
 findHash(hash=QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG, target=postei)
+Creating target WHAT=UNPACK
 setRunningTarget(QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG)
 getRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
 findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=keiko)
+Creating target WHAT=DOWNLOAD url://SOME/URL/
 setRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
 TARGET: UNPACK
   Inputs:
     U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F 
-LOG: STATUS: Setting up child jobs
 getRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
   FOUND!
 LOG: STATUS: Waiting for target U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F
@@ -196,7 +188,6 @@ Adding 1 files to cache:
 notifyFiles():
   U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F
 findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=)
-LOG: STATUS: 
   Processed inputs:
     U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F keiko
   Outputs:
@@ -207,18 +198,18 @@ notifyFiles():
   QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG
 findHash(hash=QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG, target=postei)
 findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=keiko)
-LOG: STATUS: Setting up child jobs
 Results returned:
 QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG postei
 U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F keiko
 
 RUNNING fetchFiles():
-LOG: STATUS: Setting up child jobs
 getRunningTarget(QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG)
 findHash(hash=QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG, target=postei)
+Creating target WHAT=UNPACK
 setRunningTarget(QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG)
 getRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
 findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=keiko)
+Creating target WHAT=DOWNLOAD url://SOME/URL/
 setRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
 TARGET: DOWNLOAD url://SOME/URL/
   Outputs:
@@ -231,11 +222,9 @@ notifyFiles():
 TARGET: UNPACK
   Inputs:
     U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F 
-LOG: STATUS: Setting up child jobs
 getRunningTarget(U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F)
 findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=)
 findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=)
-LOG: STATUS: 
   Processed inputs:
     U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F keiko
   Outputs:
@@ -246,15 +235,14 @@ notifyFiles():
   QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG
 findHash(hash=QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG, target=postei)
 findHash(hash=U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F, target=keiko)
-LOG: STATUS: Setting up child jobs
 Results returned:
 QSxQXsnmaVwgjK6xVdZP3H-4eeh37BsQMDs1GMe7_aoG postei
 U_l4zpQIWVSXtEhsQjGQxUwvlNRH9p5TeK2QwTd30p4F keiko
 
 RUNNING fetchFiles():
-LOG: STATUS: Setting up child jobs
 getRunningTarget(A1)
 findHash(hash=A1, target=__a1_file)
+Creating target WHAT=UNPACK
 setRunningTarget(A1)
 getRunningTarget(A2)
 findHash(hash=A2, target=__a2_file)
@@ -265,11 +253,9 @@ findHash(hash=A3, target=__a3_file)
 TARGET: UNPACK
   Inputs:
     ARCME 
-LOG: STATUS: Setting up child jobs
 getRunningTarget(ARCME)
 findHash(hash=ARCME, target=)
 findHash(hash=ARCME, target=)
-LOG: STATUS: 
   Processed inputs:
     ARCME cache/ARCM
   Outputs:
@@ -289,6 +275,7 @@ notifyFiles():
   A3
 findHash(hash=A1, target=__a1_file)
 findHash(hash=A2, target=__a2_file)
+Creating target WHAT=COPY __a2_file2
 TARGET: COPY __a2_file2
   Outputs:
     A2 __a2_file
@@ -297,6 +284,7 @@ Adding 1 files to cache:
 notifyFiles():
   A2
 findHash(hash=A2, target=__a2_file2)
+Creating target WHAT=COPY __a2_file
 TARGET: COPY __a2_file
   Outputs:
     A2 __a2_file2
@@ -305,7 +293,6 @@ Adding 1 files to cache:
 notifyFiles():
   A2
 findHash(hash=A3, target=__a3_file)
-LOG: STATUS: Setting up child jobs
 Results returned:
 A1 __a1_file
 A2 __a2_file2

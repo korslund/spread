@@ -67,10 +67,10 @@ namespace Spread
 
     // Convenience functions:
 
-    void updateFile(const std::string &file, const Hash &hash, const Hash &existing)
-    { addFile(file, hash); remFile(file, existing); }
+    void updateFile(const std::string &file, const Hash &oldH, const Hash &newH)
+    { addFile(file, newH); remFile(file, oldH); }
 
-    void ignoreFile(const std::string &file, const Hash &hash)
+    void ignoreFile(const std::string &file, const Hash &hash = Hash())
     { updateFile(file, hash, hash); }
 
     /* Add/remove a directory of dependencies. All paths are relative
@@ -116,6 +116,11 @@ namespace Spread
     boost::shared_ptr<_Internal> ptr;
 
   protected:
+    std::string prefix;
+
+    Hash::DirMap pre, post;
+    HashDir preHash, postHash, preBlinds, postBlinds;
+
     // Internal functions:
     void loadHints(const Hash &dirHash);
     DirPtr addDirFile(Hash::DirMap &out, const Hash &dirHash,

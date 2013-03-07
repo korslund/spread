@@ -1,0 +1,92 @@
+TESTING DIR path=
+LOG: Determining what to do with input hash DIR
+LOG: Hash DIR does NOT match any archive rule, assuming it is a directory
+LOG: Looking for hints for dirHash=DIR
+LOG:   No hints found.
+getRunningTarget(DIR)
+LOG: ERROR: No source for target DIR 
+ERROR: No source for target DIR 
+
+TESTING DIR path=
+LOG: Determining what to do with input hash DIR
+LOG: FOUND archive rule: dir=DIR arc=ARC
+LOG: Looking for hints for dirHash=DIR
+LOG:   No hints found.
+getRunningTarget(DIR)
+LOG: ERROR: No source for target DIR 
+LOG: FAILED loading dirHash=DIR
+   Error message: No source for target DIR 
+   Reverting to blind unpack
+OUTPUT:
+BLINDS:
+  ARC 
+
+TESTING ARC path=
+LOG: Determining what to do with input hash ARC
+LOG: FOUND archive rule: dir=DIR arc=ARC
+LOG: Looking for hints for dirHash=DIR
+LOG:   No hints found.
+getRunningTarget(DIR)
+LOG: ERROR: No source for target DIR 
+LOG: FAILED loading dirHash=DIR
+   Error message: No source for target DIR 
+   Reverting to blind unpack
+OUTPUT:
+BLINDS:
+  ARC 
+
+makeDir(): creating directory:
+  FILE1 file1
+  FILE2 sub/file1
+  => dir.dat WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq
+TESTING WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq path=
+LOG: Determining what to do with input hash WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq
+LOG: Hash WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq does NOT match any archive rule, assuming it is a directory
+LOG: Looking for hints for dirHash=WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq
+LOG:   No hints found.
+getRunningTarget(WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq)
+loadDir(dir.dat)
+  DIR = WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq
+OUTPUT:
+  FILE1 file1
+  FILE2 sub/file1
+BLINDS:
+
+TESTING WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq path=
+LOG: Determining what to do with input hash WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq
+LOG: Hash WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq does NOT match any archive rule, assuming it is a directory
+LOG: Looking for hints for dirHash=WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq
+LOG:   No hints found.
+getRunningTarget(WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq)
+LOG: ERROR: No source for target WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq 
+ERROR: No source for target WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq 
+
+getRunningTarget(FILE1)
+LOG: ERROR: No source for target FILE1 
+
+makeDir(): creating directory:
+  FILE1 file1
+  FILE2 sub/file1
+  => dir.dat WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq
+TESTING WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq path=somedir/
+LOG: Determining what to do with input hash WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq
+LOG: FOUND archive rule: dir=WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq arc=ARC
+LOG: Looking for hints for dirHash=WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq
+LOG:   No hints found.
+getRunningTarget(WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq)
+loadDir(dir.dat)
+  DIR = WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq
+OUTPUT:
+  FILE1 somedir/file1
+  FILE2 somedir/sub/file1
+BLINDS:
+
+getRunningTarget(FILE1)
+CREATING Target what=UNPACK
+setRunningTarget(FILE1)
+TARGET: UNPACK
+  Inputs:
+    ARC 
+getRunningTarget(ARC)
+LOG: ERROR: No source for target ARC 
+

@@ -1,0 +1,48 @@
+PRE:
+POST:
+PRE-HASH:
+POST-HASH:
+
+PRE:
+  WORLD world
+POST:
+  HELLO hello
+  HELLO world
+PRE-HASH:
+POST-HASH:
+
+PRE:
+  OLD arne
+  orig user.cfg
+  00 user2.cfg
+POST:
+  NEW arne
+  orig user.cfg
+  00 user2.cfg
+PRE-HASH:
+POST-HASH:
+
+PRE:
+  FIRST2 first
+  FIRST2 prefix_first
+  OLD prefix_second
+  DELETED prefix_third
+  OLD second
+  DELETED third
+POST:
+  FIRST2 first
+  SECOND second
+  FIRST2 subdir/first
+  OLD subdir/second
+  DELETED subdir/third
+PRE-HASH:
+POST-HASH:
+
+PRE:
+POST:
+PRE-HASH:
+  DIR3 dir3
+POST-HASH:
+  DIR1 
+  DIR2 dir2
+

@@ -45,6 +45,9 @@ namespace Spread
     // True if the digest is zeroed out
     bool isNull() const;
 
+    // True if NOT zero
+    bool isOk() const { return !isNull(); }
+
     // Copy digest verbatim from another source. Must be 40 bytes
     // long.
     void copy(const void* source);

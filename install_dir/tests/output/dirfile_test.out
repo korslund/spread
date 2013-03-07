@@ -1,0 +1,84 @@
+
+TEST(00, '')
+LOG: Looking for hints for dirHash=00
+LOG:   No hints found.
+getRunningTarget(00)
+LOG: ERROR: No source for target 00 
+ERROR: No source for target 00 
+TOTAL:
+
+TEST(HELLO, 'nowhere')
+LOG: Looking for hints for dirHash=HELLO
+LOG:   No hints found.
+getRunningTarget(HELLO)
+LOG: ERROR: No source for target HELLO 
+ERROR: No source for target HELLO 
+TOTAL:
+makeDir(): creating directory:
+  HASH1 file1
+  HASH2 file2
+  => dirfile1.dat LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm
+makeDir(): creating directory:
+  HASH3 file2
+  HASH4 file3
+  => dirfile2.dat RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm
+
+TEST(LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm, '')
+LOG: Looking for hints for dirHash=LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm
+LOG:   No hints found.
+getRunningTarget(LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm)
+loadDir(dirfile1.dat)
+  DIR = LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm
+LOADED:
+  HASH1 file1
+  HASH2 file2
+TOTAL:
+  HASH1 file1
+  HASH2 file2
+
+TEST(RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm, '')
+LOG: Looking for hints for dirHash=RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm
+LOG:   No hints found.
+getRunningTarget(RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm)
+loadDir(dirfile2.dat)
+  DIR = RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm
+LOADED:
+  HASH3 file2
+  HASH4 file3
+TOTAL:
+  HASH1 file1
+  HASH3 file2
+  HASH4 file3
+
+TEST(RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm, 'sub/')
+LOG: Looking for hints for dirHash=RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm
+LOG:   No hints found.
+getRunningTarget(RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm)
+loadDir(dirfile2.dat)
+  DIR = RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm
+LOADED:
+  HASH3 file2
+  HASH4 file3
+TOTAL:
+  HASH1 file1
+  HASH3 file2
+  HASH4 file3
+  HASH3 sub/file2
+  HASH4 sub/file3
+
+TEST(LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm, 'sub/')
+LOG: Looking for hints for dirHash=LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm
+LOG:   No hints found.
+getRunningTarget(LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm)
+loadDir(dirfile1.dat)
+  DIR = LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm
+LOADED:
+  HASH1 file1
+  HASH2 file2
+TOTAL:
+  HASH1 file1
+  HASH3 file2
+  HASH4 file3
+  HASH1 sub/file1
+  HASH2 sub/file2
+  HASH4 sub/file3

@@ -40,3 +40,12 @@ set(ALL ${IDIR} ${IJOBS} ${JOB} ${PJOB} ${HASH} ${UNPACK} ${HTASKS} ${TASKS} ${D
 
 add_executable(hints1_test hints1_test.cpp ${ALL})
 target_link_libraries(hints1_test ${LIBS})
+
+add_executable(add_test add_test.cpp ${ALL})
+target_link_libraries(add_test ${LIBS})
+
+add_executable(dirfile_test dirfile_test.cpp ${ALL})
+target_link_libraries(dirfile_test ${LIBS})
+
+add_executable(handle_test handle_test.cpp ${ALL})
+target_link_libraries(handle_test ${LIBS})
