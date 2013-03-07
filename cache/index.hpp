@@ -38,8 +38,12 @@ namespace Cache
        The function uses last_write_time() and file_size() to detect
        whether a file needs to be rehashed.
 
+       Throws if the file does not exist, unless if allowMissing=true,
+       in which case a missing file causes a null hash return value.
+
        Postcondition: the information about the file in our cache
-       matches reality.
+       matches reality. Exceptions thrown will not put the object in
+       an invalid state.
 
        If a hash is given, we trust that it is an up-to-date and
        correct hash of the current file data. We will double-check the
@@ -49,7 +53,8 @@ namespace Cache
        Return value: the hash of the file, either from cache or from
        rehashing the file.
      */
-    Spread::Hash addFile(std::string where, const Spread::Hash &h = Spread::Hash());
+    Spread::Hash addFile(std::string where, const Spread::Hash &h = Spread::Hash(),
+                         bool allowMissing=false);
 
     /* Used to mass add a bunch of files to the index. The function
        works more or less like addFile(), but is called on a list of

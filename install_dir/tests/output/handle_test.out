@@ -36,8 +36,8 @@ BLINDS:
   ARC 
 
 makeDir(): creating directory:
-  FILE1 file1
-  FILE2 sub/file1
+  file1 FILE1
+  sub/file1 FILE2
   => dir.dat WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq
 TESTING WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq path=
 LOG: Determining what to do with input hash WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq
@@ -48,8 +48,8 @@ getRunningTarget(WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq)
 loadDir(dir.dat)
   DIR = WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq
 OUTPUT:
-  FILE1 file1
-  FILE2 sub/file1
+  file1 FILE1
+  sub/file1 FILE2
 BLINDS:
 
 TESTING WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq path=
@@ -65,8 +65,8 @@ getRunningTarget(FILE1)
 LOG: ERROR: No source for target FILE1 
 
 makeDir(): creating directory:
-  FILE1 file1
-  FILE2 sub/file1
+  file1 FILE1
+  sub/file1 FILE2
   => dir.dat WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq
 TESTING WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq path=somedir/
 LOG: Determining what to do with input hash WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq
@@ -77,8 +77,8 @@ getRunningTarget(WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq)
 loadDir(dir.dat)
   DIR = WjIQNQTXskCO-rfbfDqFxHo3a4Pn4bLyJTBBK1SrB2pq
 OUTPUT:
-  FILE1 somedir/file1
-  FILE2 somedir/sub/file1
+  somedir/file1 FILE1
+  somedir/sub/file1 FILE2
 BLINDS:
 
 getRunningTarget(FILE1)

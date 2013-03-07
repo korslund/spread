@@ -6,9 +6,12 @@
 using namespace Spread;
 using namespace std;
 
+bool doLog = true;
+
 struct MyCache : Cache::ICacheIndex
 {
   map<Hash,string> files;
+  Hash::DirMap reverse;
 
   int getStatus(const std::string &where, const Hash &hash)
   {
@@ -30,6 +33,7 @@ struct MyCache : Cache::ICacheIndex
         assert(file != "");
         cout << "  " << hash << " " << file << endl;
         files[hash] = file;
+        reverse[file] = hash;
       }
   }
 
@@ -39,13 +43,18 @@ struct MyCache : Cache::ICacheIndex
   }
 
   void add(const std::string &s, const Hash& h)
-  { files[h] = s; }
+  { files[h] = s; reverse[s] = h; }
 
-  Hash addFile(string,const Hash&) { assert(0); }
+  // This is purely used for checking, it doesn't allow adding files
+  Hash addFile(string s,const Hash&,bool)
+  {
+    return reverse[s];
+  }
+
   void removeFile(const string&) { assert(0); }
   void getEntries(Cache::CIVector&) const { assert(0); }
 
-  void reset() { files.clear(); }
+  void reset() { files.clear(); reverse.clear(); }
 };
 
 struct DummyTarget : TreeBase
@@ -170,7 +179,7 @@ struct MyOwner : DirOwner
       }
   }
 
-  void log(const std::string &msg) { cout << "LOG: " << msg << endl; }
+  void log(const std::string &msg) { if(doLog) cout << "LOG: " << msg << endl; }
 
   std::map<Hash, JobInfoPtr> stuff;
 
@@ -210,29 +219,13 @@ struct MyOwner : DirOwner
   MyOwner() : asker(NULL) {}
 };
 
-void print(const Hash::DirMap &dir, const std::string &what)
+template <class T>
+void print(const T &m, const std::string &what)
 {
   cout << what << ":\n";
-  Hash::DirMap::const_iterator it;
-  for(it = dir.begin(); it != dir.end(); it++)
-    {
-      const std::string &file = it->first;
-      const Hash &hash = it->second;
-      assert(file != "");
-      cout << "  " << hash << " " << file << endl;
-    }
-}
-
-void print(const TreeBase::HashDir &dir, const std::string &what)
-{
-  cout << what << ":\n";
-  TreeBase::HashDir::const_iterator it;
-  for(it = dir.begin(); it != dir.end(); it++)
-    {
-      const std::string &file = it->second;
-      const Hash &hash = it->first;
-      cout << "  " << hash << " " << file << endl;
-    }
+  typename T::const_iterator it;
+  for(it = m.begin(); it != m.end(); it++)
+    cout << "  " << it->first << " " << it->second << endl;
 }
 
 MyOwner own;

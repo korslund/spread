@@ -341,18 +341,18 @@ int DirInstaller::ask(const std::string &question, const std::string &opt0,
 
   log("Asking user question: " + question);
   for(int i=0; i<opt.size(); i++)
-    log("  OPTION: " + opt[i]);
+    log("OPTION: " + opt[i]);
 
   std::string oldMsg = setStatus("Waiting for answer to user question");
   bool abort = ptr->owner->askWait(p, getInfo());
 
   if(a->abort || checkStatus()) abort = true;
-  if(abort) fail("  User wanted us to abort");
+  if(abort) fail("User abort!");
 
   int &sel = a->selection;
 
   assert(sel >= 0 && sel < opt.size());
-  log("  RESPONSE: " + opt[sel]);
+  log("RESPONSE: " + opt[sel]);
 
   setBusy(oldMsg);
   return sel;
@@ -360,17 +360,124 @@ int DirInstaller::ask(const std::string &question, const std::string &opt0,
 
 void DirInstaller::resolveConflicts(HashDir &add, HashDir &del, const DirMap &upgrade)
 {
-  assert(0);
+  HashDir backups;
+
+  // Go through the list of created elements
+  HashDir::iterator it, it2;
+  for(it = add.begin(); it != add.end();)
+    {
+      // Keep two iterators so we can remove elements from the list
+      // while iterating
+      it2 = it++;
+
+      const Hash &hash = it2->first;
+      const std::string &file = it2->second;
+      assert(hash.isValid());
+      assert(file != "");
+
+      Hash fHash = index.checkFile(file);
+
+      // Always overwrite missing files
+      if(fHash.isNull()) continue;
+
+      // Also overwrite if the file matches what we expected it to be
+      bool upg = false;
+      {
+        DirMap::const_iterator res = upgrade.find(file);
+        upg = res != upgrade.end();
+        if(upg && res->second == fHash)
+          continue;
+      }
+
+      /* If a unexpected file was found, and it's not the file we are
+         writing, then ask the user what to do.
+      */
+      if(fHash != hash)
+        {
+          std::string text;
+          if(upg) text = "File '" + file + "' contains modifications. Overwrite anyway?";
+          else text = "File '" + file + "' already exists. Overwrite it?";
+
+          int i = ask(text, "Overwrite with backup (recommended)", "Overwrite without backup", "Keep file");
+          if(i == 0 || i == 1)
+            {
+              if(i == 0)
+                backups.insert(HDValue(fHash, file + ".___backup___"));
+              continue;
+            }
+          assert(i == 2);
+        }
+
+      // Remove the file addition entry
+      add.erase(it2);
+    }
+
+  // Add backups back into the addition list
+  for(it = backups.begin(); it != backups.end(); it++)
+    add.insert(*it);
+
+  // Do the same for the delete list
+  for(it = del.begin(); it != del.end();)
+    {
+      it2 = it++;
+
+      const Hash &hash = it2->first;
+      const std::string &file = it2->second;
+      assert(hash.isValid());
+      assert(file != "");
+
+      Hash fHash = index.checkFile(file);
+
+      // Delete file if it matches the expected hash
+      if(fHash == hash)
+        continue;
+
+      if(fHash.isValid())
+        {
+          // There is a file, and it doesn't match what we want
+          int i = ask("Deleted file '" + file + "' has changes. Delete anyway?", "Delete file", "Keep file");
+          if(i == 0)
+            continue;
+          assert(i == 1);
+        }
+
+      // Don't delete this file
+      del.erase(it2);
+    }
 }
 
 void DirInstaller::findMoves(HashDir &add, HashDir &del, StrMap &moves)
 {
-  assert(0);
+  HashDir::iterator it, it2, it3;
+  for(it = add.begin(); it != add.end();)
+    {
+      it2 = it++;
+
+      it3 = del.find(it2->first);
+      if(it3 == del.end()) continue;
+
+      // We have a match! A file that is both written and removed.
+      assert(it2->first == it3->first);
+
+      // Writing and deleting the same file should never happen
+      assert(it2->second != it3->second);
+
+      // Remove the entries and add the files to the move list
+      moves[it3->second] = it2->second;
+      add.erase(it2);
+      del.erase(it3);
+    }
 }
 
 void DirInstaller::doMovesDeletes(const StrMap &moves, const HashDir &del)
 {
-  assert(0);
+  for(StrMap::const_iterator it = moves.begin(); it != moves.end(); it++)
+    {
+      ptr->owner->moveFile(it->first, it->second);
+      index.addFile(it->second);
+    }
+  for(HashDir::const_iterator it = del.begin(); it != del.end(); it++)
+    ptr->owner->deleteFile(it->second);
 }
 
 void DirInstaller::doJob()

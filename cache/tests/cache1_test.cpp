@@ -7,14 +7,14 @@ using namespace std;
 
 Cache::CacheIndex index;
 
-void add(const std::string &file, const Hash &h = Hash())
+void add(const std::string &file, const Hash &h = Hash(), bool allowMissing=false)
 {
   cout << "Adding " << file;
   if(!h.isNull()) cout << " (expecting " << h << ")";
   cout << endl;
   try
     {
-      Hash out =index.addFile(file,h);
+      Hash out =index.addFile(file,h, allowMissing);
       cout << "  Got: " << out << endl;
     }
   catch(exception &e)
@@ -55,6 +55,7 @@ int main()
   add("hello.dat", hello);
   add("hello.dat", Hash("WRONG!",6));
   add("nofile.dat");
+  add("nofile.dat", Hash(), true);
   add("hello2.dat");
   add("hello2.dat");
 

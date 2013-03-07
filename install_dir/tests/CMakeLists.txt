@@ -58,3 +58,9 @@ target_link_libraries(sortadddel_test ${LIBS})
 
 add_executable(ask_test ask_test.cpp ${ALL})
 target_link_libraries(ask_test ${LIBS})
+
+add_executable(conflict_test conflict_test.cpp ${ALL})
+target_link_libraries(conflict_test ${LIBS})
+
+add_executable(findmoves_test findmoves_test.cpp ${ALL})
+target_link_libraries(findmoves_test ${LIBS})

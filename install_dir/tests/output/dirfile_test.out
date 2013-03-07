@@ -15,12 +15,12 @@ LOG: ERROR: No source for target HELLO
 ERROR: No source for target HELLO 
 TOTAL:
 makeDir(): creating directory:
-  HASH1 file1
-  HASH2 file2
+  file1 HASH1
+  file2 HASH2
   => dirfile1.dat LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm
 makeDir(): creating directory:
-  HASH3 file2
-  HASH4 file3
+  file2 HASH3
+  file3 HASH4
   => dirfile2.dat RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm
 
 TEST(LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm, '')
@@ -30,11 +30,11 @@ getRunningTarget(LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm)
 loadDir(dirfile1.dat)
   DIR = LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm
 LOADED:
-  HASH1 file1
-  HASH2 file2
+  file1 HASH1
+  file2 HASH2
 TOTAL:
-  HASH1 file1
-  HASH2 file2
+  file1 HASH1
+  file2 HASH2
 
 TEST(RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm, '')
 LOG: Looking for hints for dirHash=RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm
@@ -43,12 +43,12 @@ getRunningTarget(RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm)
 loadDir(dirfile2.dat)
   DIR = RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm
 LOADED:
-  HASH3 file2
-  HASH4 file3
+  file2 HASH3
+  file3 HASH4
 TOTAL:
-  HASH1 file1
-  HASH3 file2
-  HASH4 file3
+  file1 HASH1
+  file2 HASH3
+  file3 HASH4
 
 TEST(RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm, 'sub/')
 LOG: Looking for hints for dirHash=RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm
@@ -57,14 +57,14 @@ getRunningTarget(RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm)
 loadDir(dirfile2.dat)
   DIR = RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm
 LOADED:
-  HASH3 file2
-  HASH4 file3
+  file2 HASH3
+  file3 HASH4
 TOTAL:
-  HASH1 file1
-  HASH3 file2
-  HASH4 file3
-  HASH3 sub/file2
-  HASH4 sub/file3
+  file1 HASH1
+  file2 HASH3
+  file3 HASH4
+  sub/file2 HASH3
+  sub/file3 HASH4
 
 TEST(LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm, 'sub/')
 LOG: Looking for hints for dirHash=LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm
@@ -73,12 +73,12 @@ getRunningTarget(LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm)
 loadDir(dirfile1.dat)
   DIR = LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm
 LOADED:
-  HASH1 file1
-  HASH2 file2
+  file1 HASH1
+  file2 HASH2
 TOTAL:
-  HASH1 file1
-  HASH3 file2
-  HASH4 file3
-  HASH1 sub/file1
-  HASH2 sub/file2
-  HASH4 sub/file3
+  file1 HASH1
+  file2 HASH3
+  file3 HASH4
+  sub/file1 HASH1
+  sub/file2 HASH2
+  sub/file3 HASH4

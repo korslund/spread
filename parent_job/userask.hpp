@@ -16,7 +16,7 @@ namespace Spread
     void abortJob() { abort = true; }
 
     UserAsk(const std::string &msg)
-      : ready(false), abort(false) {}
+      : message(msg), ready(false), abort(false) {}
 
     // This makes the class polymorphic, which means we can use
     // dynamic_cast<> on child classes.

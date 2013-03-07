@@ -4,35 +4,35 @@ PRE-HASH:
 POST-HASH:
 
 PRE:
-  WORLD world
+  world WORLD
 POST:
-  HELLO hello
-  HELLO world
+  hello HELLO
+  world HELLO
 PRE-HASH:
 POST-HASH:
 
 PRE:
-  OLD arne
-  IGNORE user.cfg
+  arne OLD
+  user.cfg IGNORE
 POST:
-  NEW arne
-  IGNORE user.cfg
+  arne NEW
+  user.cfg IGNORE
 PRE-HASH:
 POST-HASH:
 
 PRE:
-  FIRST2 first
-  FIRST2 prefix_/first
-  OLD prefix_/second
-  DELETED prefix_/third
-  OLD second
-  DELETED third
+  first FIRST2
+  prefix_/first FIRST2
+  prefix_/second OLD
+  prefix_/third DELETED
+  second OLD
+  third DELETED
 POST:
-  FIRST2 first
-  SECOND second
-  FIRST2 subdir/first
-  OLD subdir/second
-  DELETED subdir/third
+  first FIRST2
+  second SECOND
+  subdir/first FIRST2
+  subdir/second OLD
+  subdir/third DELETED
 PRE-HASH:
 POST-HASH:
 

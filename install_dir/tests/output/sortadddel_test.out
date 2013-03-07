@@ -8,7 +8,7 @@ UPGRADE:
 TESTING: Single file add
 PRE:
 POST:
-  HASH1 file1
+  file1 HASH1
 ADD:
   HASH1 file1
 DEL:
@@ -16,7 +16,7 @@ UPGRADE:
 
 TESTING: Delete single file
 PRE:
-  HASH1 file1
+  file1 HASH1
 POST:
 ADD:
 DEL:
@@ -25,11 +25,11 @@ UPGRADE:
 
 TESTING: Multiple adds and deletes
 PRE:
-  HASH3 file3
-  HASH4 file4
+  file3 HASH3
+  file4 HASH4
 POST:
-  HASH1 file1
-  HASH2 file2
+  file1 HASH1
+  file2 HASH2
 ADD:
   HASH1 file1
   HASH2 file2
@@ -40,40 +40,40 @@ UPGRADE:
 
 TESTING: Upgrade file
 PRE:
-  OLD file
+  file OLD
 POST:
-  NEW file
+  file NEW
 ADD:
   NEW file
 DEL:
 UPGRADE:
-  OLD file
+  file OLD
 
 TESTING: Ignore file
 PRE:
-  OLD file
+  file OLD
 POST:
-  OLD file
+  file OLD
 ADD:
 DEL:
 UPGRADE:
 
 TESTING: Testing everything
 PRE:
-  OLD1 file1
-  OLD1 file2
-  OLD3 file3
-  OLD4 file4
-  OLD5 file5
-  OLD6 file6
-  IGN ign
+  file1 OLD1
+  file2 OLD1
+  file3 OLD3
+  file4 OLD4
+  file5 OLD5
+  file6 OLD6
+  ign IGN
 POST:
-  NEW2 file2
-  NEW2 file3
-  OLD1 file4
-  OLD5 file5
-  NEW7 file7
-  IGN ign
+  file2 NEW2
+  file3 NEW2
+  file4 OLD1
+  file5 OLD5
+  file7 NEW7
+  ign IGN
 ADD:
   NEW2 file2
   NEW2 file3
@@ -83,7 +83,7 @@ DEL:
   OLD1 file1
   OLD6 file6
 UPGRADE:
-  OLD1 file2
-  OLD3 file3
-  OLD4 file4
+  file2 OLD1
+  file3 OLD3
+  file4 OLD4
 

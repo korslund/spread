@@ -31,7 +31,7 @@ struct DummyCache : Cache::ICacheIndex
 
   string findHash(const Hash &hash) { return files[hash]; }
 
-  Hash addFile(string,const Hash&) { assert(0); }
+  Hash addFile(string,const Hash&,bool) { assert(0); }
   void addMany(const Hash::DirMap&) { assert(0); }
   void removeFile(const string&) { assert(0); }
   void getEntries(Cache::CIVector&) const { assert(0); }

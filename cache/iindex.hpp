@@ -42,10 +42,15 @@ namespace Cache
   {
     virtual int getStatus(const std::string &where, const Spread::Hash &hash) = 0;
     virtual std::string findHash(const Spread::Hash &hash) = 0;
-    virtual Spread::Hash addFile(std::string where, const Spread::Hash &h = Spread::Hash()) = 0;
+    virtual Spread::Hash addFile(std::string where, const Spread::Hash &h = Spread::Hash(),
+                                 bool allowMissing=false) = 0;
     virtual void addMany(const Spread::Hash::DirMap &files) = 0;
     virtual void removeFile(const std::string &where) = 0;
     virtual void getEntries(CIVector &result) const = 0;
+
+    // Convenience version of addFile() for when you expect the file to be missing
+    Spread::Hash checkFile(const std::string &where, const Spread::Hash &h = Spread::Hash())
+    { return addFile(where, h, true); }
   };
 }
 #endif

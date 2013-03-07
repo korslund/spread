@@ -1,0 +1,98 @@
+TESTING Empty:
+ADD:
+DEL:
+---
+ADD:
+DEL:
+MOVES:
+
+TESTING Non-matching entries:
+ADD:
+  FILE1 file1
+  FILE2 file2
+DEL:
+  FILE3 file3
+  FILE4 file4
+---
+ADD:
+  FILE1 file1
+  FILE2 file2
+DEL:
+  FILE3 file3
+  FILE4 file4
+MOVES:
+
+TESTING One matching entry:
+ADD:
+  FILE1 file1
+  FILE2 file2
+DEL:
+  FILE2 file3
+  FILE4 file4
+---
+ADD:
+  FILE1 file1
+DEL:
+  FILE4 file4
+MOVES:
+  file3 file2
+
+TESTING Multiple options:
+ADD:
+  FILE1 file5
+  FILE1 file7
+  FILE2 file6
+DEL:
+  FILE1 file1
+  FILE1 file2
+  FILE2 file3
+  FILE2 file4
+---
+ADD:
+DEL:
+  FILE2 file4
+MOVES:
+  file1 file5
+  file2 file7
+  file3 file6
+
+TESTING All entries matching:
+ADD:
+  FILE1 file6
+  FILE2 file8
+  FILE3 file5
+  FILE4 file7
+DEL:
+  FILE1 file1
+  FILE2 file2
+  FILE3 file3
+  FILE4 file4
+---
+ADD:
+DEL:
+MOVES:
+  file1 file6
+  file2 file8
+  file3 file5
+  file4 file7
+
+TESTING Pandemonium!:
+ADD:
+  FILE1 file2
+  FILE2 file4
+  FILE3 file1
+  FILE4 file3
+DEL:
+  FILE1 file1
+  FILE2 file2
+  FILE3 file3
+  FILE4 file4
+---
+ADD:
+DEL:
+MOVES:
+  file1 file2
+  file2 file4
+  file3 file1
+  file4 file3
+

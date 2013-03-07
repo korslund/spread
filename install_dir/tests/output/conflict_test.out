@@ -1,0 +1,209 @@
+TESTING Nothing:
+ADD:
+DEL:
+UPGRADE:
+---
+ADD:
+DEL:
+
+TESTING Overwriting non-existing file:
+ADD:
+  FILE file
+DEL:
+UPGRADE:
+---
+ADD:
+  FILE file
+DEL:
+
+TESTING Overwriting identical file:
+ADD:
+  FILE file
+DEL:
+UPGRADE:
+---
+ADD:
+DEL:
+
+TESTING Deleting non-existing file:
+ADD:
+DEL:
+  FILE file
+UPGRADE:
+---
+ADD:
+DEL:
+
+TESTING Deleting expected file:
+ADD:
+DEL:
+  FILE file
+UPGRADE:
+---
+ADD:
+DEL:
+  FILE file
+
+TESTING Upgrading identical file:
+ADD:
+  FILE file
+DEL:
+UPGRADE:
+  file FILE
+---
+ADD:
+  FILE file
+DEL:
+
+TESTING Upgrading expected file:
+ADD:
+  NEW file
+DEL:
+UPGRADE:
+  file OLD
+---
+ADD:
+  NEW file
+DEL:
+
+TESTING Upgrading missing file:
+ADD:
+  NEW file
+DEL:
+UPGRADE:
+  file OLD
+---
+ADD:
+  NEW file
+DEL:
+
+TESTING Multiple targets:
+ADD:
+  HASH1 file1
+  HASH1 file2
+  HASH1 file5
+  HASH3 file3
+  HASH4 file4
+DEL:
+  ABC file6
+  DEF file7
+UPGRADE:
+  file4 OLD4
+  file5 HASH1
+---
+ADD:
+  HASH1 file1
+  HASH1 file5
+  HASH4 file4
+DEL:
+  ABC file6
+
+
+STARTING USER-ASK TESTS:
+
+TESTING Overwriting unexpected file - KEEP:
+  Preselected answer is: 2
+ADD:
+  FILE file
+DEL:
+UPGRADE:
+QUESTION: File 'file' already exists. Overwrite it?
+ANSWER: Keep file
+---
+ADD:
+DEL:
+
+TESTING Overwriting unexpected file - OVERWRITE:
+  Preselected answer is: 1
+ADD:
+  FILE file
+DEL:
+UPGRADE:
+QUESTION: File 'file' already exists. Overwrite it?
+ANSWER: Overwrite without backup
+---
+ADD:
+  FILE file
+DEL:
+
+TESTING Overwriting unexpected file - OVERWRITE + BACKUP:
+  Preselected answer is: 0
+ADD:
+  FILE file
+DEL:
+UPGRADE:
+QUESTION: File 'file' already exists. Overwrite it?
+ANSWER: Overwrite with backup (recommended)
+---
+ADD:
+  FILE file
+  OLD file.___backup___
+DEL:
+
+TESTING Overwriting unexpected file - KEEP:
+  Preselected answer is: 2
+ADD:
+  FILE file
+DEL:
+UPGRADE:
+  file OLD
+QUESTION: File 'file' contains modifications. Overwrite anyway?
+ANSWER: Keep file
+---
+ADD:
+DEL:
+
+TESTING Overwriting unexpected file - OVERWRITE:
+  Preselected answer is: 1
+ADD:
+  FILE file
+DEL:
+UPGRADE:
+  file OLD
+QUESTION: File 'file' contains modifications. Overwrite anyway?
+ANSWER: Overwrite without backup
+---
+ADD:
+  FILE file
+DEL:
+
+TESTING Overwriting unexpected file - OVERWRITE + BACKUP:
+  Preselected answer is: 0
+ADD:
+  FILE file
+DEL:
+UPGRADE:
+  file OLD
+QUESTION: File 'file' contains modifications. Overwrite anyway?
+ANSWER: Overwrite with backup (recommended)
+---
+ADD:
+  FILE file
+  WRONG file.___backup___
+DEL:
+
+TESTING Deleting wrong file - KEEP:
+  Preselected answer is: 1
+ADD:
+DEL:
+  FILE file
+UPGRADE:
+QUESTION: Deleted file 'file' has changes. Delete anyway?
+ANSWER: Keep file
+---
+ADD:
+DEL:
+
+TESTING Deleting wrong file - KILL!:
+  Preselected answer is: 0
+ADD:
+DEL:
+  FILE file
+UPGRADE:
+QUESTION: Deleted file 'file' has changes. Delete anyway?
+ANSWER: Delete file
+---
+ADD:
+DEL:
+  FILE file
+

@@ -1,40 +1,40 @@
 LOG: Asking user question: What's for dinner?
-LOG:   OPTION: Chicken
+LOG: OPTION: Chicken
 LOG: STATUS: Waiting for answer to user question
-LOG:   RESPONSE: Chicken
+LOG: RESPONSE: Chicken
 0
 LOG: Asking user question: 3+5=
-LOG:   OPTION: 2
-LOG:   OPTION: 8
-LOG:   OPTION: 3
-LOG:   OPTION: -14
+LOG: OPTION: 2
+LOG: OPTION: 8
+LOG: OPTION: 3
+LOG: OPTION: -14
 LOG: STATUS: Waiting for answer to user question
-LOG:   RESPONSE: 8
+LOG: RESPONSE: 8
 1
 LOG: Asking user question: Eh?
-LOG:   OPTION: blah
-LOG:   OPTION: bleh
-LOG:   OPTION: bloh
+LOG: OPTION: blah
+LOG: OPTION: bleh
+LOG: OPTION: bloh
 LOG: STATUS: Waiting for answer to user question
-LOG:   RESPONSE: bloh
+LOG: RESPONSE: bloh
 
 LOG: Asking user question: Eh?
-LOG:   OPTION: blah
-LOG:   OPTION: bleh
-LOG:   OPTION: bloh
+LOG: OPTION: blah
+LOG: OPTION: bleh
+LOG: OPTION: bloh
 LOG: STATUS: Waiting for answer to user question
-LOG:   RESPONSE: blah
+LOG: RESPONSE: blah
 
 LOG: Asking user question: Eh?
-LOG:   OPTION: blah
-LOG:   OPTION: bleh
-LOG:   OPTION: bloh
+LOG: OPTION: blah
+LOG: OPTION: bleh
+LOG: OPTION: bloh
 LOG: STATUS: Waiting for answer to user question
-LOG:   RESPONSE: bleh
+LOG: RESPONSE: bleh
 
 LOG: Asking user question: Eh?
-LOG:   OPTION: blah
-LOG:   OPTION: bleh
-LOG:   OPTION: bloh
+LOG: OPTION: blah
+LOG: OPTION: bleh
+LOG: OPTION: bloh
 LOG: STATUS: Waiting for answer to user question
-LOG: ERROR:   User wanted us to abort
+LOG: ERROR: User abort!

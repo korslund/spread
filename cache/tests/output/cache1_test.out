@@ -6,6 +6,8 @@ Adding hello.dat (expecting lZ5oPKdWMISZA5jDyfBQeyndzkVx3MLEOarWExFR-YMG)
   Error: Given hash doesn't match real file size: /home/mortennk/koding/spread/cache/tests/hello.dat
 Adding nofile.dat
   Error: Cannot index non-existing file: /home/mortennk/koding/spread/cache/tests/nofile.dat
+Adding nofile.dat
+  Got: 00
 Adding hello2.dat
   Got: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
 Adding hello2.dat

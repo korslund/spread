@@ -393,9 +393,13 @@ Hash CacheIndex::addEntry(std::string &where, const Hash &given, uint64_t &time)
   return hash;
 }
 
-Hash CacheIndex::addFile(std::string where, const Hash &given)
+Hash CacheIndex::addFile(std::string where, const Hash &given, bool allowMissing)
 {
   PRINT("addFile(" << where << ", " << given << ")");
+
+  if(allowMissing && !bf::exists(where))
+    return Hash();
+
   LOCK lock(ptr->mutex);
   uint64_t time;
   Hash hash = addEntry(where, given, time);
