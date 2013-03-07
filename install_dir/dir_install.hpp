@@ -128,6 +128,7 @@ namespace Spread
     void handleHash(Hash::DirMap &out, const Hash &dirHash,
                     HashDir &blinds, const std::string &path);
     void sortInput();
+    void sortBlinds();
   };
 
   struct DirOwner : TreeOwner

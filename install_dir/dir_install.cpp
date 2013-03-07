@@ -166,7 +166,6 @@ void DirInstaller::handleHash(Hash::DirMap &out, const Hash &dirHash,
       and we are missing either dir file, then we have to do the
       blind-index thing mentioned above. Otherwise if we are NOT
       upgrading, do a direct blind install.
-
    */
 
 void DirInstaller::sortInput()
@@ -186,10 +185,44 @@ void DirInstaller::sortInput()
   postHash.clear();
 }
 
+void DirInstaller::sortBlinds()
+{
+  assert(0);
+}
+
 void DirInstaller::doJob()
 {
+  /* Sort input from preHash/postHash into pre/post and
+     preBlinds/postBlinds. This may involve fetching (downloading,
+     unpacking etc) dir files.
+
+     Clears preHash/postHash.
+  */
   sortInput();
   if(checkStatus()) return;
+
+  /* Processes the *Blinds lists. This will involve fetching the
+     achives in question to tmp locations, and either installing them
+     directly (in the non-patch case) or indexing them (producing the
+     dirfile) so sortInput() will be able to use them as normal
+     archives.
+
+     Puts archives that need to be reprocessed back into
+     preHash/postHash, so we can re-run sortInput(). Clears *Blinds
+     lists.
+   */
+  sortBlinds();
+  if(checkStatus()) return;
+
+  /* Reprocess archives from sortBlinds(), if any. This time around
+     they MUST be fully processed, or it is an error. IOW, we are not
+     allowed to put archives back into the *Blinds lists.
+   */
+  sortInput();
+  if(checkStatus()) return;
+
+  if(preBlinds.size() || postBlinds.size())
+    fail("Failed to process all archives.");
 
   setDone();
 }

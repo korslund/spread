@@ -49,3 +49,6 @@ target_link_libraries(dirfile_test ${LIBS})
 
 add_executable(handle_test handle_test.cpp ${ALL})
 target_link_libraries(handle_test ${LIBS})
+
+add_executable(blinds_test blinds_test.cpp ${ALL})
+target_link_libraries(blinds_test ${LIBS})
