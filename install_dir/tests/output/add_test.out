@@ -13,20 +13,18 @@ POST-HASH:
 
 PRE:
   OLD arne
-  orig user.cfg
-  00 user2.cfg
+  IGNORE user.cfg
 POST:
   NEW arne
-  orig user.cfg
-  00 user2.cfg
+  IGNORE user.cfg
 PRE-HASH:
 POST-HASH:
 
 PRE:
   FIRST2 first
-  FIRST2 prefix_first
-  OLD prefix_second
-  DELETED prefix_third
+  FIRST2 prefix_/first
+  OLD prefix_/second
+  DELETED prefix_/third
   OLD second
   DELETED third
 POST:
@@ -41,8 +39,8 @@ POST-HASH:
 PRE:
 POST:
 PRE-HASH:
-  DIR3 dir3
+  DIR3 dir3/
 POST-HASH:
   DIR1 
-  DIR2 dir2
+  DIR2 dir2/
 

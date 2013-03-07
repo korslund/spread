@@ -19,25 +19,24 @@ struct MyTest : DirInstaller
 int main()
 {
   {
-    MyTest test;
+    MyTest test("blah");
     test.run();
   }
   {
-    MyTest test;
+    MyTest test("blah");
     test.addFile("hello", Hash("HELLO"));
     test.addFile("world", Hash("HELLO"));
     test.remFile("world", Hash("WORLD"));
     test.run();
   }
   {
-    MyTest test;
+    MyTest test("blah");
     test.updateFile("arne", Hash("OLD"), Hash("NEW"));
-    test.ignoreFile("user.cfg", Hash("orig"));
-    test.ignoreFile("user2.cfg");
+    test.ignoreFile("user.cfg");
     test.run();
   }
   {
-    MyTest test;
+    MyTest test("blah");
     test.addFile("first", Hash("FIRST"));
     Hash::DirMap dir;
     dir["first"] = Hash("FIRST2");
@@ -51,7 +50,7 @@ int main()
     test.run();
   }
   {
-    MyTest test;
+    MyTest test("blah");
     test.addDir(Hash("DIR1"));
     test.addDir(Hash("DIR2"), "dir2");
     test.remDir(Hash("DIR3"), "dir3");

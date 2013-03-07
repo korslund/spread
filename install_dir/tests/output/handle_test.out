@@ -87,6 +87,10 @@ setRunningTarget(FILE1)
 TARGET: UNPACK
   Inputs:
     ARC 
-getRunningTarget(ARC)
-LOG: ERROR: No source for target ARC 
+  Outputs:
+    FILE1 
+Adding 1 files to cache:
+  FILE1 tmp_FILE1
+notifyFiles():
+  FILE1
 

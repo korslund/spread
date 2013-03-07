@@ -33,7 +33,10 @@ struct MyCache : Cache::ICacheIndex
       }
   }
 
-  string findHash(const Hash &hash) { return files[hash]; }
+  string findHash(const Hash &hash)
+  {
+    return files[hash];
+  }
 
   void add(const std::string &s, const Hash& h)
   { files[h] = s; }
@@ -49,10 +52,9 @@ struct DummyTarget : TreeBase
 {
   std::string what;
   HashDir outs, ins;
-  int type;
 
-  DummyTarget(TreeOwner &o, const std::string &w, int t)
-    : TreeBase(o), what(w), type(t)
+  DummyTarget(TreeOwner &o, const std::string &w)
+    : TreeBase(o), what(w)
   { cout << "CREATING Target what=" << what << endl; }
 
   void addOutput(const Hash &h, const std::string &where)
@@ -78,6 +80,7 @@ struct DummyTarget : TreeBase
             }
         }
 
+        /*
         HashMap res;
         fetchFiles(ins, res);
         cout << "  Processed inputs:\n";
@@ -86,6 +89,7 @@ struct DummyTarget : TreeBase
           for(it = res.begin(); it != res.end(); it++)
             cout << "    " << it->first << " " << it->second << endl;
         }
+        */
       }
     if(outs.size())
       {
@@ -109,22 +113,27 @@ struct DummyTarget : TreeBase
   }
 };
 
+struct AskHandle
+{
+  virtual bool askWait(AskPtr ask) = 0;
+};
+
 struct MyOwner : DirOwner
 {
-  TreePtr target(const std::string &what, int type)
-  { return TreePtr(new DummyTarget(*this, what, type)); }
+  TreePtr target(const std::string &what)
+  { return TreePtr(new DummyTarget(*this, what)); }
 
   TreePtr copyTarget(const std::string &from)
-  { return target("COPY " + from, 0); }
+  { return target("COPY " + from); }
 
   TreePtr downloadTarget(const std::string &url)
-  { return target("DOWNLOAD " + url, 1); }
+  { return target("DOWNLOAD " + url); }
 
   TreePtr unpackTarget(const Hash &dir)
-  { return target("UNPACK", 2); }
+  { return target("UNPACK"); }
 
-  TreePtr unpackBlindTarget(const string&, const Hash &)
-  { assert(0); }
+  TreePtr unpackBlindTarget(const string &dir, const Hash &)
+  { return target("BLIND to " + dir); }
 
   boost::recursive_mutex mutex;
   Lock lock() { return Lock(new boost::lock_guard<boost::recursive_mutex>(mutex)); }
@@ -140,7 +149,7 @@ struct MyOwner : DirOwner
     output = dirs[file];
     Hash h = Dir::hash(output);
     cout << "  DIR = " << h << endl;
-    if(check.isOk() && check != h)
+    if(check.isValid() && check != h)
       throw std::runtime_error("HASH MISMATCH! dir=" + h.toString() +
                                " check=" + check.toString());
   }
@@ -191,9 +200,14 @@ struct MyOwner : DirOwner
     stuff[hash] = ptr;
   }
 
-  bool askWait(AskPtr ask, JobInfoPtr info) { assert(0); }
+  AskHandle *asker;
+
+  bool askWait(AskPtr ask, JobInfoPtr info)
+  { if(asker) return asker->askWait(ask); assert(0); }
   void deleteFile(const std::string &path) { assert(0); }
- 
+  void moveFile(const std::string &from, const std::string &to) { assert(0); }
+
+  MyOwner() : asker(NULL) {}
 };
 
 void print(const Hash::DirMap &dir, const std::string &what)

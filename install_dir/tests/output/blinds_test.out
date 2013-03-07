@@ -1,0 +1,116 @@
+TESTING: Nothing
+PRE-BLINDS:
+POST-BLINDS:
+LOG: Processing direct blind installs:
+LOG:   No blinds found.
+OUTPUT:
+PRE-HASH:
+POST-HASH:
+
+TESTING: Single blind install
+PRE-BLINDS:
+POST-BLINDS:
+  ARC1 
+LOG: Processing direct blind installs:
+CREATING Target what=BLIND to some/path/
+LOG:   Blind unpacking ARC1 => some/path/
+TARGET: BLIND to some/path/
+  Inputs:
+    ARC1 
+OUTPUT:
+PRE-HASH:
+POST-HASH:
+
+TESTING: Multi-blind install with paths
+PRE-BLINDS:
+POST-BLINDS:
+  ARC2 a
+  ARC3 b/
+LOG: Processing direct blind installs:
+CREATING Target what=BLIND to some/path/a
+LOG:   Blind unpacking ARC2 => some/path/a
+TARGET: BLIND to some/path/a
+  Inputs:
+    ARC2 
+CREATING Target what=BLIND to some/path/b/
+LOG:   Blind unpacking ARC3 => some/path/b/
+TARGET: BLIND to some/path/b/
+  Inputs:
+    ARC3 
+OUTPUT:
+PRE-HASH:
+POST-HASH:
+
+TESTING: Single install, with upgrade info present
+PRE-BLINDS:
+POST-BLINDS:
+  ARC1 
+LOG: Un-blinding archives for upgrade
+CREATING Target what=BLIND to 
+LOG:   Blind indexing ARC1
+TARGET: BLIND to 
+  Inputs:
+    ARC1 
+OUTPUT:
+PRE-HASH:
+POST-HASH:
+  ARC1 
+
+TESTING: Pre and post blinds
+PRE-BLINDS:
+  ARC1 
+  ARC2 a
+POST-BLINDS:
+  ARC3 b/
+  ARC4 
+LOG: Un-blinding archives for upgrade
+CREATING Target what=BLIND to 
+LOG:   Blind indexing ARC1
+TARGET: BLIND to 
+  Inputs:
+    ARC1 
+CREATING Target what=BLIND to 
+LOG:   Blind indexing ARC2
+TARGET: BLIND to 
+  Inputs:
+    ARC2 
+CREATING Target what=BLIND to 
+LOG:   Blind indexing ARC3
+TARGET: BLIND to 
+  Inputs:
+    ARC3 
+CREATING Target what=BLIND to 
+LOG:   Blind indexing ARC4
+TARGET: BLIND to 
+  Inputs:
+    ARC4 
+OUTPUT:
+PRE-HASH:
+  ARC1 
+  ARC2 a
+POST-HASH:
+  ARC3 b/
+  ARC4 
+
+TESTING: Just pre blinds
+PRE-BLINDS:
+  ARC1 
+  ARC2 a
+POST-BLINDS:
+LOG: Un-blinding archives for upgrade
+CREATING Target what=BLIND to 
+LOG:   Blind indexing ARC1
+TARGET: BLIND to 
+  Inputs:
+    ARC1 
+CREATING Target what=BLIND to 
+LOG:   Blind indexing ARC2
+TARGET: BLIND to 
+  Inputs:
+    ARC2 
+OUTPUT:
+PRE-HASH:
+  ARC1 
+  ARC2 a
+POST-HASH:
+

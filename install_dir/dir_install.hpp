@@ -13,10 +13,10 @@ namespace Spread
   struct DirInstaller : TreeBase
   {
     DirInstaller(DirOwner &owner, RuleSet &rules,
-                 Cache::ICacheIndex &cache, const std::string &prefix);
+                 Cache::ICacheIndex &_cache, const std::string &basedir);
 
     /* Add a single file to the install list. The file path is taken
-       to be relative to 'prefix'.
+       to be relative to 'basedir'.
 
        If the file already exists and does not match a file added with
        remFile/remDir, the job will ask through owner.askWait()
@@ -56,12 +56,6 @@ namespace Spread
        required, and leave all unchanged files alone (even if they
        contain user modifications.) All affected files with user
        modifications cause a recoverable error.
-
-       Note that calling remFile() is not necessary to invoke the
-       backend patching mechanism. If patching an existing file (from
-       the same location or not) can be used to create the destination
-       file, then patching is used regardless of whether remFile() was
-       called.
      */
     void remFile(const std::string &file, const Hash &hash);
 
@@ -70,15 +64,15 @@ namespace Spread
     void updateFile(const std::string &file, const Hash &oldH, const Hash &newH)
     { addFile(file, newH); remFile(file, oldH); }
 
-    void ignoreFile(const std::string &file, const Hash &hash = Hash())
-    { updateFile(file, hash, hash); }
+    void ignoreFile(const std::string &file)
+    { Hash h("IGNORE"); updateFile(file, h, h); }
 
     /* Add/remove a directory of dependencies. All paths are relative
-       to 'prefix'. You can also specify an optional path to prepend
-       to all file paths. The path MUST BE SLASH TERMINATED if you
-       want it to act as a directory. The final path becomes:
+       to 'basedir'. You can also specify an optional path to prepend
+       to all file paths. Paths will automatically be slash
+       terminated. The result will be:
 
-       prefix + path + path_in_directory
+       prefix / path / path_in_directory
 
        These functions are equivalent of calling addFile()/remFile()
        multiple times in a row. If you want more functionality, see
@@ -103,8 +97,8 @@ namespace Spread
        system or cache.)
 
        The installer may ask the RuleSet for any additional hints for
-       finding the directory object, required archive file(s), or any
-       other rule that may help the process.
+       finding the directory object, possibly fetching additional
+       files and rules in the process.
      */
     void addDir(const Hash &hash, const std::string &path = "");
     void remDir(const Hash &hash, const std::string &path = "");
@@ -117,9 +111,12 @@ namespace Spread
 
   protected:
     std::string prefix;
+    Cache::ICacheIndex &index;
 
     Hash::DirMap pre, post;
     HashDir preHash, postHash, preBlinds, postBlinds;
+
+    typedef std::map<std::string, std::string> StrMap;
 
     // Internal functions:
     void loadHints(const Hash &dirHash);
@@ -129,6 +126,13 @@ namespace Spread
                     HashDir &blinds, const std::string &path);
     void sortInput();
     void sortBlinds();
+    void sortAddDel(HashDir &add, HashDir &del, Hash::DirMap &upgrade);
+    void resolveConflicts(HashDir &add, HashDir &del, const Hash::DirMap &upgrade);
+    void findMoves(HashDir &add, HashDir &del, StrMap &moves);
+    void doMovesDeletes(const StrMap &moves, const HashDir &del);
+    int ask(const std::string &question, const std::string &opt0,
+            const std::string &opt1 = "", const std::string &opt2 = "",
+            const std::string &opt3 = "", const std::string &opt4 = "");
   };
 
   struct DirOwner : TreeOwner
@@ -145,6 +149,13 @@ namespace Spread
 
     // Delete a file from the filesystem
     virtual void deleteFile(const std::string &path) = 0;
+
+    /* Move a file. This is required to work even if the underlying OS
+       'move' function fails (eg. if trying to move across disk
+       partitions.) On failure the function must fallback to vanilla
+       copy+delete.
+     */
+    virtual void moveFile(const std::string &from, const std::string &to) = 0;
   };
 }
 

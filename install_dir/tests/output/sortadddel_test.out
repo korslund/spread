@@ -1,0 +1,89 @@
+TESTING: Nothing
+PRE:
+POST:
+ADD:
+DEL:
+UPGRADE:
+
+TESTING: Single file add
+PRE:
+POST:
+  HASH1 file1
+ADD:
+  HASH1 file1
+DEL:
+UPGRADE:
+
+TESTING: Delete single file
+PRE:
+  HASH1 file1
+POST:
+ADD:
+DEL:
+  HASH1 file1
+UPGRADE:
+
+TESTING: Multiple adds and deletes
+PRE:
+  HASH3 file3
+  HASH4 file4
+POST:
+  HASH1 file1
+  HASH2 file2
+ADD:
+  HASH1 file1
+  HASH2 file2
+DEL:
+  HASH3 file3
+  HASH4 file4
+UPGRADE:
+
+TESTING: Upgrade file
+PRE:
+  OLD file
+POST:
+  NEW file
+ADD:
+  NEW file
+DEL:
+UPGRADE:
+  OLD file
+
+TESTING: Ignore file
+PRE:
+  OLD file
+POST:
+  OLD file
+ADD:
+DEL:
+UPGRADE:
+
+TESTING: Testing everything
+PRE:
+  OLD1 file1
+  OLD1 file2
+  OLD3 file3
+  OLD4 file4
+  OLD5 file5
+  OLD6 file6
+  IGN ign
+POST:
+  NEW2 file2
+  NEW2 file3
+  OLD1 file4
+  OLD5 file5
+  NEW7 file7
+  IGN ign
+ADD:
+  NEW2 file2
+  NEW2 file3
+  NEW7 file7
+  OLD1 file4
+DEL:
+  OLD1 file1
+  OLD6 file6
+UPGRADE:
+  OLD1 file2
+  OLD3 file3
+  OLD4 file4
+

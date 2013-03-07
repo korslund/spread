@@ -52,3 +52,9 @@ target_link_libraries(handle_test ${LIBS})
 
 add_executable(blinds_test blinds_test.cpp ${ALL})
 target_link_libraries(blinds_test ${LIBS})
+
+add_executable(sortadddel_test sortadddel_test.cpp ${ALL})
+target_link_libraries(sortadddel_test ${LIBS})
+
+add_executable(ask_test ask_test.cpp ${ALL})
+target_link_libraries(ask_test ${LIBS})

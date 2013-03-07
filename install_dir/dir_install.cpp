@@ -5,6 +5,8 @@
 
 using namespace Spread;
 
+typedef Hash::DirMap DirMap;
+
 struct DirInstaller::_Internal
 {
   RuleFinderPtr rulePtr;
@@ -12,6 +14,17 @@ struct DirInstaller::_Internal
   ArcRuleSet *arcRules;
   DirOwner *owner;
 };
+
+static std::string addSlash(std::string input)
+{
+  if(input.size())
+    {
+      char c = input[input.size()-1];
+      if(c != '\\' && c != '/')
+        input += "/";
+    }
+  return input;
+}
 
 void DirInstaller::loadHints(const Hash &dirHash)
 {
@@ -60,6 +73,7 @@ void DirInstaller::loadHints(const Hash &dirHash)
       std::string where = owner.getTmpName(hint);
       TreePtr job = owner.unpackBlindTarget(where);
       job->addInput(hint);
+      job->finder = finder;
       log("  Unpacking HINT=" + hint.toString() + " to " + where);
       execJob(job, false);
       if(checkStatus()) return;
@@ -76,7 +90,7 @@ void DirInstaller::loadHints(const Hash &dirHash)
     }
 }
 
-DirPtr DirInstaller::addDirFile(Hash::DirMap &out, const Hash &dirHash,
+DirPtr DirInstaller::addDirFile(DirMap &out, const Hash &dirHash,
                                 const std::string &path)
 {
   // Load any hints associated with the dir first
@@ -86,13 +100,13 @@ DirPtr DirInstaller::addDirFile(Hash::DirMap &out, const Hash &dirHash,
   std::string dirFile = fetchFile(dirHash);
 
   // Load and use it
-  DirPtr dir(new Hash::DirMap);
+  DirPtr dir(new DirMap);
   owner.loadDir(dirFile, *dir, dirHash);
   Dir::add(out, *dir, path);
   return dir;
 }
 
-void DirInstaller::handleHash(Hash::DirMap &out, const Hash &dirHash,
+void DirInstaller::handleHash(DirMap &out, const Hash &dirHash,
                               HashDir &blinds, const std::string &path)
 {
   log("Determining what to do with input hash " + dirHash.toString());
@@ -139,35 +153,6 @@ void DirInstaller::handleHash(Hash::DirMap &out, const Hash &dirHash,
     }
 }
 
-  /*
-    So what happens on a first install, and on an upgrade?
-
-    - virtually all games will have a single zip representing each
-      hash. We don't need dir files in these cases. No dir file =
-      blind install automatically. If a dir file is found (from
-      earlier), then that works too of course.
-
-    - upgrading: this is linked to the PRE package, not the post
-      package (since that works blind.) So if a PRE hash is given, we
-      are given an additional hint of where to download an upgrade
-      zip. The pre dirhash should already be cached (but the below
-      note means we have a fallback if it isn't.) Since that is
-      cached, the hint associated with this OLD dir contains:
-
-      - new dir file (required)
-      - old dir file (not needed, but doesn't cost that much)
-      - upgraded replacement files (if any)
-      - patch files (optional)
-
-      The ONLY thing we do is blind-unpack the hinted archive into
-      a tmp dir. The rest is automatic!
-
-    - in main doJob(): if we are upgrading (there exist pre items),
-      and we are missing either dir file, then we have to do the
-      blind-index thing mentioned above. Otherwise if we are NOT
-      upgrading, do a direct blind install.
-   */
-
 void DirInstaller::sortInput()
 {
   HashDir::const_iterator it;
@@ -186,6 +171,204 @@ void DirInstaller::sortInput()
 }
 
 void DirInstaller::sortBlinds()
+{
+  assert(preHash.size() == 0 && postHash.size() == 0);
+
+  // Do we have any pre- lists?
+  if(pre.size() == 0 && preBlinds.size() == 0)
+    {
+      /* No pre-install dir listings. This means this is a pure
+         install (or reinstall), not an upgrade.
+
+         That means we do not need the directory (contents listing) of
+         the archives we are installing, since we are just dumping the
+         entire archive into the destination directory anyway.
+
+         Just bind-install the archive to the destinatin directory.
+       */
+      log("Processing direct blind installs:");
+      if(postBlinds.size() == 0)
+        {
+          log("  No blinds found.");
+          return;
+        }
+
+      HashDir::const_iterator it;
+      for(it = postBlinds.begin(); it != postBlinds.end(); it++)
+        {
+          const Hash &arcHash = it->first;
+          std::string path = prefix + it->second;
+          TreePtr job = owner.unpackBlindTarget(path);
+          job->addInput(arcHash);
+          job->finder = finder;
+          log("  Blind unpacking " + arcHash.toString() + " => " + path);
+          execJob(job);
+          if(checkStatus()) return;
+        }
+
+      postBlinds.clear();
+      return;
+    }
+
+  /* We have both pre and post listings, meaning that this is an
+     upgrade not just an install. We cannot just dump archive contents
+     into the destination directory, but have to be more careful.
+
+     Our way of handling this is to INDEX the blind archives, meaning
+     fetching them (downloading etc) then running through them and
+     listing/hashing all the contents to a dirfile. (The dirfile
+     generated and cached automatically by the sub-system.)
+
+     This essentially turns a BLIND archive into a NON-BLIND
+     archive. Then we can handle it on a file-by-file basis through
+     sortInput() like other non-blind archives.
+   */
+  log("Un-blinding archives for upgrade");
+
+  HashDir::const_iterator it = preBlinds.begin();
+  bool first=true;
+  for(;; it++)
+    {
+      // Do some fancy loop trickery for fun and profit
+      if(first && it == preBlinds.end())
+        {
+          first = false;
+          it = postBlinds.begin();
+        }
+      if(!first && it == postBlinds.end())
+        break;
+
+      const Hash &arcHash = it->first;
+      TreePtr job = owner.unpackBlindTarget("");
+      job->addInput(arcHash);
+      job->finder = finder;
+      log("  Blind indexing " + arcHash.toString());
+      execJob(job);
+      if(checkStatus()) return;
+    }
+
+  // Move the archives back to the pre-processed state
+  preHash = preBlinds;
+  postHash = postBlinds;
+  preBlinds.clear();
+  postBlinds.clear();
+}
+
+void DirInstaller::sortAddDel(HashDir &add, HashDir &del, DirMap &upgrade)
+{
+  add.clear();
+  del.clear();
+  upgrade.clear();
+
+  // 'post' lists files we are creating
+  for(DirMap::const_iterator it = post.begin(); it != post.end(); it++)
+    {
+      const std::string &file = it->first;
+      const Hash &hash = it->second;
+      assert(file != "");
+      assert(hash.isValid());
+
+      // Is there a matching file in the 'pre' directory?
+      if(pre.find(file) != pre.end())
+        {
+          const Hash &pHash = pre[file];
+          assert(pHash.isValid());
+
+          // Do the hashes match?
+          if(hash == pHash)
+            /* Then this file is not to be upgraded. Ignore it
+               completely (since it may contain user modifications
+               that we are not going to overwrite.)
+            */
+            continue;
+
+          // The hashes do not match, this is an upgrade. Store the
+          // old hash.
+          upgrade[file] = pHash;
+        }
+
+      // Add the file
+      add.insert(HDValue(hash, file));
+    }
+
+  // 'pre' list are files already expected to be in the install
+  // directory
+  for(DirMap::const_iterator it = pre.begin(); it != pre.end(); it++)
+    {
+      const std::string &file = it->first;
+      const Hash &hash = it->second;
+      assert(hash.isValid());
+      assert(file != "");
+
+      // If post contains the same file, assume we have already
+      // handled it above
+      if(post.find(file) != post.end())
+        continue;
+
+      // A file only listed in the 'pre' dir means the file should be
+      // deleted.
+      del.insert(HDValue(hash, file));
+    }
+
+  pre.clear();
+  post.clear();
+}
+
+int DirInstaller::ask(const std::string &question, const std::string &opt0,
+                      const std::string &opt1, const std::string &opt2,
+                      const std::string &opt3, const std::string &opt4)
+{
+  StringAsk *a = new StringAsk(question);
+  AskPtr p(a);
+  std::vector<std::string> &opt = a->options;
+
+  assert(opt0 != "");
+  opt.push_back(opt0);
+  if(opt1 != "")
+    {
+      opt.push_back(opt1);
+      if(opt2 != "")
+        {
+          opt.push_back(opt2);
+          if(opt3 != "")
+            {
+              opt.push_back(opt3);
+              if(opt4 != "")
+                opt.push_back(opt4);
+            }
+        }
+    }
+
+  log("Asking user question: " + question);
+  for(int i=0; i<opt.size(); i++)
+    log("  OPTION: " + opt[i]);
+
+  std::string oldMsg = setStatus("Waiting for answer to user question");
+  bool abort = ptr->owner->askWait(p, getInfo());
+
+  if(a->abort || checkStatus()) abort = true;
+  if(abort) fail("  User wanted us to abort");
+
+  int &sel = a->selection;
+
+  assert(sel >= 0 && sel < opt.size());
+  log("  RESPONSE: " + opt[sel]);
+
+  setBusy(oldMsg);
+  return sel;
+}
+
+void DirInstaller::resolveConflicts(HashDir &add, HashDir &del, const DirMap &upgrade)
+{
+  assert(0);
+}
+
+void DirInstaller::findMoves(HashDir &add, HashDir &del, StrMap &moves)
+{
+  assert(0);
+}
+
+void DirInstaller::doMovesDeletes(const StrMap &moves, const HashDir &del)
 {
   assert(0);
 }
@@ -223,13 +406,52 @@ void DirInstaller::doJob()
 
   if(preBlinds.size() || postBlinds.size())
     fail("Failed to process all archives.");
+  assert(preHash.size() == 0 && postHash.size() == 0);
+
+  /* Now we only have the 'pre' and 'post' lists of individual files
+     left. Sort them into files to be added or deleted.
+
+     Also spits out a complete list of existing files we are expecting
+     to replace/patch into 'tmp'. This isn't used in the actual
+     upgrade process, only to detect and resolve conflicts.
+   */
+  HashDir add, del;
+  {
+    DirMap upgrade;
+    sortAddDel(add, del, upgrade);
+
+    /* Go through the list and resolve conflicts between what we
+       expect and what is ACTUALLY present in the file system
+       (according to ICacheIndex.)
+
+       Will ask the user for advice if necessary, and update add/del
+       lists with results.
+    */
+    resolveConflicts(add, del, upgrade);
+  }
+
+  /* Optimize add+delte pairs into moves, which are normally much
+     faster.
+   */
+  StrMap moves;
+  findMoves(add, del, moves);
+
+  /* Perform main file install.
+   */
+  HashMap tmp;
+  if(add.size())
+    fetchFiles(add, tmp);
+
+  /* Perform file moves and deletes last.
+   */
+  doMovesDeletes(moves, del);
 
   setDone();
 }
 
 DirInstaller::DirInstaller(DirOwner &owner, RuleSet &rules,
-                           Cache::ICacheIndex &cache, const std::string &pref)
-  : TreeBase(owner), prefix(pref)
+                           Cache::ICacheIndex &_cache, const std::string &pref)
+  : TreeBase(owner), index(_cache)
 {
   ptr.reset(new _Internal);
   ptr->origRules = &rules;
@@ -237,41 +459,50 @@ DirInstaller::DirInstaller(DirOwner &owner, RuleSet &rules,
   ptr->rulePtr.reset(ptr->arcRules);
   ptr->owner = &owner;
 
-  finder.reset(new HashFinder(ptr->rulePtr, cache));
+  prefix = addSlash(pref);
+  assert(prefix != "");
+
+  finder.reset(new HashFinder(ptr->rulePtr, index));
 }
 
 void DirInstaller::addFile(const std::string &file, const Hash &hash)
 {
   assert(!getInfo()->hasStarted());
+  assert(hash.isValid());
+  assert(file != "");
   post[file] = hash;
 }
 
 void DirInstaller::remFile(const std::string &file, const Hash &hash)
 {
   assert(!getInfo()->hasStarted());
+  assert(hash.isValid());
+  assert(file != "");
   pre[file] = hash;
 }
 
-void DirInstaller::addDir(const Hash::DirMap &dir, const std::string &path)
+void DirInstaller::addDir(const DirMap &dir, const std::string &path)
 {
   assert(!getInfo()->hasStarted());
-  Dir::add(post, dir, path);
+  Dir::add(post, dir, addSlash(path));
 }
 
-void DirInstaller::remDir(const Hash::DirMap &dir, const std::string &path)
+void DirInstaller::remDir(const DirMap &dir, const std::string &path)
 {
   assert(!getInfo()->hasStarted());
-  Dir::add(pre, dir, path);
+  Dir::add(pre, dir, addSlash(path));
 }
 
 void DirInstaller::addDir(const Hash &hash, const std::string &path)
 {
   assert(!getInfo()->hasStarted());
-  postHash.insert(HDValue(hash,path));
+  assert(hash.isValid());
+  postHash.insert(HDValue(hash,addSlash(path)));
 }
 
 void DirInstaller::remDir(const Hash &hash, const std::string &path)
 {
   assert(!getInfo()->hasStarted());
-  preHash.insert(HDValue(hash,path));
+  assert(hash.isValid());
+  preHash.insert(HDValue(hash,addSlash(path)));
 }

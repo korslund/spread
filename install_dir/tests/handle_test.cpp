@@ -58,7 +58,7 @@ struct MyTest : DirInstaller
 
 int main()
 {
-  MyTest test;
+  MyTest test("handle");
   test.run();
   return 0;
 }

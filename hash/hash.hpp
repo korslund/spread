@@ -46,7 +46,7 @@ namespace Spread
     bool isNull() const;
 
     // True if NOT zero
-    bool isOk() const { return !isNull(); }
+    bool isValid() const { return !isNull(); }
 
     // Copy digest verbatim from another source. Must be 40 bytes
     // long.
