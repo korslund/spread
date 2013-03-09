@@ -1,7 +1,7 @@
 #ifndef __SPREAD_ICACHEINDEX_HPP_
 #define __SPREAD_ICACHEINDEX_HPP_
 
-#include "hash/hash.hpp"
+#include <hash/hash.hpp>
 #include <stdint.h>
 #include <vector>
 

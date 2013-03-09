@@ -2,6 +2,7 @@
 #define __SPREAD_CACHE_HPP_
 
 #include "index.hpp"
+#include "files.hpp"
 #include "misc/random.hpp"
 
 namespace Cache
@@ -10,8 +11,11 @@ namespace Cache
   {
     CacheIndex index;
     Misc::Random random;
+    Files files;
 
     std::string tmpDir;
+
+    Cache() : files(index) {}
 
     std::string createTmpFilename()
     {

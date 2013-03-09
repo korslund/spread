@@ -1,7 +1,8 @@
 #include "jobmanager.hpp"
 
-#include <install_dir/dir_install.hpp>
+#include <boost/thread/recursive_mutex.hpp>
 #include <install_jobs/leaffactory.hpp>
+#include <install_dir/dir_install.hpp>
 #include <parent_job/askqueue.hpp>
 #include <boost/filesystem.hpp>
 #include <misc/logger.hpp>
@@ -60,6 +61,7 @@ struct JobManager::_Internal : DirOwner
     namespace bf = boost::filesystem;
     log("moveFile("+from+" => "+to+")");
     bool didCopy = false;
+    bf::create_directories(bf::path(to).parent_path());
     try { bf::rename(from, to); }
     catch(...)
       {
@@ -92,11 +94,33 @@ struct JobManager::_Internal : DirOwner
     if(logPtr) logPtr->log("trd="+Thread::getId() + ": " + msg);
   }
 
-  void notifyFiles(const Hash::DirMap &files) { assert(0); }
-  JobInfoPtr getRunningTarget(const Hash &hash) { assert(0); }
-  void setRunningTarget(const Hash &hash, JobInfoPtr ptr) { assert(0); }
-  Lock lock() { assert(0); }
+  typedef boost::recursive_mutex Mutex;
+  typedef boost::lock_guard<Mutex> LockGuard;
 
+  Mutex mutex;
+  std::map<Hash, JobInfoPtr> running;
+
+  Lock lock() { return Lock(new LockGuard(mutex)); }
+  void notifyFiles(const Hash::DirMap &files)
+  {
+    LockGuard l(mutex);
+    Hash::DirMap::const_iterator it;
+    for(it = files.begin(); it != files.end(); it++)
+      running[it->second] = JobInfoPtr();
+  }
+
+  JobInfoPtr getRunningTarget(const Hash &hash)
+  {
+    LockGuard l(mutex);
+    return running[hash];
+  }
+
+  void setRunningTarget(const Hash &hash, JobInfoPtr ptr)
+  {
+    LockGuard l(mutex);
+    assert(ptr);
+    running[hash] = ptr;
+  }
 };
 
 JobManager::JobManager(Cache::Cache &_cache, RuleSet &_rules)

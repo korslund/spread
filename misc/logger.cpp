@@ -1,5 +1,5 @@
 #include "logger.hpp"
-#include <iostream>
+#include <fstream>
 #include <boost/filesystem.hpp>
 
 using namespace Misc;
@@ -19,7 +19,7 @@ Logger::Logger(const std::string &file)
   ptr.reset(strm);
 }
 
-Logger(std::ostream *str)
+Logger::Logger(std::ostream *str)
   : strm(str), filename(""), print(false)
 {}
 

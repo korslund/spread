@@ -28,7 +28,7 @@ set(READJSON ${JSON} ${MANGLE} ${MIDIR}/readjson.cpp)
 
 set(CONF ${READJSON} ${MIDIR}/jconfig.cpp)
 
-set(CACHE ${CONF} ${HASH} ${CDIR}/index.cpp)
+set(CACHE ${CONF} ${HASH} ${CDIR}/index.cpp ${CDIR}/files.cpp)
 
 add_executable(cache1_test cache1_test.cpp ${CACHE})
 target_link_libraries(cache1_test ${LIBS})
@@ -50,3 +50,6 @@ target_link_libraries(cache_speed1 ${LIBS})
 
 add_executable(virtual_test virtual_test.cpp ${CACHE})
 target_link_libraries(virtual_test ${LIBS})
+
+add_executable(files_test files_test.cpp ${CACHE})
+target_link_libraries(files_test ${LIBS})
