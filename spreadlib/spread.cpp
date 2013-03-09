@@ -223,6 +223,7 @@ SpreadLib::SpreadLib(const std::string &outDir, const std::string &tmpDir)
 
   ptr->cache.index.load(ptr->getPath("cache.conf"));
   ptr->cache.tmpDir = abs(tmpDir);
+  ptr->cache.files.setDir(ptr->getPath("file_cache/"));
 }
 
 void SpreadLib::setURLCallback(CBFunc cb) { ptr->rules.setURLCallback(cb); }

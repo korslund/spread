@@ -16,10 +16,20 @@
 
 using namespace Cache;
 using namespace Spread;
-namespace bf = boost::filesystem;
 
-static std::string abs(const bf::path &file)
-{ return bf::absolute(file).string(); }
+namespace bfs = boost::filesystem;
+
+struct BoostFSystem : FSystem
+{
+  std::string abs(const std::string &file) { return bfs::absolute(file).string(); }
+  bool exists(const std::string &file) { return bfs::exists(file); }
+  uint64_t file_size(const std::string &file) { return bfs::file_size(file); }
+  Hash hashSum(const std::string &file) { return HashStream::sum(file); }
+  bool equivalent(const std::string &file1, const std::string &file2)
+  { return bfs::equivalent(file1, file2); }
+  uint64_t last_write_time(const std::string &file)
+  { return bfs::last_write_time(file); }
+};
 
 struct Entry
 {
@@ -154,10 +164,12 @@ struct CacheIndex::_CacheIndex_Hidden
   }
 };
 
-CacheIndex::CacheIndex(const std::string &conf)
+CacheIndex::CacheIndex(const std::string &conf, FSystem *_sys)
+  : sys(_sys)
 {
   ptr = new _CacheIndex_Hidden;
   if(conf != "") load(conf);
+  if(!sys) sys = new BoostFSystem;
 }
 CacheIndex::~CacheIndex() { delete ptr; }
 
@@ -170,14 +182,14 @@ void CacheIndex::load(const std::string &conf)
 int CacheIndex::getStatus(const std::string &_where, const Hash &hash)
 {
   PRINT("Cache::getStatus(" << _where << ", " << hash << ")");
-  std::string where = abs(_where);
+  std::string where = sys->abs(_where);
   PRINT("where=" << where);
 
   LOCK lock(ptr->mutex);
 
   // Check the index first if we think this is a match.
   Entry *ent = ptr->find(where);
-  bool exists = bf::exists(where);
+  bool exists = sys->exists(where);
   bool checkAlt = false;
   if(!ent || ent->hash != hash || !exists)
     {
@@ -195,7 +207,7 @@ int CacheIndex::getStatus(const std::string &_where, const Hash &hash)
              though the strings are different. Boost lets us check
              for this.
            */
-          if(bf::equivalent(alt, where))
+          if(sys->equivalent(alt, where))
             return CI_Match;
 
           return CI_ElseWhere;
@@ -222,7 +234,7 @@ int CacheIndex::getStatus(const std::string &_where, const Hash &hash)
       std::string alt = findHash(hash);
       if(alt != "")
         {
-          if(bf::equivalent(alt, where))
+          if(sys->equivalent(alt, where))
             return CI_Match;
           return CI_ElseWhere;
         }
@@ -260,7 +272,7 @@ std::string CacheIndex::findHash(const Hash &hash)
       PRINT("Found " << file);
 
       // Does the file still exist, and does it match?
-      if(bf::exists(file) && addFile(file) == hash)
+      if(sys->exists(file) && addFile(file) == hash)
         return file;
 
       // That file didn't match after all. Try another one.
@@ -288,7 +300,7 @@ std::string CacheIndex::findHash(const Hash &hash)
 
 void CacheIndex::removeFile(const std::string &_where)
 {
-  std::string where = abs(_where);
+  std::string where = sys->abs(_where);
   LOCK lock(ptr->mutex);
   ptr->remove(where);
   ptr->removeConf(where);
@@ -306,7 +318,7 @@ void CacheIndex::addMany(const Hash::DirMap &files)
   Hash::DirMap::const_iterator it;
   for(it = files.begin(); it != files.end(); it++)
     {
-      std::string file = abs(it->first);
+      std::string file = sys->abs(it->first);
       uint64_t time;
       Hash hash = addEntry(file, it->second, time);
       if(time)
@@ -326,12 +338,12 @@ Hash CacheIndex::addEntry(std::string &where, const Hash &given, uint64_t &time)
   PRINT("addEntry: where=" << where << "  given=" << given);
 
   assert(where != "");
-  where = abs(where);
+  where = sys->abs(where);
 
   PRINT("  abs path=" << where);
 
   // First things first: does the file even exist?
-  if(!bf::exists(where))
+  if(!sys->exists(where))
     {
       // Make sure we haven't indexed it
       removeFile(where);
@@ -343,8 +355,8 @@ Hash CacheIndex::addEntry(std::string &where, const Hash &given, uint64_t &time)
   PRINT("File exists, getting stats");
 
   // Get file information
-  time = bf::last_write_time(where);
-  uint64_t size = bf::file_size(where);
+  time = sys->last_write_time(where);
+  uint64_t size = sys->file_size(where);
 
   PRINT("time=" << time << " size=" << size);
 
@@ -383,7 +395,7 @@ Hash CacheIndex::addEntry(std::string &where, const Hash &given, uint64_t &time)
     {
       // No hash provided. Hash the file ourselves.
       PRINT("Hashing the file...");
-      hash = HashStream::sum(where);
+      hash = sys->hashSum(where);
       PRINT("  Done.");
     }
   assert(!hash.isNull());
@@ -397,7 +409,7 @@ Hash CacheIndex::addFile(std::string where, const Hash &given, bool allowMissing
 {
   PRINT("addFile(" << where << ", " << given << ")");
 
-  if(allowMissing && !bf::exists(where))
+  if(allowMissing && !sys->exists(where))
     return Hash();
 
   LOCK lock(ptr->mutex);

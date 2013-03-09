@@ -23,7 +23,9 @@ namespace Spread
     virtual ~UserAsk() {}
   };
 
+  struct StringAsk;
   typedef boost::shared_ptr<UserAsk> AskPtr;
+  typedef boost::shared_ptr<StringAsk> StringAskPtr;
 
   struct StringAsk : UserAsk
   {
@@ -43,7 +45,8 @@ namespace Spread
     StringAsk(const std::string &question)
       : UserAsk(question), selection(-1) {}
 
-    static StringAsk* handle(AskPtr ask) { return dynamic_cast<StringAsk*>(ask.get()); }
+    static StringAskPtr cast(AskPtr ask)
+    { return boost::dynamic_pointer_cast<StringAsk>(ask); }
   };
 }
 #endif

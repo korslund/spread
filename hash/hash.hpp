@@ -45,8 +45,11 @@ namespace Spread
     // True if the digest is zeroed out
     bool isNull() const;
 
-    // True if NOT zero
-    bool isValid() const { return !isNull(); }
+    // True if NOT null
+    bool isSet() const { return !isNull(); }
+
+    // We do NOT implement an 'operator bool()' thing because it's
+    // generally a bad idea.
 
     // Copy digest verbatim from another source. Must be 40 bytes
     // long.

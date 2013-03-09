@@ -37,7 +37,10 @@ void JobHolder::doJob()
 
                 // Keep failed jobs to help the user debug
                 if(p->getInfo()->isError())
-                  done.push_back(p);
+                  {
+                    handleError(getInfo()->getMessage());
+                    done.push_back(p);
+                  }
               }
           }
 

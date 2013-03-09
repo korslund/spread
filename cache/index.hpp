@@ -15,6 +15,16 @@
 
 namespace Cache
 {
+  struct FSystem
+  {
+    virtual std::string abs(const std::string &file) = 0;
+    virtual bool exists(const std::string &file) = 0;
+    virtual uint64_t file_size(const std::string &file) = 0;
+    virtual bool equivalent(const std::string &file1, const std::string &file2) = 0;
+    virtual uint64_t last_write_time(const std::string &file) = 0;
+    virtual Spread::Hash hashSum(const std::string &file) = 0;
+  };
+
   struct CacheIndex : ICacheIndex
   {
     /* Returns a CIStatus result for a given file location and
@@ -89,10 +99,20 @@ namespace Cache
      */
     void getEntries(CIVector &result) const;
 
-    // The optional 'conf' parameter is passed on to load().
-    CacheIndex(const std::string &conf = "");
+    /* The optional 'conf' parameter is passed on to load() and is
+       loaded as a config file. If the file does not exist, it will be
+       created when the first cache entry is added.
+
+       The FSystem* lets you specify an alternative handler for all
+       system requests. The default handler uses boost::filesystem to
+       interact the real filesystem. Replacing it can make the
+       CacheIndex work against a virtual file system. (The config file
+       path must still be a real file.)
+     */
+    CacheIndex(const std::string &conf = "", FSystem *_sys = NULL);
     ~CacheIndex();
   private:
+    FSystem *sys;
     struct _CacheIndex_Hidden;
     _CacheIndex_Hidden *ptr;
     Spread::Hash addEntry(std::string &where, const Spread::Hash &given,

@@ -19,7 +19,7 @@ namespace Spread
        along the JobInfoPtr so that the wait loop can respond properly
        to abort requests.
      */
-    bool pushWait(AskPtr &ask, JobInfoPtr info = JobInfoPtr());
+    bool pushWait(AskPtr ask, JobInfoPtr info = JobInfoPtr());
 
     /* Pop a value off the queue, or return false if there are no
        values.

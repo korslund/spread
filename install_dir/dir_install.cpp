@@ -266,13 +266,13 @@ void DirInstaller::sortAddDel(HashDir &add, HashDir &del, DirMap &upgrade)
       const std::string &file = it->first;
       const Hash &hash = it->second;
       assert(file != "");
-      assert(hash.isValid());
+      assert(hash.isSet());
 
       // Is there a matching file in the 'pre' directory?
       if(pre.find(file) != pre.end())
         {
           const Hash &pHash = pre[file];
-          assert(pHash.isValid());
+          assert(pHash.isSet());
 
           // Do the hashes match?
           if(hash == pHash)
@@ -297,7 +297,7 @@ void DirInstaller::sortAddDel(HashDir &add, HashDir &del, DirMap &upgrade)
     {
       const std::string &file = it->first;
       const Hash &hash = it->second;
-      assert(hash.isValid());
+      assert(hash.isSet());
       assert(file != "");
 
       // If post contains the same file, assume we have already
@@ -372,7 +372,7 @@ void DirInstaller::resolveConflicts(HashDir &add, HashDir &del, const DirMap &up
 
       const Hash &hash = it2->first;
       const std::string &file = it2->second;
-      assert(hash.isValid());
+      assert(hash.isSet());
       assert(file != "");
 
       Hash fHash = index.checkFile(file);
@@ -423,7 +423,7 @@ void DirInstaller::resolveConflicts(HashDir &add, HashDir &del, const DirMap &up
 
       const Hash &hash = it2->first;
       const std::string &file = it2->second;
-      assert(hash.isValid());
+      assert(hash.isSet());
       assert(file != "");
 
       Hash fHash = index.checkFile(file);
@@ -432,7 +432,7 @@ void DirInstaller::resolveConflicts(HashDir &add, HashDir &del, const DirMap &up
       if(fHash == hash)
         continue;
 
-      if(fHash.isValid())
+      if(fHash.isSet())
         {
           // There is a file, and it doesn't match what we want
           int i = ask("Deleted file '" + file + "' has changes. Delete anyway?", "Delete file", "Keep file");
@@ -472,10 +472,7 @@ void DirInstaller::findMoves(HashDir &add, HashDir &del, StrMap &moves)
 void DirInstaller::doMovesDeletes(const StrMap &moves, const HashDir &del)
 {
   for(StrMap::const_iterator it = moves.begin(); it != moves.end(); it++)
-    {
-      ptr->owner->moveFile(it->first, it->second);
-      index.addFile(it->second);
-    }
+    ptr->owner->moveFile(it->first, it->second);
   for(HashDir::const_iterator it = del.begin(); it != del.end(); it++)
     ptr->owner->deleteFile(it->second);
 }
@@ -575,7 +572,7 @@ DirInstaller::DirInstaller(DirOwner &owner, RuleSet &rules,
 void DirInstaller::addFile(const std::string &file, const Hash &hash)
 {
   assert(!getInfo()->hasStarted());
-  assert(hash.isValid());
+  assert(hash.isSet());
   assert(file != "");
   post[file] = hash;
 }
@@ -583,7 +580,7 @@ void DirInstaller::addFile(const std::string &file, const Hash &hash)
 void DirInstaller::remFile(const std::string &file, const Hash &hash)
 {
   assert(!getInfo()->hasStarted());
-  assert(hash.isValid());
+  assert(hash.isSet());
   assert(file != "");
   pre[file] = hash;
 }
@@ -603,13 +600,13 @@ void DirInstaller::remDir(const DirMap &dir, const std::string &path)
 void DirInstaller::addDir(const Hash &hash, const std::string &path)
 {
   assert(!getInfo()->hasStarted());
-  assert(hash.isValid());
+  assert(hash.isSet());
   postHash.insert(HDValue(hash,addSlash(path)));
 }
 
 void DirInstaller::remDir(const Hash &hash, const std::string &path)
 {
   assert(!getInfo()->hasStarted());
-  assert(hash.isValid());
+  assert(hash.isSet());
   preHash.insert(HDValue(hash,addSlash(path)));
 }

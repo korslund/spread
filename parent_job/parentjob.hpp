@@ -18,6 +18,9 @@
 
 namespace Spread
 {
+  struct ParentJob;
+  typedef boost::shared_ptr<ParentJob> ParentPtr;
+
   struct ParentJob : Job
   {
     typedef std::set<JobPtr> JobSet;
@@ -30,6 +33,10 @@ namespace Spread
     // Remember to lock the mutex while reading these!
     const JobSet &getJobs() { return jobs; }
     const JobVec &getDone() { return done; }
+
+    // Convenience function for browsing the job tree
+    static ParentPtr cast(JobPtr p)
+    { return boost::dynamic_pointer_cast<ParentJob>(p); }
 
   protected:
     // Set of active jobs

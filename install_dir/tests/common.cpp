@@ -158,7 +158,7 @@ struct MyOwner : DirOwner
     output = dirs[file];
     Hash h = Dir::hash(output);
     cout << "  DIR = " << h << endl;
-    if(check.isValid() && check != h)
+    if(check.isSet() && check != h)
       throw std::runtime_error("HASH MISMATCH! dir=" + h.toString() +
                                " check=" + check.toString());
   }

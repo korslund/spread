@@ -26,6 +26,9 @@ namespace Spread
     // Called regularly by doJob() while the task runs
     virtual void tick() {}
 
+    // Called to handle error messages from failed jobs
+    virtual void handleError(const std::string &msg) {}
+
     // When set to true, the job will finish when it runs out of jobs.
     bool finishOnEmpty;
 

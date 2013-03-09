@@ -1,6 +1,7 @@
 #include "thread.hpp"
 
 #include <boost/thread.hpp>
+#include "misc/tostr.hpp"
 #include <assert.h>
 
 using namespace Spread;
@@ -20,6 +21,11 @@ void Thread::sleep(double seconds)
 {
   int msecs = (int)(seconds*1000000);
   boost::this_thread::sleep(boost::posix_time::microseconds(msecs));
+}
+
+std::string Thread::getId()
+{
+  return toStr(boost::this_thread::get_id());
 }
 
 JobInfoPtr Thread::run(Job *j, bool async)

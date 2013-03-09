@@ -35,7 +35,7 @@ public:
 struct AskQueue::_Internal
 {
   SafeQueue<AskPtr> askList;
-}
+};
 
 AskQueue::AskQueue() : ptr(new _Internal) {}
 
@@ -64,5 +64,5 @@ bool AskQueue::pushWait(AskPtr ask, JobInfoPtr info)
 
 bool AskQueue::pop(AskPtr &ask)
 {
-  return ptr->pop(ask);
+  return ptr->askList.pop(ask);
 }

@@ -6,7 +6,7 @@ struct Answer : AskHandle
 {
   bool askWait(AskPtr ask)
   {
-    StringAsk *s = StringAsk::handle(ask);
+    StringAskPtr s = StringAsk::cast(ask);
     assert(s);
 
     cout << "QUESTION: " << s->message << endl;

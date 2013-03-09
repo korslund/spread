@@ -1,0 +1,50 @@
+ADDING:
+Adding missing
+  Error: Cannot index non-existing file: missing
+Adding missing (expecting WRONG)
+  Error: Cannot index non-existing file: missing
+Adding missing
+  Got: 00
+Adding missing (expecting WRONG)
+  Got: 00
+Adding file1
+SUMMING file1
+  Got: hy5OUM6ZkNiwQTMMR8nd0Rvsa1A66ThqmdqFhOm7EsQK
+Adding file1 (expecting WRONG)
+  Error: Given hash doesn't match real file size: file1
+Adding file1 (expecting hy5OUM6ZkNiwQTMMR8nd0Rvsa1A66ThqmdqFhOm7EsQK)
+  Got: hy5OUM6ZkNiwQTMMR8nd0Rvsa1A66ThqmdqFhOm7EsQK
+Adding file2 (expecting LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF)
+  Got: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
+
+FINDING:
+Searching for WRONG
+  Found: 
+Searching for LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
+  Found: file2
+Searching for LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
+  Found: 
+Searching for LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
+  Found: 
+
+STATUS:
+Checking status for file1   Hash: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
+  File exists but is different:
+    hy5OUM6ZkNiwQTMMR8nd0Rvsa1A66ThqmdqFhOm7EsQK
+Checking status for file1   Hash: hy5OUM6ZkNiwQTMMR8nd0Rvsa1A66ThqmdqFhOm7EsQK
+  File already matches
+Checking status for file1   Hash: WRONG
+  File exists but is different:
+    hy5OUM6ZkNiwQTMMR8nd0Rvsa1A66ThqmdqFhOm7EsQK
+Checking status for file2   Hash: LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
+  SUMMING file2
+File already matches
+Checking status for file2   Hash: hy5OUM6ZkNiwQTMMR8nd0Rvsa1A66ThqmdqFhOm7EsQK
+  Hash exists elsewhere: file1
+Checking status for file2   Hash: WRONG
+  File exists but is different:
+    LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
+
+CACHE CONTENTS:
+hy5OUM6ZkNiwQTMMR8nd0Rvsa1A66ThqmdqFhOm7EsQK file1 1
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF file2 1

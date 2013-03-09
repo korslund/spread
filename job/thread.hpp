@@ -24,6 +24,9 @@ namespace Spread
     static JobInfoPtr run(Job *j, bool async=true);
     static JobInfoPtr run(JobPtr j, bool async=true);
     static void sleep(double seconds);
+
+    // Return unique thread id
+    static std::string getId();
   };
 }
 #endif
