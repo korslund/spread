@@ -236,7 +236,8 @@ void DirInstaller::sortBlinds()
      archive. Then we can handle it on a file-by-file basis through
      sortInput() like other non-blind archives.
    */
-  log("Un-blinding archives for upgrade");
+  if(preBlinds.size() || postBlinds.size())
+    log("Un-blinding archives for upgrade");
 
   HashDir::const_iterator it = preBlinds.begin();
   bool first=true;
@@ -556,9 +557,47 @@ void DirInstaller::doJob()
 
   /* Perform main file install.
    */
-  HashMap tmp;
   if(add.size())
-    fetchFiles(add, tmp);
+    {
+      /* Create a new version of our 'add' list, that is identical to
+         the original except that all filenames have an extra string
+         appended to them.
+
+         This makes the install safer by not overwriting existing
+         information, and brings a much more "transactional" nature to
+         the whole procedure. Even more importantly, we avoid bugs
+         where we try to read and write a file at the same time.
+
+         It's not a perfect solution, but it helps. Without it, even
+         simple actions such as swapping two files is a risky
+         operation, because the system might end up trying to copy
+         each file onto the other.
+       */
+      HashDir tmpAdd;
+      for(HashDir::const_iterator it = add.begin(); it != add.end(); it++)
+        {
+          const std::string &newName = it->second+".___tmp";
+          tmpAdd.insert(HDValue(it->first, newName));
+          // Also add an entry to 'moves', so the file is moved into
+          // place after a successful fetch
+          moves[newName] = it->second;
+        }
+
+      try
+        {
+          HashMap tmp;
+          fetchFiles(tmpAdd, tmp);
+        }
+      catch(...)
+        {
+          // Clean up by killing all the files we created
+          StrMap tmpMov;
+          doMovesDeletes(tmpMov, tmpAdd);
+
+          // Rethrow so our caller gets the error message
+          throw;
+        }
+    }
 
   /* Perform file moves and deletes last.
    */

@@ -23,7 +23,9 @@ struct SetupTest
     dir1["def/ghi"] = hello;
     dir1["jkl/mno"] = world;
   }
-  ~SetupTest()
+  ~SetupTest() { print(); }
+
+  void print()
   {
     if(boost::filesystem::exists(base))
       printDir(base);

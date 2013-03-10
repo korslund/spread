@@ -1,21 +1,27 @@
 
 START: Unpack with arcrule but no hint
-LOG: ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello
-GOT ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello
+LOG: ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello.___tmp
+LOG: deleteFile(_unpack/test1/hello.___tmp)
+LOG: deleteFile(_unpack/test1/world.___tmp)
+LOG: deleteFile(_unpack/test1/arc.___tmp)
+GOT ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello.___tmp
 RESULT:
   SUC: Success 0/0
     ---
-    ERR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello 0/0
+    ERR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello.___tmp 0/0
 
 START: Unpack with hint but no arcrule
 LOG: Loading HINT=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
 LOG:   No hint archive found, skipping.
-LOG: ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello
-GOT ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello
+LOG: ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello.___tmp
+LOG: deleteFile(_unpack/test1/hello.___tmp)
+LOG: deleteFile(_unpack/test1/world.___tmp)
+LOG: deleteFile(_unpack/test1/arc.___tmp)
+GOT ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello.___tmp
 RESULT:
   SUC: Success 0/0
     ---
-    ERR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello 0/0
+    ERR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello.___tmp 0/0
 
 START: Unpack with hint AND arcrule - BLIND
 LOG: Loading HINT=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
@@ -26,6 +32,9 @@ LOG: STATUS: Blind indexing archive
 LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
 LOG: STATUS: Unpacking dirHash K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/arc1.zip
+LOG: moveFile(_unpack/test1/arc.___tmp => _unpack/test1/arc)
+LOG: moveFile(_unpack/test1/hello.___tmp => _unpack/test1/hello)
+LOG: moveFile(_unpack/test1/world.___tmp => _unpack/test1/world)
 RESULT:
   SUC: Success 0/0
 
@@ -35,6 +44,9 @@ LOG:   Found archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=
 LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
 LOG: STATUS: Unpacking dirHash K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/arc1.zip
+LOG: moveFile(_unpack/test2/arc.___tmp => _unpack/test2/arc)
+LOG: moveFile(_unpack/test2/hello.___tmp => _unpack/test2/hello)
+LOG: moveFile(_unpack/test2/world.___tmp => _unpack/test2/world)
 RESULT:
   SUC: Success 0/0
 
@@ -55,7 +67,11 @@ LOG: FOUND archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6
 LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
 LOG: STATUS: Unpacking dirHash K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
 LOG: STATUS: Waiting for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
-LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test4/file1_hello
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test4/file1_hello.___tmp
+LOG: moveFile(_unpack/test4/file1_hello.___tmp => _unpack/test4/file1_hello)
+LOG: moveFile(_unpack/test4/file2_hello.___tmp => _unpack/test4/file2_hello)
+LOG: moveFile(_unpack/test4/file4_robo.___tmp => _unpack/test4/file4_robo)
+LOG: moveFile(_unpack/test4/sub/file3_hello.___tmp => _unpack/test4/sub/file3_hello)
 RESULT:
   SUC: Success 0/0
 
@@ -66,12 +82,21 @@ LOG: FOUND archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6
 LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
 LOG: STATUS: Unpacking dirHash K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
 LOG: STATUS: Waiting for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
-LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test5/sub1/file1_hello
-LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test5/sub1/file1_hello
-LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test5/sub1/file1_hello
-LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test5/sub1/file1_hello
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test5/sub1/file1_hello.___tmp
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test5/sub1/file1_hello.___tmp
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test5/sub1/file1_hello.___tmp
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test5/sub1/file1_hello.___tmp
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/world.dat
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/world.dat
+LOG: moveFile(_unpack/test5/sub1/file1_hello.___tmp => _unpack/test5/sub1/file1_hello)
+LOG: moveFile(_unpack/test5/sub1/file2_hello.___tmp => _unpack/test5/sub1/file2_hello)
+LOG: moveFile(_unpack/test5/sub1/file4_robo.___tmp => _unpack/test5/sub1/file4_robo)
+LOG: moveFile(_unpack/test5/sub1/sub/file3_hello.___tmp => _unpack/test5/sub1/sub/file3_hello)
+LOG: moveFile(_unpack/test5/sub2/file1_hello.___tmp => _unpack/test5/sub2/file1_hello)
+LOG: moveFile(_unpack/test5/sub2/file2_hello.___tmp => _unpack/test5/sub2/file2_hello)
+LOG: moveFile(_unpack/test5/sub2/file4_robo.___tmp => _unpack/test5/sub2/file4_robo)
+LOG: moveFile(_unpack/test5/sub2/sub/file3_hello.___tmp => _unpack/test5/sub2/sub/file3_hello)
+LOG: moveFile(_unpack/test5/sub3/hello.___tmp => _unpack/test5/sub3/hello)
 RESULT:
   SUC: Success 0/0
 

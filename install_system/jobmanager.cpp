@@ -63,6 +63,7 @@ struct JobManager::_Internal : DirOwner
     log("moveFile("+from+" => "+to+")");
     bool didCopy = false;
     bf::create_directories(bf::path(to).parent_path());
+    if(bf::exists(to)) bf::remove(to);
     try { bf::rename(from, to); }
     catch(...)
       {

@@ -1,0 +1,231 @@
+
+START: Remove non-existing file
+RESULT:
+  SUC: Success 0/0
+
+START: Moving non-existing file
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
+LOG: moveFile(_diff/hello2.___tmp => _diff/hello2)
+RESULT:
+  SUC: Success 0/0
+
+Directory: _diff
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       hello2
+Total 1 elements
+Hash: 5PEF2c0DtOzEjDP3zeP3o4aioDoDuW_qsEGnWSXSf_Y4
+
+START: Moving existing file
+LOG: moveFile(_diff/hello2 => _diff/hello)
+RESULT:
+  SUC: Success 0/0
+
+Directory: _diff
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       hello
+Total 1 elements
+Hash: 3lJ3fIv8ttgdEty-KxkhVrkaawmM54ZbCb44zrWiuiw3
+
+START: Ignoring file (with different hash)
+RESULT:
+  SUC: Success 0/0
+
+Directory: _diff
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       hello
+Total 1 elements
+Hash: 3lJ3fIv8ttgdEty-KxkhVrkaawmM54ZbCb44zrWiuiw3
+
+START: Replacing file
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/world.dat
+LOG: moveFile(_diff/hello.___tmp => _diff/hello)
+RESULT:
+  SUC: Success 0/0
+
+Directory: _diff
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       hello
+Total 1 elements
+Hash: m40vyqGJX2mMXXbkuIHwQvRLipWeJn2dYj2eqGn2SS03
+
+START: Deleting file
+LOG: deleteFile(_diff/hello)
+RESULT:
+  SUC: Success 0/0
+
+Directory: _diff
+Total 0 elements
+Hash: DyFtlqX_gx7jQ7dcCyxg4XCb_DdNo__ImXr0ldjqb3sI
+
+START: Installing dir
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/world.dat
+LOG: moveFile(_diff/abc.___tmp => _diff/abc)
+LOG: moveFile(_diff/def/ghi.___tmp => _diff/def/ghi)
+LOG: moveFile(_diff/jkl/mno.___tmp => _diff/jkl/mno)
+RESULT:
+  SUC: Success 0/0
+
+Directory: _diff
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       abc
+00                                                 def/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       def/ghi
+00                                                 jkl/
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       jkl/mno
+Total 5 elements
+Hash: Ec0Z5zYnvbfmz93wIJaLqjVWDTqGqBQqdUlu7Psv2y3z
+
+START: Installing dir again
+RESULT:
+  SUC: Success 0/0
+
+Directory: _diff
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       abc
+00                                                 def/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       def/ghi
+00                                                 jkl/
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       jkl/mno
+Total 5 elements
+Hash: Ec0Z5zYnvbfmz93wIJaLqjVWDTqGqBQqdUlu7Psv2y3z
+
+START: Installing dir again, expecting no changes
+RESULT:
+  SUC: Success 0/0
+
+Directory: _diff
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       abc
+00                                                 def/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       def/ghi
+00                                                 jkl/
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       jkl/mno
+Total 5 elements
+Hash: Ec0Z5zYnvbfmz93wIJaLqjVWDTqGqBQqdUlu7Psv2y3z
+
+START: Moving to subdir
+LOG: moveFile(_diff/abc => _diff/subdir/abc)
+LOG: moveFile(_diff/def/ghi => _diff/subdir/def/ghi)
+LOG: moveFile(_diff/jkl/mno => _diff/subdir/jkl/mno)
+RESULT:
+  SUC: Success 0/0
+
+Directory: _diff
+00                                                 def/
+00                                                 jkl/
+00                                                 subdir/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       subdir/abc
+00                                                 subdir/def/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       subdir/def/ghi
+00                                                 subdir/jkl/
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       subdir/jkl/mno
+Total 8 elements
+Hash: -Tb10LnKXm3q0O0SQxwU9XtYBSQXSsJrJfB--ptq0FujAQ
+
+START: Moving back
+LOG: moveFile(_diff/subdir/abc => _diff/abc)
+LOG: moveFile(_diff/subdir/def/ghi => _diff/def/ghi)
+LOG: moveFile(_diff/subdir/jkl/mno => _diff/jkl/mno)
+RESULT:
+  SUC: Success 0/0
+
+Directory: _diff
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       abc
+00                                                 def/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       def/ghi
+00                                                 jkl/
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       jkl/mno
+00                                                 subdir/
+00                                                 subdir/def/
+00                                                 subdir/jkl/
+Total 8 elements
+Hash: mR32SaxpIpTJ7VOe5b66AY34VinIQXeeNIp7N2AxLXGOAQ
+
+START: User-modding a single file
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/world.dat
+LOG: moveFile(_diff/def/ghi.___tmp => _diff/def/ghi)
+RESULT:
+  SUC: Success 0/0
+
+Directory: _diff
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       abc
+00                                                 def/
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       def/ghi
+00                                                 jkl/
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       jkl/mno
+00                                                 subdir/
+00                                                 subdir/def/
+00                                                 subdir/jkl/
+Total 8 elements
+Hash: A_7mGLjrCtyPYxmxJ2w9dVzu29FMvnGxWkfifC_5_cyOAQ
+
+START: Installing dir again, expecting no changes
+RESULT:
+  SUC: Success 0/0
+
+Directory: _diff
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       abc
+00                                                 def/
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       def/ghi
+00                                                 jkl/
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       jkl/mno
+00                                                 subdir/
+00                                                 subdir/def/
+00                                                 subdir/jkl/
+Total 8 elements
+Hash: A_7mGLjrCtyPYxmxJ2w9dVzu29FMvnGxWkfifC_5_cyOAQ
+
+START: Upgrading dir
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/robot.dat
+LOG: moveFile(_diff/jkl/mno => _diff/abc)
+LOG: moveFile(_diff/jkl/mno_NEW.___tmp => _diff/jkl/mno_NEW)
+RESULT:
+  SUC: Success 0/0
+
+Directory: _diff
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       abc
+00                                                 def/
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       def/ghi
+00                                                 jkl/
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       jkl/mno_NEW
+00                                                 subdir/
+00                                                 subdir/def/
+00                                                 subdir/jkl/
+Total 8 elements
+Hash: F2y8x_dH-ZM7tKp5c-A_BCLgE-5RI4U4OMnoUSTG2nSSAQ
+
+START: Downgrading dir
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_diff/abc
+LOG: moveFile(_diff/abc.___tmp => _diff/abc)
+LOG: moveFile(_diff/jkl/mno.___tmp => _diff/jkl/mno)
+LOG: deleteFile(_diff/jkl/mno_NEW)
+RESULT:
+  SUC: Success 0/0
+
+Directory: _diff
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       abc
+00                                                 def/
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       def/ghi
+00                                                 jkl/
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       jkl/mno
+00                                                 subdir/
+00                                                 subdir/def/
+00                                                 subdir/jkl/
+Total 8 elements
+Hash: A_7mGLjrCtyPYxmxJ2w9dVzu29FMvnGxWkfifC_5_cyOAQ
+
+START: Swap two files
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_diff/abc
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_diff/def/ghi
+LOG: moveFile(_diff/abc.___tmp => _diff/abc)
+LOG: moveFile(_diff/def/ghi.___tmp => _diff/def/ghi)
+RESULT:
+  SUC: Success 0/0
+
+Directory: _diff
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       abc
+00                                                 def/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       def/ghi
+00                                                 jkl/
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       jkl/mno
+00                                                 subdir/
+00                                                 subdir/def/
+00                                                 subdir/jkl/
+Total 8 elements
+Hash: op6D9dp-6IHuJ6KTv6ZzpIfdXzeyHdmxXoq507TPo-COAQ

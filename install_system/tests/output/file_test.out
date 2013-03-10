@@ -4,16 +4,20 @@ RESULT:
   SUC: Success 0/0
 
 START: Add files, no source
-LOG: ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test1/hello
-GOT ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test1/hello
+LOG: ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test1/hello.___tmp
+LOG: deleteFile(_file/test1/hello.___tmp)
+LOG: deleteFile(_file/test1/world.___tmp)
+GOT ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test1/hello.___tmp
 RESULT:
   SUC: Success 0/0
     ---
-    ERR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test1/hello 0/0
+    ERR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test1/hello.___tmp 0/0
 
 START: Add files, with source
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/world.dat
+LOG: moveFile(_file/test2/hello.___tmp => _file/test2/hello)
+LOG: moveFile(_file/test2/world.___tmp => _file/test2/world)
 RESULT:
   SUC: Success 0/0
 
@@ -21,6 +25,9 @@ START: Same file repeated
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
+LOG: moveFile(_file/test3/dir/hello3.___tmp => _file/test3/dir/hello3)
+LOG: moveFile(_file/test3/hello.___tmp => _file/test3/hello)
+LOG: moveFile(_file/test3/hello2.___tmp => _file/test3/hello2)
 RESULT:
   SUC: Success 0/0
 
@@ -36,6 +43,9 @@ START: Adding a custom dir
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/world.dat
+LOG: moveFile(_file/test4/abc.___tmp => _file/test4/abc)
+LOG: moveFile(_file/test4/def/ghi.___tmp => _file/test4/def/ghi)
+LOG: moveFile(_file/test4/jkl/mno.___tmp => _file/test4/jkl/mno)
 RESULT:
   SUC: Success 0/0
 
@@ -50,6 +60,12 @@ LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/world.dat
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/world.dat
+LOG: moveFile(_file/test5/abc.___tmp => _file/test5/abc)
+LOG: moveFile(_file/test5/def/ghi.___tmp => _file/test5/def/ghi)
+LOG: moveFile(_file/test5/jkl/mno.___tmp => _file/test5/jkl/mno)
+LOG: moveFile(_file/test5/sub/abc.___tmp => _file/test5/sub/abc)
+LOG: moveFile(_file/test5/sub/def/ghi.___tmp => _file/test5/sub/def/ghi)
+LOG: moveFile(_file/test5/sub/jkl/mno.___tmp => _file/test5/sub/jkl/mno)
 RESULT:
   SUC: Success 0/0
 
@@ -65,12 +81,15 @@ RESULT:
 START: Adding dir as hash, with source but missing files
 LOG: Hash 1GxiMyo3usMorjw5J4Gtn-Avw6ZrL2muqEcbyP-G5iyX does NOT match any archive rule, assuming dirHash
 LOG: Loaded DIR dirHash=1GxiMyo3usMorjw5J4Gtn-Avw6ZrL2muqEcbyP-G5iyX
-LOG: ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test6/abc
-GOT ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test6/abc
+LOG: ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test6/abc.___tmp
+LOG: deleteFile(_file/test6/abc.___tmp)
+LOG: deleteFile(_file/test6/def/ghi.___tmp)
+LOG: deleteFile(_file/test6/jkl/mno.___tmp)
+GOT ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test6/abc.___tmp
 RESULT:
   SUC: Success 0/0
     ---
-    ERR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test6/abc 0/0
+    ERR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test6/abc.___tmp 0/0
 
 START: Adding dir as hash, should work now
 LOG: Hash 1GxiMyo3usMorjw5J4Gtn-Avw6ZrL2muqEcbyP-G5iyX does NOT match any archive rule, assuming dirHash
@@ -78,6 +97,9 @@ LOG: Loaded DIR dirHash=1GxiMyo3usMorjw5J4Gtn-Avw6ZrL2muqEcbyP-G5iyX
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/world.dat
+LOG: moveFile(_file/test6/abc.___tmp => _file/test6/abc)
+LOG: moveFile(_file/test6/def/ghi.___tmp => _file/test6/def/ghi)
+LOG: moveFile(_file/test6/jkl/mno.___tmp => _file/test6/jkl/mno)
 RESULT:
   SUC: Success 0/0
 
