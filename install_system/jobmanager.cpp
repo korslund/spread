@@ -1,11 +1,11 @@
 #include "jobmanager.hpp"
 
+// Ok, so I like ordering includes by line length ;-)
 #include <boost/thread/recursive_mutex.hpp>
 #include <install_jobs/leaffactory.hpp>
 #include <install_dir/dir_install.hpp>
 #include <parent_job/askqueue.hpp>
 #include <boost/filesystem.hpp>
-#include <misc/logger.hpp>
 #include <dir/binary.hpp>
 #include <job/thread.hpp>
 #include <stdexcept>
@@ -18,8 +18,9 @@ struct JobManager::_Internal : DirOwner
   Cache::Cache &cache;
   LeafFactory fact;
   Misc::LogPtr logPtr;
+  bool logTrd;
 
-  _Internal(Cache::Cache &c) : cache(c) {}
+  _Internal(Cache::Cache &c) : cache(c), logTrd(true) {}
 
   bool askWait(AskPtr ask, JobInfoPtr info) { return askQueue.pushWait(ask, info); }
   std::string getTmpName(const Hash &hash) { return cache.createTmpFilename(hash); }
@@ -91,7 +92,13 @@ struct JobManager::_Internal : DirOwner
 
   void log(const std::string &msg)
   {
-    if(logPtr) logPtr->log("trd="+Thread::getId() + ": " + msg);
+    if(logPtr)
+      {
+        std::string out;
+        if(logTrd) out = "trd="+Thread::getId() + ": ";
+        out += msg;
+        logPtr->log(out);
+      }
   }
 
   typedef boost::recursive_mutex Mutex;
@@ -166,4 +173,10 @@ void JobManager::setLogger(const std::string &filename)
 void JobManager::setLogger(std::ostream *strm)
 {
   ptr->logPtr.reset(new Misc::Logger(strm));
+}
+
+void JobManager::setLogger(Misc::LogPtr logger, bool trd)
+{
+  ptr->logPtr = logger;
+  ptr->logTrd = trd;
 }

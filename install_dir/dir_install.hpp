@@ -23,6 +23,7 @@ namespace Spread
     void remDir(const Hash::DirMap &dir, const std::string &path = "");
     void addDir(const Hash &hash, const std::string &path = "");
     void remDir(const Hash &hash, const std::string &path = "");
+    void addHint(const Hash &hash);
 
   private:
     struct _Internal;
@@ -40,13 +41,16 @@ namespace Spread
     void doJob();
 
     // Internal functions:
-    void loadHints(const Hash &dirHash);
+    void loadHint(const Hash &hash);
+    void loadDirHints(const Hash &dirHash);
     DirPtr addDirFile(Hash::DirMap &out, const Hash &dirHash,
                       const std::string &path);
     void handleHash(Hash::DirMap &out, const Hash &dirHash,
                     HashDir &blinds, const std::string &path);
+    void loadUserHints();
     void sortInput();
     void sortBlinds();
+    void unpackBlind(const Hash &arc, const std::string &path);
     void sortAddDel(HashDir &add, HashDir &del, Hash::DirMap &upgrade);
     void resolveConflicts(HashDir &add, HashDir &del, const Hash::DirMap &upgrade);
     void findMoves(HashDir &add, HashDir &del, StrMap &moves);

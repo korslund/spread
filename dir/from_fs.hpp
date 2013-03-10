@@ -5,40 +5,32 @@
 
 namespace Spread
 {
-  /*
-    Structure used to load a directory from a file system dir. It has
-    various optional elements you can set to control the process
-    before running load().
-
-    The struct is reusable and has no internal state (except through
-    the CacheIndex.) You can call load() multiple times independently
-    of each other.
-   */
-  struct DirFromFS
+  namespace Dir
   {
-    // Hash index cache to use. The cache.addFile() member function is
-    // used to obtain all hashes.
-    Cache::ICacheIndex &cache;
+    /* Load file names and hashes from the filesystem into a directory.
 
-    // Set to true (default) to recurse into subdirectories
-    bool recurse;
+       Parameters:
 
-    // Set to true (NOT default) to include directory names in
-    // output. These are added as Null ("00") hashes.
-    bool includeDirs;
+       - dir: the output directory structure. New entries are just
+         added on top of existing entries, if any.
 
-    // Set prefix to add to all added filenames (eg. "some/subdir/").
-    // Default is no prefix; filenames are added relative to the base
-    // path.
-    std::string prefix;
+       - path: the directory to traverse. All file paths are added
+         relative to this path per default (also see: prefix)
 
-    DirFromFS(Cache::ICacheIndex &_cache)
-      : cache(_cache)
-      , recurse(true)
-      , includeDirs(false)
-    {}
+       - cache: hash index to use. cache.addFile() is used to obtain
+         all file hashes
 
-    void load(const std::string &path, Hash::DirMap &dir) const;
+       - recurse: recurse into subdirectories
+
+       - includeDirs: include directory names. These hash as null
+         hashes ("00") and names are terminated with "/"
+
+       - add prefix to all names
+     */
+    extern void fromFS(Hash::DirMap &dir, const std::string &path,
+                       Cache::ICacheIndex &cache,
+                       bool recurse = true, bool includeDirs = false,
+                       const std::string &prefix = "");
   };
 }
 #endif

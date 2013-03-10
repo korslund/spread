@@ -39,7 +39,7 @@ set(LOG ${MIDIR}/logger.cpp)
 set(HASH ${HDIR}/hash.cpp ${SPDIR}/libs/sha2/sha2.c)
 set(UNPACK ${UDIR}/dirwriter.cpp ${UDIR}/base.cpp ${UDIR}/unpack_zip.cpp ${UDIR}/auto.cpp)
 set(HTASKS ${HTDIR}/hashtask.cpp ${HTDIR}/unpackhash.cpp ${HTDIR}/downloadhash.cpp ${HTDIR}/copyhash.cpp)
-set(DIR ${DDIR}/binary.cpp ${DDIR}/tools.cpp)
+set(DIR ${DDIR}/binary.cpp ${DDIR}/tools.cpp ${DDIR}/from_fs.cpp)
 set(TASKS ${TDIR}/unpack.cpp ${TDIR}/curl.cpp ${TDIR}/download.cpp ${JOB} ${UNPACK})
 set(RULES ${RDIR}/arcruleset.cpp ${RDIR}/ruleset.cpp)
 set(JOB ${JDIR}/job.cpp ${JDIR}/jobinfo.cpp ${JDIR}/thread.cpp)
@@ -53,3 +53,9 @@ set(ALL ${ISYS} ${CONF} ${IDIR} ${IJOBS} ${CHE} ${JOB} ${PJOB} ${HASH} ${UNPACK}
 
 add_executable(manager_test manager_test.cpp ${ALL})
 target_link_libraries(manager_test ${LIBS})
+
+add_executable(file_test file_test.cpp ${ALL})
+target_link_libraries(file_test ${LIBS})
+
+add_executable(unpack_test unpack_test.cpp ${ALL})
+target_link_libraries(unpack_test ${LIBS})

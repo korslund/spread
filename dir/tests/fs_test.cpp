@@ -1,52 +1,37 @@
-#include "from_fs.hpp"
-#include <iostream>
+#include "print_dir.hpp"
 
 using namespace std;
 using namespace Spread;
 
 Cache::CacheIndex index;
-DirFromFS dfs(index);
 
-void print(Directory &dir)
-{
-  Hash::DirMap::const_iterator it;
-  for(it = dir.dir.begin(); it != dir.dir.end(); it++)
-    {
-      string hstring = it->second.toString();
-
-      // Pad hashes up to 50 chars
-      for(int i=hstring.size(); i<50; i++)
-        hstring += " ";
-
-      cout << hstring << " " << it->first << endl;
-    }
-  cout << "Total " << dir.dir.size() << " elements\n";;
-  cout << "Hash: " << dir.hash() << endl;
-}
+bool recurse = true;
+bool includeDirs = false;
+std::string prefix = "";
 
 void test(const string &msg, bool addSlash = false)
 {
   cout << endl << msg << endl;
-  Directory dir;
-  if(addSlash) dfs.load("testdir/", dir);
-  else dfs.load("testdir", dir);
-  print(dir);
+  Hash::DirMap dir;
+  if(addSlash) Dir::fromFS(dir, "testdir/", index, recurse, includeDirs, prefix);
+  else Dir::fromFS(dir, "testdir", index, recurse, includeDirs, prefix);
+  printDir(dir);
 }
 
 int main()
 {
   test("Default options");
   test("Slash added", true);
-  dfs.recurse = false;
+  recurse = false;
   test("No recursion");
-  dfs.includeDirs = true;
+  includeDirs = true;
   test("Including dirs");
-  dfs.prefix = "prefix_";
+  prefix = "prefix_";
   test("With prefix");
-  dfs.prefix = "my/prefix/";
-  dfs.recurse = true;
+  prefix = "my/prefix/";
+  recurse = true;
   test("With everything", true);
-  dfs.includeDirs = false;
+  includeDirs = false;
   test("Removing dirs again");
 
   return 0;

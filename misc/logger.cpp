@@ -23,10 +23,20 @@ Logger::Logger(std::ostream *str)
   : strm(str), filename(""), print(false)
 {}
 
+Logger::Logger()
+  : strm(NULL), filename(""), print(true)
+{}
+
 void Logger::log(const std::string &msg)
 {
   if(print)
-    std::cout << filename << ": " << msg << "\n";
+    {
+      if(filename != "")
+        std::cout << filename << ": ";
+      else
+        std::cout << "LOG: ";
+      std::cout << msg << "\n";
+    }
 
   if(!strm) return;
   char buf[100];

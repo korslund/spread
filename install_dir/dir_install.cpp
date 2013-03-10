@@ -2,10 +2,12 @@
 #include <install_jobs/hashfinder.hpp>
 #include <rules/arcruleset.hpp>
 #include <dir/tools.hpp>
+#include <set>
 
 using namespace Spread;
 
 typedef Hash::DirMap DirMap;
+typedef std::set<Hash> HashSet;
 
 struct DirInstaller::_Internal
 {
@@ -13,6 +15,8 @@ struct DirInstaller::_Internal
   RuleSet *origRules;
   ArcRuleSet *arcRules;
   DirOwner *owner;
+
+  HashSet hints;
 };
 
 static std::string addSlash(std::string input)
@@ -26,75 +30,68 @@ static std::string addSlash(std::string input)
   return input;
 }
 
-void DirInstaller::loadHints(const Hash &dirHash)
+void DirInstaller::loadHint(const Hash &hint)
 {
-  log("Looking for hints for dirHash=" + dirHash.toString());
+  log("Loading HINT=" + hint.toString());
 
-  /* TODO: This should of course allow the old style of hints as well,
-     where an archive rule + dirobject exists and we can dump it
-     directly into the ArcRuleSet.
+  // Check if there is an archive associated with the given hash
+  const ArcRuleData *arc = ptr->origRules->findArchive(hint);
 
-     In fact two cases:
-
-     - arcrule, dir exists: dump into arcruleset. Fetch system will
-       download the archive and unpack files as necessary.
-
-     - no arcrule or no dir: do a blind index (will auto-download
-       archive if needed), and then dump the generated dir into
-       arcruleset. Needs the ability to KNOW what dirhash was created
-       from a blind job, we don't know that yet.
-   */
-
-  const std::vector<Hash> *hints = ptr->arcRules->findHints(dirHash);
-  if(!hints || hints->size() == 0)
+  // If there is no archive rule, then ignore this hint.
+  if(!arc)
     {
-      log("  No hints found.");
+      log("  No hint archive found, skipping.");
       return;
     }
 
-  assert(0);
+  log("  Found archive rule: dir=" + arc->dirHash.toString() +
+      " arc=" + arc->arcHash.toString());
+  DirMap tmp;
+  DirPtr arcDir;
+  try { arcDir = addDirFile(tmp, arc->dirHash, ""); }
+  catch(...)
+    {
+      // Blind-index archive, then try again
+      unpackBlind(arc->arcHash, "");
+      // This time, allow the exception to fall through on failure
+      arcDir = addDirFile(tmp, arc->dirHash, "");
+    }
+
+  // Add archive to the ArcRuleSet.
+  ptr->arcRules->addArchive(arc->arcHash, arc->dirHash, arcDir,
+                            arc->ruleString);
+}
+
+/* Check the rule system if there are any hints associated with a
+   given dirHash, then load them.
+ */
+void DirInstaller::loadDirHints(const Hash &dirHash)
+{
+  const std::vector<Hash> *hints = ptr->arcRules->findHints(dirHash);
+  if(!hints || hints->size() == 0)
+    return;
+
+  log("Found rule hints for dirHash=" + dirHash.toString());
 
   for(int i=0; i<hints->size(); i++)
     {
       const Hash &hint = (*hints)[i];
-
-      /* All hints given refer to archives for which there are no
-         archive rules. We are only supposed to unpack them somewhere
-         to make the files within accessible through the cache. The
-         system will do the rest automatically.
-
-         Do a blind unpack to a tmp location. The job will fetch the
-         archive file itself if possible.
-
-         TODO: NO, THIS IS BAD! Read the above note for a better
-         solution.
-      */
-      assert(0);
-      std::string where = owner.getTmpName(hint);
-      TreePtr job = owner.unpackBlindTarget(where);
-      job->addInput(hint);
-      job->finder = finder;
-      log("  Unpacking HINT=" + hint.toString() + " to " + where);
-      execJob(job, false);
-      if(checkStatus()) return;
-
-      // Log errors and continue
-      if(lastJob->isNonSuccess())
-        {
-          std::string errMsg = "  FAILED loding HINT=" + hint.toString() + "\n  Error: ";
-          if(lastJob->isError()) errMsg += lastJob->getMessage();
-          else errMsg += "Job aborted";
-          errMsg += "\n  Attempting to continue without this hint.";
-          log(errMsg);
-        }
+      loadHint(hint);
     }
 }
 
+/* Load the directory object 'dirHash' and store results in
+   'out'. Fetches the dirfile if necessary, and takes care of dir
+   cache bookkeeping. Returns a DirPtr to the loaded dir.
+
+   The 'path' parameter only affects the filenames added to the 'out'
+   list. It does not affect the returned DirPtr.
+ */
 DirPtr DirInstaller::addDirFile(DirMap &out, const Hash &dirHash,
                                 const std::string &path)
 {
   // Load any hints associated with the dir first
-  loadHints(dirHash);
+  loadDirHints(dirHash);
 
   // Fetch the dir file if possible
   std::string dirFile = fetchFile(dirHash);
@@ -103,20 +100,19 @@ DirPtr DirInstaller::addDirFile(DirMap &out, const Hash &dirHash,
   DirPtr dir(new DirMap);
   owner.loadDir(dirFile, *dir, dirHash);
   Dir::add(out, *dir, path);
+  log("Loaded DIR dirHash=" + dirHash.toString());
   return dir;
 }
 
 void DirInstaller::handleHash(DirMap &out, const Hash &dirHash,
                               HashDir &blinds, const std::string &path)
 {
-  log("Determining what to do with input hash " + dirHash.toString());
-
   // Check if there is an archive associated with the given hash
   const ArcRuleData *arc = ptr->origRules->findArchive(dirHash);
 
   if(!arc)
     {
-      log("Hash " + dirHash.toString() + " does NOT match any archive rule, assuming it is a directory");
+      log("Hash " + dirHash.toString() + " does NOT match any archive rule, assuming dirHash");
 
       /* Just load the dir and add it to 'out', along with any hints
          associated with it. We assume this is enough to find all the
@@ -153,6 +149,17 @@ void DirInstaller::handleHash(DirMap &out, const Hash &dirHash,
     }
 }
 
+/* Load user-provided hints added through addHint(). These are loaded
+   before anything else is done, so that we have a maximum chance of
+   finding all the files necessary.
+ */
+void DirInstaller::loadUserHints()
+{
+  HashSet::const_iterator it;
+  for(it = ptr->hints.begin(); it != ptr->hints.end(); it++)
+    loadHint(*it);
+}
+
 void DirInstaller::sortInput()
 {
   HashDir::const_iterator it;
@@ -168,6 +175,21 @@ void DirInstaller::sortInput()
     }
   preHash.clear();
   postHash.clear();
+}
+
+/* Fetch and unpack the archive 'arcHash' into the directory
+   'path'. If path="", then just index the archive.
+ */
+void DirInstaller::unpackBlind(const Hash &arcHash, const std::string &path)
+{
+  TreePtr job = owner.unpackBlindTarget(path);
+  job->addInput(arcHash);
+  job->finder = finder;
+  if(path != "")
+    log("  Blind unpacking " + arcHash.toString() + " => " + path);
+  else
+    log("  Blind indexing " + arcHash.toString());
+  execJob(job);
 }
 
 void DirInstaller::sortBlinds()
@@ -186,23 +208,14 @@ void DirInstaller::sortBlinds()
 
          Just bind-install the archive to the destinatin directory.
        */
-      log("Processing direct blind installs:");
       if(postBlinds.size() == 0)
-        {
-          log("  No blinds found.");
-          return;
-        }
+        return;
 
+      log("Processing direct blind installs:");
       HashDir::const_iterator it;
       for(it = postBlinds.begin(); it != postBlinds.end(); it++)
         {
-          const Hash &arcHash = it->first;
-          std::string path = prefix + it->second;
-          TreePtr job = owner.unpackBlindTarget(path);
-          job->addInput(arcHash);
-          job->finder = finder;
-          log("  Blind unpacking " + arcHash.toString() + " => " + path);
-          execJob(job);
+          unpackBlind(it->first, prefix+it->second);
           if(checkStatus()) return;
         }
 
@@ -238,12 +251,7 @@ void DirInstaller::sortBlinds()
       if(!first && it == postBlinds.end())
         break;
 
-      const Hash &arcHash = it->first;
-      TreePtr job = owner.unpackBlindTarget("");
-      job->addInput(arcHash);
-      job->finder = finder;
-      log("  Blind indexing " + arcHash.toString());
-      execJob(job);
+      unpackBlind(it->first, "");
       if(checkStatus()) return;
     }
 
@@ -264,6 +272,7 @@ void DirInstaller::sortAddDel(HashDir &add, HashDir &del, DirMap &upgrade)
   for(DirMap::const_iterator it = post.begin(); it != post.end(); it++)
     {
       const std::string &file = it->first;
+      const std::string &full = prefix + file;
       const Hash &hash = it->second;
       assert(file != "");
       assert(hash.isSet());
@@ -284,11 +293,11 @@ void DirInstaller::sortAddDel(HashDir &add, HashDir &del, DirMap &upgrade)
 
           // The hashes do not match, this is an upgrade. Store the
           // old hash.
-          upgrade[file] = pHash;
+          upgrade[full] = pHash;
         }
 
       // Add the file
-      add.insert(HDValue(hash, file));
+      add.insert(HDValue(hash, full));
     }
 
   // 'pre' list are files already expected to be in the install
@@ -307,7 +316,8 @@ void DirInstaller::sortAddDel(HashDir &add, HashDir &del, DirMap &upgrade)
 
       // A file only listed in the 'pre' dir means the file should be
       // deleted.
-      del.insert(HDValue(hash, file));
+      const std::string &full = prefix + file;
+      del.insert(HDValue(hash, full));
     }
 
   pre.clear();
@@ -479,6 +489,10 @@ void DirInstaller::doMovesDeletes(const StrMap &moves, const HashDir &del)
 
 void DirInstaller::doJob()
 {
+  /* Load the hints added through addHint(), if any.
+   */
+  loadUserHints();
+
   /* Sort input from preHash/postHash into pre/post and
      preBlinds/postBlinds. This may involve fetching (downloading,
      unpacking etc) dir files.
@@ -609,4 +623,11 @@ void DirInstaller::remDir(const Hash &hash, const std::string &path)
   assert(!getInfo()->hasStarted());
   assert(hash.isSet());
   preHash.insert(HDValue(hash,addSlash(path)));
+}
+
+void DirInstaller::addHint(const Hash &hash)
+{
+  assert(!getInfo()->hasStarted());
+  assert(hash.isSet());
+  ptr->hints.insert(hash);
 }

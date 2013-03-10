@@ -93,6 +93,15 @@ namespace Spread
      */
     virtual void addDir(const Hash &hash, const std::string &path = "") = 0;
     virtual void remDir(const Hash &hash, const std::string &path = "") = 0;
+
+    /* Add a hint to the file-fetching system. A hint is a directory
+       (or corresponding archive) hash that should be included in the
+       file lookup process.
+
+       Hints do not affect the list output files, only where we might
+       FIND those output files.
+     */
+    virtual void addHint(const Hash &hint) = 0;
   };
 
   typedef boost::shared_ptr<Installer> InstallerPtr;

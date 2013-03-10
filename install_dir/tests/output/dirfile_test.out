@@ -1,15 +1,11 @@
 
 TEST(00, '')
-LOG: Looking for hints for dirHash=00
-LOG:   No hints found.
 getRunningTarget(00)
 LOG: ERROR: No source for target 00 
 ERROR: No source for target 00 
 TOTAL:
 
 TEST(HELLO, 'nowhere')
-LOG: Looking for hints for dirHash=HELLO
-LOG:   No hints found.
 getRunningTarget(HELLO)
 LOG: ERROR: No source for target HELLO 
 ERROR: No source for target HELLO 
@@ -24,11 +20,10 @@ makeDir(): creating directory:
   => dirfile2.dat RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm
 
 TEST(LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm, '')
-LOG: Looking for hints for dirHash=LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm
-LOG:   No hints found.
 getRunningTarget(LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm)
 loadDir(dirfile1.dat)
   DIR = LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm
+LOG: Loaded DIR dirHash=LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm
 LOADED:
   file1 HASH1
   file2 HASH2
@@ -37,11 +32,10 @@ TOTAL:
   file2 HASH2
 
 TEST(RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm, '')
-LOG: Looking for hints for dirHash=RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm
-LOG:   No hints found.
 getRunningTarget(RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm)
 loadDir(dirfile2.dat)
   DIR = RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm
+LOG: Loaded DIR dirHash=RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm
 LOADED:
   file2 HASH3
   file3 HASH4
@@ -51,11 +45,10 @@ TOTAL:
   file3 HASH4
 
 TEST(RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm, 'sub/')
-LOG: Looking for hints for dirHash=RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm
-LOG:   No hints found.
 getRunningTarget(RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm)
 loadDir(dirfile2.dat)
   DIR = RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm
+LOG: Loaded DIR dirHash=RarCC79mblSh7FbUZsuWZ2JPvU4yyk7_ARbuwljHcPVm
 LOADED:
   file2 HASH3
   file3 HASH4
@@ -67,11 +60,10 @@ TOTAL:
   sub/file3 HASH4
 
 TEST(LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm, 'sub/')
-LOG: Looking for hints for dirHash=LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm
-LOG:   No hints found.
 getRunningTarget(LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm)
 loadDir(dirfile1.dat)
   DIR = LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm
+LOG: Loaded DIR dirHash=LaHFafXSOupEKoGJGs3BXkm4dWV_Js1CKPi9mi_5zpdm
 LOADED:
   file1 HASH1
   file2 HASH2

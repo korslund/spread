@@ -22,6 +22,7 @@ void JobHolder::doJob()
       /* Loop through jobs. We use special functions to ensure
          thread safety, since new jobs may be inserted at any time.
       */
+      bool empty = false;
       {
         LOCK;
         JobSet::const_iterator it, it2;
@@ -38,13 +39,14 @@ void JobHolder::doJob()
                 // Keep failed jobs to help the user debug
                 if(p->getInfo()->isError())
                   {
-                    handleError(getInfo()->getMessage());
+                    handleError(p->getInfo()->getMessage());
                     done.push_back(p);
                   }
               }
           }
 
-        if(finishOnEmpty && jobs.size() == 0)
+        empty = jobs.size() == 0;
+        if(finishOnEmpty && empty)
           setDone();
       }
 
@@ -54,8 +56,10 @@ void JobHolder::doJob()
 
       tick();
 
-      // We don't need to run this very often, a couple of times a
-      // second is enough.
-      Thread::sleep(0.5);
+      Thread::sleep(0.1);
+
+      // Sleep some more if there is nothing to do
+      if(empty)
+        Thread::sleep(0.5);
     }
 }

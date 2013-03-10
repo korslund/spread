@@ -19,6 +19,7 @@ namespace Misc
 
     Logger(const std::string &file);
     Logger(std::ostream *str);
+    Logger(); // Defaults to print=true
 
     void operator()(const std::string &msg) { log(msg); }
     void log(const std::string &msg);

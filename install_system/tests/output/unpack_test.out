@@ -1,0 +1,118 @@
+
+START: Unpack with arcrule but no hint
+LOG: ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello
+GOT ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello
+RESULT:
+  SUC: Success 0/0
+    ---
+    ERR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello 0/0
+
+START: Unpack with hint but no arcrule
+LOG: Loading HINT=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
+LOG:   No hint archive found, skipping.
+LOG: ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello
+GOT ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello
+RESULT:
+  SUC: Success 0/0
+    ---
+    ERR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello 0/0
+
+START: Unpack with hint AND arcrule - BLIND
+LOG: Loading HINT=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
+LOG:   Found archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
+LOG: ERROR: No source for target K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf 
+LOG:   Blind indexing w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
+LOG: STATUS: Blind indexing archive
+LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: STATUS: Unpacking dirHash K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/arc1.zip
+RESULT:
+  SUC: Success 0/0
+
+START: Unpack with hint AND arcrule - NON-BLIND
+LOG: Loading HINT=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
+LOG:   Found archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
+LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: STATUS: Unpacking dirHash K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/arc1.zip
+RESULT:
+  SUC: Success 0/0
+
+START: Unpack zip dir itself - BLIND
+LOG: FOUND archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
+LOG: ERROR: No source for target K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf 
+LOG: FAILED loading dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+   Error message: No source for target K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf 
+   Reverting to blind unpack
+LOG: Processing direct blind installs:
+LOG:   Blind unpacking w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw => _unpack/test3/
+LOG: STATUS: Blind unpacking into _unpack/test3/
+RESULT:
+  SUC: Success 0/0
+
+START: Unpack zip dir itself - NON-BLIND
+LOG: FOUND archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
+LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: STATUS: Unpacking dirHash K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: STATUS: Waiting for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test4/file1_hello
+RESULT:
+  SUC: Success 0/0
+
+START: Combo
+LOG: FOUND archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
+LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: FOUND archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
+LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: STATUS: Unpacking dirHash K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: STATUS: Waiting for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test5/sub1/file1_hello
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test5/sub1/file1_hello
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test5/sub1/file1_hello
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test5/sub1/file1_hello
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/world.dat
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/world.dat
+RESULT:
+  SUC: Success 0/0
+
+Directory: _unpack
+00                                                 cache/
+00                                                 cache/K_/
+K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf       cache/K_/1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+00                                                 test1/
+w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw     test1/arc
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       test1/hello
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       test1/world
+00                                                 test2/
+w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw     test2/arc
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       test2/hello
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       test2/world
+00                                                 test3/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       test3/file1_hello
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       test3/file2_hello
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       test3/file4_robo
+00                                                 test3/sub/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       test3/sub/file3_hello
+00                                                 test4/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       test4/file1_hello
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       test4/file2_hello
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       test4/file4_robo
+00                                                 test4/sub/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       test4/sub/file3_hello
+00                                                 test5/
+00                                                 test5/sub1/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       test5/sub1/file1_hello
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       test5/sub1/file2_hello
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       test5/sub1/file4_robo
+00                                                 test5/sub1/sub/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       test5/sub1/sub/file3_hello
+00                                                 test5/sub2/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       test5/sub2/file1_hello
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       test5/sub2/file2_hello
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       test5/sub2/file4_robo
+00                                                 test5/sub2/sub/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       test5/sub2/sub/file3_hello
+00                                                 test5/sub3/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       test5/sub3/hello
+Total 38 elements
+Hash: 6YDTg0UoHXm4hiLHaW0WvTnB56fbIL549nEK0s88ww6JC

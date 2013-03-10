@@ -6,6 +6,7 @@
 #include <parent_job/userask.hpp>
 #include <rules/ruleset.hpp>
 #include <cache/cache.hpp>
+#include <misc/logger.hpp>
 
 namespace Spread
 {
@@ -33,6 +34,7 @@ namespace Spread
      */
     void setLogger(const std::string &filename);
     void setLogger(std::ostream *strm);
+    void setLogger(Misc::LogPtr logger, bool trd=true);
 
   private:
     struct _Internal;
@@ -42,5 +44,4 @@ namespace Spread
     void handleError(const std::string &msg);
   };
 }
-
 #endif

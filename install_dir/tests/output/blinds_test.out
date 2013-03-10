@@ -1,8 +1,6 @@
 TESTING: Nothing
 PRE-BLINDS:
 POST-BLINDS:
-LOG: Processing direct blind installs:
-LOG:   No blinds found.
 OUTPUT:
 PRE-HASH:
 POST-HASH:

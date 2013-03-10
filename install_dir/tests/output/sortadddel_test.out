@@ -10,7 +10,7 @@ PRE:
 POST:
   file1 HASH1
 ADD:
-  HASH1 file1
+  HASH1 some/path/file1
 DEL:
 UPGRADE:
 
@@ -20,7 +20,7 @@ PRE:
 POST:
 ADD:
 DEL:
-  HASH1 file1
+  HASH1 some/path/file1
 UPGRADE:
 
 TESTING: Multiple adds and deletes
@@ -31,11 +31,11 @@ POST:
   file1 HASH1
   file2 HASH2
 ADD:
-  HASH1 file1
-  HASH2 file2
+  HASH1 some/path/file1
+  HASH2 some/path/file2
 DEL:
-  HASH3 file3
-  HASH4 file4
+  HASH3 some/path/file3
+  HASH4 some/path/file4
 UPGRADE:
 
 TESTING: Upgrade file
@@ -44,10 +44,10 @@ PRE:
 POST:
   file NEW
 ADD:
-  NEW file
+  NEW some/path/file
 DEL:
 UPGRADE:
-  file OLD
+  some/path/file OLD
 
 TESTING: Ignore file
 PRE:
@@ -75,15 +75,15 @@ POST:
   file7 NEW7
   ign IGN
 ADD:
-  NEW2 file2
-  NEW2 file3
-  NEW7 file7
-  OLD1 file4
+  NEW2 some/path/file2
+  NEW2 some/path/file3
+  NEW7 some/path/file7
+  OLD1 some/path/file4
 DEL:
-  OLD1 file1
-  OLD6 file6
+  OLD1 some/path/file1
+  OLD6 some/path/file6
 UPGRADE:
-  file2 OLD1
-  file3 OLD3
-  file4 OLD4
+  some/path/file2 OLD1
+  some/path/file3 OLD3
+  some/path/file4 OLD4
 

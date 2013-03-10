@@ -26,12 +26,18 @@ set(MANGLE ${MDIR}/stream/clients/io_stream.cpp)
 set(JSON ${JS}/json_reader.cpp ${JS}/json_writer.cpp ${JS}/json_value.cpp)
 set(READJSON ${JSON} ${MANGLE} ${MIDIR}/readjson.cpp)
 
-set(DIR ${DDIR}/binary.cpp ${DDIR}/tools.cpp)
+set(CONF ${READJSON} ${MIDIR}/jconfig.cpp)
+set(CACHE ${CONF} ${HASH} ${CDIR}/index.cpp ${CDIR}/files.cpp)
 
-set(DIRTEST ${DIR} ${MANGLE} ${HASH})
+set(DIR ${DDIR}/binary.cpp ${DDIR}/tools.cpp ${DDIR}/from_fs.cpp)
+
+set(DIRTEST ${DIR} ${MANGLE} ${HASH} ${CACHE})
 
 add_executable(binary_test binary_test.cpp ${DIRTEST})
 target_link_libraries(binary_test ${LIBS})
 
 add_executable(tools_test tools_test.cpp ${DIRTEST})
 target_link_libraries(tools_test ${LIBS})
+
+add_executable(fs_test fs_test.cpp ${DIRTEST})
+target_link_libraries(fs_test ${LIBS})

@@ -6,7 +6,20 @@
 using namespace Spread;
 namespace bf = boost::filesystem;
 
-void DirFromFS::load(const std::string &where, Hash::DirMap &dir) const
+static std::string addSlash(std::string input)
+{
+  if(input.size())
+    {
+      char c = input[input.size()-1];
+      if(c != '\\' && c != '/')
+        input += "/";
+    }
+  return input;
+}
+
+void Dir::fromFS(Hash::DirMap &dir, const std::string &where,
+                 Cache::ICacheIndex &cache, bool recurse,
+                 bool includeDirs, const std::string &prefix)
 {
   assert(where != "");
 
@@ -20,15 +33,7 @@ void DirFromFS::load(const std::string &where, Hash::DirMap &dir) const
      And we need to strip away 10 leading characters to get just
      "myfile".
    */
-  int pathlen = where.size();
-
-  // All produced files will add a slash if there isn't one, so
-  // account for that too.
-  {
-    char last = where[where.size()-1];
-    if(last != '/' && last != '\\')
-      pathlen++;
-  }
+  int pathlen = addSlash(where).size();
 
   bf::recursive_directory_iterator iter(where), end;
   for(; iter != end; ++iter)
@@ -47,7 +52,7 @@ void DirFromFS::load(const std::string &where, Hash::DirMap &dir) const
       // requested it
       if(includeDirs && bf::is_directory(file))
         {
-          dir[local] = Hash();
+          dir[addSlash(local)] = Hash();
           continue;
         }
 
@@ -56,7 +61,7 @@ void DirFromFS::load(const std::string &where, Hash::DirMap &dir) const
 
       // Get the file hash
       Hash hash = cache.addFile(file);
-      assert(!hash.isNull());
+      assert(hash.isSet());
 
       // We're done, add it!
       dir[local] = hash;

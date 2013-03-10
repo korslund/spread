@@ -9,7 +9,7 @@ struct MyTest : DirInstaller
 
   void doJob()
   {
-    loadHints(hello);
+    loadDirHints(hello);
     setDone();
   }
 };
