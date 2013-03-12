@@ -2,6 +2,7 @@
 #define __SPREAD_HPP_
 
 #include "job/jobinfo.hpp"
+#include "install_system/jobmanager.hpp"
 #include <boost/function.hpp>
 #include <vector>
 
@@ -13,6 +14,8 @@ namespace Spread
   struct SpreadLib
   {
     SpreadLib(const std::string &outDir, const std::string &tmpDir);
+
+    JobManagerPtr getJobManager() const;
 
     /* Update the current rule set and package list from the given
        source.

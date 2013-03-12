@@ -2,7 +2,9 @@
 
 #include <boost/filesystem.hpp>
 #include <mangle/stream/servers/outfile_stream.hpp>
+#include <dir/binary.hpp>
 #include "print_dir.hpp"
+#include <job/thread.hpp>
 
 #include <iostream>
 using namespace std;
@@ -19,13 +21,13 @@ void genData1()
   Hash out1("psjM8uDq9pmNUZQHCFw8zK4-ayXT5-gpFuksShg-GPUo");
   Hash out2("g2lF9D0PACSgcFZUtHpxhrd6jbdnJmfUyXQ0uwO1VZo-");
 
-  Directory dir;
-  dir.dir["out_robot.txt"] = robo;
-  dir.dir["out_file1.txt"] = out1;
-  dir.dir["out_file2.txt"] = out2;
-  dir.dir["out_file3.txt"] = out1;
+  Hash::DirMap dir;
+  dir["out_robot.txt"] = robo;
+  dir["out_file1.txt"] = out1;
+  dir["out_file2.txt"] = out2;
+  dir["out_file3.txt"] = out1;
 
-  Hash dirHash = dir.write("_outdir1.dat");
+  Hash dirHash = Dir::write(dir, "_outdir1.dat");
   OutFileStream out("_outdir1.hash");
   out.write(dirHash.getData(), 40);
 }
@@ -37,19 +39,19 @@ void genData2()
   Hash out3("sJjzhl8Vh7vq-hJYYbvYjPKlvPAWc6olCd3Mk_MMv_Qk");
   Hash arcfile("-M2zyJL1Xt9rJYII9fzgh0gS9tHhklFbOTt1wY__Qy9RAg");
 
-  Directory adir;
-  adir.dir["outfile1.txt"] = out1;
-  adir.dir["outfile2.txt"] = out2;
-  adir.dir["outfile3.txt"] = out3;
+  Hash::DirMap adir;
+  adir["outfile1.txt"] = out1;
+  adir["outfile2.txt"] = out2;
+  adir["outfile3.txt"] = out3;
 
-  Hash arcdir = adir.write("_arcdir2.dat");
+  Hash arcdir = Dir::write(adir, "_arcdir2.dat");
 
-  Directory dir;
-  dir.dir["out_file1.txt"] = out1;
-  dir.dir["out_file2.txt"] = out2;
-  dir.dir["out_file4.txt"] = out3;
+  Hash::DirMap dir;
+  dir["out_file1.txt"] = out1;
+  dir["out_file2.txt"] = out2;
+  dir["out_file4.txt"] = out3;
 
-  Hash dirHash = dir.write("_outdir2.dat");
+  Hash dirHash = Dir::write(dir, "_outdir2.dat");
   OutFileStream out("_outdir2.hash");
   out.write(dirHash.getData(), 40);
 }
@@ -67,10 +69,16 @@ void test(const std::string &src, const std::string &dest, bool kill=true)
 {
   cout << "Installing " << src << " into " << dest << ":\n";
   Cache::Cache cache;
+  JobManagerPtr man(new JobManager(cache));
   cache.tmpDir = "_tmpdir/";
+  cache.files.basedir = "_tmpdir/cache/";
+  //man->setLogger(Misc::LogPtr(new Misc::Logger()), false);
+
   if(kill) bf::remove_all(dest);
   bool wasUpdated;
-  check(SR0::fetchFile(src, dest, cache, false, &wasUpdated));
+
+  Thread::run(man);
+  check(SR0::fetchFile(src, dest, man, false, &wasUpdated));
   if(wasUpdated) cout << "(UPDATED)\n";
   else cout << "(NOT UPDATED)\n";
   cout << endl;

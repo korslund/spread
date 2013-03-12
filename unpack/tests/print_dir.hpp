@@ -1,13 +1,15 @@
-#include "dir/from_fs.hpp"
+#include <cache/index.hpp>
+#include <dir/from_fs.hpp>
+#include <dir/binary.hpp>
 #include <iostream>
 
-void printDir(Spread::Directory &dir)
+void printDir(const Spread::Hash::DirMap &dir)
 {
   using namespace Spread;
   using namespace std;
 
   Hash::DirMap::const_iterator it;
-  for(it = dir.dir.begin(); it != dir.dir.end(); it++)
+  for(it = dir.begin(); it != dir.end(); it++)
     {
       string hstring = it->second.toString();
 
@@ -17,8 +19,8 @@ void printDir(Spread::Directory &dir)
 
       cout << hstring << " " << it->first << endl;
     }
-  cout << "Total " << dir.dir.size() << " elements\n";;
-  cout << "Hash: " << dir.hash() << endl;
+  cout << "Total " << dir.size() << " elements\n";;
+  cout << "Hash: " << Dir::hash(dir) << endl;
 }
 
 void printDir(const std::string &where)
@@ -26,11 +28,9 @@ void printDir(const std::string &where)
   using namespace Spread;
   using namespace std;
 
+  Hash::DirMap dir;
   Cache::CacheIndex cache;
-  DirFromFS dfs(cache);
-  Directory dir;
-  dfs.includeDirs = true;
-  dfs.load(where, dir);
+  Dir::fromFS(dir, where, cache, true, true);
   cout << "\nDirectory: " << where << endl;
   printDir(dir);
 }

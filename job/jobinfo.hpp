@@ -11,6 +11,7 @@ namespace Spread
     {
       ST_NONE,          // Job not yet created
       ST_CREATED,       // Job object created but not started
+      ST_INITIATED,     // Job has started or or will start
       ST_BUSY,          // Job is running
       ST_DONE,          // Job completed successfully
       ST_ERROR,         // Job failed
@@ -36,6 +37,7 @@ namespace Spread
     void abort();
 
     bool isCreated() const { return status >= ST_CREATED; }
+    bool isInitiated() const { return status >= ST_INITIATED; }
     bool hasStarted() const { return status >= ST_BUSY; }
     bool isBusy() const { return status == ST_BUSY; }
     bool isSuccess() const { return status == ST_DONE; }
@@ -49,6 +51,7 @@ namespace Spread
     // instance.
     void setDone() { status = ST_DONE; }
     void setError(const std::string &what);
+    void setInitiated() { status = ST_INITIATED; }
 
     // Throw an exception on error or abort status
     void failError();

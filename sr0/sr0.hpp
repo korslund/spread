@@ -6,7 +6,7 @@
 
    Unlike the larger Spread system, it does not rely on a complex set
    of rules or pre-existing data. All it needs is an URL (or file
-   path) to an sr0/ repository and it will handle the rest.
+   path) to a repository, and it will bootstrap the rest.
 
    SpreadLib uses SR0 to fetch the complete ruleset and data from a
    source.
@@ -36,24 +36,29 @@
 
    - if short.txt does NOT match the installed dir (or if there is no
      existing dir/current.hash file), then index.zip is downloaded and
-     unpacked to a temporary directory.
+     unpacked to a temporary location.
 
    - inside index.zip we expect to find the following files:
      - packs.json - package file - should contain one package named "index"
      - rules.json - (optional) rules needed to install the dir
 
-     In addition, all files inside the archive are automatically
-     hashed and will be used by the installer as needed. You should
-     probably at least include the main directory object somewhere in
-     the zip.
+     The rules.json (if present) are loaded, and the package "index"
+     is installed into the target directory using a normal Spread
+     install.
+
+     All files inside the index.zip archive are automatically hashed
+     and will be used by the installer as needed. You should probably
+     at least include the dir-object of the output directory somewhere
+     in the zip, so that the installer knows what it is supposed to
+     install.
  */
 
 #include "job/jobinfo.hpp"
-#include "cache/cache.hpp"
+#include "install_system/jobmanager.hpp"
 
 namespace Spread
 {
-  struct SR0
+  namespace SR0
   {
     /* Fetch the dir from 'url'.
 
@@ -72,9 +77,9 @@ namespace Spread
        The wasUpdated bool, if present, is set (possibly from a
        working thread) to true if updated data was downloaded.
      */
-    static JobInfoPtr fetchURL(const std::string &url,
+    extern JobInfoPtr fetchURL(const std::string &url,
                                const std::string &destDir,
-                               Cache::Cache &cache,
+                               JobManagerPtr manager,
                                bool async=true,
                                bool *wasUpdated = NULL);
 
@@ -83,9 +88,9 @@ namespace Spread
        This may still cause files to be downloaded if the installation
        data itself uses URL rules.
      */
-    static JobInfoPtr fetchFile(const std::string &dir,
+    extern JobInfoPtr fetchFile(const std::string &dir,
                                 const std::string &destDir,
-                                Cache::Cache &cache,
+                                JobManagerPtr manager,
                                 bool async=true,
                                 bool *wasUpdated = NULL);
   };

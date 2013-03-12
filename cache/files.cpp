@@ -9,6 +9,7 @@ namespace bf = boost::filesystem;
 std::string Files::makePath(const Hash &hash) const
 {
   assert(hash.isSet());
+  assert(basedir != "");
   std::string hstr = hash.toString();
   assert(hstr.size() > 2);
   bf::path res = basedir;

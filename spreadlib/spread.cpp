@@ -1,10 +1,7 @@
 #include "spread.hpp"
-#include "cache/cache.hpp"
 #include "sr0/sr0.hpp"
 #include "rules/ruleset.hpp"
 #include "rules/rule_loader.hpp"
-#include "install/installer.hpp"
-#include "dir/directory.hpp"
 #include "misc/readjson.hpp"
 #include "tasks/download.hpp"
 #include "hash/hash_stream.hpp"
@@ -14,6 +11,7 @@
 #include <stdexcept>
 #include <vector>
 #include <boost/thread/recursive_mutex.hpp>
+#include <job/thread.hpp>
 
 using namespace Spread;
 
@@ -22,7 +20,6 @@ JobInfoPtr SpreadLib::download(const std::string &url,
                                bool async)
 {
   DownloadTask *job = new DownloadTask(url, dest);
-  // TODO: We should no longer be starting threads manually here
   return Thread::run(job, async);
 }
 
@@ -126,6 +123,7 @@ struct SpreadLib::_Internal
   Cache::Cache cache;
   RuleSet rules;
   boost::recursive_mutex mutex;
+  JobManagerPtr manager;
 
   // This keeps track of updates in progress for a given channel
   std::map<std::string, JobInfoPtr> chanJobs;
@@ -212,7 +210,11 @@ struct SpreadLib::_Internal
   }
 
   ~_Internal()
-  { try { bf::remove_all(cache.tmpDir); } catch(...) {} }
+  {
+    manager->finish();
+    manager->getInfo()->abort();
+    try { bf::remove_all(cache.tmpDir); } catch(...) {}
+  }
 };
 
 SpreadLib::SpreadLib(const std::string &outDir, const std::string &tmpDir)
@@ -223,8 +225,13 @@ SpreadLib::SpreadLib(const std::string &outDir, const std::string &tmpDir)
 
   ptr->cache.index.load(ptr->getPath("cache.conf"));
   ptr->cache.tmpDir = abs(tmpDir);
-  ptr->cache.files.setDir(ptr->getPath("file_cache/"));
+  ptr->cache.files.basedir = ptr->getPath("cache/");
+  ptr->manager.reset(new JobManager(ptr->cache));
+
+  Thread::run(ptr->manager);
 }
+
+JobManagerPtr SpreadLib::getJobManager() const { return ptr->manager; }
 
 void SpreadLib::setURLCallback(CBFunc cb) { ptr->rules.setURLCallback(cb); }
 
@@ -237,7 +244,7 @@ JobInfoPtr SpreadLib::updateFromURL(const std::string &channel,
 {
   LOCK;
   return ptr->setUpdateInfo(channel) =
-    SR0::fetchURL(url, ptr->chanPath(channel), ptr->cache, async,
+    SR0::fetchURL(url, ptr->chanPath(channel), ptr->manager, async,
                   &ptr->wasUpdated[channel]);
 }
 
@@ -247,7 +254,7 @@ JobInfoPtr SpreadLib::updateFromFile(const std::string &channel,
 {
   LOCK;
   return ptr->setUpdateInfo(channel) =
-    SR0::fetchFile(path, ptr->chanPath(channel), ptr->cache, async,
+    SR0::fetchFile(path, ptr->chanPath(channel), ptr->manager, async,
                    &ptr->wasUpdated[channel]);
 }
 
@@ -282,20 +289,19 @@ JobInfoPtr SpreadLib::install(const std::string &channel,
   const Pack& p = ptr->getPack(channel,package);
   if(version) *version = p.version;
 
-  Installer *inst = new Installer(ptr->cache, ptr->rules, abs(where));
+  InstallerPtr inst = ptr->manager->createInstaller(abs(where), ptr->rules);
 
   for(int i=0; i<p.dirs.size(); i++)
-    inst->addDir(p.dirs[i], true, p.paths[i]);
+    inst->addDir(p.dirs[i], p.paths[i]);
 
-  // TODO: This will be started by the job system instead
-  return Thread::run(inst, async);
+  return ptr->manager->addInst(inst);
 }
 
 JobInfoPtr SpreadLib::unpackURL(const std::string &url, const std::string &where,
                                 bool async)
 {
   LOCK;
-  return SR0::fetchURL(url, abs(where), ptr->cache, async);
+  return SR0::fetchURL(url, abs(where), ptr->manager, async);
 }
 
 std::string SpreadLib::cacheFile(const std::string &file)

@@ -12,6 +12,7 @@ namespace bf = boost::filesystem;
 int main(int argc, char **argv)
 {
   SpreadLib spread("_bug1", "_tmp");
+  //spread.getJobManager()->setPrintLogger();
 
   if(bf::exists("_bug1"))
     bf::remove_all("_bug1");

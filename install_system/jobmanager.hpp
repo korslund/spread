@@ -12,7 +12,7 @@ namespace Spread
 {
   struct JobManager : JobHolder
   {
-    JobManager(Cache::Cache &_cache, RuleSet &_rules);
+    JobManager(Cache::Cache &_cache);
 
     /* Get next error or question from the jobs. If the UserAsk::abort
        member is set, then this is an error message. If not, it is a
@@ -27,21 +27,25 @@ namespace Spread
 
        Parameter 'destDir' specifies where to install files.
      */
-    InstallerPtr createInstaller(const std::string &destDir);
-    void addInst(InstallerPtr);
+    InstallerPtr createInstaller(const std::string &destDir, RuleSet &rules);
+    JobInfoPtr addInst(InstallerPtr);
 
     /* Set log output.
      */
     void setLogger(const std::string &filename);
     void setLogger(std::ostream *strm);
     void setLogger(Misc::LogPtr logger, bool trd=true);
+    void setPrintLogger();
+
+    Cache::Cache &cache;
 
   private:
     struct _Internal;
     boost::shared_ptr<_Internal> ptr;
-    RuleSet &rules;
 
     void handleError(const std::string &msg);
   };
+
+  typedef boost::shared_ptr<JobManager> JobManagerPtr;
 }
 #endif

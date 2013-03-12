@@ -131,8 +131,8 @@ struct JobManager::_Internal : DirOwner
   }
 };
 
-JobManager::JobManager(Cache::Cache &_cache, RuleSet &_rules)
-  : rules(_rules)
+JobManager::JobManager(Cache::Cache &_cache)
+  : cache(_cache)
 {
   ptr.reset(new _Internal(_cache));
 }
@@ -154,16 +154,17 @@ void JobManager::handleError(const std::string &msg)
   ptr->askQueue.push(ask);
 }
 
-InstallerPtr JobManager::createInstaller(const std::string &destDir)
+InstallerPtr JobManager::createInstaller(const std::string &destDir, RuleSet &rules)
 {
-  return InstallerPtr(new DirInstaller(*ptr, rules, ptr->cache.index, destDir));
+  return InstallerPtr(new DirInstaller(*ptr, rules, cache.index, destDir));
 }
 
-void JobManager::addInst(InstallerPtr p)
+JobInfoPtr JobManager::addInst(InstallerPtr p)
 {
   JobPtr job = boost::dynamic_pointer_cast<DirInstaller>(p);
   assert(job);
   add(job);
+  return job->getInfo();
 }
 
 void JobManager::setLogger(const std::string &filename)
@@ -180,4 +181,9 @@ void JobManager::setLogger(Misc::LogPtr logger, bool trd)
 {
   ptr->logPtr = logger;
   ptr->logTrd = trd;
+}
+
+void JobManager::setPrintLogger()
+{
+  setLogger(Misc::LogPtr(new Misc::Logger), false);
 }

@@ -26,7 +26,7 @@ namespace Spread
        still be ignored.
      */
     Hash::DirMap index;
-    UnpackHash() {}
+    UnpackHash() : blindOut(NULL) {}
     UnpackHash(const Hash::DirMap &_index)
       : index(_index), blindOut(NULL) {}
 

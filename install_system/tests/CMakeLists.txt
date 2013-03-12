@@ -62,3 +62,6 @@ target_link_libraries(unpack_test ${LIBS})
 
 add_executable(diff_test diff_test.cpp ${ALL})
 target_link_libraries(diff_test ${LIBS})
+
+add_executable(blind_test blind_test.cpp ${ALL})
+target_link_libraries(blind_test ${LIBS})

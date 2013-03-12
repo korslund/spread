@@ -95,14 +95,14 @@ struct Setup : Installer
 
   InstallerPtr inst;
 
-  Setup(const std::string &d) : m(cache,rules), desc(d)
+  Setup(const std::string &d) : m(cache), desc(d)
   {
     assert(base != "");
     cache.tmpDir = base + "/tmp";
     cache.files.basedir = base + "/cache";
     m.setLogger(Misc::LogPtr(new Misc::Logger()), false);
     m.finish();
-    inst = m.createInstaller(base);
+    inst = m.createInstaller(base,rules);
     m.addInst(inst);
     cout << "\nSTART: " << desc << endl;
   }

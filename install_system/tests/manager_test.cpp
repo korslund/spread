@@ -7,7 +7,6 @@ using namespace std;
 using namespace Spread;
 
 Cache::Cache cache;
-RuleSet rules;
 
 struct MyJob : Job
 {
@@ -27,7 +26,7 @@ int main()
 {
   cout << "Job adding:\n";
   {
-    JobManager *m = new JobManager(cache,rules);
+    JobManager *m = new JobManager(cache);
     JobPtr p(m);
     cout << "Adding:\n";
     m->add(new MyJob("A"));

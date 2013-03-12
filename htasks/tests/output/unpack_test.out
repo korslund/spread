@@ -1,32 +1,33 @@
-Index:
-  5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH   - a
-  5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH   - b
-  5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH   - c
-  5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH   - d
-  TpVf6gJoUYy6pQBAnfvsiPDs660o2E7L4lC67ZfbqIkE   - dir/file1.txt
-  nNdHCq2-eBiq_4tNjqrg-9lTQtdcW4fynNawsk8q_FAW   - dir/file3.txt
-  5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH   - e
-  5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH   - f
-  TpVf6gJoUYy6pQBAnfvsiPDs660o2E7L4lC67ZfbqIkE   - file1_again.txt
-  5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH   - file2.txt
-  VFJt-Q1dairWD3TFtxh08OpLdGk4XKaqd4SRhfH8KC8V   - file4.txt
+5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH       a
+5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH       b
+5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH       c
+5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH       d
+TpVf6gJoUYy6pQBAnfvsiPDs660o2E7L4lC67ZfbqIkE       dir/file1.txt
+nNdHCq2-eBiq_4tNjqrg-9lTQtdcW4fynNawsk8q_FAW       dir/file3.txt
+5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH       e
+5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH       f
+TpVf6gJoUYy6pQBAnfvsiPDs660o2E7L4lC67ZfbqIkE       file1_again.txt
+5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH       file2.txt
+VFJt-Q1dairWD3TFtxh08OpLdGk4XKaqd4SRhfH8KC8V       file4.txt
+Total 11 elements
+Hash: qMwIi1GuxuK3mFPB41SNXnOpXBUGGz0kEipHdvLyiGwXAg
 
 Directory: _unp_test1
-00                                                 dir
-00                                                 dir/to
+00                                                 dir/
+00                                                 dir/to/
 TpVf6gJoUYy6pQBAnfvsiPDs660o2E7L4lC67ZfbqIkE       dir/to/file1.txt
 5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH       file2.txt
 5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH       file2_again.txt
 5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH       file2_copy.txt
 Total 6 elements
-Hash: VdVBLmVAeKlxvYC8HruA2Lh76gJFbDIvPcyBo-CjD0BDAQ
+Hash: lwvjrlGl_InhIIsZV-slIxqrlpazlWLKCzej5AuIOyxFAQ
 
 Directory: _unp_test2
 5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH       a
 5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH       b
 5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH       c
 5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH       d
-00                                                 dir
+00                                                 dir/
 TpVf6gJoUYy6pQBAnfvsiPDs660o2E7L4lC67ZfbqIkE       dir/file1.txt
 nNdHCq2-eBiq_4tNjqrg-9lTQtdcW4fynNawsk8q_FAW       dir/file3.txt
 5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH       e
@@ -35,4 +36,4 @@ TpVf6gJoUYy6pQBAnfvsiPDs660o2E7L4lC67ZfbqIkE       file1_again.txt
 5Kgp14e_O89BLn-fGjbNzchGsPkARpFXrlGSAWZScVQH       file2.txt
 VFJt-Q1dairWD3TFtxh08OpLdGk4XKaqd4SRhfH8KC8V       file4.txt
 Total 12 elements
-Hash: 0pwLDJSd3yKjTD9WaGxX7bzL4ki_1uqKEt5g7PopzYtEAg
+Hash: oFevl728ZpfLmg8jGI7XvughikkqvDmyZ6eLJ4T_muNFAg

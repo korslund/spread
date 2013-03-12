@@ -1,0 +1,149 @@
+
+START: Unpacking arc1 normally
+LOG: FOUND archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
+LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: STATUS: Unpacking dirHash K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: STATUS: Waiting for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_blind/arc1/file1_hello.___tmp
+LOG: moveFile(_blind/arc1/file1_hello.___tmp => _blind/arc1/file1_hello)
+LOG: moveFile(_blind/arc1/file2_hello.___tmp => _blind/arc1/file2_hello)
+LOG: moveFile(_blind/arc1/file4_robo.___tmp => _blind/arc1/file4_robo)
+LOG: moveFile(_blind/arc1/sub/file3_hello.___tmp => _blind/arc1/sub/file3_hello)
+RESULT:
+  SUC: Success 0/0
+
+START: Unpacking arc2 BLIND
+LOG: FOUND archive rule: dir=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ arc=UyfuXd0_PGB-2dwkM_uXZ1ufxqvJqbwresx1MkLse1zvAw
+LOG: ERROR: No source for target VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ 
+LOG: FAILED loading dirHash=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ
+   Error message: No source for target VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ 
+   Reverting to blind unpack
+LOG: Processing direct blind installs:
+LOG:   Blind unpacking UyfuXd0_PGB-2dwkM_uXZ1ufxqvJqbwresx1MkLse1zvAw => _blind/arc2/
+LOG: STATUS: Blind unpacking into _blind/arc2/
+RESULT:
+  SUC: Success 0/0
+
+Directory: _blind
+00                                                 arc1/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       arc1/file1_hello
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       arc1/file2_hello
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       arc1/file4_robo
+00                                                 arc1/sub/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       arc1/sub/file3_hello
+00                                                 arc2/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       arc2/file1_helloX
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       arc2/file1_helloY
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       arc2/file2_hello
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       arc2/file4_robo
+00                                                 arc2/sub/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       arc2/sub/file3_renamed
+00                                                 cache/
+00                                                 cache/K_/
+K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf       cache/K_/1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+00                                                 cache/Vz/
+VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ     cache/Vz/Wd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ
+Total 18 elements
+Hash: Eu7tCdiITpdXizZ0dsvu9G1r2uVPwwo3l8Dp73gQPvgyB
+
+START: Upgrading arc1->arc2 BLIND
+LOG: FOUND archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
+LOG: ERROR: No source for target K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf 
+LOG: FAILED loading dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+   Error message: No source for target K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf 
+   Reverting to blind unpack
+LOG: FOUND archive rule: dir=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ arc=UyfuXd0_PGB-2dwkM_uXZ1ufxqvJqbwresx1MkLse1zvAw
+LOG: ERROR: No source for target VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ 
+LOG: FAILED loading dirHash=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ
+   Error message: No source for target VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ 
+   Reverting to blind unpack
+LOG: Un-blinding archives for upgrade
+LOG:   Blind indexing w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
+LOG: STATUS: Blind indexing archive
+LOG:   Blind indexing UyfuXd0_PGB-2dwkM_uXZ1ufxqvJqbwresx1MkLse1zvAw
+LOG: STATUS: Blind indexing archive
+LOG: FOUND archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
+LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: FOUND archive rule: dir=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ arc=UyfuXd0_PGB-2dwkM_uXZ1ufxqvJqbwresx1MkLse1zvAw
+LOG: Loaded DIR dirHash=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ
+LOG: STATUS: Unpacking dirHash VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_blind/arc1/file1_hello
+LOG: moveFile(_blind/arc1/file1_hello => _blind/arc1/file1_helloX)
+LOG: moveFile(_blind/arc1/file2_hello.___tmp => _blind/arc1/file2_hello)
+LOG: moveFile(_blind/arc1/sub/file3_hello => _blind/arc1/file1_helloY)
+LOG: moveFile(_blind/arc1/sub/file3_renamed.___tmp => _blind/arc1/sub/file3_renamed)
+RESULT:
+  SUC: Success 0/0
+
+Directory: _blind
+00                                                 arc1/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       arc1/file1_helloX
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       arc1/file1_helloY
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       arc1/file2_hello
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       arc1/file4_robo
+00                                                 arc1/sub/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       arc1/sub/file3_renamed
+00                                                 arc2/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       arc2/file1_helloX
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       arc2/file1_helloY
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       arc2/file2_hello
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       arc2/file4_robo
+00                                                 arc2/sub/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       arc2/sub/file3_renamed
+00                                                 cache/
+00                                                 cache/K_/
+K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf       cache/K_/1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+00                                                 cache/Vz/
+VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ     cache/Vz/Wd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ
+Total 19 elements
+Hash: ULuNU758Y_LCo8QUxqeOMKcpzgfUa-NrPR2h_KzOB3ZwB
+
+START: Downgrading arc2->arc1 BLIND
+LOG: FOUND archive rule: dir=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ arc=UyfuXd0_PGB-2dwkM_uXZ1ufxqvJqbwresx1MkLse1zvAw
+LOG: ERROR: No source for target VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ 
+LOG: FAILED loading dirHash=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ
+   Error message: No source for target VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ 
+   Reverting to blind unpack
+LOG: FOUND archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
+LOG: ERROR: No source for target K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf 
+LOG: FAILED loading dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+   Error message: No source for target K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf 
+   Reverting to blind unpack
+LOG: Un-blinding archives for upgrade
+LOG:   Blind indexing UyfuXd0_PGB-2dwkM_uXZ1ufxqvJqbwresx1MkLse1zvAw
+LOG: STATUS: Blind indexing archive
+LOG:   Blind indexing w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
+LOG: STATUS: Blind indexing archive
+LOG: FOUND archive rule: dir=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ arc=UyfuXd0_PGB-2dwkM_uXZ1ufxqvJqbwresx1MkLse1zvAw
+LOG: Loaded DIR dirHash=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ
+LOG: FOUND archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
+LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: STATUS: Unpacking dirHash K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: moveFile(_blind/arc2/file1_helloX => _blind/arc2/file1_hello)
+LOG: moveFile(_blind/arc2/file1_helloY => _blind/arc2/sub/file3_hello)
+LOG: moveFile(_blind/arc2/file2_hello.___tmp => _blind/arc2/file2_hello)
+LOG: deleteFile(_blind/arc2/sub/file3_renamed)
+RESULT:
+  SUC: Success 0/0
+
+Directory: _blind
+00                                                 arc1/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       arc1/file1_helloX
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       arc1/file1_helloY
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       arc1/file2_hello
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       arc1/file4_robo
+00                                                 arc1/sub/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       arc1/sub/file3_renamed
+00                                                 arc2/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       arc2/file1_hello
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       arc2/file2_hello
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       arc2/file4_robo
+00                                                 arc2/sub/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       arc2/sub/file3_hello
+00                                                 cache/
+00                                                 cache/K_/
+K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf       cache/K_/1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+00                                                 cache/Vz/
+VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ     cache/Vz/Wd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ
+Total 18 elements
+Hash: _HvxSM03Cb5oFhSFmUeHi2ZIAQnE5fe9P6GVw89yj2wyB

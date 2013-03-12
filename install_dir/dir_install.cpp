@@ -536,6 +536,7 @@ void DirInstaller::doJob()
    */
   HashDir add, del;
   {
+    bool isUpgrade = pre.size();
     DirMap upgrade;
     sortAddDel(add, del, upgrade);
 
@@ -545,8 +546,29 @@ void DirInstaller::doJob()
 
        Will ask the user for advice if necessary, and update add/del
        lists with results.
+
+       We only do this if we are upgrading, ie. if there was an
+       expectation of existing files in the directory. If not, then
+       completely ignore existing content.
     */
-    resolveConflicts(add, del, upgrade);
+    if(isUpgrade)
+      resolveConflicts(add, del, upgrade);
+    else
+      {
+        /* On upgrades, resolveConflicts() hashes all existing files,
+           if any. This is a good idea for non-upgrades as well, even
+           if we don't need the conflict resolution.
+         */
+        assert(del.size() == 0 && upgrade.size() == 0);
+        for(HashDir::iterator it = add.begin(); it != add.end(); it++)
+          {
+            const Hash &hash = it->first;
+            const std::string &file = it->second;
+            assert(hash.isSet());
+            assert(file != "");
+            index.checkFile(file);
+          }
+      }
   }
 
   /* Optimize add+delte pairs into moves, which are normally much

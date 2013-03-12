@@ -7,7 +7,6 @@
 #include <mangle/stream/clients/copy_stream.hpp>
 #include "htasks/unpackhash.hpp"
 #include "job/thread.hpp"
-#include "install/installer.hpp"
 #include "tasks/download.hpp"
 #include "rules/rule_loader.hpp"
 #include "misc/readjson.hpp"
@@ -33,6 +32,7 @@ struct Sr0Job : Job
   path dest;
 
   Cache::Cache *cache;
+  JobManagerPtr manager;
 
   bool *wasUpdated;
 
@@ -80,6 +80,7 @@ struct Sr0Job : Job
     PRINT("Starting SR0 job");
     setBusy("Checking for updates");
     assert(cache);
+    assert(manager);
 
     if(wasUpdated) *wasUpdated = false;
 
@@ -181,7 +182,7 @@ struct Sr0Job : Job
         loadRulesJsonFile(rules, file);
     }
 
-    Installer inst(*cache, rules, dest.string());
+    InstallerPtr inst = manager->createInstaller(dest.string(), rules);
 
     /* Add all the hashes in the original zip as archive hints to the
        installer. Since the zip file includes all the necessary dir
@@ -195,18 +196,21 @@ struct Sr0Job : Job
        by addHint().
      */
     for(HMap::iterator it = index.begin(); it != index.end(); it++)
-      inst.addHint(it->second);
+      inst->addHint(it->second);
 
     /* Add the requested output directory. Again, since we have
        indexed all the extracted files, the Installer should be able
        to load the dir contents automatically.
     */
-    inst.addDir(newHash);
+    inst->addDir(newHash);
 
     // Run the install!
+    JobInfoPtr inf = manager->addInst(inst);
     setBusy("Updating");
     PRINT("Running main installer => " << dest);
-    if(runClient(inst)) return;
+    assert(inf->isInitiated());
+    if(waitClient(inf)) return;
+    setBusy("Cleaning up");
     PRINT("  Done.");
 
     // On success, write back the new version file
@@ -222,21 +226,20 @@ struct Sr0Job : Job
 };
 
 JobInfoPtr SR0::fetchFile(const std::string &dir, const std::string &destDir,
-                          Cache::Cache &cache, bool async, bool *wasUpdated)
+                          JobManagerPtr manager, bool async, bool *wasUpdated)
 {
   Sr0Job *j = new Sr0Job;
   j->source = dir;
   j->isUrl = false;
   j->dest = destDir;
-  j->cache = &cache;
+  j->cache = &manager->cache;
+  j->manager = manager;
   j->wasUpdated = wasUpdated;
-  JobInfoPtr info = j->getInfo();
-  Thread::run(j,async);
-  return info;
+  return Thread::run(j,async);
 }
 
 JobInfoPtr SR0::fetchURL(const std::string &url, const std::string &destDir,
-                         Cache::Cache &cache, bool async, bool *wasUpdated)
+                         JobManagerPtr manager, bool async, bool *wasUpdated)
 {
   PRINT("SR0: Fetching URL " << url << " => " << destDir);
 
@@ -244,9 +247,8 @@ JobInfoPtr SR0::fetchURL(const std::string &url, const std::string &destDir,
   j->source = url;
   j->isUrl = true;
   j->dest = destDir;
-  j->cache = &cache;
+  j->cache = &manager->cache;
+  j->manager = manager;
   j->wasUpdated = wasUpdated;
-  JobInfoPtr info = j->getInfo();
-  Thread::run(j,async);
-  return info;
+  return Thread::run(j,async);
 }

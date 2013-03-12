@@ -39,6 +39,9 @@ JobInfoPtr Thread::run(JobPtr j, bool async)
   assert(j);
   ThreadObj to;
   JobInfoPtr info = j->getInfo();
+  assert(!info->isInitiated());
+  info->setInitiated();
+  assert(info->isInitiated());
   to.j = j;
   if(async) boost::thread trd(to);
   else to();
