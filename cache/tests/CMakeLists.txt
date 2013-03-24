@@ -45,6 +45,9 @@ target_link_libraries(cache4_test ${LIBS})
 add_executable(cache5_test cache5_test.cpp ${CACHE})
 target_link_libraries(cache5_test ${LIBS})
 
+add_executable(cache6_test cache6_test.cpp ${CACHE})
+target_link_libraries(cache6_test ${LIBS})
+
 add_executable(cache_speed1 cache_speed1.cpp ${CACHE})
 target_link_libraries(cache_speed1 ${LIBS})
 

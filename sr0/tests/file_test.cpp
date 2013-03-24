@@ -107,10 +107,5 @@ int main()
   printDir("_outdir4_1to2");
   printDir("_outdir5_2to1");
 
-  /* TODO: if/when we implement dir diffing later, we should recheck
-     this example to make sure outdated files are actually deleted
-     from the outdir4/5 dirs.
-   */
-
   return 0;
 }

@@ -75,6 +75,7 @@ TARGET: UNPACK
     FILE1 
 Adding 1 files to cache:
   FILE1 tmp_FILE1
+Removing 0 files from cache:
 notifyFiles():
   FILE1
 

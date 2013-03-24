@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <set>
 #include <stdint.h>
 
 namespace Misc
@@ -60,8 +61,11 @@ namespace Misc
        This function lets you set any number of entries (currently as
        strings only) in one operation, and thus only perform one
        single file write.
+
+       You may also list an optional set of entries to remove.
      */
-    void setMany(const std::map<std::string,std::string> &entries);
+    void setMany(const std::map<std::string,std::string> &entries,
+                 const std::set<std::string> &remove = std::set<std::string>());
 
     bool has(const std::string &name);
 

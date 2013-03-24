@@ -73,12 +73,6 @@ Total 5 elements
 Hash: Ec0Z5zYnvbfmz93wIJaLqjVWDTqGqBQqdUlu7Psv2y3z
 
 START: Installing dir again
-LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_diff/abc
-LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_diff/abc
-LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_diff/jkl/mno
-LOG: moveFile(_diff/abc.___tmp => _diff/abc)
-LOG: moveFile(_diff/def/ghi.___tmp => _diff/def/ghi)
-LOG: moveFile(_diff/jkl/mno.___tmp => _diff/jkl/mno)
 RESULT:
   SUC: Success 0/0
 

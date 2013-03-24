@@ -8,6 +8,7 @@ using namespace Spread;
 
 typedef Hash::DirMap DirMap;
 typedef std::set<Hash> HashSet;
+typedef std::set<std::string> StrSet;
 
 struct DirInstaller::_Internal
 {
@@ -369,24 +370,35 @@ int DirInstaller::ask(const std::string &question, const std::string &opt0,
   return sel;
 }
 
-void DirInstaller::resolveConflicts(HashDir &add, HashDir &del, const DirMap &upgrade)
+void DirInstaller::resolveConflicts(HashDir &add, HashDir &del, const DirMap &upgrade,
+                                    bool _doAsk)
 {
   HashDir backups;
 
-  // Go through the list of created elements
+  // Create a list of all the file locations we want to check
+  DirMap lookup;
   HashDir::iterator it, it2;
+  for(it = add.begin(); it != add.end(); it++)
+    lookup[it->second] = Hash();
+  for(it = del.begin(); it != del.end(); it++)
+    lookup[it->second] = Hash();
+
+  // Check all the files in one run
+  index.checkMany(lookup);
+
+  // Go through the list of created elements
   for(it = add.begin(); it != add.end();)
     {
       // Keep two iterators so we can remove elements from the list
       // while iterating
-      it2 = it++;
+      HashDir::iterator it2 = it++;
 
       const Hash &hash = it2->first;
       const std::string &file = it2->second;
       assert(hash.isSet());
       assert(file != "");
 
-      Hash fHash = index.checkFile(file);
+      const Hash &fHash = lookup[file];
 
       // Always overwrite missing files
       if(fHash.isNull()) continue;
@@ -395,7 +407,7 @@ void DirInstaller::resolveConflicts(HashDir &add, HashDir &del, const DirMap &up
       bool upg = false;
       {
         DirMap::const_iterator res = upgrade.find(file);
-        upg = res != upgrade.end();
+        upg = (res != upgrade.end());
         if(upg && res->second == fHash)
           continue;
       }
@@ -405,11 +417,15 @@ void DirInstaller::resolveConflicts(HashDir &add, HashDir &del, const DirMap &up
       */
       if(fHash != hash)
         {
-          std::string text;
-          if(upg) text = "File '" + file + "' contains modifications. Overwrite anyway?";
-          else text = "File '" + file + "' already exists. Overwrite it?";
+          int i = 1;
+          if(_doAsk)
+            {
+              std::string text;
+              if(upg) text = "File '" + file + "' contains modifications. Overwrite anyway?";
+              else text = "File '" + file + "' already exists. Overwrite it?";
+              i = ask(text, "Overwrite with backup (recommended)", "Overwrite without backup", "Keep file");
+            }
 
-          int i = ask(text, "Overwrite with backup (recommended)", "Overwrite without backup", "Keep file");
           if(i == 0 || i == 1)
             {
               if(i == 0)
@@ -437,7 +453,7 @@ void DirInstaller::resolveConflicts(HashDir &add, HashDir &del, const DirMap &up
       assert(hash.isSet());
       assert(file != "");
 
-      Hash fHash = index.checkFile(file);
+      const Hash &fHash = lookup[file];
 
       // Delete file if it matches the expected hash
       if(fHash == hash)
@@ -446,7 +462,8 @@ void DirInstaller::resolveConflicts(HashDir &add, HashDir &del, const DirMap &up
       if(fHash.isSet())
         {
           // There is a file, and it doesn't match what we want
-          int i = ask("Deleted file '" + file + "' has changes. Delete anyway?", "Delete file", "Keep file");
+          int i = 0;
+          if(_doAsk) i = ask("Deleted file '" + file + "' has changes. Delete anyway?", "Delete file", "Keep file");
           if(i == 0)
             continue;
           assert(i == 1);
@@ -482,10 +499,20 @@ void DirInstaller::findMoves(HashDir &add, HashDir &del, StrMap &moves)
 
 void DirInstaller::doMovesDeletes(const StrMap &moves, const HashDir &del)
 {
+  DirMap created;
+  StrSet removed;
   for(StrMap::const_iterator it = moves.begin(); it != moves.end(); it++)
-    ptr->owner->moveFile(it->first, it->second);
+    {
+      ptr->owner->moveFile(it->first, it->second);
+      created[it->second] = Hash();
+      removed.insert(it->first);
+    }
   for(HashDir::const_iterator it = del.begin(); it != del.end(); it++)
-    ptr->owner->deleteFile(it->second);
+    {
+      ptr->owner->deleteFile(it->second);
+      removed.insert(it->second);
+    }
+  index.addMany(created, removed);
 }
 
 void DirInstaller::doJob()
@@ -539,6 +566,7 @@ void DirInstaller::doJob()
     bool isUpgrade = pre.size();
     DirMap upgrade;
     sortAddDel(add, del, upgrade);
+    assert(isUpgrade || del.size() == 0);
 
     /* Go through the list and resolve conflicts between what we
        expect and what is ACTUALLY present in the file system
@@ -551,24 +579,7 @@ void DirInstaller::doJob()
        expectation of existing files in the directory. If not, then
        completely ignore existing content.
     */
-    if(isUpgrade)
-      resolveConflicts(add, del, upgrade);
-    else
-      {
-        /* On upgrades, resolveConflicts() hashes all existing files,
-           if any. This is a good idea for non-upgrades as well, even
-           if we don't need the conflict resolution.
-         */
-        assert(del.size() == 0 && upgrade.size() == 0);
-        for(HashDir::iterator it = add.begin(); it != add.end(); it++)
-          {
-            const Hash &hash = it->first;
-            const std::string &file = it->second;
-            assert(hash.isSet());
-            assert(file != "");
-            index.checkFile(file);
-          }
-      }
+    resolveConflicts(add, del, upgrade, doAsk);
   }
 
   /* Optimize add+delte pairs into moves, which are normally much
@@ -629,8 +640,9 @@ void DirInstaller::doJob()
 }
 
 DirInstaller::DirInstaller(DirOwner &owner, RuleSet &rules,
-                           Cache::ICacheIndex &_cache, const std::string &pref)
-  : TreeBase(owner), index(_cache)
+                           Cache::ICacheIndex &_cache, const std::string &pref,
+                           bool useAsks)
+  : TreeBase(owner), doAsk(useAsks), index(_cache)
 {
   ptr.reset(new _Internal);
   ptr->origRules = &rules;

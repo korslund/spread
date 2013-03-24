@@ -4,7 +4,6 @@ LOG: ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _u
 LOG: deleteFile(_unpack/test1/hello.___tmp)
 LOG: deleteFile(_unpack/test1/world.___tmp)
 LOG: deleteFile(_unpack/test1/arc.___tmp)
-GOT ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello.___tmp
 RESULT:
   SUC: Success 0/0
     ---
@@ -17,7 +16,6 @@ LOG: ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _u
 LOG: deleteFile(_unpack/test1/hello.___tmp)
 LOG: deleteFile(_unpack/test1/world.___tmp)
 LOG: deleteFile(_unpack/test1/arc.___tmp)
-GOT ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello.___tmp
 RESULT:
   SUC: Success 0/0
     ---

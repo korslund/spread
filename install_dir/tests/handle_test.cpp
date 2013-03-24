@@ -3,7 +3,7 @@
 struct MyTest : DirInstaller
 {
   MyTest(const std::string &pref = "")
-    : DirInstaller(own, rules, cache, pref) {}
+    : DirInstaller(own, rules, cache, pref, true) {}
 
   void test(const Hash &dirHash, const std::string &path="")
   {

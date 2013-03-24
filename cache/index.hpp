@@ -77,8 +77,20 @@ namespace Cache
        addFile() will normally write out the cache config file after
        each addition, which can be very time consuming when the index
        is large.
+
+       You can also specify an optional list of files to remove from
+       the index.
      */
-    void addMany(const Spread::Hash::DirMap &files);
+    void addMany(const Spread::Hash::DirMap &files, const StrSet &remove = StrSet());
+
+    /* Check a list of files. The given list is modified to contain
+       up-to-date hashes for all the listed files, or null hashes if
+       the file doesn't exist.
+
+       Similarly to addMany(), this is more effective when checking
+       multiple files.
+     */
+    void checkMany(Spread::Hash::DirMap &files);
 
     /* Remove a file entry from the cache. Doesn't actually delete the
        file.

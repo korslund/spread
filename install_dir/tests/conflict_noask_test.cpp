@@ -1,30 +1,5 @@
 #include "common.cpp"
 
-int answer = -1;
-
-struct Answer : AskHandle
-{
-  bool askWait(AskPtr ask)
-  {
-    StringAskPtr s = StringAsk::cast(ask);
-    assert(s);
-
-    cout << "QUESTION: " << s->message << endl;
-
-    if(answer < 0 || answer >= s->options.size())
-      {
-        cout << "ABORT!\n";
-        s->abortJob();
-        return true;
-      }
-
-    cout << "ANSWER: " << s->options[answer] << endl;
-
-    s->select(answer);
-    return false;
-  }
-};
-
 struct MyTest : DirInstaller
 {
   MyTest(const std::string &pref = "")
@@ -36,12 +11,12 @@ struct MyTest : DirInstaller
   void test(const std::string &w)
   {
     cout << "TESTING " << w << ":\n";
-    if(answer >= 0) cout << "  Preselected answer is: " << answer << endl;
     print(add, "ADD");
     print(del, "DEL");
     print(upgrade, "UPGRADE");
     doLog = false;
-    resolveConflicts(add, del, upgrade, true);
+    // NOTE: the 'false' means overwrite (don't ask) on conflict
+    resolveConflicts(add, del, upgrade, false);
     doLog = true;
     cout << "---\n";
     print(add, "ADD");
@@ -50,7 +25,6 @@ struct MyTest : DirInstaller
     del.clear();
     upgrade.clear();
     resetAll();
-    answer = -1;
     cout << endl;
   }
 
@@ -114,46 +88,18 @@ struct MyTest : DirInstaller
     c("NOT_RELEVANT", Hash("BLAHBLAH"));
     test("Multiple targets");
 
-    cout << "\nSTARTING USER-ASK TESTS:\n\n";
+    cout << "\nSTARTING CONFLICT TESTS:\n\n";
 
     a("file", Hash("FILE"));
     c("file", Hash("OLD"));
-    answer = 2;
-    test("Overwriting unexpected file - KEEP");
-
-    a("file", Hash("FILE"));
-    c("file", Hash("OLD"));
-    answer = 1;
-    test("Overwriting unexpected file - OVERWRITE");
-
-    a("file", Hash("FILE"));
-    c("file", Hash("OLD"));
-    answer = 0;
-    test("Overwriting unexpected file - OVERWRITE + BACKUP");
-
-    u("file", Hash("FILE"), Hash("OLD"));
-    c("file", Hash("WRONG"));
-    answer = 2;
-    test("Overwriting unexpected file - KEEP");
-
-    u("file", Hash("FILE"), Hash("OLD"));
-    c("file", Hash("WRONG"));
-    answer = 1;
     test("Overwriting unexpected file - OVERWRITE");
 
     u("file", Hash("FILE"), Hash("OLD"));
     c("file", Hash("WRONG"));
-    answer = 0;
-    test("Overwriting unexpected file - OVERWRITE + BACKUP");
+    test("Overwriting unexpected file - OVERWRITE");
 
     d("file", Hash("FILE"));
     c("file", Hash("WRONG"));
-    answer = 1;
-    test("Deleting wrong file - KEEP");
-
-    d("file", Hash("FILE"));
-    c("file", Hash("WRONG"));
-    answer = 0;
     test("Deleting wrong file - KILL!");
 
     assert(!checkStatus());
@@ -164,7 +110,6 @@ struct MyTest : DirInstaller
 int main()
 {
   MyTest test("test");
-  own.asker = new Answer;
   test.run();
   return 0;
 }

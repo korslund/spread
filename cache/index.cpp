@@ -70,9 +70,10 @@ struct CacheIndex::_CacheIndex_Hidden
     conf.set(file, makeConf(hash, wtime));
   }
 
-  void addConf(const std::map<std::string,std::string> &entries)
+  void addConf(const std::map<std::string,std::string> &entries,
+               const std::set<std::string> &remove)
   {
-    conf.setMany(entries);
+    conf.setMany(entries, remove);
   }
 
   void removeConf(const std::string &file)
@@ -306,17 +307,47 @@ void CacheIndex::removeFile(const std::string &_where)
   ptr->removeConf(where);
 }
 
-void CacheIndex::addMany(const Hash::DirMap &files)
+void CacheIndex::checkMany(Hash::DirMap &files)
 {
-  PRINT("addMany: " << files.size() << " entries");
+  PRINT("checkMany: " << files.size() << " entries");
+  LOCK lock(ptr->mutex);
 
+  // This is the list fed to the config file
+  std::map<std::string,std::string> entries;
+  StrSet rem;
+
+  Hash::DirMap::iterator it;
+  for(it = files.begin(); it != files.end(); it++)
+    {
+      std::string file = sys->abs(it->first);
+
+      if(!sys->exists(file))
+        {
+          it->second = Hash();
+          continue;
+        }
+
+      uint64_t time;
+      Hash hash = addEntry(file, it->second, time);
+      it->second = hash;
+      if(time)
+        entries[file] = ptr->makeConf(hash, time);
+    }
+
+  if(entries.size())
+    ptr->addConf(entries, rem);
+}
+
+void CacheIndex::addMany(const Hash::DirMap &files,
+                         const StrSet &remove)
+{
+  PRINT("addMany: " << files.size() << " entries, " << remove.size() << " to remove");
   LOCK lock(ptr->mutex);
 
   // This is the list fed to the config file
   std::map<std::string,std::string> entries;
 
-  Hash::DirMap::const_iterator it;
-  for(it = files.begin(); it != files.end(); it++)
+  for(Hash::DirMap::const_iterator it = files.begin(); it != files.end(); it++)
     {
       std::string file = sys->abs(it->first);
       uint64_t time;
@@ -324,7 +355,14 @@ void CacheIndex::addMany(const Hash::DirMap &files)
       if(time)
         entries[file] = ptr->makeConf(hash, time);
     }
-  ptr->addConf(entries);
+  for(StrSet::const_iterator it = remove.begin(); it != remove.end(); it++)
+    {
+      std::string file = sys->abs(*it);
+      ptr->remove(file);
+    }
+
+  if(entries.size() || remove.size())
+    ptr->addConf(entries, remove);
 }
 
 /* This is the main 'workhorse' of the indexer, and the function that

@@ -14,10 +14,10 @@ namespace Spread
   {
     JobManager(Cache::Cache &_cache);
 
-    /* Get next error or question from the jobs. If the UserAsk::abort
-       member is set, then this is an error message. If not, it is a
-       question to the user which you may respond to (or choose to
-       abort.)
+    /* Get next error or question from the jobs. This is used for
+       questions from the system, which you must either respond to or
+       abort. Returns an empty ptr if when there are no more
+       questions.
      */
     StringAskPtr getNextError();
 
@@ -26,8 +26,16 @@ namespace Spread
        etc, start the job through addInst().
 
        Parameter 'destDir' specifies where to install files.
+
+       If parameter 'doAsk' is true, it means you are equipped to
+       handle user-ask requests. It is important that you regularly
+       check and respond to (or abort) requests from the ask queue
+       through getNextError(), otherwise the job will hang while
+       waiting for a response. If set to false, the job will overwrite
+       and deleting files as necessary without asking.
      */
-    InstallerPtr createInstaller(const std::string &destDir, RuleSet &rules);
+    InstallerPtr createInstaller(const std::string &destDir, RuleSet &rules,
+                                 bool doAsk = false);
     JobInfoPtr addInst(InstallerPtr);
 
     /* Set log output.
@@ -42,8 +50,6 @@ namespace Spread
   private:
     struct _Internal;
     boost::shared_ptr<_Internal> ptr;
-
-    void handleError(const std::string &msg);
   };
 
   typedef boost::shared_ptr<JobManager> JobManagerPtr;

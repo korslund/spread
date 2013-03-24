@@ -11,8 +11,10 @@ namespace bf = boost::filesystem;
 
 int main(int argc, char **argv)
 {
+  cout << "Supply any parameter to enable debug logging\n\n";
+
   SpreadLib spread("_bug1", "_tmp");
-  //spread.getJobManager()->setPrintLogger();
+  if(argc > 1) spread.getJobManager()->setPrintLogger();
 
   if(bf::exists("_bug1"))
     bf::remove_all("_bug1");

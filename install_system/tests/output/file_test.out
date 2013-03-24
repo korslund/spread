@@ -7,7 +7,6 @@ START: Add files, no source
 LOG: ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test1/hello.___tmp
 LOG: deleteFile(_file/test1/hello.___tmp)
 LOG: deleteFile(_file/test1/world.___tmp)
-GOT ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test1/hello.___tmp
 RESULT:
   SUC: Success 0/0
     ---
@@ -32,14 +31,10 @@ RESULT:
   SUC: Success 0/0
 
 START: Overwriting existing file that matches
-LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
-LOG: moveFile(_file/test3/hello.___tmp => _file/test3/hello)
 RESULT:
   SUC: Success 0/0
 
 START: Overwriting ditto, but without having file in cache
-LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_file/test3/hello
-LOG: moveFile(_file/test3/hello.___tmp => _file/test3/hello)
 RESULT:
   SUC: Success 0/0
 
@@ -54,12 +49,6 @@ RESULT:
   SUC: Success 0/0
 
 START: Overwriting without cache
-LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_file/test4/abc
-LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_file/test4/abc
-LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_file/test4/jkl/mno
-LOG: moveFile(_file/test4/abc.___tmp => _file/test4/abc)
-LOG: moveFile(_file/test4/def/ghi.___tmp => _file/test4/def/ghi)
-LOG: moveFile(_file/test4/jkl/mno.___tmp => _file/test4/jkl/mno)
 RESULT:
   SUC: Success 0/0
 
@@ -82,7 +71,6 @@ RESULT:
 START: Adding dir as hash, no source
 LOG: Hash NOFILE does NOT match any archive rule, assuming dirHash
 LOG: ERROR: No source for target NOFILE 
-GOT ERROR: No source for target NOFILE 
 RESULT:
   SUC: Success 0/0
     ---
@@ -95,7 +83,6 @@ LOG: ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _f
 LOG: deleteFile(_file/test6/abc.___tmp)
 LOG: deleteFile(_file/test6/def/ghi.___tmp)
 LOG: deleteFile(_file/test6/jkl/mno.___tmp)
-GOT ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test6/abc.___tmp
 RESULT:
   SUC: Success 0/0
     ---

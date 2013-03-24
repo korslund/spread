@@ -21,20 +21,45 @@ struct MyCache : Cache::ICacheIndex
     return CI_None;
   }
 
-  void addMany(const Hash::DirMap &dir)
+  void checkMany(Hash::DirMap &dir)
+  {
+    Hash::DirMap::iterator it;
+    for(it = dir.begin(); it != dir.end(); it++)
+      it->second = reverse[it->first];
+  }
+
+  void addMany(const Hash::DirMap &dir, const Cache::StrSet &rem)
   {
     cout << "Adding " << dir.size() << " files to cache:\n";
-    Hash::DirMap::const_iterator it;
-    for(it = dir.begin(); it != dir.end(); it++)
-      {
-        const std::string &file = it->first;
-        const Hash &hash = it->second;
-        assert(!hash.isNull());
-        assert(file != "");
-        cout << "  " << hash << " " << file << endl;
-        files[hash] = file;
-        reverse[file] = hash;
-      }
+    {
+      Hash::DirMap::const_iterator it;
+      for(it = dir.begin(); it != dir.end(); it++)
+        {
+          const std::string &file = it->first;
+          const Hash &hash = it->second;
+          assert(!hash.isNull());
+          assert(file != "");
+          cout << "  " << hash << " " << file << endl;
+          files[hash] = file;
+          reverse[file] = hash;
+        }
+    }
+    cout << "Removing " << rem.size() << " files from cache:\n";
+    {
+      Cache::StrSet::const_iterator it;
+      for(it = rem.begin(); it != rem.end(); it++)
+        {
+          const std::string &file = *it;
+          assert(file != "");
+          cout << "  " << file << endl;
+          Hash h = reverse[file];
+          if(h.isSet())
+            {
+              reverse.erase(file);
+              files.erase(h);
+            }
+        }
+    }
   }
 
   string findHash(const Hash &hash)
@@ -48,6 +73,8 @@ struct MyCache : Cache::ICacheIndex
   // This is purely used for checking, it doesn't allow adding files
   Hash addFile(string s,const Hash&,bool)
   {
+    // TODO: No longer used
+    assert(0);
     return reverse[s];
   }
 

@@ -1,0 +1,134 @@
+TESTING Nothing:
+ADD:
+DEL:
+UPGRADE:
+---
+ADD:
+DEL:
+
+TESTING Overwriting non-existing file:
+ADD:
+  FILE file
+DEL:
+UPGRADE:
+---
+ADD:
+  FILE file
+DEL:
+
+TESTING Overwriting identical file:
+ADD:
+  FILE file
+DEL:
+UPGRADE:
+---
+ADD:
+DEL:
+
+TESTING Deleting non-existing file:
+ADD:
+DEL:
+  FILE file
+UPGRADE:
+---
+ADD:
+DEL:
+
+TESTING Deleting expected file:
+ADD:
+DEL:
+  FILE file
+UPGRADE:
+---
+ADD:
+DEL:
+  FILE file
+
+TESTING Upgrading identical file:
+ADD:
+  FILE file
+DEL:
+UPGRADE:
+  file FILE
+---
+ADD:
+  FILE file
+DEL:
+
+TESTING Upgrading expected file:
+ADD:
+  NEW file
+DEL:
+UPGRADE:
+  file OLD
+---
+ADD:
+  NEW file
+DEL:
+
+TESTING Upgrading missing file:
+ADD:
+  NEW file
+DEL:
+UPGRADE:
+  file OLD
+---
+ADD:
+  NEW file
+DEL:
+
+TESTING Multiple targets:
+ADD:
+  HASH1 file1
+  HASH1 file2
+  HASH1 file5
+  HASH3 file3
+  HASH4 file4
+DEL:
+  ABC file6
+  DEF file7
+UPGRADE:
+  file4 OLD4
+  file5 HASH1
+---
+ADD:
+  HASH1 file1
+  HASH1 file5
+  HASH4 file4
+DEL:
+  ABC file6
+
+
+STARTING CONFLICT TESTS:
+
+TESTING Overwriting unexpected file - OVERWRITE:
+ADD:
+  FILE file
+DEL:
+UPGRADE:
+---
+ADD:
+  FILE file
+DEL:
+
+TESTING Overwriting unexpected file - OVERWRITE:
+ADD:
+  FILE file
+DEL:
+UPGRADE:
+  file OLD
+---
+ADD:
+  FILE file
+DEL:
+
+TESTING Deleting wrong file - KILL!:
+ADD:
+DEL:
+  FILE file
+UPGRADE:
+---
+ADD:
+DEL:
+  FILE file
+

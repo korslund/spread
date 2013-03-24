@@ -54,32 +54,21 @@ struct JobManager::_Internal : DirOwner
     log("deleteFile(" + path + ")");
     try { bf::remove(path); } catch(...)
       { log("  delete failed, ignoring."); }
-    cache.index.removeFile(path);
   }
 
   void moveFile(const std::string &from, const std::string &to)
   {
     namespace bf = boost::filesystem;
     log("moveFile("+from+" => "+to+")");
-    bool didCopy = false;
     bf::create_directories(bf::path(to).parent_path());
     if(bf::exists(to)) bf::remove(to);
     try { bf::rename(from, to); }
     catch(...)
       {
         log("  - move failed, fallback to copy");
-        didCopy = true;
         bf::copy_file(from, to);
+        deleteFile(from);
       }
-
-    // Cache new before delete old - this is the least destructive if
-    // addFile() throws.
-    cache.index.addFile(to);
-
-    if(didCopy)
-      deleteFile(from);
-    else
-      cache.index.removeFile(from);
   }
 
   TreePtr copyTarget(const std::string &from)
@@ -147,16 +136,9 @@ StringAskPtr JobManager::getNextError()
   return p2;
 }
 
-void JobManager::handleError(const std::string &msg)
+InstallerPtr JobManager::createInstaller(const std::string &destDir, RuleSet &rules, bool doAsk)
 {
-  AskPtr ask(new StringAsk(msg));
-  ask->abort = true;
-  ptr->askQueue.push(ask);
-}
-
-InstallerPtr JobManager::createInstaller(const std::string &destDir, RuleSet &rules)
-{
-  return InstallerPtr(new DirInstaller(*ptr, rules, cache.index, destDir));
+  return InstallerPtr(new DirInstaller(*ptr, rules, cache.index, destDir, doAsk));
 }
 
 JobInfoPtr JobManager::addInst(InstallerPtr p)

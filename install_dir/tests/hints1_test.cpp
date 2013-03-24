@@ -5,7 +5,7 @@ Hash hello("HELLO");
 struct MyTest : DirInstaller
 {
   MyTest(const std::string &pref)
-    : DirInstaller(own, rules, cache, pref) {}
+    : DirInstaller(own, rules, cache, pref, true) {}
 
   void doJob()
   {

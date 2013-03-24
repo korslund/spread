@@ -140,16 +140,21 @@ bool JConfig::remove(const std::string &name)
   // removeMember() returns a Null value if nothing was removed.
   bool res = !p->val.removeMember(name).isNull();
   save();
+  return res;
 }
 
-void JConfig::setMany(const std::map<std::string,std::string> &entries)
+void JConfig::setMany(const std::map<std::string,std::string> &entries,
+                      const std::set<std::string> &remove)
 {
   if(entries.size() == 0) return;
 
   WLOCK;
-  std::map<std::string,std::string>::const_iterator it;
-  for(it = entries.begin(); it != entries.end(); it++)
+  for(std::map<std::string,std::string>::const_iterator it = entries.begin();
+      it != entries.end(); it++)
     p->val[it->first] = it->second;
+  for(std::set<std::string>::const_iterator it = remove.begin();
+      it != remove.end(); it++)
+    p->val.removeMember(*it);
   save();
 }
 

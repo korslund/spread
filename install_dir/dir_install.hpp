@@ -14,7 +14,8 @@ namespace Spread
   struct DirInstaller : TreeBase, Installer
   {
     DirInstaller(DirOwner &owner, RuleSet &rules,
-                 Cache::ICacheIndex &_cache, const std::string &basedir);
+                 Cache::ICacheIndex &_cache, const std::string &basedir,
+                 bool useAsks);
 
     // These are documented in installer.hpp
     void addFile(const std::string &file, const Hash &hash);
@@ -28,6 +29,7 @@ namespace Spread
   private:
     struct _Internal;
     boost::shared_ptr<_Internal> ptr;
+    bool doAsk;
 
   protected:
     std::string prefix;
@@ -52,7 +54,8 @@ namespace Spread
     void sortBlinds();
     void unpackBlind(const Hash &arc, const std::string &path);
     void sortAddDel(HashDir &add, HashDir &del, Hash::DirMap &upgrade);
-    void resolveConflicts(HashDir &add, HashDir &del, const Hash::DirMap &upgrade);
+    void resolveConflicts(HashDir &add, HashDir &del, const Hash::DirMap &upgrade,
+                          bool doAsk);
     void findMoves(HashDir &add, HashDir &del, StrMap &moves);
     void doMovesDeletes(const StrMap &moves, const HashDir &del);
     int ask(const std::string &question, const std::string &opt0,
@@ -80,8 +83,6 @@ namespace Spread
        'move' function fails (eg. if trying to move across disk
        partitions.) On failure the function must fallback to vanilla
        copy+delete.
-
-       The created file is added to cache automatically.
      */
     virtual void moveFile(const std::string &from, const std::string &to) = 0;
   };

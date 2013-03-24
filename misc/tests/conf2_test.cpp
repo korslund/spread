@@ -23,5 +23,12 @@ int main()
   JConfig conf2("_conf2_2.txt");
   conf2.setMany(mp);
 
+  set<string> st;
+  st.insert("a");
+  st.insert("e");
+
+  JConfig conf3;
+  conf3.setMany(mp, st);
+  conf3.save("_conf2_3.txt");
   return 0;
 }

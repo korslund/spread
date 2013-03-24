@@ -62,5 +62,8 @@ target_link_libraries(ask_test ${LIBS})
 add_executable(conflict_test conflict_test.cpp ${ALL})
 target_link_libraries(conflict_test ${LIBS})
 
+add_executable(conflict_noask_test conflict_noask_test.cpp ${ALL})
+target_link_libraries(conflict_noask_test ${LIBS})
+
 add_executable(findmoves_test findmoves_test.cpp ${ALL})
 target_link_libraries(findmoves_test ${LIBS})
