@@ -16,6 +16,19 @@ struct TestJob : ParentJob
   }
 };
 
+struct AbortJob : Job
+{
+  JobPtr jj;
+
+  AbortJob(JobPtr j) : jj(j) {}
+
+  void doJob()
+  {
+    jj->getInfo()->abort();
+    Thread::sleep(5);
+  }
+};
+
 int main()
 {
   {
@@ -36,6 +49,14 @@ int main()
     aj->add(new TestJob(2));
     aj->add(new TestJob(3));
     aj->add(new TestJob(4));
+    ptr->run();
+    print(ptr);
+  }
+  // Regression: AndJob fails if aborted
+  {
+    AndJob *aj = new AndJob;
+    JobPtr ptr(aj);
+    aj->add(new AbortJob(ptr));
     ptr->run();
     print(ptr);
   }
