@@ -73,6 +73,7 @@ struct CacheIndex::_CacheIndex_Hidden
   void addConf(const std::map<std::string,std::string> &entries,
                const std::set<std::string> &remove)
   {
+    PRINT("addConf: entries=" << entries.size() << " remove=" << remove.size());
     conf.setMany(entries, remove);
   }
 
@@ -91,11 +92,16 @@ struct CacheIndex::_CacheIndex_Hidden
       {
         const std::string &file = names[i];
 
-        std::string val = conf.get(file);
-        int split = val.find(' ');
-        Hash hash(val.substr(0,split));
-        time_t wtime = atoll(val.substr(split+1).c_str());
-        add(file, hash, wtime);
+        try
+          {
+            std::string val = conf.get(file);
+            int split = val.find(' ');
+            Hash hash(val.substr(0,split));
+            time_t wtime = atoll(val.substr(split+1).c_str());
+            if(wtime != 0) add(file, hash, wtime);
+          }
+        // Ignore broken entries
+        catch(...) {}
       }
   }
 
@@ -145,12 +151,13 @@ struct CacheIndex::_CacheIndex_Hidden
     assert(0);
   }
 
-  void remove(const std::string &file)
+  // Returns true if an entry was removed
+  bool remove(const std::string &file)
   {
     PTE_it it = paths.find(file);
 
     // Ignore missing entries
-    if(it == paths.end()) return;
+    if(it == paths.end()) return false;
 
     // Get the entry and remove it
     Entry *ent = it->second;
@@ -162,6 +169,8 @@ struct CacheIndex::_CacheIndex_Hidden
 
     // Kill the entry
     delete ent;
+
+    return true;
   }
 };
 
@@ -307,6 +316,16 @@ void CacheIndex::removeFile(const std::string &_where)
   ptr->removeConf(where);
 }
 
+void CacheIndex::verify()
+{
+  CIVector vec;
+  Hash::DirMap names;
+  getEntries(vec);
+  for(int i=0; i<vec.size(); i++)
+    names[vec[i].file];
+  checkMany(names);
+}
+
 void CacheIndex::checkMany(Hash::DirMap &files)
 {
   PRINT("checkMany: " << files.size() << " entries");
@@ -323,10 +342,17 @@ void CacheIndex::checkMany(Hash::DirMap &files)
 
       if(!sys->exists(file))
         {
+          PRINT("checkMany: file NOT found: " << file);
           it->second = Hash();
+          if(ptr->remove(file))
+            {
+              PRINT("  File found and removed from list");
+              rem.insert(file);
+            }
           continue;
         }
 
+      PRINT("checkMany: file found - passing to addEntry");
       uint64_t time;
       Hash hash = addEntry(file, it->second, time);
       it->second = hash;
@@ -334,7 +360,7 @@ void CacheIndex::checkMany(Hash::DirMap &files)
         entries[file] = ptr->makeConf(hash, time);
     }
 
-  if(entries.size())
+  if(entries.size() || rem.size())
     ptr->addConf(entries, rem);
 }
 

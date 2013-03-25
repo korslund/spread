@@ -99,6 +99,14 @@ namespace Cache
      */
     void removeFile(const std::string &where);
 
+    /* Verify all entries in the cache against the file
+       system. Entries will either be:
+       - left alone if correct
+       - updated if necessary
+       - removed if files no longer exist
+     */
+    void verify();
+
     /* Load data from a file. This file will be kept continually
        updated with changes from this point on.
 

@@ -146,7 +146,7 @@ bool JConfig::remove(const std::string &name)
 void JConfig::setMany(const std::map<std::string,std::string> &entries,
                       const std::set<std::string> &remove)
 {
-  if(entries.size() == 0) return;
+  if(entries.size() == 0 && remove.size() == 0) return;
 
   WLOCK;
   for(std::map<std::string,std::string>::const_iterator it = entries.begin();

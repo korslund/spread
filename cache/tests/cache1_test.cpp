@@ -78,11 +78,6 @@ int main()
   status("hello.dat", testsh);
   status("hello.dat", hello);
 
-  // Do this at the end just to dump the file. We don't want it to
-  // interfere with the testing above.
-  index.load("_cache1.conf");
-  index.addFile("CMakeLists.txt");
-
   // Dump to screen
   Cache::CIVector vec;
   index.getEntries(vec);
