@@ -106,6 +106,7 @@ struct Target : TreeBase
 
     if(ins.size())
       {
+        log("Fetching input file(s)");
         HashMap res;
         fetchFiles(ins, res);
         HashMap::const_iterator it;
@@ -130,6 +131,7 @@ struct Target : TreeBase
         task->addOutput(hash, name);
       }
 
+    if(type == T_Unpack || type == T_UnpackBlind) log("Starting unpack");
     if(!execJob(task, type != T_Download))
       {
         // Allow failure recovery on URL errors

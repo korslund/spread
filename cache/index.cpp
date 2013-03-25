@@ -49,6 +49,8 @@ typedef std::pair<HTE_it,HTE_it> HTE_pair;
 
 typedef boost::lock_guard<boost::recursive_mutex> LOCK;
 
+typedef std::map<std::string,std::string> StrMap;
+
 struct CacheIndex::_CacheIndex_Hidden
 {
   PathToEntry paths;
@@ -70,8 +72,8 @@ struct CacheIndex::_CacheIndex_Hidden
     conf.set(file, makeConf(hash, wtime));
   }
 
-  void addConf(const std::map<std::string,std::string> &entries,
-               const std::set<std::string> &remove)
+  void addConf(const StrMap &entries,
+               const StrSet &remove)
   {
     PRINT("addConf: entries=" << entries.size() << " remove=" << remove.size());
     conf.setMany(entries, remove);
@@ -88,6 +90,7 @@ struct CacheIndex::_CacheIndex_Hidden
     std::vector<std::string> names;
     names = conf.getNames();
 
+    StrSet rem;
     for(int i=0; i<names.size(); i++)
       {
         const std::string &file = names[i];
@@ -98,11 +101,22 @@ struct CacheIndex::_CacheIndex_Hidden
             int split = val.find(' ');
             Hash hash(val.substr(0,split));
             time_t wtime = atoll(val.substr(split+1).c_str());
-            if(wtime != 0) add(file, hash, wtime);
+
+            if(file == "" || split == 0 || wtime == 0 || hash.isNull())
+              // Remove broken entries
+              rem.insert(file);
+            else
+              add(file, hash, wtime);
           }
-        // Ignore broken entries
-        catch(...) {}
+        catch(...)
+          {
+            // Remove broken entries
+            rem.insert(file);
+          }
       }
+
+    if(rem.size())
+      addConf(StrMap(), rem);
   }
 
   Entry *find(const std::string &file)
@@ -332,7 +346,7 @@ void CacheIndex::checkMany(Hash::DirMap &files)
   LOCK lock(ptr->mutex);
 
   // This is the list fed to the config file
-  std::map<std::string,std::string> entries;
+  StrMap entries;
   StrSet rem;
 
   Hash::DirMap::iterator it;
@@ -371,7 +385,7 @@ void CacheIndex::addMany(const Hash::DirMap &files,
   LOCK lock(ptr->mutex);
 
   // This is the list fed to the config file
-  std::map<std::string,std::string> entries;
+  StrMap entries;
 
   for(Hash::DirMap::const_iterator it = files.begin(); it != files.end(); it++)
     {
