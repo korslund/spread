@@ -79,6 +79,9 @@ namespace Spread
     JobInfoPtr unpackURL(const std::string &url, const std::string &where,
                          bool async=true);
 
+    // Verify all entries in the file cache database
+    void verifyCache();
+
     /* Add a file to the local file cache. Any future requests for
        this data (as identified by the file's hashed value) will be
        copied from this location, instead of being downloaded or

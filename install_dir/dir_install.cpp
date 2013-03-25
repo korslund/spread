@@ -517,6 +517,8 @@ void DirInstaller::doMovesDeletes(const StrMap &moves, const HashDir &del)
 
 void DirInstaller::doJob()
 {
+  setStatus("Starting install into " + prefix);
+
   /* Load the hints added through addHint(), if any.
    */
   loadUserHints();

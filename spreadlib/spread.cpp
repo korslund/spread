@@ -13,6 +13,14 @@
 #include <boost/thread/recursive_mutex.hpp>
 #include <job/thread.hpp>
 
+//#define PRINT_DEBUG
+#ifdef PRINT_DEBUG
+#include <iostream>
+#define PRINT(a) std::cout << a << "\n"
+#else
+#define PRINT(a)
+#endif
+
 using namespace Spread;
 
 JobInfoPtr SpreadLib::download(const std::string &url,
@@ -219,15 +227,18 @@ struct SpreadLib::_Internal
 
 SpreadLib::SpreadLib(const std::string &outDir, const std::string &tmpDir)
 {
+  PRINT("SpreadLib()");
   ptr.reset(new _Internal);
 
   ptr->repoDir = abs(outDir);
+  PRINT("  repoDir=" << ptr->repoDir);
 
   ptr->cache.index.load(ptr->getPath("cache.conf"));
   ptr->cache.tmpDir = abs(tmpDir);
   ptr->cache.files.basedir = ptr->getPath("cache/");
   ptr->manager.reset(new JobManager(ptr->cache));
 
+  PRINT("  Starting JobManager");
   Thread::run(ptr->manager);
 }
 
@@ -302,6 +313,13 @@ JobInfoPtr SpreadLib::unpackURL(const std::string &url, const std::string &where
 {
   LOCK;
   return SR0::fetchURL(url, abs(where), ptr->manager, async);
+}
+
+void SpreadLib::verifyCache()
+{
+  PRINT("verifyCache() start");
+  ptr->cache.index.verify();
+  PRINT("verifyCache() done");
 }
 
 std::string SpreadLib::cacheFile(const std::string &file)

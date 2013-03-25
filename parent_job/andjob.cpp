@@ -42,8 +42,10 @@ void AndJob::doJob()
 
       setProgress(current, total);
 
-      // Exit if all jobs have finished, or if there was an error
-      if(!hasBusy || checkStatus())
+      if(checkStatus()) return;
+
+      // Exit if all jobs have finished
+      if(!hasBusy)
         break;
 
       Thread::sleep(0.1);
