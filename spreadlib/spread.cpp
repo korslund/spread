@@ -2,14 +2,11 @@
 #include "sr0/sr0.hpp"
 #include "rules/ruleset.hpp"
 #include "rules/rule_loader.hpp"
-#include "misc/readjson.hpp"
 #include "tasks/download.hpp"
 #include "hash/hash_stream.hpp"
 #include <mangle/stream/servers/file_stream.hpp>
 #include <mangle/stream/clients/copy_stream.hpp>
 #include <boost/filesystem.hpp>
-#include <stdexcept>
-#include <vector>
 #include <boost/thread/recursive_mutex.hpp>
 #include <job/thread.hpp>
 
@@ -35,96 +32,13 @@ namespace bf = boost::filesystem;
 
 static std::string abs(const bf::path &path)
 {
-  return absolute(path).string();
+  return bf::absolute(path).string();
 }
 
 static void parent(const bf::path &file)
 {
   bf::create_directories(file.parent_path());
 }
-
-static void fail(const std::string &msg)
-{ throw std::runtime_error(msg); }
-
-typedef std::vector<Hash> HashVec;
-typedef std::vector<std::string> StrVec;
-
-struct Pack
-{
-  HashVec dirs;
-  StrVec paths;
-  std::string version;
-};
-
-// TODO: Should move this to a separate file
-struct PackList
-{
-  typedef std::map<std::string, Pack> PackMap;
-  PackMap packs;
-
-  static void copy(const Json::Value &from, HashVec &to, StrVec *paths = NULL)
-  {
-    using namespace std;
-
-    if(from.isNull()) return;
-    if(!from.isArray()) fail("Invalid pack file");
-
-    to.resize(from.size());
-    if(paths) paths->resize(from.size());
-
-    for(int i=0; i<from.size(); i++)
-      {
-        // Get the input string from the hash list
-        string hash = from[i].asString();
-        string path;
-
-        // Split out the path part, if any
-        size_t pos = hash.find(' ');
-        if(pos != string::npos)
-          {
-            path = hash.substr(pos+1);
-            hash = hash.substr(0,pos);
-          }
-
-        to[i] = Hash(hash);
-
-        if(paths) (*paths)[i] = path;
-      }
-  }
-
-  void load(const std::string &file)
-  {
-    packs.clear();
-
-    using namespace Json;
-
-    Value root = ReadJson::readJson(file);
-
-    if(!root.isObject()) fail("Invalid pack file " + file);
-
-    Value::Members keys = root.getMemberNames();
-    for(int i=0; i<keys.size(); i++)
-      {
-        const std::string &key = keys[i];
-
-        Pack &p = packs[key];
-        Value v = root[key];
-
-        copy(v["dirs"], p.dirs, &p.paths);
-        p.version = v["version"].asString();
-      }
-  }
-
-  const Pack& get(const std::string &pack) const
-  {
-    PackMap::const_iterator it = packs.find(pack);
-    if(it == packs.end())
-      fail("Unknown package " + pack);
-    return it->second;
-  }
-};
-
-#define LOCK boost::lock_guard<boost::recursive_mutex> lock(ptr->mutex)
 
 struct SpreadLib::_Internal
 {
@@ -138,8 +52,14 @@ struct SpreadLib::_Internal
   std::map<std::string, bool> wasUpdated;
   std::map<std::string, PackList> allPacks;
 
-  const Pack& getPack(const std::string &channel,
-                      const std::string &pack)
+  const PackList &getList(const std::string &channel)
+  {
+    update(channel);
+    return allPacks[channel];
+  }
+
+  const PackInfo& getPack(const std::string &channel,
+                          const std::string &pack)
   {
     update(channel);
     try { return allPacks[channel].get(pack); }
@@ -165,7 +85,7 @@ struct SpreadLib::_Internal
 
         if(info->isSuccess())
           {
-            // The job is done, the data is usable.
+            // The job is done, so the data on disk is usable.
             info.reset();
             assert(!chanJobs[channel]);
           }
@@ -181,7 +101,9 @@ struct SpreadLib::_Internal
     try
       {
         loadRulesJsonFile(rules, chanPath(channel, "rules.json"));
-        allPacks[channel].load(chanPath(channel, "packs.json"));
+        allPacks[channel].load(chanPath(channel, "packs.json"), channel);
+
+        // TODO: Update status list accordingly
       }
     catch(std::exception &e)
       {
@@ -224,6 +146,8 @@ struct SpreadLib::_Internal
     try { bf::remove_all(cache.tmpDir); } catch(...) {}
   }
 };
+
+#define LOCK boost::lock_guard<boost::recursive_mutex> lock(ptr->mutex)
 
 SpreadLib::SpreadLib(const std::string &outDir, const std::string &tmpDir)
 {
@@ -269,43 +193,98 @@ JobInfoPtr SpreadLib::updateFromFile(const std::string &channel,
                    &ptr->wasUpdated[channel]);
 }
 
-std::string SpreadLib::getPackVersion(const std::string &channel,
-                                      const std::string &package)
+const SpreadLib::PackInfo &SpreadLib::getPackInfo(const std::string &channel,
+                                                  const std::string &package) const
 {
   LOCK;
-  return ptr->getPack(channel, package).version;
+  return *ptr->getPack(channel,package).info;
 }
 
-/*
-std::string SpreadLib::getPackHash(const std::string &channel,
-                                   const std::string &package)
+const SpreadLib::InfoList &SpreadLib::getInfoList(const std::string &channel) const
 {
   LOCK;
-  const Pack& p = ptr->getPack(channel,package);
-
-  if(p.dirs.size() == 0)
-    return "00";
-
-  // TODO
+  return ptr->getList(channel).infoList;
 }
-*/
 
-JobInfoPtr SpreadLib::install(const std::string &channel,
-                              const std::string &package,
-                              const std::string &where,
-                              std::string *version,
-                              bool async)
+JobInfoPtr SpreadLib::installPack(const std::string &channel,
+                                  const std::string &package,
+                                  const std::string &where,
+                                  std::string *version,
+                                  bool async,
+                                  bool doUpgrade,
+                                  bool enableAsk)
 {
+  assert(channel != "" && package != "" && where != "");
   LOCK;
-  const Pack& p = ptr->getPack(channel,package);
-  if(version) *version = p.version;
+  
+  const PackInfo& p = ptr->getPack(channel,package);
+  if(version) *version = p.info->version;
 
   InstallerPtr inst = ptr->manager->createInstaller(abs(where), ptr->rules);
 
   for(int i=0; i<p.dirs.size(); i++)
     inst->addDir(p.dirs[i], p.paths[i]);
 
-  return ptr->manager->addInst(inst);
+  if(doUpgrade)
+    {
+      const PackStatus *ps = getPackStatus(channel, package, where);
+    }
+
+  JobInfoPtr info = ptr->manager->addInst(inst);
+
+  // TODO: Add monitor job to update our status
+
+  return info;
+}
+
+JobInfoPtr SpreadLib::uninstallPack(const std::string &channel,
+                                    const std::string &package,
+                                    const std::string &where,
+                                    bool async)
+{
+  blah; assert(0); // TODO: Not updated yet
+  LOCK;
+}
+
+const SpreadLib::PackStatus *SpreadLib::getPackStatus(const std::string &channel,
+                                                      const std::string &package,
+                                                      const std::string &where) const
+{
+  assert(channel != "" && package != "");
+  StatusList lst;
+
+  getStatusList(lst, channel, package, where);
+
+  // Return first element in the list, if any
+  if(lst.size()) return *lst.begin();
+
+  // No element found
+  return NULL;
+}
+
+void SpreadLib::getStatusList(SpreadLib::StatusList &output,
+                              const std::string &channel,
+                              const std::string &package,
+                              const std::string &where) const
+{
+  LOCK;
+
+  // TODO: Ensure list is updated first
+
+  RealStatusList::const_iterator it;
+  const RealStatusList &list = ptr->blah;
+  for(it = list.begin(); it != list.end(); it++)
+    {
+      const PackStatus &s = it->stat;
+      if(channel != "" && channel != s.pack->channel) continue;
+      if(package != "" && package != s.pack->package) continue;
+
+      // TODO: We should do a full exists,is_directory,equivalence
+      // check here
+      if(where != "" && abs(where) != s.pack->path) continue;
+
+      output.insert(&s);
+    }
 }
 
 JobInfoPtr SpreadLib::unpackURL(const std::string &url, const std::string &where,

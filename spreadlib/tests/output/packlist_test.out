@@ -1,0 +1,89 @@
+PACK: shots300x260
+Channel: test
+Version: 
+Size: 0
+Dirs:
+  BR60SIN210HuA5oZHmAJGSH37cwdw0vDf-DqB8acv82TUw   
+  RUwhlaWTmUQvb8mLi_4d-pIZIq1aXfP8H5GrdcR5wJTdCg   
+  Mn57JWXqrcRWVjpslQs8Odx7GzXiwfQGwlNUUC__7VLYCg   
+
+Expected exception: Unknown package error
+ALL PACKS:
+PACK: empty
+Channel: test
+Version: 
+Size: 0
+Dirs:
+
+PACK: shots300x260
+Channel: test
+Version: 
+Size: 0
+Dirs:
+  BR60SIN210HuA5oZHmAJGSH37cwdw0vDf-DqB8acv82TUw   
+  RUwhlaWTmUQvb8mLi_4d-pIZIq1aXfP8H5GrdcR5wJTdCg   
+  Mn57JWXqrcRWVjpslQs8Odx7GzXiwfQGwlNUUC__7VLYCg   
+
+PACK: tiggit.net/10-min-space-strategy
+Channel: test
+Version: 1.03
+Size: 0
+Dirs:
+  iLmpxkzLr_OSwwnBw0ABoAO95RruG3x1kcvs3bNgHV5RC   
+
+PACK: tiggit.net/1213
+Channel: test
+Version: 
+Size: 4321
+Dirs:
+  feFIKaST1fhBKHg_OkzqQDuGgTpkoKavsOC2xfNu2H0TAg   some/path
+
+PACK: tiggit.net/blocktality
+Channel: test
+Version: 1.0.1
+Size: 1234567
+Dirs:
+  qIcK0UT8YRao378Cock7NauduHEDHHw6Ic23pdkqpGckQg   
+
+PACK: wxtiggit1-win32
+Channel: test
+Version: 0.88 beta
+Size: 0
+Dirs:
+  SYO4ROrGazq43ogPyUW33XgjsMJ-3AaYfCQIQenHD748   
+  bwhLyp9hTYpUs_yC7nJcoiv3f2zoRBvcA3dwlxVsFyc8AQ   
+
+ALL PACKS:
+PACK: shots300x260
+Channel: test
+Version: 
+Size: 0
+Dirs:
+  BR60SIN210HuA5oZHmAJGSH37cwdw0vDf-DqB8acv82TUw   
+  RUwhlaWTmUQvb8mLi_4d-pIZIq1aXfP8H5GrdcR5wJTdCg   
+  Mn57JWXqrcRWVjpslQs8Odx7GzXiwfQGwlNUUC__7VLYCg   
+  Mn57JWXqrcRWVjpslQs8Odx7GzXiwfQGwlNUUC__7VLYCg   
+
+PACK: tiggit.net/10-min-space-strategy
+Channel: test
+Version: 1.10
+Size: 0
+Dirs:
+  iLmpxdfadfdfdfdafadfAO95RruG3x1kcvs3bNgHV5RC   
+
+PACK: tiggit.net/newgame
+Channel: test
+Version: 1.0.1
+Size: 1234567
+Dirs:
+  qIcK0UT8YRao378Cock7NauduHEDHHw6Ic23pdkqpGckQg   
+
+PACK: wxtiggit1-win32
+Channel: test
+Version: 0.88 beta
+Size: 0
+Dirs:
+  SYO4ROrGazq43ogPyUW33XgjsMJ-3AaYfCQIQenHD748   
+  bwhLyp9hTYpUs_yC7nJcoiv3f2zoRBvcA3dwlxVsFyc8AQ   
+
+ALL PACKS:

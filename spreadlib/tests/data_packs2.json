@@ -1,0 +1,32 @@
+{
+	"shots300x260" : 
+	{
+		"dirs" : 
+		[
+			"BR60SIN210HuA5oZHmAJGSH37cwdw0vDf-DqB8acv82TUw",
+			"RUwhlaWTmUQvb8mLi_4d-pIZIq1aXfP8H5GrdcR5wJTdCg",
+			"Mn57JWXqrcRWVjpslQs8Odx7GzXiwfQGwlNUUC__7VLYCg",
+			"Mn57JWXqrcRWVjpslQs8Odx7GzXiwfQGwlNUUC__7VLYCg"
+		]
+	},
+	"tiggit.net/10-min-space-strategy" :
+	{
+		"dirs" : [ "iLmpxdfadfdfdfdafadfAO95RruG3x1kcvs3bNgHV5RC" ],
+		"version" : "1.10"
+	},
+	"tiggit.net/newgame" : 
+	{
+		"dirs" : [ "qIcK0UT8YRao378Cock7NauduHEDHHw6Ic23pdkqpGckQg" ],
+		"version" : "1.0.1",
+                "install_size" : 1234567
+	},
+	"wxtiggit1-win32" : 
+	{
+		"dirs" : 
+		[
+			"SYO4ROrGazq43ogPyUW33XgjsMJ-3AaYfCQIQenHD748",
+			"bwhLyp9hTYpUs_yC7nJcoiv3f2zoRBvcA3dwlxVsFyc8AQ"
+		],
+		"version" : "0.88 beta"
+	}
+}

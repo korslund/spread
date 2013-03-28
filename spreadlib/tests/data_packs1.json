@@ -1,0 +1,37 @@
+{
+	"shots300x260" : 
+	{
+		"dirs" : 
+		[
+			"BR60SIN210HuA5oZHmAJGSH37cwdw0vDf-DqB8acv82TUw",
+			"RUwhlaWTmUQvb8mLi_4d-pIZIq1aXfP8H5GrdcR5wJTdCg",
+			"Mn57JWXqrcRWVjpslQs8Odx7GzXiwfQGwlNUUC__7VLYCg"
+		]
+	},
+	"tiggit.net/10-min-space-strategy" :
+	{
+		"dirs" : [ "iLmpxkzLr_OSwwnBw0ABoAO95RruG3x1kcvs3bNgHV5RC" ],
+		"version" : "1.03"
+	},
+	"tiggit.net/1213" :
+	{
+                "install_size" : 4321,
+		"dirs" : [ "feFIKaST1fhBKHg_OkzqQDuGgTpkoKavsOC2xfNu2H0TAg some/path" ]
+	},
+	"tiggit.net/blocktality" : 
+	{
+		"dirs" : [ "qIcK0UT8YRao378Cock7NauduHEDHHw6Ic23pdkqpGckQg" ],
+		"version" : "1.0.1",
+                "install_size" : 1234567
+	},
+        "empty" : {},
+	"wxtiggit1-win32" : 
+	{
+		"dirs" : 
+		[
+			"SYO4ROrGazq43ogPyUW33XgjsMJ-3AaYfCQIQenHD748",
+			"bwhLyp9hTYpUs_yC7nJcoiv3f2zoRBvcA3dwlxVsFyc8AQ"
+		],
+		"version" : "0.88 beta"
+	}
+}

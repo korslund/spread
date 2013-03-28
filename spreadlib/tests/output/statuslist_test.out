@@ -1,0 +1,419 @@
+Listing and inserting elements:
+ALL ELEMENTS:
+
+ALL ELEMENTS:
+PACK: 1
+  Channel: A
+  Version: Ver1
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir1/ needsUpdate=0
+
+ALL ELEMENTS:
+PACK: 1
+  Channel: A
+  Version: Ver1
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir1/ needsUpdate=0
+PACK: 2
+  Channel: A
+  Version: Ver1
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir2/ needsUpdate=0
+PACK: 2
+  Channel: A
+  Version: Ver1
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir3/ needsUpdate=0
+
+Individual elements:
+PACK: 1
+  Channel: A
+  Version: Ver1
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir1/ needsUpdate=0
+PACK: 1
+  Channel: A
+  Version: Ver1
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir1/ needsUpdate=0
+NULL!
+PACK: 2
+  Channel: A
+  Version: Ver1
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir2/ needsUpdate=0
+Overwriting elements:
+ALL ELEMENTS:
+PACK: 1
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir1/ needsUpdate=0
+PACK: 2
+  Channel: A
+  Version: Ver1
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir2/ needsUpdate=0
+PACK: 2
+  Channel: A
+  Version: Ver1
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir3/ needsUpdate=0
+
+ALL ELEMENTS:
+PACK: 1
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir1/ needsUpdate=0
+PACK: 2
+  Channel: A
+  Version: Ver1
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir2/ needsUpdate=0
+PACK: 2
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir3/ needsUpdate=0
+
+ALL ELEMENTS:
+PACK: 1
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir1/ needsUpdate=0
+PACK: 2
+  Channel: A
+  Version: Ver1
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir2/ needsUpdate=0
+PACK: 2
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir3/ needsUpdate=0
+PACK: 2
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir4/ needsUpdate=0
+
+Removing elements:
+ALL ELEMENTS:
+PACK: 1
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir1/ needsUpdate=0
+PACK: 2
+  Channel: A
+  Version: Ver1
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir2/ needsUpdate=0
+PACK: 2
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir4/ needsUpdate=0
+
+ALL ELEMENTS:
+PACK: 1
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir1/ needsUpdate=0
+PACK: 2
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir4/ needsUpdate=0
+
+ALL ELEMENTS:
+PACK: 2
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir4/ needsUpdate=0
+
+ALL ELEMENTS:
+PACK: 2
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir4/ needsUpdate=0
+
+Notifying of new entries:
+ALL ELEMENTS:
+PACK: 2
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir4/ needsUpdate=0
+PACK: 1
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir1/ needsUpdate=0
+PACK: 1
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir2/ needsUpdate=0
+
+ALL ELEMENTS:
+PACK: 2
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir4/ needsUpdate=0
+PACK: 1
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir1/ needsUpdate=0
+PACK: 1
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir2/ needsUpdate=0
+
+ALL ELEMENTS:
+PACK: 2
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir4/ needsUpdate=0
+PACK: 1
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir1/ needsUpdate=0
+PACK: 1
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir2/ needsUpdate=0
+
+ALL ELEMENTS:
+PACK: 2
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir4/ needsUpdate=1
+PACK: 1
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir1/ needsUpdate=0
+PACK: 1
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir2/ needsUpdate=0
+
+ALL ELEMENTS:
+PACK: 2
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir4/ needsUpdate=1
+PACK: 1
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir1/ needsUpdate=1
+PACK: 1
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir2/ needsUpdate=1
+
+ALL ELEMENTS:
+PACK: 2
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir4/ needsUpdate=1
+PACK: 1
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir1/ needsUpdate=1
+PACK: 1
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir2/ needsUpdate=1
+PACK: 1
+  Channel: A
+  Version: Ver3
+  Size: 4321
+  Dirs:
+    abcd   hello/
+  STATUS: where=dir3 needsUpdate=0
+
+ALL ELEMENTS:
+PACK: 2
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir4/ needsUpdate=1
+PACK: 1
+  Channel: A
+  Version: Ver2
+  Size: 1234
+  Dirs:
+    abcd   
+  STATUS: where=dir1/ needsUpdate=1
+PACK: 1
+  Channel: A
+  Version: Ver3
+  Size: 4321
+  Dirs:
+    abcd   hello/
+  STATUS: where=dir2 needsUpdate=0
+PACK: 1
+  Channel: A
+  Version: Ver3
+  Size: 4321
+  Dirs:
+    abcd   hello/
+  STATUS: where=dir3 needsUpdate=0
+
+CONFIG FILE:
+ALL ELEMENTS:
+
+ALL ELEMENTS:
+PACK: 1
+  Channel: A
+  Version: Ver3
+  Size: 4321
+  Dirs:
+    abcd   hello/
+  STATUS: where=dir1/ needsUpdate=0
+PACK: 1
+  Channel: A
+  Version: Ver3
+  Size: 4321
+  Dirs:
+    abcd   hello/
+  STATUS: where=dir2/ needsUpdate=0
+PACK: XXX
+  Channel: A
+  Version: Ver3
+  Size: 4321
+  Dirs:
+    abcd   
+  STATUS: where=dir3 needsUpdate=0
+
+RELOAD CONFIG FILE:
+ALL ELEMENTS:
+PACK: 1
+  Channel: A
+  Version: Ver3
+  Size: 4321
+  Dirs:
+    abcd   hello/
+  STATUS: where=dir1/ needsUpdate=0
+PACK: 1
+  Channel: A
+  Version: Ver3
+  Size: 4321
+  Dirs:
+    abcd   hello/
+  STATUS: where=dir2/ needsUpdate=0
+PACK: XXX
+  Channel: A
+  Version: Ver3
+  Size: 4321
+  Dirs:
+    abcd   
+  STATUS: where=dir3 needsUpdate=0
+

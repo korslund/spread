@@ -13,6 +13,26 @@ namespace Spread
   struct Hash;
   struct SpreadLib
   {
+    typedef std::vector<std::string> StrVec;
+
+    struct PackInfo
+    {
+      std::string channel, package, version;
+      StrVec dirs, paths;
+      uint64_t installSize;
+    };
+
+    struct PackStatus
+    {
+      PackInfo *pack;
+      std::string path, curVer;
+      StrVec dirs, paths;
+      bool isUpdated;
+    };
+
+    typedef std::vector<PackInfo> InfoList;
+    typedef std::list<const PackStatus*> StatusList;
+
     SpreadLib(const std::string &outDir, const std::string &tmpDir);
 
     JobManagerPtr getJobManager() const;
@@ -35,43 +55,95 @@ namespace Spread
     */
     bool wasUpdated(const std::string &channel) const;
 
-    /* Get a package's version string. Note that the string is user
-       defined and may be empty. It may not be a reliable indicator of
-       package updates, unless creator of the dataset has specifically
-       declared it to be.
-     */
-    std::string getPackVersion(const std::string &channel,
-                               const std::string &package);
-
-    /* Get a unique, machine-generated hash that represents the output
-       of a given package. You are statistically guaranteed that this
-       string changes if the contents of a package has changed.
-
-       Currently DISABLED.
-     */
-    /*
-    std::string getPackHash(const std::string &channel,
-                            const std::string &package);
-    */
-
     /* Install the given package from 'channel' into the destination
        directory 'where'. All necessary sub- and parent-directories
-       are created as necessary.
+       are created as necessary. Do not call while an updateFrom
 
        If a version string is given, it is set with the package's
        version description, if any.
 
        If async=true, returns the job controller for the given job.
 
+       If doUpgrade=true, then we will upgrade the existing
+       installation in place, if any. This means, among other things,
+       that files which are not marked as changed in the upgrade will
+       not be touched or reinstalled, even if changed/missing on
+       disk. If there are no files to be upgraded, the function will
+       return an empty JobInfoPtr. If doUpgrade=false, any existing
+       installation in the same location is ignored. (The individual
+       files on disk may still be reused by the installer subsystem
+       though.)
+
+       If enableAsk=true, file conflicts (eg. overwriting/deleting
+       user-modified files) will be posted to a global message queue,
+       which you can fetch through getJobManager()->getNextError().
+       Note that you then MUST poll and answer all requests in the
+       queue for as long as the job is running, or else the job might
+       be left hanging while waiting for an answer.
+
+       On success, the job system will remember the install location
+       so that future calls to installPack() will update rather than
+       reinstall, and getPackStatus()/getStatusList() knows about the
+       installation.
+
        Throws an exception if the package or channel does not
        exist. All other errors are returned as error statuses in the
-       JobInfo.
+       JobInfo. May return an empty shared_ptr if there was no work to
+       be done (installation is already up-to-date.)
      */
-    JobInfoPtr install(const std::string &channel,
-                       const std::string &package,
-                       const std::string &where,
-                       std::string *version = NULL,
-                       bool async=true);
+    JobInfoPtr installPack(const std::string &channel,
+                           const std::string &package,
+                           const std::string &where,
+                           std::string *version = NULL,
+                           bool async=true,
+                           bool doUpgrade=true,
+                           bool enableAsk=false);
+
+    /* Uninstall a package previously installed with installPack().
+       Files are deleted and the entry is removed from the database.
+
+       The 'where' location is optional - if not set, the first
+       channel/package match is selected.
+
+       If no matching installation is found, an empty JobInfoPtr is
+       returned.
+     */
+    JobInfoPtr uninstallPack(const std::string &channel,
+                             const std::string &package,
+                             const std::string &where = "",
+                             bool async=true);
+
+
+    /* Get general information about a package.
+     */
+    const PackInfo &getPackInfo(const std::string &channel,
+                                const std::string &package) const;
+
+    /* Get a list of all packages in a channel
+     */
+    const InfoList &getInfoList(const std::string &channel) const;
+
+    /* Get installation-specific information about a package,
+       including whether the given installation is out of date.
+
+       An optional installation location can be given to specify the
+       installation at path 'where'. If no path is given, the first
+       matching installation in the list is returned.
+
+       Returns NULL if no installation was found.
+     */
+    const PackStatus *getPackStatus(const std::string &channel,
+                                    const std::string &package,
+                                    const std::string &where = "") const;
+
+    /* Get a list of all currently installed packages, optionally
+       restricted to a given channel, package, and/or location.
+     */
+    const StatusList &getStatusList(StatusList &output,
+                                    const std::string &channel = "",
+                                    const std::string &package = "",
+                                    const std::string &where = "") const;
+
 
     /* Unpack the contents of a Spread SR0 url directly into the given
        location.
