@@ -19,6 +19,7 @@
 #endif
 
 using namespace Spread;
+namespace bf = boost::filesystem;
 
 JobInfoPtr SpreadLib::download(const std::string &url,
                                const std::string &dest,
@@ -27,8 +28,6 @@ JobInfoPtr SpreadLib::download(const std::string &url,
   DownloadTask *job = new DownloadTask(url, dest);
   return Thread::run(job, async);
 }
-
-namespace bf = boost::filesystem;
 
 static std::string abs(const bf::path &path)
 {
@@ -48,80 +47,9 @@ struct SpreadLib::_Internal
   JobManagerPtr manager;
 
   // This keeps track of updates in progress for a given channel
-  std::map<std::string, JobInfoPtr> chanJobs;
-  std::map<std::string, bool> wasUpdated;
-  std::map<std::string, PackList> allPacks;
-
-  const PackList &getList(const std::string &channel)
-  {
-    update(channel);
-    return allPacks[channel];
-  }
-
-  const PackInfo& getPack(const std::string &channel,
-                          const std::string &pack)
-  {
-    update(channel);
-    try { return allPacks[channel].get(pack); }
-    catch(...)
-      {
-        fail("Unknown package " + channel + "/" + pack);
-      }
-  }
-
-  // Load the newest ruleset and packlist, if it has been updated
-  // since our last run or if it hasn't been loaded at all yet.
-  void update(const std::string &channel)
-  {
-    // Does the channel exist?
-    if(allPacks.find(channel) != allPacks.end())
-      {
-        // Yes. Check if it is currently being updated.
-        JobInfoPtr &info = chanJobs[channel];
-
-        // There has been no updates since our last load, so there's
-        // no point in reloading.
-        if(!info) return;
-
-        if(info->isSuccess())
-          {
-            // The job is done, so the data on disk is usable.
-            info.reset();
-            assert(!chanJobs[channel]);
-          }
-        else
-          /* The job is currently writing the data, meaning we can't
-             safely load it right now.
-           */
-          return;
-      }
-
-    /* Load the data. Will throw on errors, which is what we expect.
-     */
-    try
-      {
-        loadRulesJsonFile(rules, chanPath(channel, "rules.json"));
-        allPacks[channel].load(chanPath(channel, "packs.json"), channel);
-
-        // TODO: Update status list accordingly
-      }
-    catch(std::exception &e)
-      {
-        fail("Error loading channel " + channel + ".\nDETAILS: " + e.what());
-      }
-  }
-
-  JobInfoPtr &setUpdateInfo(const std::string &channel)
-  {
-    JobInfoPtr &res = chanJobs[channel];
-
-    if(res && !res->isFinished())
-      fail("Update already in progress for channel 'channel'");
-
-    return res;
-  }
-
   bf::path repoDir;
+
+  std::map<std::string, bool> wasUpdated;
 
   std::string getPath(const bf::path &file)
   {
@@ -178,6 +106,9 @@ JobInfoPtr SpreadLib::updateFromURL(const std::string &channel,
                                     bool async)
 {
   LOCK;
+  // Load any existing data into memory, ignore errors.
+  try { ptr->chan.load(channel); } catch(...) {}
+
   return ptr->setUpdateInfo(channel) =
     SR0::fetchURL(url, ptr->chanPath(channel), ptr->manager, async,
                   &ptr->wasUpdated[channel]);
@@ -188,6 +119,7 @@ JobInfoPtr SpreadLib::updateFromFile(const std::string &channel,
                                      bool async)
 {
   LOCK;
+  try { ptr->chan.load(channel); } catch(...) {}
   return ptr->setUpdateInfo(channel) =
     SR0::fetchFile(path, ptr->chanPath(channel), ptr->manager, async,
                    &ptr->wasUpdated[channel]);

@@ -1,0 +1,303 @@
+ALL ELEMENTS:
+
+CAUGHT: Error loading channel test0.
+DETAILS: FileStream: failed to open file data_chantest/channels/test0/rules.json (reading data_chantest/channels/test0/rules.json)
+CAUGHT: Error loading channel test0.
+DETAILS: FileStream: failed to open file data_chantest/channels/test0/rules.json (reading data_chantest/channels/test0/rules.json)
+CAUGHT: Error loading channel test1.
+DETAILS: FileStream: failed to open file data_chantest/channels/test1/packs.json (reading data_chantest/channels/test1/packs.json)
+CAUGHT: Error loading channel test1.
+DETAILS: FileStream: failed to open file data_chantest/channels/test1/packs.json (reading data_chantest/channels/test1/packs.json)
+
+=== LOADED (chan=test2) ===
+ALL PACKS:
+PACK: pack1
+Channel: test2
+Version: abc
+Size: 0
+Dirs:
+  ABC   
+
+PACK: pack2
+Channel: test2
+Version: 
+Size: 0
+Dirs:
+  DEF   
+
+ALL ELEMENTS:
+
++ installing test2/blah => bleh
+CAUGHT: Unknown package blah
++ installing test2/pack2 => dir1/
++ installing test2/pack2 => dir2/
+
+=== INSTALLED (chan=test2) ===
+ALL PACKS:
+PACK: pack1
+Channel: test2
+Version: abc
+Size: 0
+Dirs:
+  ABC   
+
+PACK: pack2
+Channel: test2
+Version: 
+Size: 0
+Dirs:
+  DEF   
+
+ALL ELEMENTS:
+PACK: pack2
+  Channel: test2
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+  STATUS: where=dir1/ needsUpdate=0
+PACK: pack2
+  Channel: test2
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+  STATUS: where=dir2/ needsUpdate=0
+
++ installing(mod) test2/pack2 => dir2/
++ ditto for test3/
+
+=== INSTALLED MOD (chan=test2) ===
+ALL PACKS:
+PACK: pack1
+Channel: test2
+Version: abc
+Size: 0
+Dirs:
+  ABC   
+
+PACK: pack2
+Channel: test2
+Version: 
+Size: 0
+Dirs:
+  DEF   
+
+ALL ELEMENTS:
+PACK: pack2
+  Channel: test2
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+  STATUS: where=dir1/ needsUpdate=0
+PACK: pack2
+  Channel: test2
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+    MOD   mod/
+  STATUS: where=dir2/ needsUpdate=0
+PACK: pack2
+  Channel: test3
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+    MOD   mod/
+  STATUS: where=dir2/ needsUpdate=0
+
+
+=== DATA MISMATCH (chan=test2) ===
+ALL PACKS:
+PACK: pack1
+Channel: test2
+Version: abc
+Size: 0
+Dirs:
+  ABC   
+
+PACK: pack2
+Channel: test2
+Version: 
+Size: 0
+Dirs:
+  DEF   
+
+ALL ELEMENTS:
+PACK: pack2
+  Channel: test2
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+  STATUS: where=dir1/ needsUpdate=0
+PACK: pack2
+  Channel: test2
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+    MOD   mod/
+  STATUS: where=dir2/ needsUpdate=0
+PACK: pack2
+  Channel: test3
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+    MOD   mod/
+  STATUS: where=dir2/ needsUpdate=1
+
++ reinserting fake entry/
+
+=== NOT RELOADING while BUSY (chan=test2) ===
+ALL PACKS:
+PACK: pack1
+Channel: test2
+Version: abc
+Size: 0
+Dirs:
+  ABC   
+
+PACK: pack2
+Channel: test2
+Version: 
+Size: 0
+Dirs:
+  DEF   
+
+ALL ELEMENTS:
+PACK: pack2
+  Channel: test2
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+  STATUS: where=dir1/ needsUpdate=0
+PACK: pack2
+  Channel: test2
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+    MOD   mod/
+  STATUS: where=dir2/ needsUpdate=0
+PACK: pack2
+  Channel: test3
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+    MOD   mod/
+  STATUS: where=dir2/ needsUpdate=1
+PACK: pack2
+  Channel: test3
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+    MOD   mod/
+  STATUS: where=tmp/ needsUpdate=0
+
+
+=== NOT RELOADING while ERROR (chan=test2) ===
+ALL PACKS:
+PACK: pack1
+Channel: test2
+Version: abc
+Size: 0
+Dirs:
+  ABC   
+
+PACK: pack2
+Channel: test2
+Version: 
+Size: 0
+Dirs:
+  DEF   
+
+ALL ELEMENTS:
+PACK: pack2
+  Channel: test2
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+  STATUS: where=dir1/ needsUpdate=0
+PACK: pack2
+  Channel: test2
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+    MOD   mod/
+  STATUS: where=dir2/ needsUpdate=0
+PACK: pack2
+  Channel: test3
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+    MOD   mod/
+  STATUS: where=dir2/ needsUpdate=1
+PACK: pack2
+  Channel: test3
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+    MOD   mod/
+  STATUS: where=tmp/ needsUpdate=0
+
+
+=== RELOAD on SUCCESS (chan=test2) ===
+ALL PACKS:
+PACK: pack1
+Channel: test2
+Version: abc
+Size: 0
+Dirs:
+  ABC   
+
+PACK: pack2
+Channel: test2
+Version: 
+Size: 0
+Dirs:
+  DEF   
+
+ALL ELEMENTS:
+PACK: pack2
+  Channel: test2
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+  STATUS: where=dir1/ needsUpdate=0
+PACK: pack2
+  Channel: test2
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+    MOD   mod/
+  STATUS: where=dir2/ needsUpdate=0
+PACK: pack2
+  Channel: test3
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+    MOD   mod/
+  STATUS: where=dir2/ needsUpdate=1
+PACK: pack2
+  Channel: test3
+  Version: 
+  Size: 0
+  Dirs:
+    DEF   
+    MOD   mod/
+  STATUS: where=tmp/ needsUpdate=1
+

@@ -10,23 +10,18 @@ typedef std::map<std::string,PackInfo*> Lookup;
 
 struct PackList::_Internal
 {
-  std::string channel;
   PackInfoList list;
   Lookup lookup;
 };
 
-PackList::PackList(const std::string &channel)
-{
-  ptr.reset(new _Internal);
-  ptr->channel = channel;
-}
+PackList::PackList() { ptr.reset(new _Internal); }
 
 const PackInfoList &PackList::getList() const { return ptr->list; }
 
 static void fail(const std::string &msg)
 { throw std::runtime_error(msg); }
 
-void PackList::loadJson(const std::string &file)
+void PackList::loadJson(const std::string &file, const std::string &channel)
 {
   assert(file != "");
   clear();
@@ -44,7 +39,7 @@ void PackList::loadJson(const std::string &file)
       const std::string &key = keys[i];
       PackInfo &p = ptr->list[i];
       ptr->lookup[key] = &p;
-      jsonToInfo(p, root[key], ptr->channel, key);
+      jsonToInfo(p, root[key], channel, key);
     }
 }
 

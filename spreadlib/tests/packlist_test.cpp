@@ -24,18 +24,21 @@ void print(const PackInfoList &list)
     print(list[i]);
 }
 
+void print(const PackList &list)
+{ print(list.getList()); }
+
 int main()
 {
-  PackList list("test");
-  list.loadJson("data_packs1.json");
+  PackList list;
+  list.loadJson("data_packs1.json", "test");
   print(list.get("shots300x260"));
   try { list.get("error"); }
   catch(exception &e) { cout << "Expected exception: " << e.what() << endl; }
-  print(list.getList());
-  list.loadJson("data_packs2.json");
-  print(list.getList());
+  print(list);
+  list.loadJson("data_packs2.json", "test");
+  print(list);
   list.clear();
-  print(list.getList());
+  print(list);
 
   return 0;
 }

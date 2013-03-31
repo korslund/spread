@@ -1,0 +1,11 @@
+{
+  "pack1" :
+  {
+    "dirs" : [ "ABC" ],
+    "version" : "abc"
+  },
+  "pack2" :
+  {
+    "dirs" : [ "DEF" ]
+  }
+}

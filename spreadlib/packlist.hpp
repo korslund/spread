@@ -12,7 +12,7 @@ namespace Spread
 {
   struct PackList
   {
-    PackList(const std::string &channel);
+    PackList();
 
     // Return list of all packages
     const PackInfoList &getList() const;
@@ -24,7 +24,7 @@ namespace Spread
        loadJson() may be called multiple times. Each call clears out
        all existing data before loading the new information.
      */
-    void loadJson(const std::string &file);
+    void loadJson(const std::string &file, const std::string &channel);
 
     /* Clear out all existing pack data, reverting the object back to
        the same state as right after it was constructed.
