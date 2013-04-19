@@ -25,17 +25,13 @@ int main(int argc, char **argv)
   info = spread.updateFromURL("tiggit.net", "http://tiggit.net/client/sr0/", true);
 
   /* This should fail as there is no loaded data yet.
-
-     This one worked OK from the start, install() fails immediately
-     because there are no loadable files. This is acceptible behavior
-     as you shouldn't be calling install() if you haven't initialized
-     your data first.
    */
   bool fail = false;
   try
     {
       cout << "Attempting to install a package\n";
-      info2 = spread.install("tiggit.net", "tiggit.net/cave-story", "_bug1/cave-story");
+      info2 = spread.installPack("tiggit.net", "tiggit.net/cave-story", "_bug1/cave-story",
+                                 NULL, true, false);
       info2->failError();
       cout << "Unexpected success\n";
     }
@@ -57,7 +53,8 @@ int main(int argc, char **argv)
   try
     {
       cout << "Installing package for real this time\n";
-      info2 = spread.install("tiggit.net", "tiggit.net/cave-story", "_bug1/cave-story");
+      info2 = spread.installPack("tiggit.net", "tiggit.net/cave-story", "_bug1/cave-story",
+                                 NULL, true, false);
       cout << "Waiting...\n";
       info2->wait();
       info2->failError();

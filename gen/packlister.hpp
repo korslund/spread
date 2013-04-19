@@ -1,8 +1,9 @@
 #ifndef __SPREAD_GEN_PACKLISTER_HPP_
 #define __SPREAD_GEN_PACKLISTER_HPP_
 
-#include "cache/cache.hpp"
+#include "cache/iindex.hpp"
 #include "rules/ruleset.hpp"
+#include "spreadlib/packinfo.hpp"
 #include <vector>
 #include <set>
 
@@ -13,9 +14,11 @@
 
 namespace SpreadGen
 {
+  typedef std::set<const Spread::ArcRuleData*> ArcRuleSet;
+
   struct PackLister
   {
-    PackLister(Cache::Cache &_cache,
+    PackLister(Cache::ICacheIndex &_cache,
                const Spread::RuleSet &_rules)
       : cache(_cache), rules(_rules) {}
 
@@ -39,21 +42,15 @@ namespace SpreadGen
     void setVersion(const std::string &packName, const std::string &version)
     { packs[packName].version = version; }
 
-    // Output:
-
-    typedef std::vector<Spread::Hash> HashList;
-    typedef std::vector<std::string> StrList;
     typedef std::set<Spread::Hash> HashSet;
 
-    struct PackInfo
-    {
-      HashList dirs;
-      StrList paths;
-      std::string version;
-    };
-
-    // Package list
-    std::map<std::string, PackInfo> packs;
+    /* Package list. Note that the 'channel' member is left blank
+       because it is not used by ListWriter. The channel name is not
+       included anywhere in the written output and is in fact not
+       defined as a concept within the channel data itself. Also,
+       installSize is not computed.
+     */
+    std::map<std::string, Spread::PackInfo> packs;
 
     // Directory files to include in the output
     HashSet dirs;
@@ -62,10 +59,10 @@ namespace SpreadGen
     Spread::RuleList ruleSet;
 
     // Archive rules to include
-    std::set<const Spread::ArcRuleData*> arcSet;
+    ArcRuleSet arcSet;
 
   private:
-    Cache::Cache &cache;
+    Cache::ICacheIndex &cache;
     const Spread::RuleSet &rules;
 
     // Process a directory or archive hash. Used by both the add*()

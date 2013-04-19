@@ -11,8 +11,21 @@ namespace Spread
 {
   struct ChanList
   {
+    /* Files used in basedir:
+
+       basedir/installed.conf (backups to .conf.old)
+       basedir/channels/<channel>/rules.json (read-only)
+       basedir/channels/<channel>/packs.json (read-only)
+     */
     ChanList(const std::string &basedir, RuleSet &rules);
 
+    /* Get package information read from disk (read-only), or the
+       install status container. Both functions will load or reload
+       data from disk if we deem it is necessary. getPackList() does
+       the equivalent to load(channel), while getStatusList() loads
+       all channels for which setChannelJob() has been called (since
+       these might have updated since our last call.)
+     */
     const PackList &getPackList(const std::string &channel);
     StatusList &getStatusList();
 
@@ -20,6 +33,8 @@ namespace Spread
        you are planning to overwrite the data on disk (see
        setChannelJob()), you usually don't need to call this as lazy
        loading is implicit in getPackList().
+
+       Throws on error.
      */
     void load(const std::string &channel);
 
@@ -34,7 +49,8 @@ namespace Spread
        You may pre-load existing data on disk using load() BEFORE
        starting the job. This will load old data from disk (if any)
        into memory for use while you are waiting for the job to
-       finish.
+       finish. If you try calling load() AFTER setChannelJob(), the
+       job (while running) will block load() from loading any data.
      */
     void setChannelJob(const std::string &channel, JobInfoPtr job);
 

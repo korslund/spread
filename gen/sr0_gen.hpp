@@ -1,14 +1,14 @@
 #ifndef __SPREAD_GEN_SR0GEN_HPP_
 #define __SPREAD_GEN_SR0GEN_HPP_
 
-#include "cache/cache.hpp"
+#include "cache/iindex.hpp"
 #include "rules/ruleset.hpp"
 
 namespace SpreadGen
 {
   struct GenSR0
   {
-    GenSR0(Cache::Cache &_cache,
+    GenSR0(Cache::ICacheIndex &_cache,
            const Spread::RuleSet &_rules)
       : cache(_cache), rules(_rules) {}
 
@@ -31,7 +31,7 @@ namespace SpreadGen
     void makeSR0(const Spread::Hash &hash, const std::string &outDir);
 
   private:
-    Cache::Cache &cache;
+    Cache::ICacheIndex &cache;
     const Spread::RuleSet &rules;
   };
 }

@@ -17,7 +17,7 @@ int main()
   cout << "Result: " << hsh << endl;
 
   printDir("_copy");
-  printDir("_out");
+  //printDir("_out");
 
   return 0;
 }

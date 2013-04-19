@@ -1,5 +1,6 @@
 #include "listwriter.hpp"
 #include <iostream>
+#include "cache/index.hpp"
 
 #include "print_dir.hpp"
 
@@ -7,7 +8,7 @@ using namespace SpreadGen;
 using namespace Spread;
 using namespace std;
 
-Cache::Cache cache;
+Cache::CacheIndex cache;
 RuleSet rules;
 PackLister lst(cache, rules);
 
@@ -20,15 +21,15 @@ Hash arcHash2("OTHER_ARC");
 
 int main()
 {
-  Directory dir;
-  dir.dir["world.txt"] = world;
-  dirHash2 = dir.write("_writer_dir2.out");
+  Hash::DirMap dir;
+  dir["world.txt"] = world;
+  dirHash2 = Dir::write(dir, "_writer_dir2.out");
 
-  dir.dir["hello.txt"] = hello;
-  dirHash = dir.write("_writer_dir.out");
+  dir["hello.txt"] = hello;
+  dirHash = Dir::write(dir, "_writer_dir.out");
 
-  cache.index.addFile("_writer_dir.out");
-  cache.index.addFile("_writer_dir2.out");
+  cache.addFile("_writer_dir.out");
+  cache.addFile("_writer_dir2.out");
   rules.addURL(hello, "url-to-hello");
   rules.addURL(hello, "other-hello-url", 3, 2);
   rules.addURL(Hash("blah"), "you will never see this");
@@ -39,7 +40,7 @@ int main()
 
   lst.addDir("no-hint", dirHash);
   lst.setVersion("no-hint", "1.2.3");
-  lst.addHint("with-hint", arcHash2);
+  //lst.addHint("with-hint", arcHash2);
   lst.addDir("with-hint", dirHash);
 
   ListWriter wrt(cache);

@@ -208,39 +208,18 @@ void StatusList::notifyNew(const PackInfo &info)
   for(PSLit it = ptr->list.begin(); it != ptr->list.end(); it++)
     {
       assert(it->info.dirs.size() == it->info.paths.size());
+      // Only check packages matching in channel and package name
       if(it->info.channel == info.channel && it->info.package == info.package)
-        {
-          // Assume inequality, unless we pass the equality tests
-          // below
-          it->needsUpdate = true;
-
-          if(it->info.dirs.size() != info.dirs.size())
-            continue;
-
-          bool fail = false;
-          for(int i=0; i<info.dirs.size(); i++)
-            {
-              if(info.dirs[i] != it->info.dirs[i] ||
-                 info.paths[i] != it->info.paths[i])
-                {
-                  fail = true;
-                  break;
-                }
-            }
-          if(fail) continue;
-
-          // The installed pack matches the most recent pack info,
-          // therefore the installed back does NOT need to be updated.
-          it->needsUpdate = false;
-        }
+        // If the packages match, we don't need to update.
+        it->needsUpdate = !info.match(it->info);
     }
 }
 
 /* Since we are using direct search (no lookups) in notifyNew, this
-   function in particular isn't very efficient for large list
-   sizes. We assume for now that the number of installed games is
-   relatively low. We can optimize this using map<>s for lookups
-   later.
+   function in particular isn't very efficient for large list sizes as
+   an O(N*M) algorithm. We assume for now that the number of installed
+   packs is relatively low. We can optimize this using map<> for
+   lookups later.
  */
 void StatusList::notifyNew(const PackInfoList &list)
 {

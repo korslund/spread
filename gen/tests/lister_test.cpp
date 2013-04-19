@@ -1,11 +1,13 @@
 #include "packlister.hpp"
+#include "cache/index.hpp"
+#include "dir/binary.hpp"
 #include <iostream>
 
 using namespace SpreadGen;
 using namespace Spread;
 using namespace std;
 
-Cache::Cache cache;
+Cache::CacheIndex cache;
 RuleSet rules;
 
 Hash dirHash;
@@ -19,16 +21,16 @@ Hash arcHash("ARC_WITH_DIR");
 
 void genDir()
 {
-  Directory dir;
-  dir.dir["hello.txt"] = hello;
-  dir.dir["dir/world.txt"] = world;
-  dirHash = dir.write("_lister_dir.out");
+  Hash::DirMap dir;
+  dir["hello.txt"] = hello;
+  dir["dir/world.txt"] = world;
+  dirHash = Dir::write(dir, "_lister_dir.out");
 }
 
 void print(const PackLister &lst)
 {
   {
-    std::map<std::string, PackLister::PackInfo>::const_iterator it;
+    std::map<std::string, PackInfo>::const_iterator it;
     cout << "  PACKS:\n";
     for(it = lst.packs.begin(); it != lst.packs.end(); it++)
       {
@@ -36,9 +38,6 @@ void print(const PackLister &lst)
         cout << "      Dirs:";
         for(int i=0; i<it->second.dirs.size(); i++)
           cout << " " << it->second.dirs[i];
-        cout << "\n      Hints:";
-        for(int i=0; i<it->second.hints.size(); i++)
-          cout << " " << it->second.hints[i];
         cout << "\n      Version: " << it->second.version << endl;
       }
   }
@@ -72,12 +71,6 @@ void test1(const std::string &msg, bool hint=false)
 
   PackLister lst(cache, rules);
 
-  if(hint)
-    {
-      lst.addHint("test1", fakeArc);
-      lst.setVersion("test1", "with-hint");
-    }
-
   try { lst.addDir("test1", dirHash); }
   catch(exception &e)
     {
@@ -95,7 +88,7 @@ int main()
 
   test1("Non-existing dir");
 
-  cache.index.addFile("_lister_dir.out");
+  cache.addFile("_lister_dir.out");
   test1("Created dir file but nothing else");
 
   rules.addURL(hello, "url-to-hello");

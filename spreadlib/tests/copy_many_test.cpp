@@ -25,7 +25,7 @@ int main()
   cout << "Progress: " << info->getCurrent() << "/" << info->getTotal() << endl;
 
   printDir("_copy_many");
-  printDir("_out");
+  //printDir("_out");
 
   return 0;
 }

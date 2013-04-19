@@ -7,7 +7,7 @@ using namespace SpreadGen;
 using namespace Spread;
 
 void GenSR0::makeSR0(const std::string &arcFile, const std::string &outDir)
-{ makeSR0(cache.index.addFile(arcFile), outDir); }
+{ makeSR0(cache.addFile(arcFile), outDir); }
 
 void GenSR0::makeSR0(const Hash &hash, const std::string &outDir)
 {

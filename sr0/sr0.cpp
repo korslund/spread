@@ -208,7 +208,8 @@ struct Sr0Job : Job
     JobInfoPtr inf = manager->addInst(inst);
     setBusy("Updating");
     PRINT("Running main installer => " << dest);
-    assert(inf->isInitiated());
+    //assert(inf->isInitiated()); // This may fail
+    assert(manager->getInfo()->isInitiated()); // This is correct
     if(waitClient(inf)) return;
     setBusy("Cleaning up");
     PRINT("  Done.");

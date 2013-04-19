@@ -3,7 +3,6 @@
 
 #include "packlister.hpp"
 #include <mangle/vfs/stream_factory.hpp>
-//#include "misc/jconfig.hpp"
 
 /* The ListWriter takes the output from a PackLister and writes it as
    files to a directory.
@@ -30,8 +29,8 @@ namespace SpreadGen
 {
   struct ListWriter
   {
-    ListWriter(Cache::Cache &_cache/*, const Misc::JConfig &_c1k*/)
-      : cache(_cache)/*, cache1k(_c1k)*/ {}
+    ListWriter(Cache::ICacheIndex &_cache)
+      : cache(_cache) {}
 
     // Write to a directory
     void write(const PackLister &lister, const std::string &where);
@@ -40,8 +39,7 @@ namespace SpreadGen
     void write(const PackLister &lister, Mangle::VFS::StreamFactoryPtr output);
 
   private:
-    Cache::Cache &cache;
-    //Misc::JConfig &cache1k;
+    Cache::ICacheIndex &cache;
   };
 }
 

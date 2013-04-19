@@ -4,7 +4,7 @@
 #include "job/jobinfo.hpp"
 #include "install_system/jobmanager.hpp"
 #include <boost/function.hpp>
-#include <vector>
+#include "spreadlib/statusinfo.hpp"
 
 /* Top-level interface to the Spread system.
  */
@@ -13,26 +13,6 @@ namespace Spread
   struct Hash;
   struct SpreadLib
   {
-    typedef std::vector<std::string> StrVec;
-
-    struct PackInfo
-    {
-      std::string channel, package, version;
-      StrVec dirs, paths;
-      uint64_t installSize;
-    };
-
-    struct PackStatus
-    {
-      PackInfo *pack;
-      std::string path, curVer;
-      StrVec dirs, paths;
-      bool isUpdated;
-    };
-
-    typedef std::vector<PackInfo> InfoList;
-    typedef std::list<const PackStatus*> StatusList;
-
     SpreadLib(const std::string &outDir, const std::string &tmpDir);
 
     JobManagerPtr getJobManager() const;
@@ -68,8 +48,8 @@ namespace Spread
        installation in place, if any. This means, among other things,
        that files which are not marked as changed in the upgrade will
        not be touched or reinstalled, even if changed/missing on
-       disk. If there are no files to be upgraded, the function will
-       return an empty JobInfoPtr. If doUpgrade=false, any existing
+       disk. If no files need to be upgraded, the function may return
+       an empty JobInfoPtr. If doUpgrade=false, any existing
        installation in the same location is ignored. (The individual
        files on disk may still be reused by the installer subsystem
        though.)
@@ -83,7 +63,8 @@ namespace Spread
 
        On success, the job system will remember the install location
        so that future calls to installPack() will update rather than
-       reinstall, and getPackStatus()/getStatusList() knows about the
+       reinstall (when called with doUpgrade=true.) Also,
+       getPackStatus()/getStatusList() will know about the
        installation.
 
        Throws an exception if the package or channel does not
@@ -121,7 +102,7 @@ namespace Spread
 
     /* Get a list of all packages in a channel
      */
-    const InfoList &getInfoList(const std::string &channel) const;
+    const PackInfoList &getInfoList(const std::string &channel) const;
 
     /* Get installation-specific information about a package,
        including whether the given installation is out of date.
@@ -139,10 +120,10 @@ namespace Spread
     /* Get a list of all currently installed packages, optionally
        restricted to a given channel, package, and/or location.
      */
-    const StatusList &getStatusList(StatusList &output,
-                                    const std::string &channel = "",
-                                    const std::string &package = "",
-                                    const std::string &where = "") const;
+    void getStatusList(PackStatusList &output,
+                       const std::string &channel = "",
+                       const std::string &package = "",
+                       const std::string &where = "") const;
 
 
     /* Unpack the contents of a Spread SR0 url directly into the given
@@ -209,8 +190,8 @@ namespace Spread
     typedef boost::function< void(const Hash &hash, const std::string &url) > CBFunc;
     void setURLCallback(CBFunc cb);
 
-  private:
     struct _Internal;
+  private:
     boost::shared_ptr<_Internal> ptr;
   };
 }
