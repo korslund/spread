@@ -1,0 +1,16 @@
+{
+    "p" :
+    {
+        "dirs":["blah"],
+        "install_size" : 123,
+        "version":"YO!"
+    },
+    "p2" :
+    {
+        "dirs":["1GxiMyo3usMorjw5J4Gtn-Avw6ZrL2muqEcbyP-G5iyX"]
+    },
+    "p3" :
+    {
+        "dirs":["K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf"]
+    }
+}

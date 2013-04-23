@@ -51,7 +51,8 @@ static Json::Value fromDirs(const StrVec &dirs, const StrVec &paths)
 Json::Value Spread::infoToJson(const PackInfo &info)
 {
   Json::Value res;
-  res["version"] = info.version;
+  if(info.version != "")
+    res["version"] = info.version;
   res["install_size"] = info.installSize;
   res["dirs"] = fromDirs(info.dirs, info.paths);
   return res;

@@ -1,7 +1,6 @@
 #ifndef __SPREAD_HPP_
 #define __SPREAD_HPP_
 
-#include "job/jobinfo.hpp"
 #include "install_system/jobmanager.hpp"
 #include <boost/function.hpp>
 #include "spreadlib/statusinfo.hpp"
@@ -24,9 +23,9 @@ namespace Spread
                              const std::string &url,
                              bool async=true);
 
-    JobInfoPtr updateFromFile(const std::string &channel,
-                              const std::string &path,
-                              bool async=true);
+    JobInfoPtr updateFromFS(const std::string &channel,
+                            const std::string &path,
+                            bool async=true);
 
     /* Returns whether any new data was downloaded in the last call to
        updateFromURL()/File() for this channel.

@@ -31,6 +31,7 @@ JobInfoPtr SpreadLib::download(const std::string &url,
 
 static std::string abs(const bf::path &path)
 {
+  assert(path != "");
   return bf::absolute(path).string();
 }
 
@@ -141,9 +142,9 @@ JobInfoPtr SpreadLib::updateFromURL(const std::string &channel,
   return info;
 }
 
-JobInfoPtr SpreadLib::updateFromFile(const std::string &channel,
-                                     const std::string &path,
-                                     bool async)
+JobInfoPtr SpreadLib::updateFromFS(const std::string &channel,
+                                   const std::string &path,
+                                   bool async)
 {
   LOCK;
   try { ptr->chan.load(channel); } catch(...) {}
@@ -175,13 +176,19 @@ struct InstallMonitor : Job
 
   void doJob()
   {
-    setDone();
-
-    if(waitClient(client)) return;
+    PRINT("Monitor: waiting for job " << pack.package);
+    if(waitClient(client))
+      {
+        PRINT("Monitor: job " << pack.package << " failed");
+        return;
+      }
+    PRINT("Monitor: job " << pack.package << " success");
     assert(client->isSuccess());
 
     // Notify the system that this package was installed successfully
     LOCK;
+    PRINT("Monitor: setting status for " << pack.channel << "/" << pack.package
+          << " at " << where);
     ptr->chan.getStatusList().setEntry(pack, where);
 
     /* Attempt to notify the status list directly if the entry has
@@ -198,6 +205,7 @@ struct InstallMonitor : Job
     const PackInfo &newest = ptr->chan.getPackList(pack.channel).get(pack.package);
     ptr->chan.getStatusList().notifyNew(newest);
 
+    PRINT("Monitor " << pack.package << " done");
     setDone();
   }
 };
@@ -276,6 +284,12 @@ JobInfoPtr SpreadLib::installPack(const std::string &channel,
   job->where = where;
   Thread::run(job, async);
 
+  if(!async)
+    {
+      assert(info->isFinished());
+      info->failError();
+    }
+
   // Return the installer job info, not our monitor job info.
   return info;
 }
@@ -337,10 +351,12 @@ const PackStatus *SpreadLib::getPackStatus(const std::string &channel,
 void SpreadLib::getStatusList(PackStatusList &output,
                               const std::string &channel,
                               const std::string &package,
-                              const std::string &where) const
+                              const std::string &_where) const
 {
   LOCK;
-  ptr->chan.getStatusList().getList(output, channel, package, abs(where));
+  std::string where = _where;
+  if(where != "") where = abs(where);
+  ptr->chan.getStatusList().getList(output, channel, package, where);
 }
 
 JobInfoPtr SpreadLib::unpackURL(const std::string &url, const std::string &where,

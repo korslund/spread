@@ -129,12 +129,14 @@ void StatusList::getList(PackStatusList &output,
                          const std::string &package,
                          const std::string &where) const
 {
+  output.clear();
   for(PSLcit it = ptr->list.begin(); it != ptr->list.end(); it++)
     {
       // Skip non-matching entries
-      if(channel != "" && channel != it->info.channel) continue;
-      if(package != "" && package != it->info.package) continue;
-      if(where != "" && !pMatch(where,it->where)) continue;
+      if((channel != "" && channel != it->info.channel) ||
+         (package != "" && package != it->info.package) ||
+         (where != "" && !pMatch(where,it->where)))
+         continue;
 
       output.push_back(&*it);
     }

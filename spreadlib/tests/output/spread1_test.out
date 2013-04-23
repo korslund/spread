@@ -1,0 +1,414 @@
+
+
+Directory: _test1/
+00                                                 spread/
+00                                                 spread/cache/
+Total 2 elements
+Hash: FwCmuiauZk4aPQcjyUx-JyA6vV9vHxQoDj7zez0A0ERw
+
+CAUGHT: Error loading channel c.
+DETAILS: FileStream: failed to open file /home/mortennk/koding/spread/spreadlib/tests/_test1/spread/channels/c/rules.json (reading /home/mortennk/koding/spread/spreadlib/tests/_test1/spread/channels/c/rules.json)
+Directory: _test1/
+00                                                 spread/
+00                                                 spread/cache/
+Total 2 elements
+Hash: FwCmuiauZk4aPQcjyUx-JyA6vV9vHxQoDj7zez0A0ERw
+
+ALL PACKS:
+PACK: p
+Channel: c
+Version: YO!
+Size: 123
+Dirs:
+  blah   
+
+PACK: p2
+Channel: c
+Version: 
+Size: 0
+Dirs:
+  1GxiMyo3usMorjw5J4Gtn-Avw6ZrL2muqEcbyP-G5iyX   
+
+PACK: p3
+Channel: c
+Version: 
+Size: 0
+Dirs:
+  K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf   
+
+CAUGHT: Unknown package NOPACK
+Directory: _test1/
+00                                                 spread/
+00                                                 spread/cache/
+00                                                 spread/channels/
+00                                                 spread/channels/c/
+3vkvKJSQr9mkb_BaOBApQYAuu9jRrxXlyGyOlCirjMsZAQ     spread/channels/c/packs.json
+aMFrF-tLieG6jpCHKo6SXPTpF59QLw7DydMs0MVglzxl       spread/channels/c/rules.json
+Total 6 elements
+Hash: geZNzsK9RhEh8m2wr9hJlhnqgDLJSvGLDbzQ0NNoHidyAQ
+
+CAUGHT: No source for target blah 
+Directory: _test1/
+00                                                 spread/
+00                                                 spread/cache/
+00                                                 spread/channels/
+00                                                 spread/channels/c/
+3vkvKJSQr9mkb_BaOBApQYAuu9jRrxXlyGyOlCirjMsZAQ     spread/channels/c/packs.json
+aMFrF-tLieG6jpCHKo6SXPTpF59QLw7DydMs0MVglzxl       spread/channels/c/rules.json
+Total 6 elements
+Hash: geZNzsK9RhEh8m2wr9hJlhnqgDLJSvGLDbzQ0NNoHidyAQ
+
+NULL!
+NULL!
+PACK: p2
+  Channel: c
+  Version: 
+  Size: 0
+  Dirs:
+    1GxiMyo3usMorjw5J4Gtn-Avw6ZrL2muqEcbyP-G5iyX   
+  STATUS: where=/home/mortennk/koding/spread/spreadlib/tests/_test1/out needsUpdate=0
+PACK: p2
+  Channel: c
+  Version: 
+  Size: 0
+  Dirs:
+    1GxiMyo3usMorjw5J4Gtn-Avw6ZrL2muqEcbyP-G5iyX   
+  STATUS: where=/home/mortennk/koding/spread/spreadlib/tests/_test1/out needsUpdate=0
+
+
+Directory: _test1/
+00                                                 out/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       out/abc
+00                                                 out/def/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       out/def/ghi
+00                                                 out/jkl/
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       out/jkl/mno
+00                                                 spread/
+00                                                 spread/cache/
+00                                                 spread/cache/1G/
+1GxiMyo3usMorjw5J4Gtn-Avw6ZrL2muqEcbyP-G5iyX       spread/cache/1G/xiMyo3usMorjw5J4Gtn-Avw6ZrL2muqEcbyP-G5iyX
+00                                                 spread/channels/
+00                                                 spread/channels/c/
+3vkvKJSQr9mkb_BaOBApQYAuu9jRrxXlyGyOlCirjMsZAQ     spread/channels/c/packs.json
+aMFrF-tLieG6jpCHKo6SXPTpF59QLw7DydMs0MVglzxl       spread/channels/c/rules.json
+VcCJmzYrCLnzoxNk9zjq8OI9qmrMdigncvFBmURlZvzP       spread/installed.conf
+Total 15 elements
+Hash: gUhcDtM5t6lzByHqlaNRG2TJkaddGX_V7DusG8-uhDl8Aw
+
+ARCHIVE: w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
+PACK: p3
+  Channel: c
+  Version: 
+  Size: 0
+  Dirs:
+    K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf   
+  STATUS: where=/home/mortennk/koding/spread/spreadlib/tests/_test1/out needsUpdate=0
+
+
+Directory: _test1/
+00                                                 out/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       out/file1_hello
+SG6kYiTRu0-2gPNPfJrZao8k7Ii-c-qOWmxlJg6cuKcF       out/file2_hello
+N0VT8AYfLEu2hFufocgj9ykAQoNEgcQwzLW7m1Tfc-cj       out/file4_robo
+00                                                 out/sub/
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       out/sub/file3_hello
+00                                                 spread/
+00                                                 spread/cache/
+00                                                 spread/cache/K_/
+K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf       spread/cache/K_/1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+00                                                 spread/channels/
+00                                                 spread/channels/c/
+3vkvKJSQr9mkb_BaOBApQYAuu9jRrxXlyGyOlCirjMsZAQ     spread/channels/c/packs.json
+aMFrF-tLieG6jpCHKo6SXPTpF59QLw7DydMs0MVglzxl       spread/channels/c/rules.json
+VbSwL0fV30mPJ05ovP903tz-gTKQLquHO73pvPMzUxDP       spread/installed.conf
+Total 15 elements
+Hash: cwmrwiFnPxhDjmPpltaNsT7PesTcSOdT0BFWs9a7rouWAw
+
+PACK: 1
+  Channel: a
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dir1 needsUpdate=0
+PACK: 2
+  Channel: a
+  Version: 
+  Size: 321
+  Dirs:
+    dir3   
+  STATUS: where=/dir2 needsUpdate=0
+PACK: 3
+  Channel: a
+  Version: 
+  Size: 232
+  Dirs:
+    dir4   
+    dir5   abc/
+  STATUS: where=/dir2 needsUpdate=0
+PACK: 1
+  Channel: a
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dir4 needsUpdate=0
+PACK: 2
+  Channel: b
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dirX needsUpdate=0
+
+INDIVIDUAL PACKS:
+PACK: 1
+  Channel: a
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dir1 needsUpdate=0
+PACK: 1
+  Channel: a
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dir4 needsUpdate=0
+NULL!
+PACK: 2
+  Channel: b
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dirX needsUpdate=0
+
+LISTS:
+PACK: 1
+  Channel: a
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dir1 needsUpdate=0
+PACK: 2
+  Channel: a
+  Version: 
+  Size: 321
+  Dirs:
+    dir3   
+  STATUS: where=/dir2 needsUpdate=0
+PACK: 3
+  Channel: a
+  Version: 
+  Size: 232
+  Dirs:
+    dir4   
+    dir5   abc/
+  STATUS: where=/dir2 needsUpdate=0
+PACK: 1
+  Channel: a
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dir4 needsUpdate=0
+
+PACK: 2
+  Channel: b
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dirX needsUpdate=0
+
+PACK: 1
+  Channel: a
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dir1 needsUpdate=0
+PACK: 1
+  Channel: a
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dir4 needsUpdate=0
+
+PACK: 2
+  Channel: a
+  Version: 
+  Size: 321
+  Dirs:
+    dir3   
+  STATUS: where=/dir2 needsUpdate=0
+PACK: 2
+  Channel: b
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dirX needsUpdate=0
+
+PACK: 3
+  Channel: a
+  Version: 
+  Size: 232
+  Dirs:
+    dir4   
+    dir5   abc/
+  STATUS: where=/dir2 needsUpdate=0
+
+(empty status list)
+
+PACK: 2
+  Channel: a
+  Version: 
+  Size: 321
+  Dirs:
+    dir3   
+  STATUS: where=/dir2 needsUpdate=0
+
+PACK: 2
+  Channel: b
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dirX needsUpdate=0
+
+PACK: 1
+  Channel: a
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dir1 needsUpdate=0
+PACK: 1
+  Channel: a
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dir4 needsUpdate=0
+
+XYZ
+PACK: 1
+  Channel: a
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dir1 needsUpdate=0
+
+(empty status list)
+
+PACK: 1
+  Channel: a
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dir4 needsUpdate=0
+
+PACK: 1
+  Channel: a
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dir4 needsUpdate=0
+
+PACK: 2
+  Channel: a
+  Version: 
+  Size: 321
+  Dirs:
+    dir3   
+  STATUS: where=/dir2 needsUpdate=0
+PACK: 3
+  Channel: a
+  Version: 
+  Size: 232
+  Dirs:
+    dir4   
+    dir5   abc/
+  STATUS: where=/dir2 needsUpdate=0
+
+ABC
+PACK: 1
+  Channel: a
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dir1 needsUpdate=0
+
+PACK: 2
+  Channel: a
+  Version: 
+  Size: 321
+  Dirs:
+    dir3   
+  STATUS: where=/dir2 needsUpdate=0
+PACK: 3
+  Channel: a
+  Version: 
+  Size: 232
+  Dirs:
+    dir4   
+    dir5   abc/
+  STATUS: where=/dir2 needsUpdate=0
+
+(empty status list)
+
+PACK: 1
+  Channel: a
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dir4 needsUpdate=0
+
+PACK: 2
+  Channel: b
+  Version: 
+  Size: 123
+  Dirs:
+    dir1   
+    dir2   
+  STATUS: where=/dirX needsUpdate=0
+
+(empty status list)
+
+
+Directory: _test1/
+00                                                 spread/
+00                                                 spread/cache/
+op8fRhI39XkLiXUCz6l_RJBFuW-8F5nN_9xpGTJHUmuUAg     spread/installed.conf
+Total 3 elements
+Hash: DsRxIchMdkEqfv9DeMHa7g_bbRp1xF7363ujmAOJ7Ouv

@@ -25,11 +25,17 @@ target_link_libraries(statuslist_test ${LIBS})
 add_executable(chanlist_test chanlist_test.cpp ${MANGLE})
 target_link_libraries(chanlist_test ${LIBS})
 
-add_executable(bug1_test bug1_test.cpp ${MANGLE})
-target_link_libraries(bug1_test ${LIBS})
+#add_executable(bug1_test bug1_test.cpp ${MANGLE})
+#target_link_libraries(bug1_test ${LIBS})
 
 add_executable(copy_test copy_test.cpp ${MANGLE})
 target_link_libraries(copy_test ${LIBS})
 
 add_executable(copy_many_test copy_many_test.cpp ${MANGLE})
 target_link_libraries(copy_many_test ${LIBS})
+
+add_executable(spread1_test spread1_test.cpp ${MANGLE})
+target_link_libraries(spread1_test ${LIBS})
+
+add_executable(spread2_test spread2_test.cpp ${MANGLE})
+target_link_libraries(spread2_test ${LIBS})

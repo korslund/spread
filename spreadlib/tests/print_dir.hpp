@@ -3,14 +3,22 @@
 #include <dir/binary.hpp>
 #include <iostream>
 
-void printDir(const Spread::Hash::DirMap &dir)
+void printDir(Spread::Hash::DirMap &dir, bool skipCache=false)
 {
   using namespace Spread;
   using namespace std;
 
-  Hash::DirMap::const_iterator it;
-  for(it = dir.begin(); it != dir.end(); it++)
+  Hash::DirMap::iterator it, it2;
+  for(it2 = dir.begin(); it2 != dir.end();)
     {
+      it = it2++;
+
+      if(skipCache && it->first.find("cache.conf") != string::npos)
+        {
+          dir.erase(it);
+          continue;
+        }
+
       string hstring = it->second.toString();
 
       // Pad hashes up to 50 chars
@@ -23,7 +31,7 @@ void printDir(const Spread::Hash::DirMap &dir)
   cout << "Hash: " << Dir::hash(dir) << endl;
 }
 
-void printDir(const std::string &where)
+void printDir(const std::string &where, bool skipCache=false)
 {
   using namespace Spread;
   using namespace std;
@@ -32,5 +40,5 @@ void printDir(const std::string &where)
   Cache::CacheIndex cache;
   Dir::fromFS(dir, where, cache, true, true);
   cout << "\nDirectory: " << where << endl;
-  printDir(dir);
+  printDir(dir, skipCache);
 }
