@@ -14,11 +14,17 @@ namespace Spread
   {
     PackList();
 
+    /* Note that returned values are passed by value, not
+       reference. Due to our setup, loadJson() may in principle be
+       called at any time to update the dataset, which would
+       invalidate references.
+     */
+
     // Return list of all packages
-    const PackInfoList &getList() const;
+    PackInfoList getList() const;
 
     // Get one package, throw if it doesn't exist
-    const PackInfo &get(const std::string &pack) const;
+    PackInfo get(const std::string &pack) const;
 
     /* Load packlist from a json file. The PackList is reusable, so
        loadJson() may be called multiple times. Each call clears out

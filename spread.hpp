@@ -96,12 +96,12 @@ namespace Spread
 
     /* Get general information about a package.
      */
-    const PackInfo &getPackInfo(const std::string &channel,
-                                const std::string &package) const;
+    PackInfo getPackInfo(const std::string &channel,
+                         const std::string &package) const;
 
     /* Get a list of all packages in a channel
      */
-    const PackInfoList &getInfoList(const std::string &channel) const;
+    PackInfoList getInfoList(const std::string &channel) const;
 
     /* Get installation-specific information about a package,
        including whether the given installation is out of date.

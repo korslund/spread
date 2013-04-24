@@ -21,7 +21,8 @@ namespace Spread
     bool match(const PackInfo &other) const
     {
       if(other.dirs.size() != dirs.size()) return false;
-      assert(dirs.size() == paths.size() == other.paths.size());
+      assert(dirs.size() == paths.size());
+      assert(dirs.size() == other.paths.size());
       for(int i=0; i<dirs.size(); i++)
         if(dirs[i] != other.dirs[i] || paths[i] != other.paths[i])
           return false;

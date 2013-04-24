@@ -16,7 +16,7 @@ struct PackList::_Internal
 
 PackList::PackList() { ptr.reset(new _Internal); }
 
-const PackInfoList &PackList::getList() const { return ptr->list; }
+PackInfoList PackList::getList() const { return ptr->list; }
 
 static void fail(const std::string &msg)
 { throw std::runtime_error(msg); }
@@ -43,7 +43,7 @@ void PackList::loadJson(const std::string &file, const std::string &channel)
     }
 }
 
-const PackInfo& PackList::get(const std::string &pack) const
+PackInfo PackList::get(const std::string &pack) const
 {
   Lookup::const_iterator it = ptr->lookup.find(pack);
   if(it == ptr->lookup.end())

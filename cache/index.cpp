@@ -1,6 +1,6 @@
 #include "index.hpp"
 #include <map>
-#include <time.h>
+#include <ctime>
 #include <boost/filesystem.hpp>
 #include "hash/hash_stream.hpp"
 #include <boost/thread/recursive_mutex.hpp>
@@ -35,7 +35,7 @@ struct Entry
 {
   Hash hash;
   std::string file;
-  time_t writeTime;
+  std::time_t writeTime;
 };
 
 typedef std::multimap<Hash, Entry*> HashToEntry;
@@ -453,6 +453,20 @@ Hash CacheIndex::addEntry(std::string &where, const Hash &given, uint64_t &time)
       if(ent->writeTime != time ||
          ent->hash.size() != size) match = false;
       if(!given.isNull() && given != ent->hash)
+        match = false;
+
+      /* Workaround fix: If the file is written several times in less
+         than one second, with addFile() called in between, an entry
+         may be stored with the right time/size stamp (because we
+         can't detect time changes of less than a second), causing us
+         to get a match when there shouldn't be one.
+
+         We ASSUME that since the previous write was immediately
+         followed by addFile(), then THIS call to addFile() is
+         immediate as well. This isn't a perfect solution but it's ok.
+       */
+      std::time_t tdiff = std::time(NULL) - time;
+      if(tdiff == 0 || tdiff == 1)
         match = false;
 
       if(match)

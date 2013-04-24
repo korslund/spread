@@ -1,9 +1,11 @@
 
 START: Empty run
+LOG: STATUS: Starting install into _file/
 RESULT:
   SUC: Success 0/0
 
 START: Add files, no source
+LOG: STATUS: Starting install into _file/
 LOG: ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test1/hello.___tmp
 LOG: deleteFile(_file/test1/hello.___tmp)
 LOG: deleteFile(_file/test1/world.___tmp)
@@ -13,6 +15,7 @@ RESULT:
     ERR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test1/hello.___tmp 0/0
 
 START: Add files, with source
+LOG: STATUS: Starting install into _file/
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/world.dat
 LOG: moveFile(_file/test2/hello.___tmp => _file/test2/hello)
@@ -21,6 +24,7 @@ RESULT:
   SUC: Success 0/0
 
 START: Same file repeated
+LOG: STATUS: Starting install into _file/
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
@@ -31,14 +35,17 @@ RESULT:
   SUC: Success 0/0
 
 START: Overwriting existing file that matches
+LOG: STATUS: Starting install into _file/
 RESULT:
   SUC: Success 0/0
 
 START: Overwriting ditto, but without having file in cache
+LOG: STATUS: Starting install into _file/
 RESULT:
   SUC: Success 0/0
 
 START: Adding a custom dir
+LOG: STATUS: Starting install into _file/
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/world.dat
@@ -49,10 +56,12 @@ RESULT:
   SUC: Success 0/0
 
 START: Overwriting without cache
+LOG: STATUS: Starting install into _file/
 RESULT:
   SUC: Success 0/0
 
 START: Adding dir twice + subdir
+LOG: STATUS: Starting install into _file/
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat
@@ -69,6 +78,7 @@ RESULT:
   SUC: Success 0/0
 
 START: Adding dir as hash, no source
+LOG: STATUS: Starting install into _file/
 LOG: Hash NOFILE does NOT match any archive rule, assuming dirHash
 LOG: ERROR: No source for target NOFILE 
 RESULT:
@@ -77,6 +87,7 @@ RESULT:
     ERR: No source for target NOFILE  0/0
 
 START: Adding dir as hash, with source but missing files
+LOG: STATUS: Starting install into _file/
 LOG: Hash 1GxiMyo3usMorjw5J4Gtn-Avw6ZrL2muqEcbyP-G5iyX does NOT match any archive rule, assuming dirHash
 LOG: Loaded DIR dirHash=1GxiMyo3usMorjw5J4Gtn-Avw6ZrL2muqEcbyP-G5iyX
 LOG: ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test6/abc.___tmp
@@ -89,6 +100,7 @@ RESULT:
     ERR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test6/abc.___tmp 0/0
 
 START: Adding dir as hash, should work now
+LOG: STATUS: Starting install into _file/
 LOG: Hash 1GxiMyo3usMorjw5J4Gtn-Avw6ZrL2muqEcbyP-G5iyX does NOT match any archive rule, assuming dirHash
 LOG: Loaded DIR dirHash=1GxiMyo3usMorjw5J4Gtn-Avw6ZrL2muqEcbyP-G5iyX
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/hello.dat

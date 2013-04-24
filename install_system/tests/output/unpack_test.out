@@ -1,5 +1,6 @@
 
 START: Unpack with arcrule but no hint
+LOG: STATUS: Starting install into _unpack/
 LOG: ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello.___tmp
 LOG: deleteFile(_unpack/test1/hello.___tmp)
 LOG: deleteFile(_unpack/test1/world.___tmp)
@@ -10,6 +11,7 @@ RESULT:
     ERR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello.___tmp 0/0
 
 START: Unpack with hint but no arcrule
+LOG: STATUS: Starting install into _unpack/
 LOG: Loading HINT=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
 LOG:   No hint archive found, skipping.
 LOG: ERROR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello.___tmp
@@ -22,13 +24,18 @@ RESULT:
     ERR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello.___tmp 0/0
 
 START: Unpack with hint AND arcrule - BLIND
+LOG: STATUS: Starting install into _unpack/
 LOG: Loading HINT=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
 LOG:   Found archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
 LOG: ERROR: No source for target K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf 
 LOG:   Blind indexing w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
 LOG: STATUS: Blind indexing archive
+LOG: Fetching input file(s)
+LOG: Starting unpack
 LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
 LOG: STATUS: Unpacking dirHash K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: Fetching input file(s)
+LOG: Starting unpack
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/arc1.zip
 LOG: moveFile(_unpack/test1/arc.___tmp => _unpack/test1/arc)
 LOG: moveFile(_unpack/test1/hello.___tmp => _unpack/test1/hello)
@@ -37,10 +44,13 @@ RESULT:
   SUC: Success 0/0
 
 START: Unpack with hint AND arcrule - NON-BLIND
+LOG: STATUS: Starting install into _unpack/
 LOG: Loading HINT=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
 LOG:   Found archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
 LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
 LOG: STATUS: Unpacking dirHash K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: Fetching input file(s)
+LOG: Starting unpack
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/arc1.zip
 LOG: moveFile(_unpack/test2/arc.___tmp => _unpack/test2/arc)
 LOG: moveFile(_unpack/test2/hello.___tmp => _unpack/test2/hello)
@@ -49,6 +59,7 @@ RESULT:
   SUC: Success 0/0
 
 START: Unpack zip dir itself - BLIND
+LOG: STATUS: Starting install into _unpack/
 LOG: FOUND archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
 LOG: ERROR: No source for target K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf 
 LOG: FAILED loading dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
@@ -57,13 +68,18 @@ LOG: FAILED loading dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
 LOG: Processing direct blind installs:
 LOG:   Blind unpacking w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw => _unpack/test3/
 LOG: STATUS: Blind unpacking into _unpack/test3/
+LOG: Fetching input file(s)
+LOG: Starting unpack
 RESULT:
   SUC: Success 0/0
 
 START: Unpack zip dir itself - NON-BLIND
+LOG: STATUS: Starting install into _unpack/
 LOG: FOUND archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
 LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
 LOG: STATUS: Unpacking dirHash K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: Fetching input file(s)
+LOG: Starting unpack
 LOG: STATUS: Waiting for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test4/file1_hello.___tmp
 LOG: moveFile(_unpack/test4/file1_hello.___tmp => _unpack/test4/file1_hello)
@@ -74,15 +90,18 @@ RESULT:
   SUC: Success 0/0
 
 START: Combo
+LOG: STATUS: Starting install into _unpack/
 LOG: FOUND archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
 LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
 LOG: FOUND archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
 LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
 LOG: STATUS: Unpacking dirHash K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: Fetching input file(s)
+LOG: Starting unpack
 LOG: STATUS: Waiting for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test5/sub1/file1_hello.___tmp
-LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test5/sub1/file1_hello.___tmp
-LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test5/sub1/file1_hello.___tmp
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test5/sub1/sub/file3_hello.___tmp
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test5/sub1/sub/file3_hello.___tmp
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_unpack/test5/sub1/file1_hello.___tmp
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/world.dat
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/data/world.dat

@@ -59,3 +59,6 @@ target_link_libraries(virtual_test ${LIBS})
 
 add_executable(files_test files_test.cpp ${CACHE})
 target_link_libraries(files_test ${LIBS})
+
+add_executable(bug1_test bug1_test.cpp ${CACHE})
+target_link_libraries(bug1_test ${LIBS})

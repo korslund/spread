@@ -158,7 +158,10 @@ struct Sr0Job : Job
         return;
       }
 
-    // Index all the extracted files
+    /* Index all the extracted files from the SR0 archive. The install
+       below is allowed to depend directly on files included in the
+       archive. Dir-files are usually included.
+     */
     PRINT("Adding files to cache index");
     for(HMap::iterator it = index.begin(); it != index.end(); it++)
       {
@@ -208,9 +211,13 @@ struct Sr0Job : Job
     JobInfoPtr inf = manager->addInst(inst);
     setBusy("Updating");
     PRINT("Running main installer => " << dest);
-    //assert(inf->isInitiated()); // This may fail
-    assert(manager->getInfo()->isInitiated()); // This is correct
-    if(waitClient(inf)) return;
+    assert(manager->getInfo()->isInitiated());
+    if(waitClient(inf))
+      {
+        PRINT("  waitClient() told us to exit");
+        return;
+      }
+
     setBusy("Cleaning up");
     PRINT("  Done.");
 

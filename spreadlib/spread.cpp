@@ -112,6 +112,7 @@ SpreadLib::SpreadLib(const std::string &outDir, const std::string &tmpDir)
 
   PRINT("  Starting JobManager");
   Thread::run(ptr->manager);
+  PRINT("  SpreadLib() done");
 }
 
 JobManagerPtr SpreadLib::getJobManager() const { return ptr->manager; }
@@ -154,14 +155,17 @@ JobInfoPtr SpreadLib::updateFromFS(const std::string &channel,
   return info;
 }
 
-const PackInfo &SpreadLib::getPackInfo(const std::string &channel,
-                                       const std::string &package) const
+PackInfo SpreadLib::getPackInfo(const std::string &channel,
+                                const std::string &package) const
 {
   LOCK;
-  return ptr->chan.getPackList(channel).get(package);
+  const PackInfo &res = ptr->chan.getPackList(channel).get(package);
+  assert(res.channel == channel && res.package == package);
+  assert(res.dirs.size() == res.paths.size());
+  return res;
 }
 
-const PackInfoList &SpreadLib::getInfoList(const std::string &channel) const
+PackInfoList SpreadLib::getInfoList(const std::string &channel) const
 {
   LOCK;
   return ptr->chan.getPackList(channel).getList();
@@ -223,6 +227,8 @@ JobInfoPtr SpreadLib::installPack(const std::string &channel,
 
   std::string where = abs(_where);
 
+  PRINT("Installing " << channel << "/" << package << " => " << where);
+
   // Request the package information we are installing
   const PackInfo& p = getPackInfo(channel,package);
   if(version) *version = p.version;
@@ -230,6 +236,8 @@ JobInfoPtr SpreadLib::installPack(const std::string &channel,
   const PackStatus *ps = NULL;
   if(doUpgrade)
     {
+      PRINT("doUpgrade is TRUE");
+
       // If we are upgrading, check against existing installations
       // first.
       ps = getPackStatus(channel, package, where);
@@ -240,15 +248,21 @@ JobInfoPtr SpreadLib::installPack(const std::string &channel,
     }
 
   // Create an installer job (without starting it)
+  PRINT("Creating installer");
   InstallerPtr inst = ptr->manager->createInstaller(where, ptr->rules, enableAsk);
 
+  PRINT("Adding " << p.dirs.size() << " dirs:");
   // Add the output directory hashes
   assert(p.dirs.size() == p.paths.size());
   for(int i=0; i<p.dirs.size(); i++)
-    inst->addDir(Hash(p.dirs[i]), p.paths[i]);
+    {
+      PRINT("  dir=" << p.dirs[i] << " path=" << p.paths[i]);
+      inst->addDir(Hash(p.dirs[i]), p.paths[i]);
+    }
 
   if(ps)
     {
+      PRINT("UPGRADING existing package");
       assert(doUpgrade);
       // If we are upgrading from an older version, then notify the
       // installer. It will handle all the details for us.
@@ -258,6 +272,7 @@ JobInfoPtr SpreadLib::installPack(const std::string &channel,
     }
 
   // Start the job
+  PRINT("Staring the installer");
   JobInfoPtr info = ptr->manager->addInst(inst);
 
   // Add monitor job to update our status. It will exit when the
@@ -269,19 +284,11 @@ JobInfoPtr SpreadLib::installPack(const std::string &channel,
      install-list database if/when the install job finishes. The info
      we set here controls what will be available through
      getPackStatus() etc in the future.
-
-     Notice that we COPY the information here, it is not a reference.
-     This is intentional and important; the PackInfo referenced by 'p'
-     above belongs to the PackList owned by ptr->chan. If the channel
-     data is reloaded while our install job is in progress, not only
-     will old references be invalid - but even if they WERE valid they
-     would contain the wrong data! The 'updated' PackInfo would refer
-     to the newest version, not to the data we are actually
-     installing.
    */
   job->pack = p;
   job->ptr = ptr;
   job->where = where;
+  PRINT("Starting monitor job");
   Thread::run(job, async);
 
   if(!async)
@@ -329,7 +336,7 @@ JobInfoPtr SpreadLib::uninstallPack(const std::string &channel,
      A BETTER option: allow both through a user parameter, but this
      isn't a priority.
    */
-  return Thread::run(new RemoveJob(where));
+  return Thread::run(new RemoveJob(where), async);
 }
 
 const PackStatus *SpreadLib::getPackStatus(const std::string &channel,

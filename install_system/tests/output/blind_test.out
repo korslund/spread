@@ -1,8 +1,11 @@
 
 START: Unpacking arc1 normally
+LOG: STATUS: Starting install into _blind/
 LOG: FOUND archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
 LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
 LOG: STATUS: Unpacking dirHash K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: Fetching input file(s)
+LOG: Starting unpack
 LOG: STATUS: Waiting for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF
 LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_blind/arc1/file1_hello.___tmp
 LOG: moveFile(_blind/arc1/file1_hello.___tmp => _blind/arc1/file1_hello)
@@ -13,6 +16,7 @@ RESULT:
   SUC: Success 0/0
 
 START: Unpacking arc2 BLIND
+LOG: STATUS: Starting install into _blind/
 LOG: FOUND archive rule: dir=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ arc=UyfuXd0_PGB-2dwkM_uXZ1ufxqvJqbwresx1MkLse1zvAw
 LOG: ERROR: No source for target VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ 
 LOG: FAILED loading dirHash=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ
@@ -21,6 +25,8 @@ LOG: FAILED loading dirHash=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ
 LOG: Processing direct blind installs:
 LOG:   Blind unpacking UyfuXd0_PGB-2dwkM_uXZ1ufxqvJqbwresx1MkLse1zvAw => _blind/arc2/
 LOG: STATUS: Blind unpacking into _blind/arc2/
+LOG: Fetching input file(s)
+LOG: Starting unpack
 RESULT:
   SUC: Success 0/0
 
@@ -47,6 +53,7 @@ Total 18 elements
 Hash: Eu7tCdiITpdXizZ0dsvu9G1r2uVPwwo3l8Dp73gQPvgyB
 
 START: Upgrading arc1->arc2 BLIND
+LOG: STATUS: Starting install into _blind/
 LOG: FOUND archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
 LOG: ERROR: No source for target K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf 
 LOG: FAILED loading dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
@@ -60,14 +67,20 @@ LOG: FAILED loading dirHash=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ
 LOG: Un-blinding archives for upgrade
 LOG:   Blind indexing w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
 LOG: STATUS: Blind indexing archive
+LOG: Fetching input file(s)
+LOG: Starting unpack
 LOG:   Blind indexing UyfuXd0_PGB-2dwkM_uXZ1ufxqvJqbwresx1MkLse1zvAw
 LOG: STATUS: Blind indexing archive
+LOG: Fetching input file(s)
+LOG: Starting unpack
 LOG: FOUND archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
 LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
 LOG: FOUND archive rule: dir=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ arc=UyfuXd0_PGB-2dwkM_uXZ1ufxqvJqbwresx1MkLse1zvAw
 LOG: Loaded DIR dirHash=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ
 LOG: STATUS: Unpacking dirHash VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ
-LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_blind/arc1/file1_hello
+LOG: Fetching input file(s)
+LOG: Starting unpack
+LOG: STATUS: Copying file /home/mortennk/koding/spread/install_system/tests/_blind/arc1/sub/file3_hello
 LOG: moveFile(_blind/arc1/file1_hello => _blind/arc1/file1_helloX)
 LOG: moveFile(_blind/arc1/file2_hello.___tmp => _blind/arc1/file2_hello)
 LOG: moveFile(_blind/arc1/sub/file3_hello => _blind/arc1/file1_helloY)
@@ -99,6 +112,7 @@ Total 19 elements
 Hash: ULuNU758Y_LCo8QUxqeOMKcpzgfUa-NrPR2h_KzOB3ZwB
 
 START: Downgrading arc2->arc1 BLIND
+LOG: STATUS: Starting install into _blind/
 LOG: FOUND archive rule: dir=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ arc=UyfuXd0_PGB-2dwkM_uXZ1ufxqvJqbwresx1MkLse1zvAw
 LOG: ERROR: No source for target VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ 
 LOG: FAILED loading dirHash=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ
@@ -112,13 +126,19 @@ LOG: FAILED loading dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
 LOG: Un-blinding archives for upgrade
 LOG:   Blind indexing UyfuXd0_PGB-2dwkM_uXZ1ufxqvJqbwresx1MkLse1zvAw
 LOG: STATUS: Blind indexing archive
+LOG: Fetching input file(s)
+LOG: Starting unpack
 LOG:   Blind indexing w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
 LOG: STATUS: Blind indexing archive
+LOG: Fetching input file(s)
+LOG: Starting unpack
 LOG: FOUND archive rule: dir=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ arc=UyfuXd0_PGB-2dwkM_uXZ1ufxqvJqbwresx1MkLse1zvAw
 LOG: Loaded DIR dirHash=VzWd-T91WGBxVgagT-WEfu0BsU3AEU_fxA4DTuuOm1MYAQ
 LOG: FOUND archive rule: dir=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf arc=w6SHIUFtAX7pRgU4k-wQmG4TxOxNGthNNMjksT_h600uAw
 LOG: Loaded DIR dirHash=K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
 LOG: STATUS: Unpacking dirHash K_1dlTRAqCV0rgzwNsOsjbJyotuQgBrei9zX2FtH4dDf
+LOG: Fetching input file(s)
+LOG: Starting unpack
 LOG: moveFile(_blind/arc2/file1_helloX => _blind/arc2/file1_hello)
 LOG: moveFile(_blind/arc2/file1_helloY => _blind/arc2/sub/file3_hello)
 LOG: moveFile(_blind/arc2/file2_hello.___tmp => _blind/arc2/file2_hello)

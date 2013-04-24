@@ -1,0 +1,287 @@
+
+EMPTY TEST:
+a/1 d=D1 NEED=0
+a/1 d=D2 NEED=0
+a/2 d=D1 NEED=0
+a/2 d=D2 NEED=0
+a/3 d=D3 NEED=0
+a/4 d=D5 NEED=0
+a/4 d=D4 NEED=0
+b/1 d=D1 NEED=0
+
+
+LOADING 1:
+Loading chan: a
+  pre-wasUpdated: 0
+  wasUpdated: 1
+
+Directory: _test2/channels
+00                                                 a/
+MYSEbVWCWbMyA2iSKnaGVkmDNowFOqZ8v7nRJ6FW8YMo       a/current.hash
+HhfWacX7FEjrT_NhAqlak9FGEJ619OAKHYDv30ooJv_p       a/packs.json
+N1F-Xz3GaBn2H1p7uKzhkhKCQV8QVR0t76XD6wmFtXAD       a/rules.json
+Total 4 elements
+Hash: WOg7DRJDMm6496joVPv6EmiE6HLrdxw2tfm8sN7d2oLY
+a/1 d=D1 NEED=0
+a/1 d=D2 NEED=1
+a/2 d=D1 NEED=1
+a/2 d=D2 NEED=0
+a/3 d=D3 NEED=0
+a/4 d=D5 NEED=1
+a/4 d=D4 NEED=0
+b/1 d=D1 NEED=0
+
+
+LOADING 2:
+Loading chan: a
+  pre-wasUpdated: 0
+  wasUpdated: 1
+
+Directory: _test2/channels
+00                                                 a/
+5m6nHSTbyeg_qR07rFOM_0huIlSBFJa8ZISv7Hnu2w4o       a/current.hash
+iSSmUUxwBpCRO3z0qn8n9AM90Ayf9LHCdaA4zsUS4OPp       a/packs.json
+N1F-Xz3GaBn2H1p7uKzhkhKCQV8QVR0t76XD6wmFtXAD       a/rules.json
+Total 4 elements
+Hash: fS3XvE2qy0hsdIqqbW6GYMfLWhD-LnK_2qMPpaR8SpTY
+a/1 d=D1 NEED=1
+a/1 d=D2 NEED=0
+a/2 d=D1 NEED=0
+a/2 d=D2 NEED=1
+a/3 d=D3 NEED=0
+a/4 d=D5 NEED=0
+a/4 d=D4 NEED=1
+b/1 d=D1 NEED=0
+
+
+LOADING B1:
+Loading chan: b
+  pre-wasUpdated: 0
+  wasUpdated: 1
+
+Directory: _test2/channels
+00                                                 b/
+MYSEbVWCWbMyA2iSKnaGVkmDNowFOqZ8v7nRJ6FW8YMo       b/current.hash
+HhfWacX7FEjrT_NhAqlak9FGEJ619OAKHYDv30ooJv_p       b/packs.json
+N1F-Xz3GaBn2H1p7uKzhkhKCQV8QVR0t76XD6wmFtXAD       b/rules.json
+Total 4 elements
+Hash: puHEehTLNxQexVS9LOhVawVusd_MDUFU6wFc-bxtoR7Y
+a/1 d=D1 NEED=0
+a/1 d=D2 NEED=0
+a/2 d=D1 NEED=0
+a/2 d=D2 NEED=0
+a/3 d=D3 NEED=0
+a/4 d=D5 NEED=0
+a/4 d=D4 NEED=0
+b/1 d=D1 NEED=0
+
+
+LOADING B2:
+Loading chan: b
+  pre-wasUpdated: 0
+  wasUpdated: 1
+
+Directory: _test2/channels
+00                                                 b/
+5m6nHSTbyeg_qR07rFOM_0huIlSBFJa8ZISv7Hnu2w4o       b/current.hash
+iSSmUUxwBpCRO3z0qn8n9AM90Ayf9LHCdaA4zsUS4OPp       b/packs.json
+N1F-Xz3GaBn2H1p7uKzhkhKCQV8QVR0t76XD6wmFtXAD       b/rules.json
+Total 4 elements
+Hash: SXbXHWgrtr_YoZqdw9oN-PdpfxfzZnQY-GXXUwk14FnY
+a/1 d=D1 NEED=0
+a/1 d=D2 NEED=0
+a/2 d=D1 NEED=0
+a/2 d=D2 NEED=0
+a/3 d=D3 NEED=0
+a/4 d=D5 NEED=0
+a/4 d=D4 NEED=0
+b/1 d=D1 NEED=1
+
+
+LOADING 1 twice:
+Loading chan: a
+  pre-wasUpdated: 0
+  wasUpdated: 1
+Loading chan: a
+  pre-wasUpdated: 1
+  wasUpdated: 0
+
+Directory: _test2/channels
+00                                                 a/
+MYSEbVWCWbMyA2iSKnaGVkmDNowFOqZ8v7nRJ6FW8YMo       a/current.hash
+HhfWacX7FEjrT_NhAqlak9FGEJ619OAKHYDv30ooJv_p       a/packs.json
+N1F-Xz3GaBn2H1p7uKzhkhKCQV8QVR0t76XD6wmFtXAD       a/rules.json
+Total 4 elements
+Hash: WOg7DRJDMm6496joVPv6EmiE6HLrdxw2tfm8sN7d2oLY
+a/1 d=D1 NEED=0
+a/1 d=D2 NEED=1
+a/2 d=D1 NEED=1
+a/2 d=D2 NEED=0
+a/3 d=D3 NEED=0
+a/4 d=D5 NEED=1
+a/4 d=D4 NEED=0
+b/1 d=D1 NEED=0
+
+
+LOADING 2 twice:
+Loading chan: a
+  pre-wasUpdated: 0
+  wasUpdated: 1
+Loading chan: a
+  pre-wasUpdated: 1
+  wasUpdated: 0
+
+Directory: _test2/channels
+00                                                 a/
+5m6nHSTbyeg_qR07rFOM_0huIlSBFJa8ZISv7Hnu2w4o       a/current.hash
+iSSmUUxwBpCRO3z0qn8n9AM90Ayf9LHCdaA4zsUS4OPp       a/packs.json
+N1F-Xz3GaBn2H1p7uKzhkhKCQV8QVR0t76XD6wmFtXAD       a/rules.json
+Total 4 elements
+Hash: fS3XvE2qy0hsdIqqbW6GYMfLWhD-LnK_2qMPpaR8SpTY
+a/1 d=D1 NEED=1
+a/1 d=D2 NEED=0
+a/2 d=D1 NEED=0
+a/2 d=D2 NEED=1
+a/3 d=D3 NEED=0
+a/4 d=D5 NEED=0
+a/4 d=D4 NEED=1
+b/1 d=D1 NEED=0
+
+
+LOADING A and B:
+Loading chan: b
+  pre-wasUpdated: 0
+  wasUpdated: 1
+Loading chan: a
+  pre-wasUpdated: 0
+  wasUpdated: 1
+
+Directory: _test2/channels
+00                                                 a/
+MYSEbVWCWbMyA2iSKnaGVkmDNowFOqZ8v7nRJ6FW8YMo       a/current.hash
+HhfWacX7FEjrT_NhAqlak9FGEJ619OAKHYDv30ooJv_p       a/packs.json
+N1F-Xz3GaBn2H1p7uKzhkhKCQV8QVR0t76XD6wmFtXAD       a/rules.json
+00                                                 b/
+5m6nHSTbyeg_qR07rFOM_0huIlSBFJa8ZISv7Hnu2w4o       b/current.hash
+iSSmUUxwBpCRO3z0qn8n9AM90Ayf9LHCdaA4zsUS4OPp       b/packs.json
+N1F-Xz3GaBn2H1p7uKzhkhKCQV8QVR0t76XD6wmFtXAD       b/rules.json
+Total 8 elements
+Hash: dlE9LkRF4FiMLd7w5BazyqanzBKRSIMM8-JoFVQJFNOoAQ
+a/1 d=D1 NEED=0
+a/1 d=D2 NEED=1
+a/2 d=D1 NEED=1
+a/2 d=D2 NEED=0
+a/3 d=D3 NEED=0
+a/4 d=D5 NEED=1
+a/4 d=D4 NEED=0
+b/1 d=D1 NEED=1
+
+
+LOADING 1->2:
+Loading chan: a
+  pre-wasUpdated: 0
+  wasUpdated: 1
+Loading chan: a
+  pre-wasUpdated: 1
+  wasUpdated: 1
+
+Directory: _test2/channels
+00                                                 a/
+5m6nHSTbyeg_qR07rFOM_0huIlSBFJa8ZISv7Hnu2w4o       a/current.hash
+iSSmUUxwBpCRO3z0qn8n9AM90Ayf9LHCdaA4zsUS4OPp       a/packs.json
+N1F-Xz3GaBn2H1p7uKzhkhKCQV8QVR0t76XD6wmFtXAD       a/rules.json
+Total 4 elements
+Hash: fS3XvE2qy0hsdIqqbW6GYMfLWhD-LnK_2qMPpaR8SpTY
+a/1 d=D1 NEED=1
+a/1 d=D2 NEED=0
+a/2 d=D1 NEED=0
+a/2 d=D2 NEED=1
+a/3 d=D3 NEED=0
+a/4 d=D5 NEED=0
+a/4 d=D4 NEED=1
+b/1 d=D1 NEED=0
+
+
+LOADING 2->1:
+Loading chan: a
+  pre-wasUpdated: 0
+  wasUpdated: 1
+Loading chan: a
+  pre-wasUpdated: 1
+  wasUpdated: 1
+
+Directory: _test2/channels
+00                                                 a/
+MYSEbVWCWbMyA2iSKnaGVkmDNowFOqZ8v7nRJ6FW8YMo       a/current.hash
+HhfWacX7FEjrT_NhAqlak9FGEJ619OAKHYDv30ooJv_p       a/packs.json
+N1F-Xz3GaBn2H1p7uKzhkhKCQV8QVR0t76XD6wmFtXAD       a/rules.json
+Total 4 elements
+Hash: WOg7DRJDMm6496joVPv6EmiE6HLrdxw2tfm8sN7d2oLY
+a/1 d=D1 NEED=0
+a/1 d=D2 NEED=1
+a/2 d=D1 NEED=1
+a/2 d=D2 NEED=0
+a/3 d=D3 NEED=0
+a/4 d=D5 NEED=1
+a/4 d=D4 NEED=0
+b/1 d=D1 NEED=0
+
+
+LOADING 2->1->2:
+Loading chan: a
+  pre-wasUpdated: 0
+  wasUpdated: 1
+Loading chan: a
+  pre-wasUpdated: 1
+  wasUpdated: 1
+Loading chan: a
+  pre-wasUpdated: 1
+  wasUpdated: 1
+
+Directory: _test2/channels
+00                                                 a/
+5m6nHSTbyeg_qR07rFOM_0huIlSBFJa8ZISv7Hnu2w4o       a/current.hash
+iSSmUUxwBpCRO3z0qn8n9AM90Ayf9LHCdaA4zsUS4OPp       a/packs.json
+N1F-Xz3GaBn2H1p7uKzhkhKCQV8QVR0t76XD6wmFtXAD       a/rules.json
+Total 4 elements
+Hash: fS3XvE2qy0hsdIqqbW6GYMfLWhD-LnK_2qMPpaR8SpTY
+a/1 d=D1 NEED=1
+a/1 d=D2 NEED=0
+a/2 d=D1 NEED=0
+a/2 d=D2 NEED=1
+a/3 d=D3 NEED=0
+a/4 d=D5 NEED=0
+a/4 d=D4 NEED=1
+b/1 d=D1 NEED=0
+
+
+LOADING 1->2->2->1:
+Loading chan: a
+  pre-wasUpdated: 0
+  wasUpdated: 1
+Loading chan: a
+  pre-wasUpdated: 1
+  wasUpdated: 1
+Loading chan: a
+  pre-wasUpdated: 1
+  wasUpdated: 0
+Loading chan: a
+  pre-wasUpdated: 0
+  wasUpdated: 1
+
+Directory: _test2/channels
+00                                                 a/
+MYSEbVWCWbMyA2iSKnaGVkmDNowFOqZ8v7nRJ6FW8YMo       a/current.hash
+HhfWacX7FEjrT_NhAqlak9FGEJ619OAKHYDv30ooJv_p       a/packs.json
+N1F-Xz3GaBn2H1p7uKzhkhKCQV8QVR0t76XD6wmFtXAD       a/rules.json
+Total 4 elements
+Hash: WOg7DRJDMm6496joVPv6EmiE6HLrdxw2tfm8sN7d2oLY
+a/1 d=D1 NEED=0
+a/1 d=D2 NEED=1
+a/2 d=D1 NEED=1
+a/2 d=D2 NEED=0
+a/3 d=D3 NEED=0
+a/4 d=D5 NEED=1
+a/4 d=D4 NEED=0
+b/1 d=D1 NEED=0
+
