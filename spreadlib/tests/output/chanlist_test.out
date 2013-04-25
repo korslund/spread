@@ -1,9 +1,9 @@
 ALL ELEMENTS:
 
 CAUGHT: Error loading channel test0.
-DETAILS: FileStream: failed to open file data_chantest/channels/test0/rules.json (reading data_chantest/channels/test0/rules.json)
+DETAILS: FileStream: failed to open file data_chantest/channels/test0/packs.json (reading data_chantest/channels/test0/packs.json)
 CAUGHT: Error loading channel test0.
-DETAILS: FileStream: failed to open file data_chantest/channels/test0/rules.json (reading data_chantest/channels/test0/rules.json)
+DETAILS: FileStream: failed to open file data_chantest/channels/test0/packs.json (reading data_chantest/channels/test0/packs.json)
 CAUGHT: Error loading channel test1.
 DETAILS: FileStream: failed to open file data_chantest/channels/test1/packs.json (reading data_chantest/channels/test1/packs.json)
 CAUGHT: Error loading channel test1.

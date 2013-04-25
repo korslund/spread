@@ -88,7 +88,9 @@ struct ChanList::_Internal
 
     try
       {
-        loadRulesJsonFile(rules, chanPath(channel, "rules.json"));
+        std::string rfile = chanPath(channel, "rules.json");
+        if(bf::exists(rfile))
+          loadRulesJsonFile(rules, rfile);
         PackList list;
         list.loadJson(chanPath(channel, "packs.json"), channel);
 

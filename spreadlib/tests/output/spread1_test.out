@@ -7,7 +7,7 @@ Total 2 elements
 Hash: FwCmuiauZk4aPQcjyUx-JyA6vV9vHxQoDj7zez0A0ERw
 
 CAUGHT: Error loading channel c.
-DETAILS: FileStream: failed to open file /home/mortennk/koding/spread/spreadlib/tests/_test1/spread/channels/c/rules.json (reading /home/mortennk/koding/spread/spreadlib/tests/_test1/spread/channels/c/rules.json)
+DETAILS: FileStream: failed to open file /home/mortennk/koding/spread/spreadlib/tests/_test1/spread/channels/c/packs.json (reading /home/mortennk/koding/spread/spreadlib/tests/_test1/spread/channels/c/packs.json)
 Directory: _test1/
 00                                                 spread/
 00                                                 spread/cache/

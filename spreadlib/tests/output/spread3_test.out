@@ -1,10 +1,10 @@
+(empty status list)
 
-INSTALLING to _test3/no-upgrade/test
+
+INSTALLING to _test3/data3/no-upgrade/test
 SUCCESS!
-test/test d=x9pMJPbmhKy7oMdiSWdctjtEN_B9IDQDg_fOc2X1koeNAQ NEED=0
 
-
-Directory: _test3/no-upgrade/test
+Directory: _test3/data3/no-upgrade/test
 2K2AVsRkXuTwRIaqI11TKYXA-QQj1M7OFmlRntnNNuQH       delete
 CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file1
 CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
@@ -19,12 +19,10 @@ Hash: kT632ER_2iJJQSu526XoccsVSK4yK-v--7xl2e6A_q67AQ
 
 INSTALLING AGAIN:
 
-INSTALLING to _test3/no-upgrade/test
+INSTALLING to _test3/data3/no-upgrade/test
 SUCCESS!
-test/test d=x9pMJPbmhKy7oMdiSWdctjtEN_B9IDQDg_fOc2X1koeNAQ NEED=0
 
-
-Directory: _test3/no-upgrade/test
+Directory: _test3/data3/no-upgrade/test
 2K2AVsRkXuTwRIaqI11TKYXA-QQj1M7OFmlRntnNNuQH       delete
 CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file1
 CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
@@ -39,12 +37,28 @@ Hash: kT632ER_2iJJQSu526XoccsVSK4yK-v--7xl2e6A_q67AQ
 
 MODIFYING FILES:
 
-INSTALLING to _test3/no-upgrade/test
+INSTALLING to _test3/data3/no-upgrade/test
 SUCCESS!
-test/test d=x9pMJPbmhKy7oMdiSWdctjtEN_B9IDQDg_fOc2X1koeNAQ NEED=0
 
+Directory: _test3/data3/no-upgrade/test
+2K2AVsRkXuTwRIaqI11TKYXA-QQj1M7OFmlRntnNNuQH       delete
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
+mjx8Wg1q_AQQkSvXfmJO2hDt4uR3JIahNZFnUWPZ9QAG       file3
+akxqhyC2rmG1UXOIU1Nfyg-cJl_HDSRLUfqYTKv28wAG       file4
+00                                                 sub/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file2
+CnXmKVtFa-pnKbDsKC4tio5EX5GgeFAZSAGo5KvkoWIG       sub/file5
+Total 9 elements
+Hash: kT632ER_2iJJQSu526XoccsVSK4yK-v--7xl2e6A_q67AQ
 
-Directory: _test3/no-upgrade/test
+MODIFYING IGNORED FILE:
+
+INSTALLING to _test3/data3/no-upgrade/test
+SUCCESS!
+
+Directory: _test3/data3/no-upgrade/test
 2K2AVsRkXuTwRIaqI11TKYXA-QQj1M7OFmlRntnNNuQH       delete
 CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file1
 CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
@@ -59,17 +73,152 @@ Hash: kT632ER_2iJJQSu526XoccsVSK4yK-v--7xl2e6A_q67AQ
 
 REMOVING:
 
-UNINSTALLING _test3/no-upgrade/test
+UNINSTALLING _test3/data3/no-upgrade/test
 SUCCESS!
 (empty status list)
 
 
-INSTALLING to _test3/upgrade/test
+SWITCHING TO CHANNEL 2
+(empty status list)
+
+
+INSTALLING to _test3/data3/no-upgrade/test
 SUCCESS!
-test/test d=x9pMJPbmhKy7oMdiSWdctjtEN_B9IDQDg_fOc2X1koeNAQ NEED=0
+
+Directory: _test3/data3/no-upgrade/test
+JLcfY2YXU4y1pWE-NruwVNow_Z87Run4rtYNp4Qt7WEE       add
+duuLsEjsE2HODP--Ybr67vM37XSiA6PPRBlKQH2aQX0G       file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
+mjx8Wg1q_AQQkSvXfmJO2hDt4uR3JIahNZFnUWPZ9QAG       file3
+CnXmKVtFa-pnKbDsKC4tio5EX5GgeFAZSAGo5KvkoWIG       file4
+00                                                 sub/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file2
+akxqhyC2rmG1UXOIU1Nfyg-cJl_HDSRLUfqYTKv28wAG       sub/file5
+00                                                 sub2/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub2/file1
+Total 10 elements
+Hash: 5KPIBKuIH5HRSGUaup6Vp4Z23mAEF-SRxgXPtu4twPnoAQ
+
+UPGRADING TO 1
+test/test d=SSRfzT06oCeSCZBsM15WyymF9rGNNV10eK15JlnqrOKLAQ NEED=1
 
 
-Directory: _test3/upgrade/test
+INSTALLING to _test3/data3/no-upgrade/test
+SUCCESS!
+
+Directory: _test3/data3/no-upgrade/test
+JLcfY2YXU4y1pWE-NruwVNow_Z87Run4rtYNp4Qt7WEE       add
+2K2AVsRkXuTwRIaqI11TKYXA-QQj1M7OFmlRntnNNuQH       delete
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
+mjx8Wg1q_AQQkSvXfmJO2hDt4uR3JIahNZFnUWPZ9QAG       file3
+akxqhyC2rmG1UXOIU1Nfyg-cJl_HDSRLUfqYTKv28wAG       file4
+00                                                 sub/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file2
+CnXmKVtFa-pnKbDsKC4tio5EX5GgeFAZSAGo5KvkoWIG       sub/file5
+00                                                 sub2/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub2/file1
+Total 12 elements
+Hash: 6UPz7JFiIOHqirEFz9_J71MEqkMc9zp-kzjfQwNTHcZLAg
+
+BACK to 2
+test/test d=x9pMJPbmhKy7oMdiSWdctjtEN_B9IDQDg_fOc2X1koeNAQ NEED=1
+
+
+INSTALLING to _test3/data3/no-upgrade/test
+SUCCESS!
+
+Directory: _test3/data3/no-upgrade/test
+JLcfY2YXU4y1pWE-NruwVNow_Z87Run4rtYNp4Qt7WEE       add
+2K2AVsRkXuTwRIaqI11TKYXA-QQj1M7OFmlRntnNNuQH       delete
+duuLsEjsE2HODP--Ybr67vM37XSiA6PPRBlKQH2aQX0G       file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
+mjx8Wg1q_AQQkSvXfmJO2hDt4uR3JIahNZFnUWPZ9QAG       file3
+CnXmKVtFa-pnKbDsKC4tio5EX5GgeFAZSAGo5KvkoWIG       file4
+00                                                 sub/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file2
+akxqhyC2rmG1UXOIU1Nfyg-cJl_HDSRLUfqYTKv28wAG       sub/file5
+00                                                 sub2/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub2/file1
+Total 12 elements
+Hash: 3H4dHWAXV_7BJ__vfaEYz7uEb3vkpsGsjiBdp7iW9PZLAg
+
+AND AGAIN
+
+INSTALLING to _test3/data3/no-upgrade/test
+SUCCESS!
+
+Directory: _test3/data3/no-upgrade/test
+JLcfY2YXU4y1pWE-NruwVNow_Z87Run4rtYNp4Qt7WEE       add
+2K2AVsRkXuTwRIaqI11TKYXA-QQj1M7OFmlRntnNNuQH       delete
+duuLsEjsE2HODP--Ybr67vM37XSiA6PPRBlKQH2aQX0G       file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
+mjx8Wg1q_AQQkSvXfmJO2hDt4uR3JIahNZFnUWPZ9QAG       file3
+CnXmKVtFa-pnKbDsKC4tio5EX5GgeFAZSAGo5KvkoWIG       file4
+00                                                 sub/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file2
+akxqhyC2rmG1UXOIU1Nfyg-cJl_HDSRLUfqYTKv28wAG       sub/file5
+00                                                 sub2/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub2/file1
+Total 12 elements
+Hash: 3H4dHWAXV_7BJ__vfaEYz7uEb3vkpsGsjiBdp7iW9PZLAg
+
+UNINSTALLING _test3/data3/no-upgrade/test
+SUCCESS!
+(empty status list)
+
+
+FRESH INSTALL:
+
+INSTALLING to _test3/data3/no-upgrade/test
+SUCCESS!
+
+Directory: _test3/data3/no-upgrade/test
+JLcfY2YXU4y1pWE-NruwVNow_Z87Run4rtYNp4Qt7WEE       add
+duuLsEjsE2HODP--Ybr67vM37XSiA6PPRBlKQH2aQX0G       file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
+mjx8Wg1q_AQQkSvXfmJO2hDt4uR3JIahNZFnUWPZ9QAG       file3
+CnXmKVtFa-pnKbDsKC4tio5EX5GgeFAZSAGo5KvkoWIG       file4
+00                                                 sub/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file2
+akxqhyC2rmG1UXOIU1Nfyg-cJl_HDSRLUfqYTKv28wAG       sub/file5
+00                                                 sub2/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub2/file1
+Total 10 elements
+Hash: 5KPIBKuIH5HRSGUaup6Vp4Z23mAEF-SRxgXPtu4twPnoAQ
+
+MODIFY AND UPDATE:
+test/test d=SSRfzT06oCeSCZBsM15WyymF9rGNNV10eK15JlnqrOKLAQ NEED=1
+
+
+INSTALLING to _test3/data3/no-upgrade/test
+SUCCESS!
+
+Directory: _test3/data3/no-upgrade/test
+JLcfY2YXU4y1pWE-NruwVNow_Z87Run4rtYNp4Qt7WEE       add
+2K2AVsRkXuTwRIaqI11TKYXA-QQj1M7OFmlRntnNNuQH       delete
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
+mjx8Wg1q_AQQkSvXfmJO2hDt4uR3JIahNZFnUWPZ9QAG       file3
+akxqhyC2rmG1UXOIU1Nfyg-cJl_HDSRLUfqYTKv28wAG       file4
+00                                                 sub/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file2
+CnXmKVtFa-pnKbDsKC4tio5EX5GgeFAZSAGo5KvkoWIG       sub/file5
+00                                                 sub2/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub2/file1
+Total 12 elements
+Hash: 6UPz7JFiIOHqirEFz9_J71MEqkMc9zp-kzjfQwNTHcZLAg
+(empty status list)
+
+
+INSTALLING to _test3/data3/upgrade/test
+SUCCESS!
+
+Directory: _test3/data3/upgrade/test
 2K2AVsRkXuTwRIaqI11TKYXA-QQj1M7OFmlRntnNNuQH       delete
 CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file1
 CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
@@ -84,12 +233,10 @@ Hash: kT632ER_2iJJQSu526XoccsVSK4yK-v--7xl2e6A_q67AQ
 
 INSTALLING AGAIN:
 
-INSTALLING to _test3/upgrade/test
+INSTALLING to _test3/data3/upgrade/test
 NO JOB EXECUTED
-test/test d=x9pMJPbmhKy7oMdiSWdctjtEN_B9IDQDg_fOc2X1koeNAQ NEED=0
 
-
-Directory: _test3/upgrade/test
+Directory: _test3/data3/upgrade/test
 2K2AVsRkXuTwRIaqI11TKYXA-QQj1M7OFmlRntnNNuQH       delete
 CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file1
 CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
@@ -104,12 +251,10 @@ Hash: kT632ER_2iJJQSu526XoccsVSK4yK-v--7xl2e6A_q67AQ
 
 MODIFYING FILES:
 
-INSTALLING to _test3/upgrade/test
+INSTALLING to _test3/data3/upgrade/test
 NO JOB EXECUTED
-test/test d=x9pMJPbmhKy7oMdiSWdctjtEN_B9IDQDg_fOc2X1koeNAQ NEED=0
 
-
-Directory: _test3/upgrade/test
+Directory: _test3/data3/upgrade/test
 2K2AVsRkXuTwRIaqI11TKYXA-QQj1M7OFmlRntnNNuQH       delete
 1E7kv-nseTGHsrD3TNsLIro15Y_titqo8QxW0dKFlsYQ       file1
 CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
@@ -122,9 +267,494 @@ CnXmKVtFa-pnKbDsKC4tio5EX5GgeFAZSAGo5KvkoWIG       sub/file5
 Total 9 elements
 Hash: Dz_qYlPDBOo7n38Phhcns5Of0I2go8UTZ9ZtP0vxPEi7AQ
 
+MODIFYING IGNORED FILE:
+
+INSTALLING to _test3/data3/upgrade/test
+NO JOB EXECUTED
+
+Directory: _test3/data3/upgrade/test
+2K2AVsRkXuTwRIaqI11TKYXA-QQj1M7OFmlRntnNNuQH       delete
+1E7kv-nseTGHsrD3TNsLIro15Y_titqo8QxW0dKFlsYQ       file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       file3
+ej5kiqX9CC_UL-KMy-5J6MLKTf1kaAJf8xZKC71kLfEF       file4
+00                                                 sub/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file2
+CnXmKVtFa-pnKbDsKC4tio5EX5GgeFAZSAGo5KvkoWIG       sub/file5
+Total 9 elements
+Hash: p1tH9_EWb59pLtCHHFAjn4YcRMHwAWyxVsNQrAScDI-7AQ
+
 REMOVING:
 
-UNINSTALLING _test3/upgrade/test
+UNINSTALLING _test3/data3/upgrade/test
 SUCCESS!
 (empty status list)
 
+
+SWITCHING TO CHANNEL 2
+(empty status list)
+
+
+INSTALLING to _test3/data3/upgrade/test
+SUCCESS!
+
+Directory: _test3/data3/upgrade/test
+JLcfY2YXU4y1pWE-NruwVNow_Z87Run4rtYNp4Qt7WEE       add
+duuLsEjsE2HODP--Ybr67vM37XSiA6PPRBlKQH2aQX0G       file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
+mjx8Wg1q_AQQkSvXfmJO2hDt4uR3JIahNZFnUWPZ9QAG       file3
+CnXmKVtFa-pnKbDsKC4tio5EX5GgeFAZSAGo5KvkoWIG       file4
+00                                                 sub/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file2
+akxqhyC2rmG1UXOIU1Nfyg-cJl_HDSRLUfqYTKv28wAG       sub/file5
+00                                                 sub2/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub2/file1
+Total 10 elements
+Hash: 5KPIBKuIH5HRSGUaup6Vp4Z23mAEF-SRxgXPtu4twPnoAQ
+
+UPGRADING TO 1
+test/test d=SSRfzT06oCeSCZBsM15WyymF9rGNNV10eK15JlnqrOKLAQ NEED=1
+
+
+INSTALLING to _test3/data3/upgrade/test
+SUCCESS!
+
+Directory: _test3/data3/upgrade/test
+2K2AVsRkXuTwRIaqI11TKYXA-QQj1M7OFmlRntnNNuQH       delete
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
+mjx8Wg1q_AQQkSvXfmJO2hDt4uR3JIahNZFnUWPZ9QAG       file3
+akxqhyC2rmG1UXOIU1Nfyg-cJl_HDSRLUfqYTKv28wAG       file4
+00                                                 sub/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file2
+CnXmKVtFa-pnKbDsKC4tio5EX5GgeFAZSAGo5KvkoWIG       sub/file5
+00                                                 sub2/
+Total 10 elements
+Hash: Hl-WyHHvWXM_krnRdIBELy9BdwnTSbcp1HQkGwU9WCjqAQ
+
+BACK to 2
+test/test d=x9pMJPbmhKy7oMdiSWdctjtEN_B9IDQDg_fOc2X1koeNAQ NEED=1
+
+
+INSTALLING to _test3/data3/upgrade/test
+SUCCESS!
+
+Directory: _test3/data3/upgrade/test
+JLcfY2YXU4y1pWE-NruwVNow_Z87Run4rtYNp4Qt7WEE       add
+duuLsEjsE2HODP--Ybr67vM37XSiA6PPRBlKQH2aQX0G       file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
+mjx8Wg1q_AQQkSvXfmJO2hDt4uR3JIahNZFnUWPZ9QAG       file3
+CnXmKVtFa-pnKbDsKC4tio5EX5GgeFAZSAGo5KvkoWIG       file4
+00                                                 sub/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file2
+akxqhyC2rmG1UXOIU1Nfyg-cJl_HDSRLUfqYTKv28wAG       sub/file5
+00                                                 sub2/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub2/file1
+Total 10 elements
+Hash: 5KPIBKuIH5HRSGUaup6Vp4Z23mAEF-SRxgXPtu4twPnoAQ
+
+AND AGAIN
+
+INSTALLING to _test3/data3/upgrade/test
+NO JOB EXECUTED
+
+Directory: _test3/data3/upgrade/test
+JLcfY2YXU4y1pWE-NruwVNow_Z87Run4rtYNp4Qt7WEE       add
+duuLsEjsE2HODP--Ybr67vM37XSiA6PPRBlKQH2aQX0G       file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
+mjx8Wg1q_AQQkSvXfmJO2hDt4uR3JIahNZFnUWPZ9QAG       file3
+CnXmKVtFa-pnKbDsKC4tio5EX5GgeFAZSAGo5KvkoWIG       file4
+00                                                 sub/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file2
+akxqhyC2rmG1UXOIU1Nfyg-cJl_HDSRLUfqYTKv28wAG       sub/file5
+00                                                 sub2/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub2/file1
+Total 10 elements
+Hash: 5KPIBKuIH5HRSGUaup6Vp4Z23mAEF-SRxgXPtu4twPnoAQ
+
+UNINSTALLING _test3/data3/upgrade/test
+SUCCESS!
+(empty status list)
+
+
+FRESH INSTALL:
+
+INSTALLING to _test3/data3/upgrade/test
+SUCCESS!
+
+Directory: _test3/data3/upgrade/test
+JLcfY2YXU4y1pWE-NruwVNow_Z87Run4rtYNp4Qt7WEE       add
+duuLsEjsE2HODP--Ybr67vM37XSiA6PPRBlKQH2aQX0G       file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
+mjx8Wg1q_AQQkSvXfmJO2hDt4uR3JIahNZFnUWPZ9QAG       file3
+CnXmKVtFa-pnKbDsKC4tio5EX5GgeFAZSAGo5KvkoWIG       file4
+00                                                 sub/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file2
+akxqhyC2rmG1UXOIU1Nfyg-cJl_HDSRLUfqYTKv28wAG       sub/file5
+00                                                 sub2/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub2/file1
+Total 10 elements
+Hash: 5KPIBKuIH5HRSGUaup6Vp4Z23mAEF-SRxgXPtu4twPnoAQ
+
+MODIFY AND UPDATE:
+test/test d=SSRfzT06oCeSCZBsM15WyymF9rGNNV10eK15JlnqrOKLAQ NEED=1
+
+
+INSTALLING to _test3/data3/upgrade/test
+SUCCESS!
+
+Directory: _test3/data3/upgrade/test
+2K2AVsRkXuTwRIaqI11TKYXA-QQj1M7OFmlRntnNNuQH       delete
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       file2
+LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF       file3
+akxqhyC2rmG1UXOIU1Nfyg-cJl_HDSRLUfqYTKv28wAG       file4
+00                                                 sub/
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file1
+CA4J0CBaJrN8ZJMe-WXcBXisN_QD6659OK5msIEAU8kG       sub/file2
+CnXmKVtFa-pnKbDsKC4tio5EX5GgeFAZSAGo5KvkoWIG       sub/file5
+00                                                 sub2/
+Total 10 elements
+Hash: -A01vIp9I8odbyIqDwi05OWNZbtIivc40rBJukHRQUDqAQ
+(empty status list)
+
+
+INSTALLING to _test3/data4/no-upgrade/test
+SUCCESS!
+
+Directory: _test3/data4/no-upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
+
+INSTALLING AGAIN:
+
+INSTALLING to _test3/data4/no-upgrade/test
+SUCCESS!
+
+Directory: _test3/data4/no-upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
+
+MODIFYING FILES:
+
+INSTALLING to _test3/data4/no-upgrade/test
+SUCCESS!
+
+Directory: _test3/data4/no-upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
+
+MODIFYING IGNORED FILE:
+
+INSTALLING to _test3/data4/no-upgrade/test
+SUCCESS!
+
+Directory: _test3/data4/no-upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
+
+REMOVING:
+
+UNINSTALLING _test3/data4/no-upgrade/test
+SUCCESS!
+(empty status list)
+
+
+SWITCHING TO CHANNEL 2
+(empty status list)
+
+
+INSTALLING to _test3/data4/no-upgrade/test
+SUCCESS!
+
+Directory: _test3/data4/no-upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
+
+UPGRADING TO 1
+test/test d=7GFg3cmw5w7cHy4As-6qieCxS4re4AKmBKjMJZt_pr3f NEED=1
+
+
+INSTALLING to _test3/data4/no-upgrade/test
+SUCCESS!
+
+Directory: _test3/data4/no-upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
+
+BACK to 2
+test/test d=_0mt8GMbKrr0JGnQ0KfBkooaPJ-B2Cs6q1IIuRvV5B7f NEED=1
+
+
+INSTALLING to _test3/data4/no-upgrade/test
+SUCCESS!
+
+Directory: _test3/data4/no-upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
+
+AND AGAIN
+
+INSTALLING to _test3/data4/no-upgrade/test
+SUCCESS!
+
+Directory: _test3/data4/no-upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
+
+UNINSTALLING _test3/data4/no-upgrade/test
+SUCCESS!
+(empty status list)
+
+
+FRESH INSTALL:
+
+INSTALLING to _test3/data4/no-upgrade/test
+SUCCESS!
+
+Directory: _test3/data4/no-upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
+
+MODIFY AND UPDATE:
+test/test d=7GFg3cmw5w7cHy4As-6qieCxS4re4AKmBKjMJZt_pr3f NEED=1
+
+
+INSTALLING to _test3/data4/no-upgrade/test
+SUCCESS!
+
+Directory: _test3/data4/no-upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
+(empty status list)
+
+
+INSTALLING to _test3/data4/upgrade/test
+SUCCESS!
+
+Directory: _test3/data4/upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
+
+INSTALLING AGAIN:
+
+INSTALLING to _test3/data4/upgrade/test
+NO JOB EXECUTED
+
+Directory: _test3/data4/upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
+
+MODIFYING FILES:
+
+INSTALLING to _test3/data4/upgrade/test
+NO JOB EXECUTED
+
+Directory: _test3/data4/upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
+
+MODIFYING IGNORED FILE:
+
+INSTALLING to _test3/data4/upgrade/test
+NO JOB EXECUTED
+
+Directory: _test3/data4/upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
+
+REMOVING:
+
+UNINSTALLING _test3/data4/upgrade/test
+SUCCESS!
+(empty status list)
+
+
+SWITCHING TO CHANNEL 2
+(empty status list)
+
+
+INSTALLING to _test3/data4/upgrade/test
+SUCCESS!
+
+Directory: _test3/data4/upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
+
+UPGRADING TO 1
+test/test d=7GFg3cmw5w7cHy4As-6qieCxS4re4AKmBKjMJZt_pr3f NEED=1
+
+
+INSTALLING to _test3/data4/upgrade/test
+SUCCESS!
+
+Directory: _test3/data4/upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
+
+BACK to 2
+test/test d=_0mt8GMbKrr0JGnQ0KfBkooaPJ-B2Cs6q1IIuRvV5B7f NEED=1
+
+
+INSTALLING to _test3/data4/upgrade/test
+SUCCESS!
+
+Directory: _test3/data4/upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
+
+AND AGAIN
+
+INSTALLING to _test3/data4/upgrade/test
+NO JOB EXECUTED
+
+Directory: _test3/data4/upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
+
+UNINSTALLING _test3/data4/upgrade/test
+SUCCESS!
+(empty status list)
+
+
+FRESH INSTALL:
+
+INSTALLING to _test3/data4/upgrade/test
+SUCCESS!
+
+Directory: _test3/data4/upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
+
+MODIFY AND UPDATE:
+test/test d=7GFg3cmw5w7cHy4As-6qieCxS4re4AKmBKjMJZt_pr3f NEED=1
+
+
+INSTALLING to _test3/data4/upgrade/test
+SUCCESS!
+
+Directory: _test3/data4/upgrade/test
+BvlhuAK8Ru4WhVXwZtKPTw6a_fP4gXTB7m-d4AT8MKAC       1
+wM3nf6j--X1HbBCq09LVT8wvM2FA0HNlHC3Mzx43n9YC       2
+EvN6ioQDTT5iPXJv4Q5QMfTfmXrBP01VcbWpDEH7hP4C       3
+fER6olJCZKPiTfc6b93Y2zYIQPiVvLXlTWQ8GN4mqK4C       4
+4soncfx8VCvN7rYGWm6HL_Ly0mOhkAW1X2MxHAqPH6kC       5
+pTZzLPxtcIwqfPeCf3g32X8k7O-GJYLrnX2idGhhFQ8C       6
+Total 6 elements
+Hash: dWdhqjStuqfqojTdPc6kwGKLkAhBGsVCGeeYUEDVBckKAQ
