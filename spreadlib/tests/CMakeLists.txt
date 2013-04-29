@@ -42,3 +42,6 @@ target_link_libraries(spread2_test ${LIBS})
 
 add_executable(spread3_test spread3_test.cpp ${MANGLE})
 target_link_libraries(spread3_test ${LIBS})
+
+add_executable(legacy_test legacy_test.cpp ${MANGLE})
+target_link_libraries(legacy_test ${LIBS})

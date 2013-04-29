@@ -8,7 +8,12 @@ static void toDirs(const Json::Value &from, StrVec &dirs, StrVec &paths)
 {
   using namespace std;
 
-  if(from.isNull()) return;
+  if(from.isNull())
+    {
+      dirs.clear();
+      paths.clear();
+      return;
+    }
   if(!from.isArray()) 
     throw std::runtime_error("Error parsing pack file");
 

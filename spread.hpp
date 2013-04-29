@@ -79,6 +79,18 @@ namespace Spread
                            bool doUpgrade=true,
                            bool enableAsk=false);
 
+    /* Tell the system that channel/package is already installed at
+       the location 'where', but do not perform any actual checks if
+       the files are present.
+
+       This will insert an 'empty' database entry for the given
+       install. This means that the next time installPack() is called
+       on the same installation, it will ALWAYS consider the package
+       to be outdated and in need of an update.
+     */
+    void setLegacyPack(const std::string &channel, const std::string &package,
+                       const std::string &where);
+
     /* Uninstall a package previously installed with installPack().
        Files are deleted and the entry is removed from the database.
 

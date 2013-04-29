@@ -1,0 +1,38 @@
+Setting test2 with no dir file
+
+Directory: _legacy/
+00                                                 cache/
+00                                                 cache/x9/
+00                                                 channels/
+00                                                 channels/test/
+Qu49nKk1sCGlGXeDv2IyJ-YsYXkUnjv2zXGWBIpp1M2n       channels/test/packs.json
+h4TgjaLNE2Mb5TCpM882Z0c0SbE5Wj6tG-ymKNs1QwWo       installed.conf
+Total 6 elements
+Hash: -TaSLtGL6RXj_b3aJHce45RR3wXxFsjLZVKtrG5Djz5QAQ
+Restarting spread
+Setting test1 WITH dir file
+
+Directory: _legacy/
+00                                                 cache/
+00                                                 cache/x9/
+x9pMJPbmhKy7oMdiSWdctjtEN_B9IDQDg_fOc2X1koeNAQ     cache/x9/pMJPbmhKy7oMdiSWdctjtEN_B9IDQDg_fOc2X1koeNAQ
+00                                                 channels/
+00                                                 channels/test/
+Qu49nKk1sCGlGXeDv2IyJ-YsYXkUnjv2zXGWBIpp1M2n       channels/test/packs.json
+QhY61tbk2QvGqJIRb4cOR9Rh6oOMaOgJijuBHlQQF6xMAQ     installed.conf
+h4TgjaLNE2Mb5TCpM882Z0c0SbE5Wj6tG-ymKNs1QwWo       installed.conf.old
+Total 8 elements
+Hash: VMVvDt8gc_czOIi8ntpeA1__YX89a-FykWdEu2pKom_rAQ
+Calling again
+
+Directory: _legacy/
+00                                                 cache/
+00                                                 cache/x9/
+x9pMJPbmhKy7oMdiSWdctjtEN_B9IDQDg_fOc2X1koeNAQ     cache/x9/pMJPbmhKy7oMdiSWdctjtEN_B9IDQDg_fOc2X1koeNAQ
+00                                                 channels/
+00                                                 channels/test/
+Qu49nKk1sCGlGXeDv2IyJ-YsYXkUnjv2zXGWBIpp1M2n       channels/test/packs.json
+QhY61tbk2QvGqJIRb4cOR9Rh6oOMaOgJijuBHlQQF6xMAQ     installed.conf
+h4TgjaLNE2Mb5TCpM882Z0c0SbE5Wj6tG-ymKNs1QwWo       installed.conf.old
+Total 8 elements
+Hash: VMVvDt8gc_czOIi8ntpeA1__YX89a-FykWdEu2pKom_rAQ

@@ -214,6 +214,47 @@ struct InstallMonitor : Job
   }
 };
 
+void SpreadLib::setLegacyPack(const std::string &channel, const std::string &package,
+                              const std::string &_where)
+{
+  std::string where = abs(_where);
+
+  // If there's already a registered install in this location, we
+  // don't have to do anything.
+  if(getPackStatus(channel, package, where) != NULL)
+    return;
+
+  // Get the latest package info
+  PackInfo p = getPackInfo(channel,package);
+
+  // Set the install status
+  {
+    PackInfo pack = p;
+
+    // Clear the dirs to force the package to update on the next
+    // installPack() call
+    pack.dirs.clear();
+    pack.paths.clear();
+    ptr->chan.getStatusList().setEntry(pack, where);
+  }
+
+  // Make sure all relevant directory files are cached, if they exist
+  for(int i=0; i<p.dirs.size(); i++)
+    {
+      Hash hash(p.dirs[i]);
+
+      // Cache storage path - blank if file is already in cache
+      const std::string &dest = ptr->cache.files.storePath(hash);
+      if(dest == "") continue;
+
+      // Source file - blank if not found
+      const std::string &src = ptr->cache.index.findHash(hash);
+      if(src == "") continue;
+
+      bf::copy_file(src, dest);
+    }
+}
+
 JobInfoPtr SpreadLib::installPack(const std::string &channel,
                                   const std::string &package,
                                   const std::string &_where,
