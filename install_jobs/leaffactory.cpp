@@ -156,6 +156,11 @@ struct Target : TreeBase
                 goto restart;
               }
           }
+
+        // If we have been aborted ourselves, then that overrides
+        // error messages (otherwise we will return an error status on
+        // aborts, when we should return abort status.)
+        if(checkStatus()) return;
         lastJob->failError();
       }
 

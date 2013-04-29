@@ -335,6 +335,7 @@ JobInfoPtr SpreadLib::installPack(const std::string &channel,
   if(!async)
     {
       assert(info->isFinished());
+      PRINT("Checking job for errors");
       info->failError();
     }
 

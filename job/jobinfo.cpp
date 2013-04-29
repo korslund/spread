@@ -35,6 +35,7 @@ void JobInfo::abort()
 
 void JobInfo::failError()
 {
+  checkStatus();
   if(isError())
     throw std::runtime_error(getMessage());
   else if(isAbort())
@@ -121,7 +122,17 @@ void JobInfo::reset()
 void JobInfo::setError(const std::string &what)
 {
   message = what;
-  status = ST_ERROR;
+
+  /* Don't override abort messages - we don't want to potentially
+     trigger error messages to the user when they have already
+     requested aborting the job.
+
+     If you call info->abort(), you expect isAbort() to be true, not
+     isError().
+   */
+  checkStatus();
+  if(status != ST_ABORT)
+    status = ST_ERROR;
 }
 
 bool JobInfo::checkStatus()

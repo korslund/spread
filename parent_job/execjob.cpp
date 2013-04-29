@@ -18,6 +18,14 @@ bool ExecJob::execJob(JobPtr p, bool failOnError)
 
   assert(lastJob);
   assert(lastJob->isFinished());
-  if(failOnError) lastJob->failError();
+
+  /* This handles aborts as well. If we are aborted during execution,
+     then lastJob is aborted as well. This causes failError() to throw
+     an exception. However, since aborts take precedence over errors
+     in our job subsystem, the result will be isAbort() status, not
+     isError() status.
+   */
+  if(failOnError)
+    lastJob->failError();
   return lastJob->isSuccess();
 }

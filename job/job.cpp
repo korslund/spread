@@ -55,6 +55,7 @@ bool Job::runClient(JobPtr job, bool includeStats, bool copyFail)
 
 bool Job::waitClient(JobInfoPtr client, bool includeStats, bool copyFail)
 {
+  assert(client);
   if(clearClient(copyFail)) return true;
   if(includeStats) setClient(client);
   else setAbortClient(client);
