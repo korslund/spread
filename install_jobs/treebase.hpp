@@ -78,7 +78,8 @@ namespace Spread
     virtual void notifyFiles(const Hash::DirMap &files) = 0;
 
     /* Check for existing jobs associated with the target hash.
-       Returns an empty JobInfoPtr if no job was found.
+       Returns an empty JobInfoPtr if no job was found, or the job is
+       no longer running.
      */
     virtual JobInfoPtr getRunningTarget(const Hash &hash) = 0;
 

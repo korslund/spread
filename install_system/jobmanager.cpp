@@ -109,7 +109,10 @@ struct JobManager::_Internal : DirOwner
   JobInfoPtr getRunningTarget(const Hash &hash)
   {
     LockGuard l(mutex);
-    return running[hash];
+
+    JobInfoPtr &inf = running[hash];
+    if(inf && inf->isFinished()) inf.reset();
+    return inf;
   }
 
   void setRunningTarget(const Hash &hash, JobInfoPtr ptr)

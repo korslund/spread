@@ -40,4 +40,17 @@ int main()
   if(info->isError())
     cout << "Error: " << info->getMessage() << endl;
   else assert(info->isAbort());
+  cout << "Trying to install again\n";
+  info = spread.installPack("tiggit.net", "tiggit.net/cave-story", game);
+  cout << "Waiting a bit\n";
+  Thread::sleep(1.5);
+  cout << "Aborting and waiting for finish\n";
+  info->abort();
+  while(!info->isFinished()) Thread::sleep(0.1);
+  cout << "Sleeping a little longer\n";
+  Thread::sleep(0.2);
+  cout << "Checking for error message\n";
+  if(info->isError())
+    cout << "Error: " << info->getMessage() << endl;
+  else assert(info->isAbort());
 }
