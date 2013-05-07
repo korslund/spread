@@ -10,7 +10,8 @@
   given stream factory or file system directory.
 
   The file may be in any known archive format, and the format is
-  auto-detected. The backend code is found in the unpack/ module.
+  auto-detected. The backend code is found in the UnpackCpp submodule
+  in libs/unpackcpp/.
  */
 
 namespace Spread

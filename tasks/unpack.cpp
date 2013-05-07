@@ -1,9 +1,9 @@
 #include "unpack.hpp"
-#include <unpack/auto.hpp>
+#include <unpackcpp/auto.hpp>
 
 using namespace Spread;
 
-struct UProgress : Unpack::Progress
+struct UProgress : UnpackCpp::Progress
 {
   JobInfoPtr info;
 
@@ -24,7 +24,7 @@ void UnpackTask::doJob()
   UProgress prog;
   prog.info = info;
 
-  Unpack::AutoUnpack unp;
+  UnpackCpp::AutoUnpack unp;
 
   if(dir != "")
     {

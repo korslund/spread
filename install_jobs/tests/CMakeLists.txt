@@ -7,15 +7,16 @@ include_directories("../../libs/jsoncpp/include/")
 include_directories(${Boost_INCLUDE_DIRS})
 
 find_package(Boost COMPONENTS filesystem system thread REQUIRED)
-find_package(Boost COMPONENTS thread REQUIRED)
 find_package(CURL REQUIRED)
+find_package(ZLIB REQUIRED)
 
-set(LIBS ${Boost_LIBRARIES} zzip ${CURL_LIBRARIES})
+add_subdirectory("../../libs/unpackcpp/" "${CMAKE_CURRENT_BINARY_DIR}/_unpackcpp")
+
+set(LIBS UnpackCpp ${Boost_LIBRARIES} ${ZLIB_LIBRARIES} ${CURL_LIBRARIES})
 
 set(SPDIR ../..)
 
 set(DDIR ${SPDIR}/dir)
-set(UDIR ${SPDIR}/unpack)
 set(TDIR ${SPDIR}/tasks)
 set(JDIR ${SPDIR}/job)
 set(PJDIR ${SPDIR}/parent_job)
@@ -25,10 +26,9 @@ set(HTDIR ${SPDIR}/htasks)
 set(RDIR ${SPDIR}/rules)
 
 set(HASH ${HDIR}/hash.cpp ${SPDIR}/libs/sha2/sha2.c)
-set(UNPACK ${UDIR}/dirwriter.cpp ${UDIR}/base.cpp ${UDIR}/unpack_zip.cpp ${UDIR}/auto.cpp)
 set(HTASKS ${HTDIR}/hashtask.cpp ${HTDIR}/unpackhash.cpp ${HTDIR}/downloadhash.cpp ${HTDIR}/copyhash.cpp)
 set(DIR ${DDIR}/binary.cpp ${DDIR}/tools.cpp)
-set(TASKS ${TDIR}/unpack.cpp ${TDIR}/curl.cpp ${TDIR}/download.cpp ${JOB} ${UNPACK})
+set(TASKS ${TDIR}/unpack.cpp ${TDIR}/curl.cpp ${TDIR}/download.cpp ${JOB})
 set(RULES ${RDIR}/arcruleset.cpp ${RDIR}/ruleset.cpp)
 set(JOB ${JDIR}/job.cpp ${JDIR}/jobinfo.cpp ${JDIR}/thread.cpp)
 set(PJOB ${PJDIR}/parentjob.cpp ${PJDIR}/listjob.cpp ${PJDIR}/jobholder.cpp ${PJDIR}/execjob.cpp ${PJDIR}/andjob.cpp)

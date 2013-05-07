@@ -8,10 +8,12 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 find_package(Boost COMPONENTS filesystem system thread REQUIRED)
 find_package(CURL REQUIRED)
+find_package(ZLIB REQUIRED)
 
 add_subdirectory("../../" "${CMAKE_CURRENT_BINARY_DIR}/_spread")
+add_subdirectory("../../libs/unpackcpp/" "${CMAKE_CURRENT_BINARY_DIR}/_unpackcpp")
 
-set(LIBS Spread ${Boost_LIBRARIES} zzip ${CURL_LIBRARIES})
+set(LIBS Spread UnpackCpp ${Boost_LIBRARIES} ${ZLIB_LIBRARIES} ${CURL_LIBRARIES})
 
 set(MDIR ../../libs/mangle)
 set(CPP ${MDIR}/stream/clients/io_stream.cpp)

@@ -7,7 +7,7 @@ using namespace std;
 
 int main()
 {
-  string zip = "../../unpack/tests/archives/test.zip";
+  string zip = "test.zip";
   cout << "Unpacking " << zip << "...\n";
 
   Spread::UnpackTask unp(zip, "_outdir1");

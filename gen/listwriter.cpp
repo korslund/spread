@@ -2,7 +2,7 @@
 #include <mangle/stream/clients/copy_stream.hpp>
 #include <stdexcept>
 #include <assert.h>
-#include "unpack/dirwriter.hpp"
+#include <unpackcpp/misc/dirwriter.hpp>
 #include "hash/hash_stream.hpp"
 #include "spreadlib/infojson.hpp"
 #include "rule_writer.hpp"
@@ -16,7 +16,7 @@ using namespace Mangle::Stream;
 
 void ListWriter::write(const PackLister &lister, const string &where)
 {
-  StreamFactoryPtr ptr(new Unpack::DirWriter(where));
+  StreamFactoryPtr ptr(new UnpackCpp::DirWriter(where));
   write(lister, ptr);
 }
 
