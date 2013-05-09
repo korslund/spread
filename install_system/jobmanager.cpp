@@ -10,6 +10,10 @@
 #include <job/thread.hpp>
 #include <stdexcept>
 
+#ifdef NEED_LOCKGUARD
+#include <boost/thread/lock_guard.hpp>
+#endif
+
 using namespace Spread;
 
 struct JobManager::_Internal : DirOwner

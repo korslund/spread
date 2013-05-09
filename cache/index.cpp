@@ -4,6 +4,9 @@
 #include <boost/filesystem.hpp>
 #include "hash/hash_stream.hpp"
 #include <boost/thread/recursive_mutex.hpp>
+#ifdef NEED_LOCKGUARD
+#include <boost/thread/lock_guard.hpp>
+#endif
 #include "misc/jconfig.hpp"
 
 //#define PRINT_DEBUG

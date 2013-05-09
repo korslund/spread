@@ -6,6 +6,10 @@
 #include <boost/thread/recursive_mutex.hpp>
 #include <cstdio>
 
+#ifdef NEED_LOCKGUARD
+#include <boost/thread/lock_guard.hpp>
+#endif
+
 using namespace Spread;
 
 typedef boost::shared_ptr<URLRule> URLPtr;

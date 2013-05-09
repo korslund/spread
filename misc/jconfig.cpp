@@ -5,6 +5,10 @@
 #include <boost/thread/recursive_mutex.hpp>
 #include <boost/filesystem.hpp>
 
+#ifdef NEED_LOCKGUARD
+#include <boost/thread/lock_guard.hpp>
+#endif
+
 using namespace Misc;
 
 //#define PRINT_DEBUG

@@ -3,6 +3,10 @@
 #include <job/thread.hpp>
 #include <boost/thread/mutex.hpp>
 
+#ifdef NEED_LOCKGUARD
+#include <boost/thread/lock_guard.hpp>
+#endif
+
 #define LOCK boost::lock_guard<boost::mutex> lock(mutex)
 
 using namespace Spread;

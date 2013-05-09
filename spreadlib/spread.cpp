@@ -10,6 +10,10 @@
 #include <boost/thread/recursive_mutex.hpp>
 #include <job/thread.hpp>
 
+#ifdef NEED_LOCKGUARD
+#include <boost/thread/lock_guard.hpp>
+#endif
+
 //#define PRINT_DEBUG
 #ifdef PRINT_DEBUG
 #include <iostream>
