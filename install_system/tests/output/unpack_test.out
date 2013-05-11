@@ -8,7 +8,8 @@ LOG: deleteFile(_unpack/test1/arc.___tmp)
 RESULT:
   SUC: Success 0/0
     ---
-    ERR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello.___tmp 0/0
+    ERR: Failed installing into _unpack/:
+No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello.___tmp 0/0
 
 START: Unpack with hint but no arcrule
 LOG: STATUS: Starting install into _unpack/
@@ -21,7 +22,8 @@ LOG: deleteFile(_unpack/test1/arc.___tmp)
 RESULT:
   SUC: Success 0/0
     ---
-    ERR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello.___tmp 0/0
+    ERR: Failed installing into _unpack/:
+No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _unpack/test1/hello.___tmp 0/0
 
 START: Unpack with hint AND arcrule - BLIND
 LOG: STATUS: Starting install into _unpack/

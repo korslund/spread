@@ -2,6 +2,7 @@
 #include <install_jobs/hashfinder.hpp>
 #include <rules/arcruleset.hpp>
 #include <dir/tools.hpp>
+#include <stdexcept>
 #include <set>
 
 using namespace Spread;
@@ -623,14 +624,14 @@ void DirInstaller::doJob()
           HashMap tmp;
           fetchFiles(tmpAdd, tmp);
         }
-      catch(...)
+      catch(std::exception &e)
         {
           // Clean up by killing all the files we created
           StrMap tmpMov;
           doMovesDeletes(tmpMov, tmpAdd);
 
           // Rethrow so our caller gets the error message
-          throw;
+          throw std::runtime_error(("Failed installing into " + prefix + ":\n") + e.what());
         }
     }
 

@@ -38,7 +38,8 @@ Hash: 6ufh4AQO2UK8J6EjdXvEaQKLibsHYFgkkNIqw2WaHu3f
 
 TEST5: Wrong content
 Writing TpVf6gJoUYy6pQBAnfvsiPDs660o2E7L4lC67ZfbqIkE - 'this is not a string'
-CAUGHT: Hash mismatch in _ht_test5/wrong.txt
+CAUGHT: Error testing:
+Details: Hash mismatch in _ht_test5/wrong.txt
   Expected: TpVf6gJoUYy6pQBAnfvsiPDs660o2E7L4lC67ZfbqIkE
   Recieved: VFJt-Q1dairWD3TFtxh08OpLdGk4XKaqd4SRhfH8KC8V
 

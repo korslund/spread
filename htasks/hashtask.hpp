@@ -50,6 +50,9 @@ namespace Spread
     void closeStream();
     struct _HashTaskHidden;
     boost::shared_ptr<_HashTaskHidden> ptr;
+
+  protected:
+    std::string desc; // Used for error messages
   };
 };
 

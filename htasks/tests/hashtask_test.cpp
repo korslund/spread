@@ -69,7 +69,7 @@ TestTask::TestTask(TestJob *job)
   : j(job)
 { job->task = this; }
 
-Job *TestTask::createJob() { return j; }
+Job *TestTask::createJob() { desc = "testing"; return j; }
 
 void testJob(TestJob *j)
 {

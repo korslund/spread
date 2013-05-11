@@ -77,7 +77,7 @@ void HashTask::closeStream()
   ptr->curStream.reset();
 
   if(res != ptr->curHash)
-    fail("Hash mismatch in " + ptr->curFile +
+    fail("Error " + desc + ":\nDetails: Hash mismatch in " + ptr->curFile +
          "\n  Expected: " + ptr->curHash.toString() +
          "\n  Recieved: " + res.toString());
 

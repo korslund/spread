@@ -32,6 +32,8 @@ private:
 
 Job* CopyHash::createJob()
 {
+  desc = "copying " + source;
+
   // Guess the hash from targets
   assert(outputs.size() > 0);
   assert(source != "");

@@ -12,7 +12,8 @@ LOG: deleteFile(_file/test1/world.___tmp)
 RESULT:
   SUC: Success 0/0
     ---
-    ERR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test1/hello.___tmp 0/0
+    ERR: Failed installing into _file/:
+No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test1/hello.___tmp 0/0
 
 START: Add files, with source
 LOG: STATUS: Starting install into _file/
@@ -97,7 +98,8 @@ LOG: deleteFile(_file/test6/jkl/mno.___tmp)
 RESULT:
   SUC: Success 0/0
     ---
-    ERR: No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test6/abc.___tmp 0/0
+    ERR: Failed installing into _file/:
+No source for target LPJNul-wow4m6DsqxbninhsWHlwfp0JecwQzYpOLmCQF _file/test6/abc.___tmp 0/0
 
 START: Adding dir as hash, should work now
 LOG: STATUS: Starting install into _file/

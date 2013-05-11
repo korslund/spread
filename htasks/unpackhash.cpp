@@ -139,6 +139,8 @@ Job *UnpackHash::createJob()
   assert(inputs.size() == 1);
   std::string file = inputs.begin()->second;
 
+  desc = "unpacking " + file;
+
   PRINT("UnpackHash::createJob: file=" << file);
 
   // Figure out if we are doing a "blind" unpack
