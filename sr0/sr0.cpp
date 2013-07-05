@@ -117,6 +117,8 @@ struct Sr0Job : Job
           }
       }
 
+    if(wasUpdated) *wasUpdated = true;
+
     setBusy("Fetching update info");
     PRINT("Fetching update info");
 
@@ -224,10 +226,6 @@ struct Sr0Job : Job
     // On success, write back the new version file
     OutFileStream out(hashFile);
     out.write(newHash.getData(), 40);
-
-    // Notify the caller that we successfully updated the data, if
-    // they requested it.
-    if(wasUpdated) *wasUpdated = true;
 
     setDone();
   }

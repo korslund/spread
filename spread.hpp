@@ -28,9 +28,9 @@ namespace Spread
                             bool async=true);
 
     /* Returns whether any new data was downloaded in the last call to
-       updateFromURL()/File() for this channel.
-
-       Only call this after the appropriate job has finished.
+       updateFromURL()/File() for this channel. May be called while
+       the job is running to see if the an update is/has been in
+       progress.
     */
     bool wasUpdated(const std::string &channel) const;
 
@@ -130,6 +130,12 @@ namespace Spread
 
     /* Get a list of all currently installed packages, optionally
        restricted to a given channel, package, and/or location.
+
+       NOTE: It is possible for this list to contain items that have
+       no corresponding info package info. This can happen if items
+       have been removed from the server list, for example. Your
+       application should be aware of the possibility of these
+       "orphaned" packages.
      */
     void getStatusList(PackStatusList &output,
                        const std::string &channel = "",

@@ -577,10 +577,6 @@ void DirInstaller::doJob()
 
        Will ask the user for advice if necessary, and update add/del
        lists with results.
-
-       We only do this if we are upgrading, ie. if there was an
-       expectation of existing files in the directory. If not, then
-       completely ignore existing content.
     */
     resolveConflicts(add, del, upgrade, doAsk);
   }
