@@ -1,6 +1,8 @@
 #include "files.hpp"
 
 #include <boost/filesystem.hpp>
+#include <dir/from_fs.hpp>
+#include <assert.h>
 
 using namespace Cache;
 using namespace Spread;
@@ -16,6 +18,17 @@ std::string Files::makePath(const Hash &hash) const
   res /= hstr.substr(0,2);
   res /= hstr.substr(2,std::string::npos);
   return res.string();
+}
+
+void Files::cacheAll() const
+{
+  assert(basedir != "");
+  Hash::DirMap list;
+
+  // fromFS() does exactly what we want - traverses the directory
+  // recursively and caches all files in it.
+
+  Dir::fromFS(list, basedir, index);
 }
 
 std::string Files::storePath(const Hash &hash) const

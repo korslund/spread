@@ -114,6 +114,8 @@ SpreadLib::SpreadLib(const std::string &outDir, const std::string &tmpDir)
   ptr->cache.files.basedir = ptr->getPath("cache/");
   ptr->manager.reset(new JobManager(ptr->cache));
 
+  ptr->cache.files.cacheAll();
+
   PRINT("  Starting JobManager");
   Thread::run(ptr->manager);
   PRINT("  SpreadLib() done");

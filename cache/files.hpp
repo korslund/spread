@@ -15,6 +15,12 @@ namespace Cache
      */
     std::string basedir;
 
+    /* Browse through basedir and make sure all files there are added
+       to the cache index. Typically you would call this immediately
+       after setting a new basedir.
+     */
+    void cacheAll() const;
+
     /* Produce cache path for a given hash. This does not read or
        write the filesystem, it just creates the path string.
      */

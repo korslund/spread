@@ -77,9 +77,6 @@ void TreeBase::fetchFiles(const HashDir &outputs, HashMap &results)
         if(src.type == TST_File || src.type == TST_InPlace)
           continue;
 
-        // Probably use a shared_ptr here. And actually, like
-        // before we make a Target first, then set it up to do
-        // what we want.
         TreePtr job;
         if(src.type == TST_Download)
           job = owner.downloadTarget(src.value);

@@ -17,6 +17,7 @@ set(MIDIR ${SPDIR}/misc)
 set(JDIR ${SPDIR}/job)
 set(HDIR ${SPDIR}/hash)
 set(CDIR ${SPDIR}/cache)
+set(DDIR ${SPDIR}/dir)
 
 set(JOB ${JDIR}/thread.cpp ${JDIR}/job.cpp)
 set(C85 ${MIDIR}/comp85.cpp)
@@ -25,10 +26,11 @@ set(HASH ${HDIR}/hash.cpp ${LIBDIR}/sha2/sha2.c ${C85})
 set(MANGLE ${MDIR}/stream/clients/io_stream.cpp)
 set(JSON ${JS}/json_reader.cpp ${JS}/json_writer.cpp ${JS}/json_value.cpp)
 set(READJSON ${JSON} ${MANGLE} ${MIDIR}/readjson.cpp)
+set(DIR ${DDIR}/from_fs.cpp)
 
 set(CONF ${READJSON} ${MIDIR}/jconfig.cpp)
 
-set(CACHE ${CONF} ${HASH} ${CDIR}/index.cpp ${CDIR}/files.cpp)
+set(CACHE ${CONF} ${HASH} ${CDIR}/index.cpp ${CDIR}/files.cpp ${DIR})
 
 add_executable(cache1_test cache1_test.cpp ${CACHE})
 target_link_libraries(cache1_test ${LIBS})
